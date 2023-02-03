@@ -19,8 +19,9 @@
         Mine = 15,
         Ruin = 16,
         Ship = 17,
-        Shipwrecks = 18,
+        Shipwreck = 18,
         Towers = 19,
-        Land = 20
+        Land = 20,
+        Temple = 21
     }
 }
