@@ -23,7 +23,7 @@ namespace Skyrim.Api.Test.Domains
         }
     }
 
-    public class Create : LocationDomain_Tests
+    public class CreateLocation : LocationDomain_Tests
     {
         [Theory]
         [MemberData(nameof(ValidPropertiesForEachLocationType))]

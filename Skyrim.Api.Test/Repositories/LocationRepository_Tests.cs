@@ -53,7 +53,7 @@ namespace Skyrim.Api.Test.Repositories
             };
         }
 
-        protected CreateLocationDto CreateNewCreateLocationDto()
+        protected CreateLocationDto CreateNewCreateLocationDtoAsCity()
         {
             return new CreateLocationDto
             {
@@ -68,23 +68,23 @@ namespace Skyrim.Api.Test.Repositories
     public class SaveLocationAsCity : LocationRepository_Tests
     {
         [Fact]
-        public async void WithValidLocationDto_SavesExpectedCity()
+        public async void WithValidCreateLocationDto_SavesExpectedCity()
         {
             // Arrange
             _mockMapper.Setup(x => x.Map<City>(It.IsAny<CreateLocationDto>())).Returns(CreateNewCity());
 
             //Act
-            var result = await _locationRepository.SaveLocationAsCity(new CreateLocationDto());
+            var result = await _locationRepository.SaveLocationAsCity(CreateNewCreateLocationDtoAsCity());
 
             //Assert
             Assert.Equal(_context.Cities.FirstOrDefault().Name, result.Name);
         }
 
         [Fact]
-        public async void WithValidLocationDto_MapsLocationAsCity()
+        public async void WithValidCreateLocationDto_MapsLocationAsCity()
         {
             // Arrange
-            var createLocationDto = CreateNewCreateLocationDto();
+            var createLocationDto = CreateNewCreateLocationDtoAsCity();
             _mockMapper.Setup(x => x.Map<City>(createLocationDto)).Returns(CreateNewCity());
 
             // Act
@@ -95,7 +95,7 @@ namespace Skyrim.Api.Test.Repositories
         }
 
         [Fact]
-        public async void WithValidLocationDto_ReturnsExpectedCity()
+        public async void WithValidCreateLocationDto_ReturnsExpectedCity()
         {
             // Arrange
             var city = CreateNewCity();
@@ -113,23 +113,23 @@ namespace Skyrim.Api.Test.Repositories
         }
 
         [Fact]
-        public async void WithInvalidLocationDto_WhenMapping_ReturnsNullWhichThrowsErrorInSavingToDatabase()
+        public async void WithInvalidCreateLocationDto_WhenMapping_ReturnsNullWhichThrowsErrorInSavingToDatabase()
         {
             // Arrange
             _mockMapper.Setup(x => x.Map<City>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
 
             // Act
-            var result = await _locationRepository.SaveLocationAsCity(CreateNewCreateLocationDto());
+            var result = await _locationRepository.SaveLocationAsCity(CreateNewCreateLocationDtoAsCity());
 
             //Assert
             Assert.Null(result);
         }
 
         [Fact]
-        public async void WithInvalidLocationDto_LogsError()
+        public async void WithInvalidCreateLocationDto_LogsError()
         {
             // Arrange
-            var createLocationDto = CreateNewCreateLocationDto();
+            var createLocationDto = CreateNewCreateLocationDtoAsCity();
 
             // Act
             await _locationRepository.SaveLocationAsCity(createLocationDto);
@@ -139,7 +139,7 @@ namespace Skyrim.Api.Test.Repositories
         }
 
         [Fact]
-        public async void WithInvalidLocationDto_ReturnsExpectedNullLocation()
+        public async void WithInvalidCreateLocationDto_ReturnsExpectedNullLocation()
         {
             // Arrange
             var exception = new Exception();

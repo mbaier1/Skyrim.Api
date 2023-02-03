@@ -27,7 +27,7 @@ namespace Skyrim.Api.Test.Controllers
         }
     }
 
-    public class CreateLocation : LocationController_Tests
+    public class CreateLocation_AsCity : LocationController_Tests
     {
         [Fact]
         public async void WhenCreateLocationDtoHasRequiredValidPropertiesAsACity_ReturnsCreateAtActionWithCityDetails()
