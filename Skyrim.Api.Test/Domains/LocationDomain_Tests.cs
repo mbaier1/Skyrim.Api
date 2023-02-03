@@ -293,5 +293,25 @@ namespace Skyrim.Api.Test.Domains
                     (City)null
             };
         }
+
+        [Fact]
+        public async void CreateLocationDtoDoesNotContainValidLocationType_ReturnsNull()
+        {
+            // Arrange
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "Test",
+                GeographicalDescription = "Test"
+            };
+
+            _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
+
+            // Act
+            var result = await _locationDomain.CreateLocation(createLocationDto);
+
+            // Assert
+            Assert.Null(result);
+        }
     }
 }
