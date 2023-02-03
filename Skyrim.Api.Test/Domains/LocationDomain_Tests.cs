@@ -16,13 +16,15 @@ namespace Skyrim.Api.Test.Domains
 {
     public class LocationDomain_Tests
     {
-        internal readonly ILocationDomain _locationDomain;
-        internal readonly Mock<ILocationRepository> _mockLocationRepository;
+        protected readonly ILocationDomain _locationDomain;
+        protected readonly Mock<ILocationRepository> _mockLocationRepository;
+        protected readonly Mock<ICreateLocationDtoFormatHelper> _mockCreateLocationDtoFormatHelper;
 
         public LocationDomain_Tests()
         {
             _mockLocationRepository = new Mock<ILocationRepository>();
-            _locationDomain = new LocationDomain(_mockLocationRepository.Object);
+            _mockCreateLocationDtoFormatHelper = new Mock<ICreateLocationDtoFormatHelper>();
+            _locationDomain = new LocationDomain(_mockLocationRepository.Object, _mockCreateLocationDtoFormatHelper.Object);
         }
     }
 
@@ -54,6 +56,7 @@ namespace Skyrim.Api.Test.Domains
 
             _mockLocationRepository.Setup(x => x.SaveLocationAsCity(It.IsAny<CreateLocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
+            _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
 
             // Act
 
@@ -71,12 +74,13 @@ namespace Skyrim.Api.Test.Domains
         [Theory]
         [MemberData(nameof(WhiteSpaceProperties))]
         public async void CreateLocationDtoContainsEmpty_WhiteSpace_OrNullDescription(string description,
-            CreateLocationDto createLocationDto, City city)
+            CreateLocationDto createLocationDto, CreateLocationDto formatedCreateLocationDto, City city)
         {
             // Arrange
             var completedCreateTask = Task<Location>.FromResult(city);
             _mockLocationRepository.Setup(x => x.SaveLocationAsCity(It.IsAny<CreateLocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
+            _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(formatedCreateLocationDto);
 
             // Act
             var result = await _locationDomain.CreateLocation(createLocationDto);
@@ -91,10 +95,18 @@ namespace Skyrim.Api.Test.Domains
         {
             yield return new object[]
             {
-                    "CreateLocationDto has a null description so it returns a City with empty description", new CreateLocationDto
+                    "CreateLocationDto has a null description so it returns a City with empty description",
+                    new CreateLocationDto
                     {
                         Name = "Test",
                         Description = null,
+                        TypeOfLocation = LocationType.City,
+                        GeographicalDescription = "Test"
+                    },
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = "",
                         TypeOfLocation = LocationType.City,
                         GeographicalDescription = "Test"
                     },
@@ -116,6 +128,13 @@ namespace Skyrim.Api.Test.Domains
                         TypeOfLocation = LocationType.City,
                         GeographicalDescription = "Test"
                     },
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = "",
+                        TypeOfLocation = LocationType.City,
+                        GeographicalDescription = "Test"
+                    },
                     new City
                     {
                         Id = 0,
@@ -128,6 +147,13 @@ namespace Skyrim.Api.Test.Domains
             yield return new object[]
             {
                     "CreateLocationDto has empty description so it returns a City with empty description", new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = "",
+                        TypeOfLocation = LocationType.City,
+                        GeographicalDescription = "Test"
+                    },
+                    new CreateLocationDto
                     {
                         Name = "Test",
                         Description = "",
@@ -148,12 +174,13 @@ namespace Skyrim.Api.Test.Domains
         [Theory]
         [MemberData(nameof(UnallowedNull_Invalid_OrWhiteSpaceProperties))]
         public async void CreateLocationDtoContainsInvalidEmpty_WhiteSpace_OrNullProperties(string description,
-            CreateLocationDto createLocationDto, City city)
+            CreateLocationDto createLocationDto, CreateLocationDto badFormatedCreateLocationDto, City city)
         {
             // Arrange
             var completedCreateTask = Task<Location>.FromResult(city);
             _mockLocationRepository.Setup(x => x.SaveLocationAsCity(It.IsAny<CreateLocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
+            _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(badFormatedCreateLocationDto);
 
             // Act
             var result = await _locationDomain.CreateLocation(createLocationDto);
@@ -173,6 +200,7 @@ namespace Skyrim.Api.Test.Domains
                         GeographicalDescription = "Test",
                         Name = "Test"
                     },
+                    (CreateLocationDto)null,
                     (City)null
             };
             yield return new object[]
@@ -185,6 +213,7 @@ namespace Skyrim.Api.Test.Domains
                         Name = null,
                         TypeOfLocation = LocationType.City
                     },
+                    (CreateLocationDto)null,
                     (City)null
             };
             yield return new object[]
@@ -197,6 +226,7 @@ namespace Skyrim.Api.Test.Domains
                         Name = "",
                         TypeOfLocation = LocationType.City
                     },
+                    (CreateLocationDto)null,
                     (City)null
             };
             yield return new object[]
@@ -209,6 +239,7 @@ namespace Skyrim.Api.Test.Domains
                         Name = "   ",
                         TypeOfLocation = LocationType.City
                     },
+                    (CreateLocationDto)null,
                     (City)null
             };
             yield return new object[]
@@ -221,6 +252,7 @@ namespace Skyrim.Api.Test.Domains
                         Name = "Test",
                         TypeOfLocation = LocationType.City
                     },
+                    (CreateLocationDto)null,
                     (City)null
             };
             yield return new object[]
@@ -233,6 +265,7 @@ namespace Skyrim.Api.Test.Domains
                         Name = "Test",
                         TypeOfLocation = LocationType.City
                     },
+                    (CreateLocationDto)null,
                     (City)null
             };
             yield return new object[]
@@ -245,6 +278,7 @@ namespace Skyrim.Api.Test.Domains
                         Name = "Test",
                         TypeOfLocation = LocationType.City
                     },
+                    (CreateLocationDto)null,
                     (City)null
             };
         }

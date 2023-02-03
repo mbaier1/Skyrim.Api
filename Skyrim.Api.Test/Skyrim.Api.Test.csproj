@@ -27,4 +27,8 @@
     <ProjectReference Include="..\Skyrim.Api\Skyrim.Api.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Domains\DomainHelpers\" />
+  </ItemGroup>
+
 </Project>
