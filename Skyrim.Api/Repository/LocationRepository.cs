@@ -38,5 +38,10 @@ namespace Skyrim.Api.Repository
                 return null;
             }
         }
+
+        public async Task<Location> SaveLocationAsTown(CreateLocationDto createLocationDto)
+        {
+            return null;
+        }
     }
 }

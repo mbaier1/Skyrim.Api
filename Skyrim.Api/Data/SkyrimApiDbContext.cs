@@ -24,6 +24,7 @@ namespace Skyrim.Api.Data
         }
 
         public DbSet<City> Cities { get; set; }
+        public DbSet<Town> Towns { get; set; }
         public DbSet<Guard> Guards { get; set; }
         public DbSet<PhyscialFightingShop> PhyscialFightingShops { get; set; }
         public DbSet<Chicken> Chickens { get; set; }

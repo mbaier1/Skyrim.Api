@@ -9,7 +9,9 @@ namespace Skyrim.Api.Configurations
         public AutoMapperConfiguration()
         {
             CreateMap<City, CreateLocationDto>().ReverseMap();
+            CreateMap<Town, CreateLocationDto>().ReverseMap();
             CreateMap<City, GetLocationDto>().ReverseMap();
+            CreateMap<Town, GetLocationDto>().ReverseMap();
         }
     }
 }
