@@ -41,7 +41,20 @@ namespace Skyrim.Api.Repository
 
         public async Task<Location> SaveLocationAsTown(CreateLocationDto createLocationDto)
         {
-            return null;
+            try
+            {
+                var town = _mapper.Map<Town>(createLocationDto);
+                await _context.AddAsync(town);
+                await _context.SaveChangesAsync();
+
+                return town;
+            }
+            catch (Exception e)
+            {
+                _loggerExtension.LogFatalError(e, createLocationDto);
+
+                return null;
+            }
         }
     }
 }

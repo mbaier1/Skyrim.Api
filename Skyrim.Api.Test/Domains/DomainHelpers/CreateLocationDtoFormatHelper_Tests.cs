@@ -50,6 +50,17 @@ namespace Skyrim.Api.Test.Domains.DomainHelpers
                     TypeOfLocation = LocationType.City
                 }
             };
+            yield return new object[]
+            {
+                "Valid properties for a Town Location",
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Town
+                }
+            };
         }
 
         [Theory]
@@ -178,6 +189,114 @@ namespace Skyrim.Api.Test.Domains.DomainHelpers
                      GeographicalDescription = "Test"
                  }
             };
+            yield return new object[]
+            {
+                "CreateLocationDto has a null description for town so it returns with an empty description",
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = null,
+                     TypeOfLocation = LocationType.Town,
+                     GeographicalDescription = "Test"
+                 },
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = "",
+                     TypeOfLocation = LocationType.Town,
+                     GeographicalDescription = "Test"
+                 }
+            };
+            yield return new object[]
+            {
+                "CreateLocationDto has white spaces for description for Town so it returns with an empty description",
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = "     ",
+                     TypeOfLocation = LocationType.Town,
+                     GeographicalDescription = "Test"
+                 },
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = "",
+                     TypeOfLocation = LocationType.Town,
+                     GeographicalDescription = "Test"
+                 }
+            };
+            yield return new object[]
+            {
+                "CreateLocationDto has empty description for Town so it returns with an empty description",
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = "",
+                     TypeOfLocation = LocationType.Town,
+                     GeographicalDescription = "Test"
+                 },
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = "",
+                     TypeOfLocation = LocationType.Town,
+                     GeographicalDescription = "Test"
+                 }
+            };
+            yield return new object[]
+            {
+                "CreateLocationDto has white space in the name for Town so it returns with an empty description",
+                 new CreateLocationDto
+                 {
+                     Name = "  Test   ",
+                     Description = "Test",
+                     TypeOfLocation = LocationType.Town,
+                     GeographicalDescription = "Test"
+                 },
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = "Test",
+                     TypeOfLocation = LocationType.Town,
+                     GeographicalDescription = "Test"
+                 }
+            };
+            yield return new object[]
+            {
+                "CreateLocationDto has white space in the description for Town so it returns with an empty description",
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = "  Test",
+                     TypeOfLocation = LocationType.Town,
+                     GeographicalDescription = "Test"
+                 },
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = "Test",
+                     TypeOfLocation = LocationType.Town,
+                     GeographicalDescription = "Test"
+                 }
+            };
+            yield return new object[]
+            {
+                "CreateLocationDto has white space in the geographical description for Town so it returns with an empty description",
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = "Test",
+                     TypeOfLocation = LocationType.Town,
+                     GeographicalDescription = "Test    "
+                 },
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = "Test",
+                     TypeOfLocation = LocationType.Town,
+                     GeographicalDescription = "Test"
+                 }
+            };
         }
 
         [Theory]
@@ -264,6 +383,78 @@ namespace Skyrim.Api.Test.Domains.DomainHelpers
                      Description = "Test",
                      GeographicalDescription = " ",
                      TypeOfLocation = LocationType.City
+                 },
+                 (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                "CreateLocationDto has a null name for Town",
+                 new CreateLocationDto
+                 {
+                     Name = null,
+                     Description = "Test",
+                     GeographicalDescription = "Test",
+                     TypeOfLocation = LocationType.Town
+                 },
+                 (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                "CreateLocationDto has has an empty name for Town",
+                 new CreateLocationDto
+                 {
+                     Name = "",
+                     Description = "Test",
+                     GeographicalDescription = "Test",
+                     TypeOfLocation = LocationType.Town
+                 },
+                 (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                "CreateLocationDto has has a white space name for Town",
+                 new CreateLocationDto
+                 {
+                     Name = " ",
+                     Description = "Test",
+                     GeographicalDescription = "Test",
+                     TypeOfLocation = LocationType.Town
+                 },
+                 (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                "CreateLocationDto has a null Geographic Description for Town",
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = "Test",
+                     GeographicalDescription = null,
+                     TypeOfLocation = LocationType.Town
+                 },
+                 (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                "CreateLocationDto has an empty Geographic Description for Town",
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = "Test",
+                     GeographicalDescription = "",
+                     TypeOfLocation = LocationType.Town
+                 },
+                 (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                "CreateLocationDto has a white space Geographic Description name for Town",
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = "Test",
+                     GeographicalDescription = " ",
+                     TypeOfLocation = LocationType.Town
                  },
                  (CreateLocationDto)null
             };
