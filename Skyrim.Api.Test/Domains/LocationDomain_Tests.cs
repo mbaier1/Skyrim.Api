@@ -37,6 +37,11 @@ namespace Skyrim.Api.Test.Domains
                 _mockLocationRepository.Setup(x => x.SaveLocationAsCity(It.IsAny<CreateLocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
             }
+            else if (type.TypeOfLocation == LocationType.Town)
+            {
+                _mockLocationRepository.Setup(x => x.SaveLocationAsTown(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+            }
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
 
@@ -79,26 +84,62 @@ namespace Skyrim.Api.Test.Domains
                     GeographicalDescription = "Test"
                 }
             };
+            yield return new object[]
+            {
+                "Valid properties for Town Location",
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    TypeOfLocation = LocationType.Town,
+                    GeographicalDescription = "Test"
+                },
+                new Town
+                {
+                    Id = 0,
+                    Name = "Test",
+                    Description = "Test",
+                    TypeOfLocation = LocationType.Town,
+                    GeographicalDescription = "Test"
+                },
+                new Town
+                {
+                    Id = 0,
+                    Name = "Test",
+                    Description = "Test",
+                    TypeOfLocation = LocationType.Town,
+                    GeographicalDescription = "Test"
+                }
+            };
         }
 
         [Theory]
         [MemberData(nameof(WhiteSpaceProperties))]
         public async void CreateLocationDtoContainsEmpty_WhiteSpace_OrNullDescription(string description,
-            CreateLocationDto createLocationDto, CreateLocationDto formatedCreateLocationDto, City city)
+            CreateLocationDto createLocationDto, CreateLocationDto formatedCreateLocationDto, 
+            Location taskType, Location type)
         {
             // Arrange
-            var completedCreateTask = Task<Location>.FromResult(city);
-            _mockLocationRepository.Setup(x => x.SaveLocationAsCity(It.IsAny<CreateLocationDto>()))
-                .ReturnsAsync((Location)completedCreateTask.Result);
+            var completedCreateTask = Task<Location>.FromResult(taskType);
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(formatedCreateLocationDto);
+            if (type.TypeOfLocation == LocationType.City)
+            {
+                _mockLocationRepository.Setup(x => x.SaveLocationAsCity(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+            }
+            else if (type.TypeOfLocation == LocationType.Town)
+            {
+                _mockLocationRepository.Setup(x => x.SaveLocationAsTown(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+            }
 
             // Act
             var result = await _locationDomain.CreateLocation(createLocationDto);
 
             // Assert
-            Assert.Equal(city.Name, result.Name);
-            Assert.Equal(city.Description, result.Description);
-            Assert.Equal(city.TypeOfLocation, result.TypeOfLocation);
+            Assert.Equal(type.Name, result.Name);
+            Assert.Equal(type.Description, result.Description);
+            Assert.Equal(type.TypeOfLocation, result.TypeOfLocation);
         }
 
         public static IEnumerable<object[]> WhiteSpaceProperties()
@@ -127,6 +168,14 @@ namespace Skyrim.Api.Test.Domains
                         Description = "",
                         TypeOfLocation = LocationType.City,
                         GeographicalDescription = "Test"
+                    },
+                    new City
+                    {
+                        Id = 0,
+                        Name = "Test",
+                        Description = "",
+                        TypeOfLocation = LocationType.City,
+                        GeographicalDescription = "Test"
                     }
             };
             yield return new object[]
@@ -140,6 +189,14 @@ namespace Skyrim.Api.Test.Domains
                     },
                     new CreateLocationDto
                     {
+                        Name = "Test",
+                        Description = "",
+                        TypeOfLocation = LocationType.City,
+                        GeographicalDescription = "Test"
+                    },
+                    new City
+                    {
+                        Id = 0,
                         Name = "Test",
                         Description = "",
                         TypeOfLocation = LocationType.City,
@@ -178,6 +235,116 @@ namespace Skyrim.Api.Test.Domains
                         Description = "",
                         TypeOfLocation = LocationType.City,
                         GeographicalDescription = "Test"
+                    },
+                    new City
+                    {
+                        Id = 0,
+                        Name = "Test",
+                        Description = "",
+                        TypeOfLocation = LocationType.City,
+                        GeographicalDescription = "Test"
+                    }
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null description so it returns a Town with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = null,
+                        TypeOfLocation = LocationType.Town,
+                        GeographicalDescription = "Test"
+                    },
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = "",
+                        TypeOfLocation = LocationType.Town,
+                        GeographicalDescription = "Test"
+                    },
+                    new Town
+                    {
+                        Id = 0,
+                        Name = "Test",
+                        Description = "",
+                        TypeOfLocation = LocationType.Town,
+                        GeographicalDescription = "Test"
+                    },
+                    new Town
+                    {
+                        Id = 0,
+                        Name = "Test",
+                        Description = "",
+                        TypeOfLocation = LocationType.Town,
+                        GeographicalDescription = "Test"
+                    }
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has white spaces for description so it returns a Town with empty description",
+                new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = "     ",
+                        TypeOfLocation = LocationType.Town,
+                        GeographicalDescription = "Test"
+                    },
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = "",
+                        TypeOfLocation = LocationType.Town,
+                        GeographicalDescription = "Test"
+                    },
+                    new Town
+                    {
+                        Id = 0,
+                        Name = "Test",
+                        Description = "",
+                        TypeOfLocation = LocationType.Town,
+                        GeographicalDescription = "Test"
+                    },
+                    new Town
+                    {
+                        Id = 0,
+                        Name = "Test",
+                        Description = "",
+                        TypeOfLocation = LocationType.Town,
+                        GeographicalDescription = "Test"
+                    }
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has empty description so it returns a Town with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = "",
+                        TypeOfLocation = LocationType.Town,
+                        GeographicalDescription = "Test"
+                    },
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = "",
+                        TypeOfLocation = LocationType.Town,
+                        GeographicalDescription = "Test"
+                    },
+                    new Town
+                    {
+                        Id = 0,
+                        Name = "Test",
+                        Description = "",
+                        TypeOfLocation = LocationType.Town,
+                        GeographicalDescription = "Test"
+                    },
+                    new Town
+                    {
+                        Id = 0,
+                        Name = "Test",
+                        Description = "",
+                        TypeOfLocation = LocationType.Town,
+                        GeographicalDescription = "Test"
                     }
             };
         }
@@ -185,13 +352,22 @@ namespace Skyrim.Api.Test.Domains
         [Theory]
         [MemberData(nameof(UnallowedNull_Invalid_OrWhiteSpaceProperties))]
         public async void CreateLocationDtoContainsInvalidEmpty_WhiteSpace_OrNullProperties(string description,
-            CreateLocationDto createLocationDto, CreateLocationDto badFormatedCreateLocationDto, City city)
+            CreateLocationDto createLocationDto, CreateLocationDto badFormatedCreateLocationDto,
+            Location taskType, Location type)
         {
             // Arrange
-            var completedCreateTask = Task<Location>.FromResult(city);
-            _mockLocationRepository.Setup(x => x.SaveLocationAsCity(It.IsAny<CreateLocationDto>()))
-                .ReturnsAsync((Location)completedCreateTask.Result);
+            var completedCreateTask = Task<Location>.FromResult(taskType);
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(badFormatedCreateLocationDto);
+            if (type.TypeOfLocation == LocationType.City)
+            {
+                _mockLocationRepository.Setup(x => x.SaveLocationAsCity(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+            }
+            else if (type.TypeOfLocation == LocationType.Town)
+            {
+                _mockLocationRepository.Setup(x => x.SaveLocationAsTown(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+            }
 
             // Act
             var result = await _locationDomain.CreateLocation(createLocationDto);
@@ -212,7 +388,11 @@ namespace Skyrim.Api.Test.Domains
                         Name = "Test"
                     },
                     (CreateLocationDto)null,
-                    (City)null
+                    (City)null,
+                    new City
+                    {
+                        TypeOfLocation = LocationType.City,
+                    }
             };
             yield return new object[]
             {
@@ -225,7 +405,11 @@ namespace Skyrim.Api.Test.Domains
                         TypeOfLocation = LocationType.City
                     },
                     (CreateLocationDto)null,
-                    (City)null
+                    (City)null,
+                    new City
+                    {
+                        TypeOfLocation = LocationType.City,
+                    }
             };
             yield return new object[]
             {
@@ -238,7 +422,11 @@ namespace Skyrim.Api.Test.Domains
                         TypeOfLocation = LocationType.City
                     },
                     (CreateLocationDto)null,
-                    (City)null
+                    (City)null,
+                    new City
+                    {
+                        TypeOfLocation = LocationType.City,
+                    }
             };
             yield return new object[]
             {
@@ -251,7 +439,11 @@ namespace Skyrim.Api.Test.Domains
                         TypeOfLocation = LocationType.City
                     },
                     (CreateLocationDto)null,
-                    (City)null
+                    (City)null,
+                    new City
+                    {
+                        TypeOfLocation = LocationType.City,
+                    }
             };
             yield return new object[]
             {
@@ -264,7 +456,11 @@ namespace Skyrim.Api.Test.Domains
                         TypeOfLocation = LocationType.City
                     },
                     (CreateLocationDto)null,
-                    (City)null
+                    (City)null,
+                    new City
+                    {
+                        TypeOfLocation = LocationType.City,
+                    }
             };
             yield return new object[]
             {
@@ -277,7 +473,11 @@ namespace Skyrim.Api.Test.Domains
                         TypeOfLocation = LocationType.City
                     },
                     (CreateLocationDto)null,
-                    (City)null
+                    (City)null,
+                    new City
+                    {
+                        TypeOfLocation = LocationType.City,
+                    }
             };
             yield return new object[]
             {
@@ -290,7 +490,113 @@ namespace Skyrim.Api.Test.Domains
                         TypeOfLocation = LocationType.City
                     },
                     (CreateLocationDto)null,
-                    (City)null
+                    (City)null,
+                    new City
+                    {
+                        TypeOfLocation = LocationType.City,
+                    }
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = null,
+                        TypeOfLocation = LocationType.Town
+                    },
+                    (CreateLocationDto)null,
+                    (Town)null,
+                    new Town
+                    {
+                        TypeOfLocation = LocationType.Town,
+                    }
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has an empty name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = "",
+                        TypeOfLocation = LocationType.Town
+                    },
+                    (CreateLocationDto)null,
+                    (Town)null,
+                    new Town
+                    {
+                        TypeOfLocation = LocationType.Town,
+                    }
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a white space name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = "   ",
+                        TypeOfLocation = LocationType.Town
+                    },
+                    (CreateLocationDto)null,
+                    (Town)null,
+                    new Town
+                    {
+                        TypeOfLocation = LocationType.Town,
+                    }
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = null,
+                        Name = "Test",
+                        TypeOfLocation = LocationType.Town
+                    },
+                    (CreateLocationDto)null,
+                    (Town)null,
+                    new Town
+                    {
+                        TypeOfLocation = LocationType.Town,
+                    }
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has an empty Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "",
+                        Name = "Test",
+                        TypeOfLocation = LocationType.Town
+                    },
+                    (CreateLocationDto)null,
+                    (Town)null,
+                    new Town
+                    {
+                        TypeOfLocation = LocationType.Town,
+                    }
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a white space Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = " ",
+                        Name = "Test",
+                        TypeOfLocation = LocationType.Town
+                    },
+                    (CreateLocationDto)null,
+                    (Town)null,
+                    new Town
+                    {
+                        TypeOfLocation = LocationType.Town,
+                    }
             };
         }
 

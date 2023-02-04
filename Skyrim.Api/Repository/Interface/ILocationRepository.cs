@@ -6,5 +6,6 @@ namespace Skyrim.Api.Repository.Interface
     public interface ILocationRepository
     {
         Task<Location> SaveLocationAsCity(CreateLocationDto createLocationDto);
+        Task<Location> SaveLocationAsTown(CreateLocationDto createLocationDto);
     }
 }

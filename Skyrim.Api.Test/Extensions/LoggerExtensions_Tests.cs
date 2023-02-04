@@ -31,24 +31,44 @@ namespace Skyrim.Api.Test.Extensions
 
     public class LogFatalError : LoggerExtensions_Tests
     {
-        [Fact]
-        public void WhenLoggerIsCalled_ErrorIsLoggedOnce()
+        [Theory]
+        [MemberData(nameof(FatalErrorsForEachLocationType))]
+        public void WhenLoggerIsCalled_ErrorIsLoggedOnce(string description, Exception exception, CreateLocationDto createLocationDto)
         {
             // Arrange
-            var exception = new Exception();
-            var createLocationDto = new CreateLocationDto
-            {
-                Name = "Test",
-                Description = "Test",
-                GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.City
-            };
 
             // Act
             _mockLoggerExtension.Object.LogFatalError(exception, createLocationDto);
 
             // Assert
             _mockLoggerExtension.Verify(x => x.LogFatalError(It.IsAny<Exception>(), It.IsAny<CreateLocationDto>()), Times.Once());
+        }
+        public static IEnumerable<object[]> FatalErrorsForEachLocationType()
+        {
+            yield return new object[]
+            {
+                "Fatal Error for City location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                Description = "Test",
+                GeographicalDescription = "Test",
+                TypeOfLocation = LocationType.City
+                }
+            };
+            yield return new object[]
+            {
+                "Fatal Error for Town location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                Description = "Test",
+                GeographicalDescription = "Test",
+                TypeOfLocation = LocationType.Town
+                }
+            };
         }
     }
 }
