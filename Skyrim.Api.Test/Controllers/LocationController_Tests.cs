@@ -350,7 +350,7 @@ namespace Skyrim.Api.Test.Controllers
 
             var createLocationDto = new CreateLocationDto
             {
-                Name = "Test City",
+                Name = "Test Town",
                 Description = "    ",
                 TypeOfLocation = LocationType.Town,
                 GeographicalDescription = "Test Description"
@@ -359,7 +359,7 @@ namespace Skyrim.Api.Test.Controllers
             var town = new Town
             {
                 Id = 0,
-                Name = "Test homestead",
+                Name = "Test Town",
                 Description = "",
                 TypeOfLocation = LocationType.Town,
                 GeographicalDescription = "Test Description"
