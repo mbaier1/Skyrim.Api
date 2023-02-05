@@ -653,7 +653,7 @@ namespace Skyrim.Api.Test.Domains
             }
             else if (type.TypeOfLocation == LocationType.Settlement)
             {
-                _mockLocationRepository.Setup(x => x.SaveLocationAsHomestead(It.IsAny<CreateLocationDto>()))
+                _mockLocationRepository.Setup(x => x.SaveLocationAsSettlement(It.IsAny<CreateLocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
             }
 
@@ -1017,7 +1017,7 @@ namespace Skyrim.Api.Test.Domains
                     },
                     (CreateLocationDto)null,
                     (Settlement)null,
-                    new Homestead
+                    new Settlement
                     {
                         TypeOfLocation = LocationType.Settlement,
                     }
@@ -1034,7 +1034,7 @@ namespace Skyrim.Api.Test.Domains
                     },
                     (CreateLocationDto)null,
                     (Settlement)null,
-                    new Homestead
+                    new Settlement
                     {
                         TypeOfLocation = LocationType.Settlement,
                     }
@@ -1051,7 +1051,7 @@ namespace Skyrim.Api.Test.Domains
                     },
                     (CreateLocationDto)null,
                     (Settlement)null,
-                    new Homestead
+                    new Settlement
                     {
                         TypeOfLocation = LocationType.Settlement,
                     }
@@ -1068,7 +1068,7 @@ namespace Skyrim.Api.Test.Domains
                     },
                     (CreateLocationDto)null,
                     (Settlement)null,
-                    new Homestead
+                    new Settlement
                     {
                         TypeOfLocation = LocationType.Settlement,
                     }
@@ -1085,7 +1085,7 @@ namespace Skyrim.Api.Test.Domains
                     },
                     (CreateLocationDto)null,
                     (Settlement)null,
-                    new Homestead
+                    new Settlement
                     {
                         TypeOfLocation = LocationType.Settlement,
                     }
