@@ -507,7 +507,7 @@ namespace Skyrim.Api.Test.Controllers
     public class CreateLocation_AsHomestead : LocationController_Tests
     {
         [Fact]
-        public async void WhenCreateLocationDtoHasRequiredValidPropertiesAsAHomestead_ReturnsCreateAtActionWithTownDetails()
+        public async void WhenCreateLocationDtoHasRequiredValidPropertiesAsAHomestead_ReturnsCreateAtActionWithHomesteadDetails()
         {
             // Arrange
 
@@ -573,7 +573,7 @@ namespace Skyrim.Api.Test.Controllers
             var homestead = new Homestead
             {
                 Id = 0,
-                Name = "Test settlement",
+                Name = "Test Homestead",
                 Description = "",
                 TypeOfLocation = LocationType.Homestead,
                 GeographicalDescription = "Test Description"
@@ -721,7 +721,7 @@ namespace Skyrim.Api.Test.Controllers
     public class CreateLocation_AsSettlement : LocationController_Tests
     {
         [Fact]
-        public async void WhenCreateLocationDtoHasRequiredValidPropertiesAsASettlement_ReturnsCreateAtActionWithTownDetails()
+        public async void WhenCreateLocationDtoHasRequiredValidPropertiesAsASettlement_ReturnsCreateAtActionWithSettlementDetails()
         {
             // Arrange
 
@@ -747,7 +747,7 @@ namespace Skyrim.Api.Test.Controllers
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
             var settlementObject = new object();
-            var locationAsSettlement = new Homestead();
+            var locationAsSettlement = new Settlement();
 
             // Act
 

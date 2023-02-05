@@ -429,55 +429,55 @@ namespace Skyrim.Api.Test.Domains.DomainHelpers
             };
             yield return new object[]
             {
-                "CreateLocationDto has a null description for Homestead so it returns with an empty description",
+                "CreateLocationDto has a null description for Settlement so it returns with an empty description",
                  new CreateLocationDto
                  {
                      Name = "Test",
                      Description = null,
-                     TypeOfLocation = LocationType.Homestead,
+                     TypeOfLocation = LocationType.Settlement,
                      GeographicalDescription = "Test"
                  },
                  new CreateLocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.Homestead,
+                     TypeOfLocation = LocationType.Settlement,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
-                "CreateLocationDto has white spaces for description for Homestead so it returns with an empty description",
+                "CreateLocationDto has white spaces for description for Settlement so it returns with an empty description",
                  new CreateLocationDto
                  {
                      Name = "Test",
                      Description = "     ",
-                     TypeOfLocation = LocationType.Homestead,
+                     TypeOfLocation = LocationType.Settlement,
                      GeographicalDescription = "Test"
                  },
                  new CreateLocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.Homestead,
+                     TypeOfLocation = LocationType.Settlement,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
-                "CreateLocationDto has empty description for Homestead so it returns with an empty description",
+                "CreateLocationDto has empty description for Settlement so it returns with an empty description",
                  new CreateLocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.Homestead,
+                     TypeOfLocation = LocationType.Settlement,
                      GeographicalDescription = "Test"
                  },
                  new CreateLocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.Homestead,
+                     TypeOfLocation = LocationType.Settlement,
                      GeographicalDescription = "Test"
                  }
             };
