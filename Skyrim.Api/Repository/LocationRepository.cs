@@ -56,5 +56,23 @@ namespace Skyrim.Api.Repository
                 return null;
             }
         }
+
+        public async Task<Location> SaveLocationAsHomestead(CreateLocationDto createLocationDto)
+        {
+            try
+            {
+                var homestead = _mapper.Map<Homestead>(createLocationDto);
+                await _context.AddAsync(homestead);
+                await _context.SaveChangesAsync();
+
+                return homestead;
+            }
+            catch (Exception e)
+            {
+                _loggerExtension.LogFatalError(e, createLocationDto);
+
+                return null;
+            }
+        }
     }
 }

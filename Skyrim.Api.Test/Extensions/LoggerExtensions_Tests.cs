@@ -69,6 +69,18 @@ namespace Skyrim.Api.Test.Extensions
                 TypeOfLocation = LocationType.Town
                 }
             };
+            yield return new object[]
+            {
+                "Fatal Error for Homestead location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                Description = "Test",
+                GeographicalDescription = "Test",
+                TypeOfLocation = LocationType.Homestead
+                }
+            };
         }
     }
 }
