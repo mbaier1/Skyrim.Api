@@ -34,6 +34,8 @@ namespace Skyrim.Api.Domain
                     return await _locationRepository.SaveLocationAsCity(createLocationDto);
                 case LocationType.Town:
                     return await _locationRepository.SaveLocationAsTown(createLocationDto);
+                case LocationType.Homestead:
+                    return await _locationRepository.SaveLocationAsHomestead(createLocationDto);
                 default:
                     return null;
             }

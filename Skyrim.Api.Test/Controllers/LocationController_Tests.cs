@@ -359,7 +359,7 @@ namespace Skyrim.Api.Test.Controllers
             var town = new Town
             {
                 Id = 0,
-                Name = "Test town",
+                Name = "Test homestead",
                 Description = "",
                 TypeOfLocation = LocationType.Town,
                 GeographicalDescription = "Test Description"
@@ -485,6 +485,220 @@ namespace Skyrim.Api.Test.Controllers
                 Name = "Test",
                 Description = "Test",
                 TypeOfLocation = LocationType.Town,
+                GeographicalDescription = "        "
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+    }
+
+    public class CreateLocation_AsHomestead : LocationController_Tests
+    {
+        [Fact]
+        public async void WhenCreateLocationDtoHasRequiredValidPropertiesAsAHomestead_ReturnsCreateAtActionWithTownDetails()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Homestead",
+                TypeOfLocation = LocationType.Homestead,
+                GeographicalDescription = "Test Description"
+            };
+
+            var homestead = new Homestead
+            {
+                Id = 0,
+                Name = "Test Homestead",
+                TypeOfLocation = LocationType.Homestead,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(homestead);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var townObject = new object();
+            var locationAsHomestead = new Homestead();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            townObject = responseAsCreateAsActionResult.Value;
+
+            locationAsHomestead.Id = (int)townObject.GetType().GetProperty("Id").GetValue(townObject, null);
+            locationAsHomestead.Name = (string)townObject.GetType().GetProperty("Name").GetValue(townObject, null);
+            locationAsHomestead.TypeOfLocation = (LocationType)townObject.GetType().GetProperty("TypeOfLocation").GetValue(townObject, null);
+            locationAsHomestead.GeographicalDescription = (string)townObject.GetType().GetProperty("GeographicalDescription").GetValue(townObject, null);
+            locationAsHomestead.Description = (string)townObject.GetType().GetProperty("Description").GetValue(townObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(homestead.Id, locationAsHomestead.Id);
+            Assert.Equal(homestead.Name, locationAsHomestead.Name);
+            Assert.Equal(homestead.Description, locationAsHomestead.Description);
+            Assert.Equal(LocationType.Homestead, locationAsHomestead.TypeOfLocation);
+            Assert.Equal(homestead.GeographicalDescription, locationAsHomestead.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasEmptySpacesForDescriptionAHomestead_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Homestead",
+                Description = "    ",
+                TypeOfLocation = LocationType.Homestead,
+                GeographicalDescription = "Test Description"
+            };
+
+            var homestead = new Homestead
+            {
+                Id = 0,
+                Name = "Test homestead",
+                Description = "",
+                TypeOfLocation = LocationType.Homestead,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(homestead);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var homesteadObject = new object();
+            var locationAsHomestead = new Homestead();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            homesteadObject = responseAsCreateAsActionResult.Value;
+
+            locationAsHomestead.Id = (int)homesteadObject.GetType().GetProperty("Id").GetValue(homesteadObject, null);
+            locationAsHomestead.Name = (string)homesteadObject.GetType().GetProperty("Name").GetValue(homesteadObject, null);
+            locationAsHomestead.TypeOfLocation = (LocationType)homesteadObject.GetType().GetProperty("TypeOfLocation").GetValue(homesteadObject, null);
+            locationAsHomestead.GeographicalDescription = (string)homesteadObject.GetType().GetProperty("GeographicalDescription").GetValue(homesteadObject, null);
+            locationAsHomestead.Description = (string)homesteadObject.GetType().GetProperty("Description").GetValue(homesteadObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(homestead.Name, locationAsHomestead.Name);
+            Assert.Equal(homestead.Id, locationAsHomestead.Id);
+            Assert.Equal(homestead.Description, locationAsHomestead.Description);
+            Assert.Equal(LocationType.Homestead, locationAsHomestead.TypeOfLocation);
+            Assert.Equal(homestead.GeographicalDescription, locationAsHomestead.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullForDescriptionAsAHomestead_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Homestead",
+                Description = null,
+                TypeOfLocation = LocationType.Homestead,
+                GeographicalDescription = "Test Description"
+            };
+
+            var homestead = new Homestead
+            {
+                Id = 0,
+                Name = "Test Homestead",
+                Description = null,
+                TypeOfLocation = LocationType.Homestead,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(homestead);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var homesteadObject = new object();
+            var locationAsHomestead = new Homestead();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            homesteadObject = responseAsCreateAsActionResult.Value;
+
+            locationAsHomestead.Id = (int)homesteadObject.GetType().GetProperty("Id").GetValue(homesteadObject, null);
+            locationAsHomestead.Name = (string)homesteadObject.GetType().GetProperty("Name").GetValue(homesteadObject, null);
+            locationAsHomestead.TypeOfLocation = (LocationType)homesteadObject.GetType().GetProperty("TypeOfLocation").GetValue(homesteadObject, null);
+            locationAsHomestead.GeographicalDescription = (string)homesteadObject.GetType().GetProperty("GeographicalDescription").GetValue(homesteadObject, null);
+            locationAsHomestead.Description = (string)homesteadObject.GetType().GetProperty("Description").GetValue(homesteadObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(homestead.Id, locationAsHomestead.Id);
+            Assert.Equal(homestead.Name, locationAsHomestead.Name);
+            Assert.Equal(homestead.Description, locationAsHomestead.Description);
+            Assert.Equal(LocationType.Homestead, locationAsHomestead.TypeOfLocation);
+            Assert.Equal(homestead.GeographicalDescription, locationAsHomestead.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsAHomestead_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "      ",
+                Description = "Test",
+                TypeOfLocation = LocationType.Homestead,
+                GeographicalDescription = "Test Description"
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsATown_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.Homestead,
                 GeographicalDescription = "        "
             };
 
