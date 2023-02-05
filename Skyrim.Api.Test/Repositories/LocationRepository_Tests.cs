@@ -75,6 +75,17 @@ namespace Skyrim.Api.Test.Repositories
             };
         }
 
+        protected Settlement CreateNewSettlement()
+        {
+            return new Settlement
+            {
+                Name = "Test Settlement Name",
+                GeographicalDescription = "Test Geographical Location Description",
+                Description = "Test Description",
+                TypeOfLocation = LocationType.Settlement
+            };
+        }
+
         protected CreateLocationDto CreateNewCreateLocationDtoAsCity()
         {
             return new CreateLocationDto
@@ -105,6 +116,17 @@ namespace Skyrim.Api.Test.Repositories
                 Description = "Test",
                 GeographicalDescription = "Test",
                 TypeOfLocation = LocationType.Homestead
+            };
+        }
+
+        protected CreateLocationDto CreateNewCreateLocationDtoAsSettlement()
+        {
+            return new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "Test",
+                GeographicalDescription = "Test",
+                TypeOfLocation = LocationType.Settlement
             };
         }
     }
@@ -336,7 +358,7 @@ namespace Skyrim.Api.Test.Repositories
         public async void WithInvalidCreateLocationDto_WhenMapping_ReturnsNullWhichThrowsErrorInSavingToDatabase()
         {
             // Arrange
-            _mockMapper.Setup(x => x.Map<Town>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
+            _mockMapper.Setup(x => x.Map<Homestead>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
 
             // Act
             var result = await _locationRepository.SaveLocationAsHomestead(CreateNewCreateLocationDtoAsHomestead());
@@ -367,6 +389,94 @@ namespace Skyrim.Api.Test.Repositories
 
             // Act
             var result = await _locationRepository.SaveLocationAsHomestead(new CreateLocationDto());
+
+            //Assert
+            Assert.Null(result);
+        }
+    }
+
+    public class SaveLocationAsSettlement : LocationRepository_Tests
+    {
+        [Fact]
+        public async void WithValidCreateLocationDto_SavesExpectedSettlement()
+        {
+            // Arrange
+            _mockMapper.Setup(x => x.Map<Settlement>(It.IsAny<CreateLocationDto>())).Returns(CreateNewSettlement());
+
+            //Act
+            var result = await _locationRepository.SaveLocationAsSettlement(CreateNewCreateLocationDtoAsSettlement());
+
+            //Assert
+            Assert.Equal(_context.Settlements.FirstOrDefault().Name, result.Name);
+        }
+
+        [Fact]
+        public async void WithValidCreateLocationDto_MapsLocationAsSettlement()
+        {
+            // Arrange
+            var createLocationDto = CreateNewCreateLocationDtoAsSettlement();
+            _mockMapper.Setup(x => x.Map<Settlement>(createLocationDto)).Returns(CreateNewSettlement());
+
+            // Act
+            var result = await _locationRepository.SaveLocationAsSettlement(createLocationDto);
+
+            // Assert
+            _mockMapper.Verify(x => x.Map<Settlement>(createLocationDto), Times.Once());
+        }
+
+        [Fact]
+        public async void WithValidCreateLocationDto_ReturnsExpectedSettlement()
+        {
+            // Arrange
+            var settlement = CreateNewSettlement();
+            _mockMapper.Setup(x => x.Map<Settlement>(It.IsAny<CreateLocationDto>())).Returns(settlement);
+
+            // Act
+            var result = await _locationRepository.SaveLocationAsSettlement(CreateNewCreateLocationDtoAsSettlement());
+
+            // Assert
+            Assert.Equal(settlement.Name, result.Name);
+            Assert.Equal(settlement.Description, result.Description);
+            Assert.Equal(settlement.GeographicalDescription, result.GeographicalDescription);
+            Assert.Equal(settlement.TypeOfLocation, result.TypeOfLocation);
+            Assert.Equal(settlement.Id, result.Id);
+        }
+
+        [Fact]
+        public async void WithInvalidCreateLocationDto_WhenMapping_ReturnsNullWhichThrowsErrorInSavingToDatabase()
+        {
+            // Arrange
+            _mockMapper.Setup(x => x.Map<Settlement>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
+
+            // Act
+            var result = await _locationRepository.SaveLocationAsSettlement(CreateNewCreateLocationDtoAsSettlement());
+
+            //Assert
+            Assert.Null(result);
+        }
+
+        [Fact]
+        public async void WithInvalidCreateLocationDto_LogsError()
+        {
+            // Arrange
+            var createLocationDto = CreateNewCreateLocationDtoAsSettlement();
+
+            // Act
+            await _locationRepository.SaveLocationAsSettlement(createLocationDto);
+
+            // Assert
+            _mockLoggerExtension.Verify(x => x.LogFatalError(It.IsAny<Exception>(), It.IsAny<CreateLocationDto>()), Times.Once);
+        }
+
+        [Fact]
+        public async void WithInvalidCreateLocationDto_ReturnsExpectedNullLocation()
+        {
+            // Arrange
+            var exception = new Exception();
+            _mockMapper.Setup(x => x.Map<Settlement>(It.IsAny<CreateLocationDto>())).Throws(exception);
+
+            // Act
+            var result = await _locationRepository.SaveLocationAsSettlement(new CreateLocationDto());
 
             //Assert
             Assert.Null(result);

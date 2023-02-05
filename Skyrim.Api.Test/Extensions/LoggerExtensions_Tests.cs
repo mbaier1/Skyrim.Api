@@ -52,9 +52,9 @@ namespace Skyrim.Api.Test.Extensions
                 new CreateLocationDto
                 {
                     Name = "Test",
-                Description = "Test",
-                GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.City
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.City
                 }
             };
             yield return new object[]
@@ -64,9 +64,9 @@ namespace Skyrim.Api.Test.Extensions
                 new CreateLocationDto
                 {
                     Name = "Test",
-                Description = "Test",
-                GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.Town
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Town
                 }
             };
             yield return new object[]
@@ -76,9 +76,21 @@ namespace Skyrim.Api.Test.Extensions
                 new CreateLocationDto
                 {
                     Name = "Test",
-                Description = "Test",
-                GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.Homestead
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Homestead
+                }
+            };
+            yield return new object[]
+            {
+                "Fatal Error for Settlement location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Settlement
                 }
             };
         }
