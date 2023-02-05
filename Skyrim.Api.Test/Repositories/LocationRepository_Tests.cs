@@ -349,7 +349,7 @@ namespace Skyrim.Api.Test.Repositories
         public async void WithInvalidCreateLocationDto_LogsError()
         {
             // Arrange
-            var createLocationDto = CreateNewCreateLocationDtoAsTown();
+            var createLocationDto = CreateNewCreateLocationDtoAsHomestead();
 
             // Act
             await _locationRepository.SaveLocationAsHomestead(createLocationDto);
