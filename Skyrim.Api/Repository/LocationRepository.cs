@@ -74,5 +74,22 @@ namespace Skyrim.Api.Repository
                 return null;
             }
         }
+        public async Task<Location> SaveLocationAsSettlement(CreateLocationDto createLocationDto)
+        {
+            try
+            {
+                var settlement = _mapper.Map<Settlement>(createLocationDto);
+                await _context.AddAsync(settlement);
+                await _context.SaveChangesAsync();
+
+                return settlement;
+            }
+            catch (Exception e)
+            {
+                _loggerExtension.LogFatalError(e, createLocationDto);
+
+                return null;
+            }
+        }
     }
 }

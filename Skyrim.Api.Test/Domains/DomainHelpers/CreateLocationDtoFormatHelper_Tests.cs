@@ -72,6 +72,17 @@ namespace Skyrim.Api.Test.Domains.DomainHelpers
                     TypeOfLocation = LocationType.Homestead
                 }
             };
+            yield return new object[]
+            {
+                "Valid properties for a Settlement Location",
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Settlement
+                }
+            };
         }
 
         [Theory]
@@ -416,6 +427,114 @@ namespace Skyrim.Api.Test.Domains.DomainHelpers
                      GeographicalDescription = "Test"
                  }
             };
+            yield return new object[]
+            {
+                "CreateLocationDto has a null description for Settlement so it returns with an empty description",
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = null,
+                     TypeOfLocation = LocationType.Settlement,
+                     GeographicalDescription = "Test"
+                 },
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = "",
+                     TypeOfLocation = LocationType.Settlement,
+                     GeographicalDescription = "Test"
+                 }
+            };
+            yield return new object[]
+            {
+                "CreateLocationDto has white spaces for description for Settlement so it returns with an empty description",
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = "     ",
+                     TypeOfLocation = LocationType.Settlement,
+                     GeographicalDescription = "Test"
+                 },
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = "",
+                     TypeOfLocation = LocationType.Settlement,
+                     GeographicalDescription = "Test"
+                 }
+            };
+            yield return new object[]
+            {
+                "CreateLocationDto has empty description for Settlement so it returns with an empty description",
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = "",
+                     TypeOfLocation = LocationType.Settlement,
+                     GeographicalDescription = "Test"
+                 },
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = "",
+                     TypeOfLocation = LocationType.Settlement,
+                     GeographicalDescription = "Test"
+                 }
+            };
+            yield return new object[]
+            {
+                "CreateLocationDto has white space in the name for Settlement so it returns with an empty description",
+                 new CreateLocationDto
+                 {
+                     Name = "  Test   ",
+                     Description = "Test",
+                     TypeOfLocation = LocationType.Settlement,
+                     GeographicalDescription = "Test"
+                 },
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = "Test",
+                     TypeOfLocation = LocationType.Settlement,
+                     GeographicalDescription = "Test"
+                 }
+            };
+            yield return new object[]
+            {
+                "CreateLocationDto has white space in the description for Settlement so it returns with an empty description",
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = "  Test",
+                     TypeOfLocation = LocationType.Settlement,
+                     GeographicalDescription = "Test"
+                 },
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = "Test",
+                     TypeOfLocation = LocationType.Settlement,
+                     GeographicalDescription = "Test"
+                 }
+            };
+            yield return new object[]
+            {
+                "CreateLocationDto has white space in the geographical description for Settlement so it returns with an empty description",
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = "Test",
+                     TypeOfLocation = LocationType.Settlement,
+                     GeographicalDescription = "Test    "
+                 },
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = "Test",
+                     TypeOfLocation = LocationType.Settlement,
+                     GeographicalDescription = "Test"
+                 }
+            };
         }
 
         [Theory]
@@ -646,6 +765,78 @@ namespace Skyrim.Api.Test.Domains.DomainHelpers
                      Description = "Test",
                      GeographicalDescription = " ",
                      TypeOfLocation = LocationType.Homestead
+                 },
+                 (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                "CreateLocationDto has a null name for Settlement",
+                 new CreateLocationDto
+                 {
+                     Name = null,
+                     Description = "Test",
+                     GeographicalDescription = "Test",
+                     TypeOfLocation = LocationType.Settlement
+                 },
+                 (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                "CreateLocationDto has has an empty name for Settlement",
+                 new CreateLocationDto
+                 {
+                     Name = "",
+                     Description = "Test",
+                     GeographicalDescription = "Test",
+                     TypeOfLocation = LocationType.Settlement
+                 },
+                 (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                "CreateLocationDto has has a white space name for Settlement",
+                 new CreateLocationDto
+                 {
+                     Name = " ",
+                     Description = "Test",
+                     GeographicalDescription = "Test",
+                     TypeOfLocation = LocationType.Settlement
+                 },
+                 (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                "CreateLocationDto has a null Geographic Description for Settlement",
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = "Test",
+                     GeographicalDescription = null,
+                     TypeOfLocation = LocationType.Settlement
+                 },
+                 (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                "CreateLocationDto has an empty Geographic Description for Settlement",
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = "Test",
+                     GeographicalDescription = "",
+                     TypeOfLocation = LocationType.Settlement
+                 },
+                 (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                "CreateLocationDto has a white space Geographic Description name for Settlement",
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = "Test",
+                     GeographicalDescription = " ",
+                     TypeOfLocation = LocationType.Settlement
                  },
                  (CreateLocationDto)null
             };
