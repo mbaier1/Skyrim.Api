@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Skyrim.Api.Data;
 
@@ -11,9 +12,11 @@ using Skyrim.Api.Data;
 namespace Skyrim.Api.Migrations
 {
     [DbContext(typeof(SkyrimApiDbContext))]
-    partial class SkyrimApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230204014028_AddedTownAsLocationType")]
+    partial class AddedTownAsLocationType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -197,13 +200,6 @@ namespace Skyrim.Api.Migrations
                     b.HasBaseType("Skyrim.Api.Data.AbstractModels.Location");
 
                     b.ToTable("Cities");
-                });
-
-            modelBuilder.Entity("Skyrim.Api.Data.Models.Homestead", b =>
-                {
-                    b.HasBaseType("Skyrim.Api.Data.AbstractModels.Location");
-
-                    b.ToTable("Homesteads");
                 });
 
             modelBuilder.Entity("Skyrim.Api.Data.Models.Town", b =>

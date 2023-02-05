@@ -7,6 +7,7 @@ using Skyrim.Api.Domain;
 using Skyrim.Api.Extensions.Interfaces;
 using Skyrim.Api.Repository.Interface;
 using Skyrim.Api.Repository;
+using Skyrim.Api.Domain.DomainHelpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,7 +38,7 @@ builder.Services.AddAutoMapper(typeof(AutoMapperConfiguration));
 builder.Services.AddScoped<ILocationRepository, LocationRepository>();
 builder.Services.AddScoped<ILocationDomain, LocationDomain>();
 builder.Services.AddScoped<ILoggerExtension, Skyrim.Api.Extensions.LoggerExtensions>();
-
+builder.Services.AddScoped<ICreateLocationDtoFormatHelper, CreateLocationDtoFormatHelper>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

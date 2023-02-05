@@ -9,59 +9,33 @@ namespace Skyrim.Api.Domain
     public class LocationDomain : ILocationDomain
     {
         private readonly ILocationRepository _locationRepository;
+        private readonly ICreateLocationDtoFormatHelper _CreateLocationDtoFormatHelper;
 
-        public LocationDomain(ILocationRepository locationRepository)
+        public LocationDomain(ILocationRepository locationRepository, ICreateLocationDtoFormatHelper createLocationDtoFormatHelper)
         {
             _locationRepository = locationRepository;
+            _CreateLocationDtoFormatHelper = createLocationDtoFormatHelper;
         }
 
         public async Task<Location> CreateLocation(CreateLocationDto createLocationDto)
         {
-            createLocationDto = VerifyCreateLocationDtoHasValidProperties(createLocationDto);
+            createLocationDto = _CreateLocationDtoFormatHelper.FormatEntity(createLocationDto);
             if (createLocationDto == null)
                 return null;
 
-            return await CreateLocationAsCorrectLocationType(createLocationDto);
+            return await CreateLocationAsCorrectType(createLocationDto);
         }
 
-        private CreateLocationDto VerifyCreateLocationDtoHasValidProperties(CreateLocationDto createLocationDto)
-        {
-            createLocationDto = CheckForNullOrWhiteSpaceProperties(createLocationDto);
-            if (createLocationDto == null)
-                return null;
-
-            createLocationDto = TrimWhiteSpace(createLocationDto);
-
-            return createLocationDto;
-        }
-
-        private CreateLocationDto CheckForNullOrWhiteSpaceProperties(CreateLocationDto createLocationDto)
-        {
-            if (string.IsNullOrWhiteSpace(createLocationDto.Description))
-                createLocationDto.Description = "";
-
-            if (string.IsNullOrWhiteSpace(createLocationDto.Name)
-                || string.IsNullOrWhiteSpace(createLocationDto.GeographicalDescription))
-                return null;
-
-            return createLocationDto;
-        }
-
-        private CreateLocationDto TrimWhiteSpace(CreateLocationDto createLocationDto)
-        {
-            createLocationDto.Name = createLocationDto.Name.Trim();
-            createLocationDto.Description = createLocationDto.Description.Trim();
-            createLocationDto.GeographicalDescription = createLocationDto.GeographicalDescription.Trim();
-
-            return createLocationDto;
-        }
-
-        private async Task<Location> CreateLocationAsCorrectLocationType(CreateLocationDto createLocationDto)
+        private async Task<Location> CreateLocationAsCorrectType(CreateLocationDto createLocationDto)
         {
             switch (createLocationDto.TypeOfLocation)
             {
                 case LocationType.City:
                     return await _locationRepository.SaveLocationAsCity(createLocationDto);
+                case LocationType.Town:
+                    return await _locationRepository.SaveLocationAsTown(createLocationDto);
+                case LocationType.Homestead:
+                    return await _locationRepository.SaveLocationAsHomestead(createLocationDto);
                 default:
                     return null;
             }
