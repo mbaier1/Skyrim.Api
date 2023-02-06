@@ -961,7 +961,7 @@ namespace Skyrim.Api.Test.Controllers
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
             var daedricShrineObject = new object();
-            var locationAsDaedricShrine = new Settlement();
+            var locationAsDaedricShrine = new DaedricShrine();
 
             // Act
 
