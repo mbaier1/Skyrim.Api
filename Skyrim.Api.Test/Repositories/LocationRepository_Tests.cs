@@ -86,6 +86,17 @@ namespace Skyrim.Api.Test.Repositories
             };
         }
 
+        protected DaedricShrine CreateNewDaedricShrine()
+        {
+            return new DaedricShrine
+            {
+                Name = "Test DaedricShrine Name",
+                GeographicalDescription = "Test Geographical Location Description",
+                Description = "Test Description",
+                TypeOfLocation = LocationType.DaedricShrine
+            };
+        }
+
         protected CreateLocationDto CreateNewCreateLocationDtoAsCity()
         {
             return new CreateLocationDto
@@ -127,6 +138,17 @@ namespace Skyrim.Api.Test.Repositories
                 Description = "Test",
                 GeographicalDescription = "Test",
                 TypeOfLocation = LocationType.Settlement
+            };
+        }
+
+        protected CreateLocationDto CreateNewCreateLocationDtoAsDaedricShrine()
+        {
+            return new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "Test",
+                GeographicalDescription = "Test",
+                TypeOfLocation = LocationType.DaedricShrine
             };
         }
     }
@@ -477,6 +499,94 @@ namespace Skyrim.Api.Test.Repositories
 
             // Act
             var result = await _locationRepository.SaveLocationAsSettlement(new CreateLocationDto());
+
+            //Assert
+            Assert.Null(result);
+        }
+    }
+
+    public class SaveLocationAsDaedricShrine : LocationRepository_Tests
+    {
+        [Fact]
+        public async void WithValidCreateLocationDto_SavesExpectedDaedricShrine()
+        {
+            // Arrange
+            _mockMapper.Setup(x => x.Map<DaedricShrine>(It.IsAny<CreateLocationDto>())).Returns(CreateNewDaedricShrine());
+
+            //Act
+            var result = await _locationRepository.SaveLocationAsDaedricShrine(CreateNewCreateLocationDtoAsDaedricShrine());
+
+            //Assert
+            Assert.Equal(_context.DaedricShrines.FirstOrDefault().Name, result.Name);
+        }
+
+        [Fact]
+        public async void WithValidCreateLocationDto_MapsLocationAsDaedricShrine()
+        {
+            // Arrange
+            var createLocationDto = CreateNewCreateLocationDtoAsDaedricShrine();
+            _mockMapper.Setup(x => x.Map<DaedricShrine>(createLocationDto)).Returns(CreateNewDaedricShrine());
+
+            // Act
+            var result = await _locationRepository.SaveLocationAsDaedricShrine(createLocationDto);
+
+            // Assert
+            _mockMapper.Verify(x => x.Map<DaedricShrine>(createLocationDto), Times.Once());
+        }
+
+        [Fact]
+        public async void WithValidCreateLocationDto_ReturnsExpectedDaedricShrine()
+        {
+            // Arrange
+            var daedricShrine = CreateNewDaedricShrine();
+            _mockMapper.Setup(x => x.Map<DaedricShrine>(It.IsAny<CreateLocationDto>())).Returns(daedricShrine);
+
+            // Act
+            var result = await _locationRepository.SaveLocationAsDaedricShrine(CreateNewCreateLocationDtoAsDaedricShrine());
+
+            // Assert
+            Assert.Equal(daedricShrine.Name, result.Name);
+            Assert.Equal(daedricShrine.Description, result.Description);
+            Assert.Equal(daedricShrine.GeographicalDescription, result.GeographicalDescription);
+            Assert.Equal(daedricShrine.TypeOfLocation, result.TypeOfLocation);
+            Assert.Equal(daedricShrine.Id, result.Id);
+        }
+
+        [Fact]
+        public async void WithInvalidCreateLocationDto_WhenMapping_ReturnsNullWhichThrowsErrorInSavingToDatabase()
+        {
+            // Arrange
+            _mockMapper.Setup(x => x.Map<DaedricShrine>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
+
+            // Act
+            var result = await _locationRepository.SaveLocationAsDaedricShrine(CreateNewCreateLocationDtoAsDaedricShrine());
+
+            //Assert
+            Assert.Null(result);
+        }
+
+        [Fact]
+        public async void WithInvalidCreateLocationDto_LogsError()
+        {
+            // Arrange
+            var createLocationDto = CreateNewCreateLocationDtoAsDaedricShrine();
+
+            // Act
+            await _locationRepository.SaveLocationAsDaedricShrine(createLocationDto);
+
+            // Assert
+            _mockLoggerExtension.Verify(x => x.LogFatalError(It.IsAny<Exception>(), It.IsAny<CreateLocationDto>()), Times.Once);
+        }
+
+        [Fact]
+        public async void WithInvalidCreateLocationDto_ReturnsExpectedNullLocation()
+        {
+            // Arrange
+            var exception = new Exception();
+            _mockMapper.Setup(x => x.Map<DaedricShrine>(It.IsAny<CreateLocationDto>())).Throws(exception);
+
+            // Act
+            var result = await _locationRepository.SaveLocationAsDaedricShrine(new CreateLocationDto());
 
             //Assert
             Assert.Null(result);

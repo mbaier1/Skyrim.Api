@@ -38,7 +38,6 @@ namespace Skyrim.Api.Repository
                 return null;
             }
         }
-
         public async Task<Location> SaveLocationAsTown(CreateLocationDto createLocationDto)
         {
             try
@@ -56,7 +55,6 @@ namespace Skyrim.Api.Repository
                 return null;
             }
         }
-
         public async Task<Location> SaveLocationAsHomestead(CreateLocationDto createLocationDto)
         {
             try
@@ -83,6 +81,23 @@ namespace Skyrim.Api.Repository
                 await _context.SaveChangesAsync();
 
                 return settlement;
+            }
+            catch (Exception e)
+            {
+                _loggerExtension.LogFatalError(e, createLocationDto);
+
+                return null;
+            }
+        }
+        public async Task<Location> SaveLocationAsDaedricShrine(CreateLocationDto createLocationDto)
+        {
+            try
+            {
+                var daedricShrine = _mapper.Map<DaedricShrine>(createLocationDto);
+                await _context.AddAsync(daedricShrine);
+                await _context.SaveChangesAsync();
+
+                return daedricShrine;
             }
             catch (Exception e)
             {
