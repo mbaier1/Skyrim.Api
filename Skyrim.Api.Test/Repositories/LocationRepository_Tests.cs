@@ -250,10 +250,10 @@ namespace Skyrim.Api.Test.Repositories
             _mockMapper.Setup(x => x.Map<Town>(It.IsAny<CreateLocationDto>())).Returns(CreateNewTown());
 
             //Act
-            var result = await _locationRepository.SaveLocationAsTown(CreateNewCreateLocationDtoAsCity());
+            var result = await _locationRepository.SaveLocationAsTown(CreateNewCreateLocationDtoAsTown());
 
             //Assert
-            Assert.Equal(_context.Cities.FirstOrDefault().Name, result.Name);
+            Assert.Equal(_context.Towns.FirstOrDefault().Name, result.Name);
         }
 
         [Fact]
