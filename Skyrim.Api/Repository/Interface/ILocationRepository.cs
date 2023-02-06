@@ -9,5 +9,6 @@ namespace Skyrim.Api.Repository.Interface
         Task<Location> SaveLocationAsTown(CreateLocationDto createLocationDto);
         Task<Location> SaveLocationAsHomestead(CreateLocationDto createLocationDto);
         Task<Location> SaveLocationAsSettlement(CreateLocationDto createLocationDto);
+        Task<Location> SaveLocationAsDaedricShrine(CreateLocationDto createLocationDto);
     }
 }
