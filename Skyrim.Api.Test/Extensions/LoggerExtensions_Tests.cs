@@ -93,6 +93,18 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.Settlement
                 }
             };
+            yield return new object[]
+            {
+                "Fatal Error for DaedricShrine location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.DaedricShrine
+                }
+            };
         }
     }
 }

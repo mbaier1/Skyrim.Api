@@ -931,4 +931,218 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
         }
     }
+
+    public class CreateLocation_AsDaedricShrine : LocationController_Tests
+    {
+        [Fact]
+        public async void WhenCreateLocationDtoHasRequiredValidPropertiesAsADaedricShrine_ReturnsCreateAtActionWithDaedricShrineDetails()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test DaedricShrine",
+                TypeOfLocation = LocationType.DaedricShrine,
+                GeographicalDescription = "Test Description"
+            };
+
+            var daedricShrine = new DaedricShrine
+            {
+                Id = 0,
+                Name = "Test DaedricShrine",
+                TypeOfLocation = LocationType.DaedricShrine,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(daedricShrine);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var daedricShrineObject = new object();
+            var locationAsDaedricShrine = new DaedricShrine();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            daedricShrineObject = responseAsCreateAsActionResult.Value;
+
+            locationAsDaedricShrine.Id = (int)daedricShrineObject.GetType().GetProperty("Id").GetValue(daedricShrineObject, null);
+            locationAsDaedricShrine.Name = (string)daedricShrineObject.GetType().GetProperty("Name").GetValue(daedricShrineObject, null);
+            locationAsDaedricShrine.TypeOfLocation = (LocationType)daedricShrineObject.GetType().GetProperty("TypeOfLocation").GetValue(daedricShrineObject, null);
+            locationAsDaedricShrine.GeographicalDescription = (string)daedricShrineObject.GetType().GetProperty("GeographicalDescription").GetValue(daedricShrineObject, null);
+            locationAsDaedricShrine.Description = (string)daedricShrineObject.GetType().GetProperty("Description").GetValue(daedricShrineObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(daedricShrine.Id, locationAsDaedricShrine.Id);
+            Assert.Equal(daedricShrine.Name, locationAsDaedricShrine.Name);
+            Assert.Equal(daedricShrine.Description, locationAsDaedricShrine.Description);
+            Assert.Equal(LocationType.DaedricShrine, locationAsDaedricShrine.TypeOfLocation);
+            Assert.Equal(daedricShrine.GeographicalDescription, locationAsDaedricShrine.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasEmptySpacesForDescriptionADaedricShrine_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test DaedricShrine",
+                Description = "    ",
+                TypeOfLocation = LocationType.DaedricShrine,
+                GeographicalDescription = "Test Description"
+            };
+
+            var daedricShrine = new DaedricShrine
+            {
+                Id = 0,
+                Name = "Test DaedricShrine",
+                Description = "",
+                TypeOfLocation = LocationType.DaedricShrine,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(daedricShrine);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var daedricShrineObject = new object();
+            var locationAsDaedricShrine = new DaedricShrine();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            daedricShrineObject = responseAsCreateAsActionResult.Value;
+
+            locationAsDaedricShrine.Id = (int)daedricShrineObject.GetType().GetProperty("Id").GetValue(daedricShrineObject, null);
+            locationAsDaedricShrine.Name = (string)daedricShrineObject.GetType().GetProperty("Name").GetValue(daedricShrineObject, null);
+            locationAsDaedricShrine.TypeOfLocation = (LocationType)daedricShrineObject.GetType().GetProperty("TypeOfLocation").GetValue(daedricShrineObject, null);
+            locationAsDaedricShrine.GeographicalDescription = (string)daedricShrineObject.GetType().GetProperty("GeographicalDescription").GetValue(daedricShrineObject, null);
+            locationAsDaedricShrine.Description = (string)daedricShrineObject.GetType().GetProperty("Description").GetValue(daedricShrineObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(daedricShrine.Name, locationAsDaedricShrine.Name);
+            Assert.Equal(daedricShrine.Id, locationAsDaedricShrine.Id);
+            Assert.Equal(daedricShrine.Description, locationAsDaedricShrine.Description);
+            Assert.Equal(LocationType.DaedricShrine, locationAsDaedricShrine.TypeOfLocation);
+            Assert.Equal(daedricShrine.GeographicalDescription, locationAsDaedricShrine.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullForDescriptionAsADaedricShrine_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test DaedricShrine",
+                Description = null,
+                TypeOfLocation = LocationType.DaedricShrine,
+                GeographicalDescription = "Test Description"
+            };
+
+            var daedricShrine = new DaedricShrine
+            {
+                Id = 0,
+                Name = "Test DaedricShrine",
+                Description = null,
+                TypeOfLocation = LocationType.DaedricShrine,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(daedricShrine);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var daedricShrineObject = new object();
+            var locationAsDaedricShrine = new DaedricShrine();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            daedricShrineObject = responseAsCreateAsActionResult.Value;
+
+            locationAsDaedricShrine.Id = (int)daedricShrineObject.GetType().GetProperty("Id").GetValue(daedricShrineObject, null);
+            locationAsDaedricShrine.Name = (string)daedricShrineObject.GetType().GetProperty("Name").GetValue(daedricShrineObject, null);
+            locationAsDaedricShrine.TypeOfLocation = (LocationType)daedricShrineObject.GetType().GetProperty("TypeOfLocation").GetValue(daedricShrineObject, null);
+            locationAsDaedricShrine.GeographicalDescription = (string)daedricShrineObject.GetType().GetProperty("GeographicalDescription").GetValue(daedricShrineObject, null);
+            locationAsDaedricShrine.Description = (string)daedricShrineObject.GetType().GetProperty("Description").GetValue(daedricShrineObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(daedricShrine.Id, locationAsDaedricShrine.Id);
+            Assert.Equal(daedricShrine.Name, locationAsDaedricShrine.Name);
+            Assert.Equal(daedricShrine.Description, locationAsDaedricShrine.Description);
+            Assert.Equal(LocationType.DaedricShrine, locationAsDaedricShrine.TypeOfLocation);
+            Assert.Equal(daedricShrine.GeographicalDescription, locationAsDaedricShrine.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsADaedricShrine_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "      ",
+                Description = "Test",
+                TypeOfLocation = LocationType.DaedricShrine,
+                GeographicalDescription = "Test Description"
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsADaedricShrine_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.DaedricShrine,
+                GeographicalDescription = "        "
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+    }
 }
