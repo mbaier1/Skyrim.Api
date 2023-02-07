@@ -99,5 +99,17 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.DaedricShrine
                 }
         };
+        yield return new object[]
+        {
+                "Fatal Error for StandingStone location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.StandingStone
+                }
+        };
     }
 }

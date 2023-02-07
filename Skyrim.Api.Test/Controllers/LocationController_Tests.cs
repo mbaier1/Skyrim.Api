@@ -1145,4 +1145,218 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
         }
     }
+
+    public class CreateLocation_AsStandingStone : LocationController_Tests
+    {
+        [Fact]
+        public async void WhenCreateLocationDtoHasRequiredValidPropertiesAsAStandingStone_ReturnsCreateAtActionWithStandingStoneDetails()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test StandingStone",
+                TypeOfLocation = LocationType.StandingStone,
+                GeographicalDescription = "Test Description"
+            };
+
+            var standingStone = new StandingStone
+            {
+                Id = 0,
+                Name = "Test StandingStone",
+                TypeOfLocation = LocationType.StandingStone,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(standingStone);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var standingStoneObject = new object();
+            var locationAsStandingStone = new StandingStone();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            standingStoneObject = responseAsCreateAsActionResult.Value;
+
+            locationAsStandingStone.Id = (int)standingStoneObject.GetType().GetProperty("Id").GetValue(standingStoneObject, null);
+            locationAsStandingStone.Name = (string)standingStoneObject.GetType().GetProperty("Name").GetValue(standingStoneObject, null);
+            locationAsStandingStone.TypeOfLocation = (LocationType)standingStoneObject.GetType().GetProperty("TypeOfLocation").GetValue(standingStoneObject, null);
+            locationAsStandingStone.GeographicalDescription = (string)standingStoneObject.GetType().GetProperty("GeographicalDescription").GetValue(standingStoneObject, null);
+            locationAsStandingStone.Description = (string)standingStoneObject.GetType().GetProperty("Description").GetValue(standingStoneObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(standingStone.Id, locationAsStandingStone.Id);
+            Assert.Equal(standingStone.Name, locationAsStandingStone.Name);
+            Assert.Equal(standingStone.Description, locationAsStandingStone.Description);
+            Assert.Equal(LocationType.StandingStone, locationAsStandingStone.TypeOfLocation);
+            Assert.Equal(standingStone.GeographicalDescription, locationAsStandingStone.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasEmptySpacesForDescriptionAStandingStone_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test StandingStone",
+                Description = "    ",
+                TypeOfLocation = LocationType.StandingStone,
+                GeographicalDescription = "Test Description"
+            };
+
+            var standingStone = new StandingStone
+            {
+                Id = 0,
+                Name = "Test StandingStone",
+                Description = "",
+                TypeOfLocation = LocationType.StandingStone,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(standingStone);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var standingStoneObject = new object();
+            var locationAsStandingStone = new StandingStone();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            standingStoneObject = responseAsCreateAsActionResult.Value;
+
+            locationAsStandingStone.Id = (int)standingStoneObject.GetType().GetProperty("Id").GetValue(standingStoneObject, null);
+            locationAsStandingStone.Name = (string)standingStoneObject.GetType().GetProperty("Name").GetValue(standingStoneObject, null);
+            locationAsStandingStone.TypeOfLocation = (LocationType)standingStoneObject.GetType().GetProperty("TypeOfLocation").GetValue(standingStoneObject, null);
+            locationAsStandingStone.GeographicalDescription = (string)standingStoneObject.GetType().GetProperty("GeographicalDescription").GetValue(standingStoneObject, null);
+            locationAsStandingStone.Description = (string)standingStoneObject.GetType().GetProperty("Description").GetValue(standingStoneObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(standingStone.Name, locationAsStandingStone.Name);
+            Assert.Equal(standingStone.Id, locationAsStandingStone.Id);
+            Assert.Equal(standingStone.Description, locationAsStandingStone.Description);
+            Assert.Equal(LocationType.StandingStone, locationAsStandingStone.TypeOfLocation);
+            Assert.Equal(standingStone.GeographicalDescription, locationAsStandingStone.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullForDescriptionAsAStandingStone_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test StandingStone",
+                Description = null,
+                TypeOfLocation = LocationType.StandingStone,
+                GeographicalDescription = "Test Description"
+            };
+
+            var standingStone = new StandingStone
+            {
+                Id = 0,
+                Name = "Test StandingStone",
+                Description = null,
+                TypeOfLocation = LocationType.StandingStone,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(standingStone);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var standingStoneObject = new object();
+            var locationAsStandingStone = new StandingStone();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            standingStoneObject = responseAsCreateAsActionResult.Value;
+
+            locationAsStandingStone.Id = (int)standingStoneObject.GetType().GetProperty("Id").GetValue(standingStoneObject, null);
+            locationAsStandingStone.Name = (string)standingStoneObject.GetType().GetProperty("Name").GetValue(standingStoneObject, null);
+            locationAsStandingStone.TypeOfLocation = (LocationType)standingStoneObject.GetType().GetProperty("TypeOfLocation").GetValue(standingStoneObject, null);
+            locationAsStandingStone.GeographicalDescription = (string)standingStoneObject.GetType().GetProperty("GeographicalDescription").GetValue(standingStoneObject, null);
+            locationAsStandingStone.Description = (string)standingStoneObject.GetType().GetProperty("Description").GetValue(standingStoneObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(standingStone.Id, locationAsStandingStone.Id);
+            Assert.Equal(standingStone.Name, locationAsStandingStone.Name);
+            Assert.Equal(standingStone.Description, locationAsStandingStone.Description);
+            Assert.Equal(LocationType.StandingStone, locationAsStandingStone.TypeOfLocation);
+            Assert.Equal(standingStone.GeographicalDescription, locationAsStandingStone.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsAStandingStone_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "      ",
+                Description = "Test",
+                TypeOfLocation = LocationType.StandingStone,
+                GeographicalDescription = "Test Description"
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsAStandingStone_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.StandingStone,
+                GeographicalDescription = "        "
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+    }
 }
