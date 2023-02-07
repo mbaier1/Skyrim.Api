@@ -1,52 +1,46 @@
-﻿using Castle.Core.Logging;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Moq;
 using Skyrim.Api.Data.Enums;
+using Skyrim.Api.Domain;
 using Skyrim.Api.Domain.DTOs;
 using Skyrim.Api.Extensions;
 using Skyrim.Api.Extensions.Interfaces;
-using Skyrim.Api.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using LoggerExtensions = Skyrim.Api.Extensions.LoggerExtensions;
+using Skyrim.Api.Test.Extensions;
 
 namespace Skyrim.Api.Test.Extensions
 {
-    public class LoggerExtensions_Tests
+    public class DomainLoggerExtensions_Tests
     {
-        protected readonly LoggerExtensions _loggerExtensions;
-        protected readonly Mock<ILogger<LocationRepository>> _partialMockLocationRepositoryLogger;
-        protected Mock<ILoggerExtension> _mockLoggerExtension;
-
-        public LoggerExtensions_Tests()
+        protected readonly DomainLoggerExtensions _loggerExtensions;
+        protected readonly Mock<ILogger<LocationDomain>> _partialMockDomainRepositoryLogger;
+        protected Mock<IDomainLoggerExtension> _mockLoggerExtension;
+        public DomainLoggerExtensions_Tests()
         {
-            _partialMockLocationRepositoryLogger = new Mock<ILogger<LocationRepository>>();
-            _mockLoggerExtension = new Mock<ILoggerExtension>();
-            _loggerExtensions = new LoggerExtensions(_partialMockLocationRepositoryLogger.Object);
+            _partialMockDomainRepositoryLogger = new Mock<ILogger<LocationDomain>>();
+            _mockLoggerExtension = new Mock<IDomainLoggerExtension>();
+            _loggerExtensions = new DomainLoggerExtensions(_partialMockDomainRepositoryLogger.Object);
         }
     }
+}
 
-    public class LogFatalError : LoggerExtensions_Tests
+public class LogError : DomainLoggerExtensions_Tests
+{
+    [Theory]
+    [MemberData(nameof(FatalErrorsForEachLocationType))]
+    public void WhenLoggerIsCalled_ErrorIsLoggedOnce(string description, Exception exception, CreateLocationDto createLocationDto)
     {
-        [Theory]
-        [MemberData(nameof(FatalErrorsForEachLocationType))]
-        public void WhenLoggerIsCalled_ErrorIsLoggedOnce(string description, Exception exception, CreateLocationDto createLocationDto)
-        {
-            // Arrange
+        // Arrange
 
-            // Act
-            _mockLoggerExtension.Object.LogFatalError(exception, createLocationDto);
+        // Act
+        _mockLoggerExtension.Object.LogError(exception, createLocationDto);
 
-            // Assert
-            _mockLoggerExtension.Verify(x => x.LogFatalError(It.IsAny<Exception>(), It.IsAny<CreateLocationDto>()), Times.Once());
-        }
-        public static IEnumerable<object[]> FatalErrorsForEachLocationType()
+        // Assert
+        _mockLoggerExtension.Verify(x => x.LogError(It.IsAny<Exception>(), It.IsAny<CreateLocationDto>()), Times.Once());
+    }
+    public static IEnumerable<object[]> FatalErrorsForEachLocationType()
+    {
+        yield return new object[]
         {
-            yield return new object[]
-            {
                 "Fatal Error for City location",
                 new Exception(),
                 new CreateLocationDto
@@ -56,9 +50,9 @@ namespace Skyrim.Api.Test.Extensions
                     GeographicalDescription = "Test",
                     TypeOfLocation = LocationType.City
                 }
-            };
-            yield return new object[]
-            {
+        };
+        yield return new object[]
+        {
                 "Fatal Error for Town location",
                 new Exception(),
                 new CreateLocationDto
@@ -68,9 +62,9 @@ namespace Skyrim.Api.Test.Extensions
                     GeographicalDescription = "Test",
                     TypeOfLocation = LocationType.Town
                 }
-            };
-            yield return new object[]
-            {
+        };
+        yield return new object[]
+        {
                 "Fatal Error for Homestead location",
                 new Exception(),
                 new CreateLocationDto
@@ -80,9 +74,9 @@ namespace Skyrim.Api.Test.Extensions
                     GeographicalDescription = "Test",
                     TypeOfLocation = LocationType.Homestead
                 }
-            };
-            yield return new object[]
-            {
+        };
+        yield return new object[]
+        {
                 "Fatal Error for Settlement location",
                 new Exception(),
                 new CreateLocationDto
@@ -92,9 +86,9 @@ namespace Skyrim.Api.Test.Extensions
                     GeographicalDescription = "Test",
                     TypeOfLocation = LocationType.Settlement
                 }
-            };
-            yield return new object[]
-            {
+        };
+        yield return new object[]
+        {
                 "Fatal Error for DaedricShrine location",
                 new Exception(),
                 new CreateLocationDto
@@ -104,7 +98,6 @@ namespace Skyrim.Api.Test.Extensions
                     GeographicalDescription = "Test",
                     TypeOfLocation = LocationType.DaedricShrine
                 }
-            };
-        }
+        };
     }
 }

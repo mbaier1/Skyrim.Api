@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Skyrim.Api.Data;
+﻿using Microsoft.AspNetCore.Mvc;
 using Skyrim.Api.Data.AbstractModels;
 using Skyrim.Api.Domain.DTOs;
 using Skyrim.Api.Domain.Interfaces;
