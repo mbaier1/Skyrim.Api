@@ -4,11 +4,11 @@ using Skyrim.Api.Extensions.Interfaces;
 
 namespace Skyrim.Api.Extensions
 {
-    public class DomainLoggerExtension : IDomainLoggerExtension
+    public class DomainLoggerExtensions : IDomainLoggerExtension
     {
         private readonly ILogger<LocationDomain> _creatLocationDtoDomainLogger;
 
-        public DomainLoggerExtension(ILogger<LocationDomain> creatLocationDtoDomainLogger)
+        public DomainLoggerExtensions(ILogger<LocationDomain> creatLocationDtoDomainLogger)
         {
             _creatLocationDtoDomainLogger = creatLocationDtoDomainLogger;
         }

@@ -1,14 +1,13 @@
-﻿using Moq;
-using Skyrim.Api.Domain.Interfaces;
-using Skyrim.Api.Domain;
-using Skyrim.Api.Repository.Interface;
+﻿using AutoMapper;
+using Moq;
+using Skyrim.Api.Data.AbstractModels;
 using Skyrim.Api.Data.Enums;
 using Skyrim.Api.Data.Models;
+using Skyrim.Api.Domain;
 using Skyrim.Api.Domain.DTOs;
-using Skyrim.Api.Data.AbstractModels;
-using AutoMapper;
+using Skyrim.Api.Domain.Interfaces;
 using Skyrim.Api.Extensions.Interfaces;
-using Skyrim.Api.Repository;
+using Skyrim.Api.Repository.Interface;
 
 namespace Skyrim.Api.Test.Domains
 {
@@ -291,7 +290,8 @@ namespace Skyrim.Api.Test.Domains
 
         [Theory]
         [MemberData(nameof(ValidPropertiesForEachLocationType))]
-        public async void WithValidProperties_MapsToCorrectLocation(string description, CreateLocationDto createLocationDto, Location location)
+        public async void WithValidProperties_MapsToCorrectLocation(string description, CreateLocationDto createLocationDto, Location taskType,
+            Location location)
         {
             // Arrange
             if (location.TypeOfLocation == LocationType.City)
@@ -305,7 +305,8 @@ namespace Skyrim.Api.Test.Domains
             else if (location.TypeOfLocation == LocationType.DaedricShrine)
                 _mockMapper.Setup(x => x.Map<DaedricShrine>(It.IsAny<CreateLocationDto>())).Returns(CreateNewDaedricShrine());
 
-            var completedCreateTask = Task<Location>.FromResult(location);
+            _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
+            var completedCreateTask = Task<Location>.FromResult(taskType);
             _mockLocationRepository.Setup(x => x.SaveLocation(It.IsAny<Location>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
@@ -313,7 +314,58 @@ namespace Skyrim.Api.Test.Domains
             await _locationDomain.CreateLocation(createLocationDto);
 
             // Assert
-            _mockMapper.Verify(x => x.Map<City>(createLocationDto), Times.Once());
+            if (location.TypeOfLocation == LocationType.City)
+                _mockMapper.Verify(x => x.Map<City>(createLocationDto), Times.Once());
+            else if (location.TypeOfLocation == LocationType.Town)
+                _mockMapper.Verify(x => x.Map<Town>(createLocationDto), Times.Once());
+            else if (location.TypeOfLocation == LocationType.Homestead)
+                _mockMapper.Verify(x => x.Map<Homestead>(createLocationDto), Times.Once());
+            else if (location.TypeOfLocation == LocationType.Settlement)
+                _mockMapper.Verify(x => x.Map<Settlement>(createLocationDto), Times.Once());
+            else if (location.TypeOfLocation == LocationType.DaedricShrine)
+                _mockMapper.Verify(x => x.Map<DaedricShrine>(createLocationDto), Times.Once());
+        }
+
+        [Theory]
+        [MemberData(nameof(InvalidProperties))]
+        public async void WithInvalidProperties_MappingFails_AndReturnsNull(string description, CreateLocationDto createLocationDto)
+        {
+            // Arrange
+            _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
+
+            // Act
+            var result = _locationDomain.CreateLocation(createLocationDto);
+
+            // Assert
+            Assert.Equal(null, result.Result);
+        }
+        public static IEnumerable<object[]> InvalidProperties()
+        {
+            yield return new object[]
+            {
+                "Invalid properties for City",
+                new CreateLocationDto { TypeOfLocation = LocationType.City }
+            };
+            yield return new object[]
+            {
+                "Invalid properties for Town",
+                new CreateLocationDto { TypeOfLocation = LocationType.Town }
+            };
+            yield return new object[]
+            {
+                "Invalid properties for Homestead",
+                new CreateLocationDto { TypeOfLocation = LocationType.Homestead }
+            };
+            yield return new object[]
+            {
+                "Invalid properties for Settlement",
+                new CreateLocationDto { TypeOfLocation = LocationType.Settlement }
+            };
+            yield return new object[]
+            {
+                "Invalid properties for DaedricShrine",
+                new CreateLocationDto { TypeOfLocation = LocationType.DaedricShrine }
+            };
         }
 
         [Theory]
@@ -331,6 +383,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<Settlement>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
             else if (location.TypeOfLocation == LocationType.DaedricShrine)
                 _mockMapper.Setup(x => x.Map<DaedricShrine>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
+
+            _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
 
             // Act
             await _locationDomain.CreateLocation(createLocationDto);
@@ -404,7 +458,6 @@ namespace Skyrim.Api.Test.Domains
             Assert.Equal(type.Description, result.Description);
             Assert.Equal(type.TypeOfLocation, result.TypeOfLocation);
         }
-
         public static IEnumerable<object[]> WhiteSpaceProperties()
         {
             yield return new object[]
@@ -632,7 +685,6 @@ namespace Skyrim.Api.Test.Domains
             // Assert
             Assert.Equal(null, result);
         }
-
         public static IEnumerable<object[]> UnallowedNull_Invalid_OrWhiteSpaceProperties()
         {
             yield return new object[]

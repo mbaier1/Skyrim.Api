@@ -2,12 +2,12 @@ using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Skyrim.Api.Configurations;
 using Skyrim.Api.Data;
-using Skyrim.Api.Domain.Interfaces;
 using Skyrim.Api.Domain;
-using Skyrim.Api.Extensions.Interfaces;
-using Skyrim.Api.Repository.Interface;
-using Skyrim.Api.Repository;
 using Skyrim.Api.Domain.DomainHelpers;
+using Skyrim.Api.Domain.Interfaces;
+using Skyrim.Api.Extensions.Interfaces;
+using Skyrim.Api.Repository;
+using Skyrim.Api.Repository.Interface;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,7 +37,8 @@ builder.Services.AddDbContext<SkyrimApiDbContext>(options =>
 builder.Services.AddAutoMapper(typeof(AutoMapperConfiguration));
 builder.Services.AddScoped<ILocationRepository, LocationRepository>();
 builder.Services.AddScoped<ILocationDomain, LocationDomain>();
-builder.Services.AddScoped<IRepositoryLoggerExtension, Skyrim.Api.Extensions.RepositoryloggerExtensions>();
+builder.Services.AddScoped<IRepositoryLoggerExtension, Skyrim.Api.Extensions.RepositoryLoggerExtensions>();
+builder.Services.AddScoped<IDomainLoggerExtension, Skyrim.Api.Extensions.DomainLoggerExtensions>();
 builder.Services.AddScoped<ICreateLocationDtoFormatHelper, CreateLocationDtoFormatHelper>();
 var app = builder.Build();
 

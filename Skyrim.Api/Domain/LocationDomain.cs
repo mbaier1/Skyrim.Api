@@ -33,7 +33,7 @@ namespace Skyrim.Api.Domain
                 return null;
 
             var location = MapLocationAsCorrectType(createLocationDto);
-            if (createLocationDto == null)
+            if (location == null)
                 return null;
 
             return await _locationRepository.SaveLocation(location);
