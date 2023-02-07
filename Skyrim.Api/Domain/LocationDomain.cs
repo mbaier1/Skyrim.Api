@@ -1,7 +1,10 @@
-﻿using Skyrim.Api.Data.AbstractModels;
+﻿using AutoMapper;
+using Skyrim.Api.Data.AbstractModels;
 using Skyrim.Api.Data.Enums;
+using Skyrim.Api.Data.Models;
 using Skyrim.Api.Domain.DTOs;
 using Skyrim.Api.Domain.Interfaces;
+using Skyrim.Api.Extensions.Interfaces;
 using Skyrim.Api.Repository.Interface;
 
 namespace Skyrim.Api.Domain
@@ -10,11 +13,17 @@ namespace Skyrim.Api.Domain
     {
         private readonly ILocationRepository _locationRepository;
         private readonly ICreateLocationDtoFormatHelper _CreateLocationDtoFormatHelper;
+        private readonly IDomainLoggerExtension _loggerExtension;
+        private readonly IMapper _mapper;
 
-        public LocationDomain(ILocationRepository locationRepository, ICreateLocationDtoFormatHelper createLocationDtoFormatHelper)
+
+        public LocationDomain(ILocationRepository locationRepository, ICreateLocationDtoFormatHelper createLocationDtoFormatHelper,
+            IDomainLoggerExtension loggerExtension, IMapper mapper)
         {
             _locationRepository = locationRepository;
             _CreateLocationDtoFormatHelper = createLocationDtoFormatHelper;
+            _loggerExtension = loggerExtension;
+            _mapper = mapper;
         }
 
         public async Task<Location> CreateLocation(CreateLocationDto createLocationDto)
@@ -23,25 +32,38 @@ namespace Skyrim.Api.Domain
             if (createLocationDto == null)
                 return null;
 
-            return await CreateLocationAsCorrectType(createLocationDto);
+            var location = MapLocationAsCorrectType(createLocationDto);
+            if (location == null)
+                return null;
+
+            return await _locationRepository.SaveLocation(location);
         }
 
-        private async Task<Location> CreateLocationAsCorrectType(CreateLocationDto createLocationDto)
+        private Location MapLocationAsCorrectType(CreateLocationDto createLocationDto)
         {
-            switch (createLocationDto.TypeOfLocation)
+            try
             {
-                case LocationType.City:
-                    return await _locationRepository.SaveLocationAsCity(createLocationDto);
-                case LocationType.Town:
-                    return await _locationRepository.SaveLocationAsTown(createLocationDto);
-                case LocationType.Homestead:
-                    return await _locationRepository.SaveLocationAsHomestead(createLocationDto);
-                case LocationType.Settlement:
-                    return await _locationRepository.SaveLocationAsSettlement(createLocationDto);
-                case LocationType.DaedricShrine:
-                    return await _locationRepository.SaveLocationAsDaedricShrine(createLocationDto);
-                default:
-                    return null;
+                switch (createLocationDto.TypeOfLocation)
+                {
+                    case LocationType.City:
+                        return _mapper.Map<City>(createLocationDto);
+                    case LocationType.Town:
+                        return _mapper.Map<Town>(createLocationDto);
+                    case LocationType.Homestead:
+                        return _mapper.Map<Homestead>(createLocationDto);
+                    case LocationType.Settlement:
+                        return _mapper.Map<Settlement>(createLocationDto);
+                    case LocationType.DaedricShrine:
+                        return _mapper.Map<DaedricShrine>(createLocationDto);
+                    default:
+                        return null;
+                }
+            }
+            catch (Exception e)
+            {
+                _loggerExtension.LogError(e, createLocationDto);
+
+                return null;
             }
         }
     }

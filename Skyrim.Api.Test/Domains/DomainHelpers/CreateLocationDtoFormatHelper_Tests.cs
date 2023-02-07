@@ -1,12 +1,6 @@
 ﻿using Skyrim.Api.Data.Enums;
 using Skyrim.Api.Domain.DomainHelpers;
 using Skyrim.Api.Domain.DTOs;
-using Skyrim.Api.Domain.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Skyrim.Api.Test.Domains.DomainHelpers
 {
