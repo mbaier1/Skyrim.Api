@@ -89,6 +89,18 @@ namespace Skyrim.Api.Test.Domains
             };
         }
 
+        protected static StandingStone CreateNewStandingStone()
+        {
+            return new StandingStone
+            {
+                Id = 0,
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.StandingStone,
+                GeographicalDescription = "Test"
+            };
+        }
+
         protected static CreateLocationDto CreateNewCreateLocationDtoAsCity()
         {
             return new CreateLocationDto
@@ -143,6 +155,17 @@ namespace Skyrim.Api.Test.Domains
                 TypeOfLocation = LocationType.DaedricShrine
             };
         }
+
+        protected static CreateLocationDto CreateNewCreateLocationDtoAsStandingStone()
+        {
+            return new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "",
+                GeographicalDescription = "Test",
+                TypeOfLocation = LocationType.StandingStone
+            };
+        }
     }
 
     public class CreateLocation : LocationDomain_Tests
@@ -163,6 +186,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<Settlement>(It.IsAny<CreateLocationDto>())).Returns(CreateNewSettlement());
             else if (type.TypeOfLocation == LocationType.DaedricShrine)
                 _mockMapper.Setup(x => x.Map<DaedricShrine>(It.IsAny<CreateLocationDto>())).Returns(CreateNewDaedricShrine());
+            else if (type.TypeOfLocation == LocationType.StandingStone)
+                _mockMapper.Setup(x => x.Map<StandingStone>(It.IsAny<CreateLocationDto>())).Returns(CreateNewStandingStone());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
             var completedCreateTask = Task<Location>.FromResult(taskType);
@@ -286,6 +311,27 @@ namespace Skyrim.Api.Test.Domains
                     GeographicalDescription = "Test"
                 }
             };
+            yield return new object[]
+            {
+                "Valid properties for StandingStone Location",
+                CreateNewCreateLocationDtoAsStandingStone(),
+                new StandingStone
+                {
+                    Id = 0,
+                    Name = "Test",
+                    Description = "Test",
+                    TypeOfLocation = LocationType.StandingStone,
+                    GeographicalDescription = "Test"
+                },
+                new StandingStone
+                {
+                    Id = 0,
+                    Name = "Test",
+                    Description = "Test",
+                    TypeOfLocation = LocationType.StandingStone,
+                    GeographicalDescription = "Test"
+                }
+            };
         }
 
         [Theory]
@@ -304,6 +350,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<Settlement>(It.IsAny<CreateLocationDto>())).Returns(CreateNewSettlement());
             else if (location.TypeOfLocation == LocationType.DaedricShrine)
                 _mockMapper.Setup(x => x.Map<DaedricShrine>(It.IsAny<CreateLocationDto>())).Returns(CreateNewDaedricShrine());
+            else if (location.TypeOfLocation == LocationType.StandingStone)
+                _mockMapper.Setup(x => x.Map<StandingStone>(It.IsAny<CreateLocationDto>())).Returns(CreateNewStandingStone());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
             var completedCreateTask = Task<Location>.FromResult(taskType);
@@ -366,6 +414,11 @@ namespace Skyrim.Api.Test.Domains
                 "Invalid properties for DaedricShrine",
                 new CreateLocationDto { TypeOfLocation = LocationType.DaedricShrine }
             };
+            yield return new object[]
+            {
+                "Invalid properties for StandingStone",
+                new CreateLocationDto { TypeOfLocation = LocationType.StandingStone }
+            };
         }
 
         [Theory]
@@ -383,6 +436,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<Settlement>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
             else if (location.TypeOfLocation == LocationType.DaedricShrine)
                 _mockMapper.Setup(x => x.Map<DaedricShrine>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
+            else if (location.TypeOfLocation == LocationType.StandingStone)
+                _mockMapper.Setup(x => x.Map<StandingStone>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
 
@@ -425,6 +480,12 @@ namespace Skyrim.Api.Test.Domains
                 CreateNewDaedricShrine(),
                 CreateNewCreateLocationDtoAsDaedricShrine()
             };
+            yield return new object[]
+            {
+                "Invalid properties for StandingStone",
+                CreateNewStandingStone(),
+                CreateNewCreateLocationDtoAsStandingStone()
+            };
         }
 
         [Theory]
@@ -444,6 +505,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<Settlement>(It.IsAny<CreateLocationDto>())).Returns(CreateNewSettlement());
             else if (type.TypeOfLocation == LocationType.DaedricShrine)
                 _mockMapper.Setup(x => x.Map<DaedricShrine>(It.IsAny<CreateLocationDto>())).Returns(CreateNewDaedricShrine());
+            else if (type.TypeOfLocation == LocationType.StandingStone)
+                _mockMapper.Setup(x => x.Map<StandingStone>(It.IsAny<CreateLocationDto>())).Returns(CreateNewStandingStone());
 
             var completedCreateTask = Task<Location>.FromResult(taskType);
             _mockLocationRepository.Setup(x => x.SaveLocation(It.IsAny<Location>()))
@@ -669,6 +732,48 @@ namespace Skyrim.Api.Test.Domains
                     CreateNewDaedricShrine(),
                     CreateNewDaedricShrine()
             };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null description so it returns a StandingStone with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = null,
+                        TypeOfLocation = LocationType.StandingStone,
+                        GeographicalDescription = "Test"
+                    },
+                    CreateNewCreateLocationDtoAsStandingStone(),
+                    CreateNewStandingStone(),
+                    CreateNewStandingStone()
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has white spaces for description so it returns a StandingStone with empty description",
+                new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = "     ",
+                        TypeOfLocation = LocationType.StandingStone,
+                        GeographicalDescription = "Test"
+                    },
+                    CreateNewCreateLocationDtoAsStandingStone(),
+                    CreateNewStandingStone(),
+                    CreateNewStandingStone()
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has empty description so it returns a StandingStone with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = "",
+                        TypeOfLocation = LocationType.StandingStone,
+                        GeographicalDescription = "Test"
+                    },
+                    CreateNewCreateLocationDtoAsStandingStone(),
+                    CreateNewStandingStone(),
+                    CreateNewStandingStone()
+            };
         }
 
         [Theory]
@@ -689,17 +794,6 @@ namespace Skyrim.Api.Test.Domains
         {
             yield return new object[]
             {
-                    "CreateLocationDto has no Location Type",
-                    new CreateLocationDto
-                    {
-                        Description = "Test",
-                        GeographicalDescription = "Test",
-                        Name = "Test"
-                    },
-                    (CreateLocationDto)null
-            };
-            yield return new object[]
-            {
                     "CreateLocationDto has a null name",
                     new CreateLocationDto
                     {
@@ -1055,6 +1149,78 @@ namespace Skyrim.Api.Test.Domains
                         GeographicalDescription = " ",
                         Name = "Test",
                         TypeOfLocation = LocationType.DaedricShrine
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = null,
+                        TypeOfLocation = LocationType.StandingStone
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has an empty name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = "",
+                        TypeOfLocation = LocationType.StandingStone
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a white space name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = "   ",
+                        TypeOfLocation = LocationType.StandingStone
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = null,
+                        Name = "Test",
+                        TypeOfLocation = LocationType.StandingStone
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has an empty Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "",
+                        Name = "Test",
+                        TypeOfLocation = LocationType.StandingStone
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a white space Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = " ",
+                        Name = "Test",
+                        TypeOfLocation = LocationType.StandingStone
                     },
                     (CreateLocationDto)null
             };

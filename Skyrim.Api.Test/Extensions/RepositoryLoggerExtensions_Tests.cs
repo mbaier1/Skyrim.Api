@@ -100,6 +100,18 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.DaedricShrine
                 }
             };
+            yield return new object[]
+            {
+                "Fatal Error for StandingStone location",
+                new Exception(),
+                new StandingStone
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.StandingStone
+                }
+            };
         }
     }
 }
