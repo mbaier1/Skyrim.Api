@@ -89,6 +89,18 @@ namespace Skyrim.Api.Test.Repositories
             };
         }
 
+        protected static StandingStone CreateNewStandingStone()
+        {
+            return new StandingStone
+            {
+                Id = 0,
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.StandingStone,
+                GeographicalDescription = "Test"
+            };
+        }
+
         protected CreateLocationDto CreateNewCreateLocationDtoAsCity()
         {
             return new CreateLocationDto
@@ -143,6 +155,17 @@ namespace Skyrim.Api.Test.Repositories
                 TypeOfLocation = LocationType.DaedricShrine
             };
         }
+
+        protected static CreateLocationDto CreateNewCreateLocationDtoAsStandingStone()
+        {
+            return new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "",
+                GeographicalDescription = "Test",
+                TypeOfLocation = LocationType.StandingStone
+            };
+        }
     }
 
     public class SaveLocation : LocationRepository_Tests
@@ -174,6 +197,9 @@ namespace Skyrim.Api.Test.Repositories
                 case LocationType.DaedricShrine:
                     Assert.Equal(_context.DaedricShrines.FirstOrDefault().Name, result.Name);
                     break;
+                case LocationType.StandingStone:
+                    Assert.Equal(_context.StandingStones.FirstOrDefault().Name, result.Name);
+                    break;
             }
         }
         public static IEnumerable<object[]> ValidLocationForEachLocationType()
@@ -197,6 +223,10 @@ namespace Skyrim.Api.Test.Repositories
             yield return new object[]
             {
                 CreateNewDaedricShrine()
+            };
+            yield return new object[]
+            {
+                CreateNewStandingStone()
             };
         }
 
@@ -255,6 +285,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Invalid properties for DaedricShrine",
                 new DaedricShrine()
+            };
+            yield return new object[]
+            {
+                "Invalid properties for StandingStone",
+                new StandingStone()
             };
         }
 
