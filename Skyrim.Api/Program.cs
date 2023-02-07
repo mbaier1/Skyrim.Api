@@ -37,7 +37,7 @@ builder.Services.AddDbContext<SkyrimApiDbContext>(options =>
 builder.Services.AddAutoMapper(typeof(AutoMapperConfiguration));
 builder.Services.AddScoped<ILocationRepository, LocationRepository>();
 builder.Services.AddScoped<ILocationDomain, LocationDomain>();
-builder.Services.AddScoped<ILoggerExtension, Skyrim.Api.Extensions.LoggerExtensions>();
+builder.Services.AddScoped<IRepositoryLoggerExtension, Skyrim.Api.Extensions.RepositoryloggerExtensions>();
 builder.Services.AddScoped<ICreateLocationDtoFormatHelper, CreateLocationDtoFormatHelper>();
 var app = builder.Build();
 

@@ -1,47 +1,42 @@
-﻿using Castle.Core.Logging;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Moq;
+using Skyrim.Api.Data.AbstractModels;
 using Skyrim.Api.Data.Enums;
+using Skyrim.Api.Data.Models;
 using Skyrim.Api.Domain.DTOs;
-using Skyrim.Api.Extensions;
 using Skyrim.Api.Extensions.Interfaces;
 using Skyrim.Api.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using LoggerExtensions = Skyrim.Api.Extensions.LoggerExtensions;
+using RepositoryloggerExtensions = Skyrim.Api.Extensions.RepositoryLoggerExtensions;
 
 namespace Skyrim.Api.Test.Extensions
 {
-    public class LoggerExtensions_Tests
+    public class RepositoryLoggerExtensions_Tests
     {
-        protected readonly LoggerExtensions _loggerExtensions;
+        protected readonly RepositoryloggerExtensions _loggerExtensions;
         protected readonly Mock<ILogger<LocationRepository>> _partialMockLocationRepositoryLogger;
-        protected Mock<ILoggerExtension> _mockLoggerExtension;
+        protected Mock<IRepositoryLoggerExtension> _mockLoggerExtension;
 
-        public LoggerExtensions_Tests()
+        public RepositoryLoggerExtensions_Tests()
         {
             _partialMockLocationRepositoryLogger = new Mock<ILogger<LocationRepository>>();
-            _mockLoggerExtension = new Mock<ILoggerExtension>();
-            _loggerExtensions = new LoggerExtensions(_partialMockLocationRepositoryLogger.Object);
+            _mockLoggerExtension = new Mock<IRepositoryLoggerExtension>();
+            _loggerExtensions = new RepositoryloggerExtensions(_partialMockLocationRepositoryLogger.Object);
         }
     }
 
-    public class LogFatalError : LoggerExtensions_Tests
+    public class LogError : RepositoryLoggerExtensions_Tests
     {
         [Theory]
         [MemberData(nameof(FatalErrorsForEachLocationType))]
-        public void WhenLoggerIsCalled_ErrorIsLoggedOnce(string description, Exception exception, CreateLocationDto createLocationDto)
+        public void WhenLoggerIsCalled_ErrorIsLoggedOnce(string description, Exception exception, Location location)
         {
             // Arrange
 
             // Act
-            _mockLoggerExtension.Object.LogFatalError(exception, createLocationDto);
+            _mockLoggerExtension.Object.LogError(exception, location);
 
             // Assert
-            _mockLoggerExtension.Verify(x => x.LogFatalError(It.IsAny<Exception>(), It.IsAny<CreateLocationDto>()), Times.Once());
+            _mockLoggerExtension.Verify(x => x.LogError(It.IsAny<Exception>(), It.IsAny<Location>()), Times.Once());
         }
         public static IEnumerable<object[]> FatalErrorsForEachLocationType()
         {
@@ -49,7 +44,7 @@ namespace Skyrim.Api.Test.Extensions
             {
                 "Fatal Error for City location",
                 new Exception(),
-                new CreateLocationDto
+                new City
                 {
                     Name = "Test",
                     Description = "Test",
@@ -61,7 +56,7 @@ namespace Skyrim.Api.Test.Extensions
             {
                 "Fatal Error for Town location",
                 new Exception(),
-                new CreateLocationDto
+                new Town
                 {
                     Name = "Test",
                     Description = "Test",
@@ -73,7 +68,7 @@ namespace Skyrim.Api.Test.Extensions
             {
                 "Fatal Error for Homestead location",
                 new Exception(),
-                new CreateLocationDto
+                new Settlement
                 {
                     Name = "Test",
                     Description = "Test",
@@ -85,7 +80,7 @@ namespace Skyrim.Api.Test.Extensions
             {
                 "Fatal Error for Settlement location",
                 new Exception(),
-                new CreateLocationDto
+                new Homestead
                 {
                     Name = "Test",
                     Description = "Test",
@@ -97,7 +92,7 @@ namespace Skyrim.Api.Test.Extensions
             {
                 "Fatal Error for DaedricShrine location",
                 new Exception(),
-                new CreateLocationDto
+                new DaedricShrine
                 {
                     Name = "Test",
                     Description = "Test",
