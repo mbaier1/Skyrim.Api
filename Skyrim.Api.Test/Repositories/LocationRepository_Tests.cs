@@ -8,6 +8,7 @@ using Skyrim.Api.Domain.DTOs;
 using Skyrim.Api.Extensions.Interfaces;
 using Skyrim.Api.Repository;
 using Skyrim.Api.Repository.Interface;
+using Skyrim.Api.Test.TestHelpers;
 
 namespace Skyrim.Api.Test.Repositories
 {
@@ -33,146 +34,13 @@ namespace Skyrim.Api.Test.Repositories
         {
             _locationRepository = GetInMemoryRepository();
         }
-
-        protected static City CreateNewCity()
-        {
-            return new City
-            {
-                Name = "Test City Name",
-                GeographicalDescription = "Test Geographical Location Description",
-                Description = "Test Description",
-                TypeOfLocation = LocationType.City
-            };
-        }
-
-        protected static Town CreateNewTown()
-        {
-            return new Town
-            {
-                Name = "Test City Name",
-                GeographicalDescription = "Test Geographical Location Description",
-                Description = "Test Description",
-                TypeOfLocation = LocationType.Town
-            };
-        }
-
-        protected static Homestead CreateNewHomestead()
-        {
-            return new Homestead
-            {
-                Name = "Test Homestead Name",
-                GeographicalDescription = "Test Geographical Location Description",
-                Description = "Test Description",
-                TypeOfLocation = LocationType.Homestead
-            };
-        }
-
-        protected static Settlement CreateNewSettlement()
-        {
-            return new Settlement
-            {
-                Name = "Test Settlement Name",
-                GeographicalDescription = "Test Geographical Location Description",
-                Description = "Test Description",
-                TypeOfLocation = LocationType.Settlement
-            };
-        }
-
-        protected static DaedricShrine CreateNewDaedricShrine()
-        {
-            return new DaedricShrine
-            {
-                Name = "Test DaedricShrine Name",
-                GeographicalDescription = "Test Geographical Location Description",
-                Description = "Test Description",
-                TypeOfLocation = LocationType.DaedricShrine
-            };
-        }
-
-        protected static StandingStone CreateNewStandingStone()
-        {
-            return new StandingStone
-            {
-                Id = 0,
-                Name = "Test",
-                Description = "Test",
-                TypeOfLocation = LocationType.StandingStone,
-                GeographicalDescription = "Test"
-            };
-        }
-
-        protected CreateLocationDto CreateNewCreateLocationDtoAsCity()
-        {
-            return new CreateLocationDto
-            {
-                Name = "Test",
-                Description = "Test",
-                GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.City
-            };
-        }
-
-        protected CreateLocationDto CreateNewCreateLocationDtoAsTown()
-        {
-            return new CreateLocationDto
-            {
-                Name = "Test",
-                Description = "Test",
-                GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.Town
-            };
-        }
-
-        protected CreateLocationDto CreateNewCreateLocationDtoAsHomestead()
-        {
-            return new CreateLocationDto
-            {
-                Name = "Test",
-                Description = "Test",
-                GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.Homestead
-            };
-        }
-
-        protected CreateLocationDto CreateNewCreateLocationDtoAsSettlement()
-        {
-            return new CreateLocationDto
-            {
-                Name = "Test",
-                Description = "Test",
-                GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.Settlement
-            };
-        }
-
-        protected CreateLocationDto CreateNewCreateLocationDtoAsDaedricShrine()
-        {
-            return new CreateLocationDto
-            {
-                Name = "Test",
-                Description = "Test",
-                GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.DaedricShrine
-            };
-        }
-
-        protected static CreateLocationDto CreateNewCreateLocationDtoAsStandingStone()
-        {
-            return new CreateLocationDto
-            {
-                Name = "Test",
-                Description = "",
-                GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.StandingStone
-            };
-        }
     }
 
     public class SaveLocation : LocationRepository_Tests
     {
         [Theory]
         [MemberData(nameof(ValidLocationForEachLocationType))]
-        public async void WithValidCreateLocationDto_SavesExpectedLocation(Location location)
+        public async void WithValidCreateLocationDto_SavesExpectedLocation(string description, Location location)
         {
             // Arrange
 
@@ -200,39 +68,53 @@ namespace Skyrim.Api.Test.Repositories
                 case LocationType.StandingStone:
                     Assert.Equal(_context.StandingStones.FirstOrDefault().Name, result.Name);
                     break;
+                case LocationType.Landmark:
+                    Assert.Equal(_context.Landmarks.FirstOrDefault().Name, result.Name);
+                    break;
             }
         }
         public static IEnumerable<object[]> ValidLocationForEachLocationType()
         {
             yield return new object[]
             {
-                CreateNewCity()
+                "Valid properties for a City",
+                TestMethodHelpers.CreateNewCity()
             };
             yield return new object[]
             {
-                CreateNewTown()
+                "Valid properties for a Town",
+                TestMethodHelpers.CreateNewTown()
             };
             yield return new object[]
             {
-                CreateNewHomestead()
+                "Valid properties for a Homestead",
+                TestMethodHelpers.CreateNewHomestead()
             };
             yield return new object[]
             {
-                CreateNewSettlement()
+                "Valid properties for a Settlement",
+                TestMethodHelpers.CreateNewSettlement()
             };
             yield return new object[]
             {
-                CreateNewDaedricShrine()
+                "Valid properties for a DaedricShrine",
+                TestMethodHelpers.CreateNewDaedricShrine()
             };
             yield return new object[]
             {
-                CreateNewStandingStone()
+                "Valid properties for a StandingStone",
+                TestMethodHelpers.CreateNewStandingStone()
+            };
+            yield return new object[]
+            {
+                "Valid properties for a Landmark",
+                TestMethodHelpers.CreateNewLandmark()
             };
         }
 
         [Theory]
         [MemberData(nameof(ValidLocationForEachLocationType))]
-        public async void WithValidLocations_ReturnsExpectedLocation(Location location)
+        public async void WithValidLocations_ReturnsExpectedLocation(string description, Location location)
         {
             // Arrange
 
@@ -290,6 +172,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Invalid properties for StandingStone",
                 new StandingStone()
+            };
+            yield return new object[]
+            {
+                "Invalid properties for Landmark",
+                new Landmark()
             };
         }
 

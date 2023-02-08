@@ -111,5 +111,125 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.StandingStone
                 }
         };
+        yield return new object[]
+        {
+                "Fatal Error for Landmark location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Landmark
+                }
+        };
+    }
+
+    [Theory]
+    [MemberData(nameof(ErrorsAndLocationsForEachLocationType))]
+    public void WhenLoggerIsCalled_LogsErrorForCorrectLocationType(string description, Exception exception, CreateLocationDto createLocationDto,
+        LocationType locationType)
+    {
+        // Arrange
+
+        // Act
+        _mockLoggerExtension.Object.LogError(exception, createLocationDto);
+
+        // Assert
+        Assert.Equal(locationType, createLocationDto.TypeOfLocation);
+    }
+    public static IEnumerable<object[]> ErrorsAndLocationsForEachLocationType()
+    {
+        yield return new object[]
+        {
+                "Fatal Error for City location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.City
+                },
+                LocationType.City
+        };
+        yield return new object[]
+        {
+                "Fatal Error for Town location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Town
+                },
+                LocationType.Town
+        };
+        yield return new object[]
+        {
+                "Fatal Error for Homestead location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Homestead
+                },
+                LocationType.Homestead
+        };
+        yield return new object[]
+        {
+                "Fatal Error for Settlement location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Settlement
+                },
+                LocationType.Settlement
+        };
+        yield return new object[]
+        {
+                "Fatal Error for DaedricShrine location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.DaedricShrine
+                },
+                LocationType.DaedricShrine
+        };
+        yield return new object[]
+        {
+                "Fatal Error for StandingStone location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.StandingStone
+                },
+                LocationType.StandingStone
+        };
+        yield return new object[]
+        {
+                "Fatal Error for Landmark location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Landmark
+                },
+                LocationType.Landmark
+        };
     }
 }
