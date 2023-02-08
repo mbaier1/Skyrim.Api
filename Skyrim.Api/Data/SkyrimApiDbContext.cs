@@ -29,6 +29,7 @@ namespace Skyrim.Api.Data
         public DbSet<Settlement> Settlements { get; set; }
         public DbSet<DaedricShrine> DaedricShrines { get; set; }
         public DbSet<StandingStone> StandingStones { get; set; }
+        public DbSet<Landmark> Landmarks { get; set; }
 
         public DbSet<Guard> Guards { get; set; }
         public DbSet<PhyscialFightingShop> PhyscialFightingShops { get; set; }

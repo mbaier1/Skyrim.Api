@@ -57,6 +57,8 @@ namespace Skyrim.Api.Domain
                         return _mapper.Map<DaedricShrine>(createLocationDto);
                     case LocationType.StandingStone:
                         return _mapper.Map<StandingStone>(createLocationDto);
+                    case LocationType.Landmark:
+                        return _mapper.Map<Landmark>(createLocationDto);
                     default:
                         return null;
                 }
