@@ -1179,7 +1179,7 @@ namespace Skyrim.Api.Test.Domains
                         Description = "Test",
                         GeographicalDescription = "Test",
                         Name = null,
-                        TypeOfLocation = LocationType.StandingStone
+                        TypeOfLocation = LocationType.Landmark
                     },
                     (CreateLocationDto)null
             };
