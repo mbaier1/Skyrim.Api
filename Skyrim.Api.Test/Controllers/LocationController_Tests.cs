@@ -120,7 +120,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(city.Id, locationAsCity.Id);
             Assert.Equal(city.Name, locationAsCity.Name);
             Assert.Equal(city.Description, locationAsCity.Description);
-            Assert.Equal(LocationType.City, locationAsCity.TypeOfLocation);
+            Assert.Equal(city.TypeOfLocation, locationAsCity.TypeOfLocation);
             Assert.Equal(city.GeographicalDescription, locationAsCity.GeographicalDescription);
         }
 
@@ -173,7 +173,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(city.Name, locationAsCity.Name);
             Assert.Equal(city.Id, locationAsCity.Id);
             Assert.Equal(city.Description, locationAsCity.Description);
-            Assert.Equal(LocationType.City, locationAsCity.TypeOfLocation);
+            Assert.Equal(city.TypeOfLocation, locationAsCity.TypeOfLocation);
             Assert.Equal(city.GeographicalDescription, locationAsCity.GeographicalDescription);
         }
 
@@ -226,7 +226,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(city.Id, locationAsCity.Id);
             Assert.Equal(city.Name, locationAsCity.Name);
             Assert.Equal(city.Description, locationAsCity.Description);
-            Assert.Equal(LocationType.City, locationAsCity.TypeOfLocation);
+            Assert.Equal(city.TypeOfLocation, locationAsCity.TypeOfLocation);
             Assert.Equal(city.GeographicalDescription, locationAsCity.GeographicalDescription);
         }
 
@@ -339,7 +339,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(town.Id, locationAsTown.Id);
             Assert.Equal(town.Name, locationAsTown.Name);
             Assert.Equal(town.Description, locationAsTown.Description);
-            Assert.Equal(LocationType.Town, locationAsTown.TypeOfLocation);
+            Assert.Equal(town.TypeOfLocation, locationAsTown.TypeOfLocation);
             Assert.Equal(town.GeographicalDescription, locationAsTown.GeographicalDescription);
         }
 
@@ -392,7 +392,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(town.Name, locationAsTown.Name);
             Assert.Equal(town.Id, locationAsTown.Id);
             Assert.Equal(town.Description, locationAsTown.Description);
-            Assert.Equal(LocationType.Town, locationAsTown.TypeOfLocation);
+            Assert.Equal(town.TypeOfLocation, locationAsTown.TypeOfLocation);
             Assert.Equal(town.GeographicalDescription, locationAsTown.GeographicalDescription);
         }
 
@@ -445,7 +445,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(town.Id, locationAsTown.Id);
             Assert.Equal(town.Name, locationAsTown.Name);
             Assert.Equal(town.Description, locationAsTown.Description);
-            Assert.Equal(LocationType.Town, locationAsTown.TypeOfLocation);
+            Assert.Equal(town.TypeOfLocation, locationAsTown.TypeOfLocation);
             Assert.Equal(town.GeographicalDescription, locationAsTown.GeographicalDescription);
         }
 
@@ -553,7 +553,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(homestead.Id, locationAsHomestead.Id);
             Assert.Equal(homestead.Name, locationAsHomestead.Name);
             Assert.Equal(homestead.Description, locationAsHomestead.Description);
-            Assert.Equal(LocationType.Homestead, locationAsHomestead.TypeOfLocation);
+            Assert.Equal(homestead.TypeOfLocation, locationAsHomestead.TypeOfLocation);
             Assert.Equal(homestead.GeographicalDescription, locationAsHomestead.GeographicalDescription);
         }
 
@@ -606,7 +606,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(homestead.Name, locationAsHomestead.Name);
             Assert.Equal(homestead.Id, locationAsHomestead.Id);
             Assert.Equal(homestead.Description, locationAsHomestead.Description);
-            Assert.Equal(LocationType.Homestead, locationAsHomestead.TypeOfLocation);
+            Assert.Equal(homestead.TypeOfLocation, locationAsHomestead.TypeOfLocation);
             Assert.Equal(homestead.GeographicalDescription, locationAsHomestead.GeographicalDescription);
         }
 
@@ -659,7 +659,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(homestead.Id, locationAsHomestead.Id);
             Assert.Equal(homestead.Name, locationAsHomestead.Name);
             Assert.Equal(homestead.Description, locationAsHomestead.Description);
-            Assert.Equal(LocationType.Homestead, locationAsHomestead.TypeOfLocation);
+            Assert.Equal(homestead.TypeOfLocation, locationAsHomestead.TypeOfLocation);
             Assert.Equal(homestead.GeographicalDescription, locationAsHomestead.GeographicalDescription);
         }
 
@@ -767,7 +767,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(settlement.Id, locationAsSettlement.Id);
             Assert.Equal(settlement.Name, locationAsSettlement.Name);
             Assert.Equal(settlement.Description, locationAsSettlement.Description);
-            Assert.Equal(LocationType.Settlement, locationAsSettlement.TypeOfLocation);
+            Assert.Equal(settlement.TypeOfLocation, locationAsSettlement.TypeOfLocation);
             Assert.Equal(settlement.GeographicalDescription, locationAsSettlement.GeographicalDescription);
         }
 
@@ -820,7 +820,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(settlement.Name, locationAsSettlement.Name);
             Assert.Equal(settlement.Id, locationAsSettlement.Id);
             Assert.Equal(settlement.Description, locationAsSettlement.Description);
-            Assert.Equal(LocationType.Settlement, locationAsSettlement.TypeOfLocation);
+            Assert.Equal(settlement.TypeOfLocation, locationAsSettlement.TypeOfLocation);
             Assert.Equal(settlement.GeographicalDescription, locationAsSettlement.GeographicalDescription);
         }
 
@@ -873,7 +873,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(settlement.Id, locationAsSettlement.Id);
             Assert.Equal(settlement.Name, locationAsSettlement.Name);
             Assert.Equal(settlement.Description, locationAsSettlement.Description);
-            Assert.Equal(LocationType.Settlement, locationAsSettlement.TypeOfLocation);
+            Assert.Equal(settlement.TypeOfLocation, locationAsSettlement.TypeOfLocation);
             Assert.Equal(settlement.GeographicalDescription, locationAsSettlement.GeographicalDescription);
         }
 
@@ -981,7 +981,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(daedricShrine.Id, locationAsDaedricShrine.Id);
             Assert.Equal(daedricShrine.Name, locationAsDaedricShrine.Name);
             Assert.Equal(daedricShrine.Description, locationAsDaedricShrine.Description);
-            Assert.Equal(LocationType.DaedricShrine, locationAsDaedricShrine.TypeOfLocation);
+            Assert.Equal(daedricShrine.TypeOfLocation, locationAsDaedricShrine.TypeOfLocation);
             Assert.Equal(daedricShrine.GeographicalDescription, locationAsDaedricShrine.GeographicalDescription);
         }
 
@@ -1034,7 +1034,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(daedricShrine.Name, locationAsDaedricShrine.Name);
             Assert.Equal(daedricShrine.Id, locationAsDaedricShrine.Id);
             Assert.Equal(daedricShrine.Description, locationAsDaedricShrine.Description);
-            Assert.Equal(LocationType.DaedricShrine, locationAsDaedricShrine.TypeOfLocation);
+            Assert.Equal(daedricShrine.TypeOfLocation, locationAsDaedricShrine.TypeOfLocation);
             Assert.Equal(daedricShrine.GeographicalDescription, locationAsDaedricShrine.GeographicalDescription);
         }
 
@@ -1087,7 +1087,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(daedricShrine.Id, locationAsDaedricShrine.Id);
             Assert.Equal(daedricShrine.Name, locationAsDaedricShrine.Name);
             Assert.Equal(daedricShrine.Description, locationAsDaedricShrine.Description);
-            Assert.Equal(LocationType.DaedricShrine, locationAsDaedricShrine.TypeOfLocation);
+            Assert.Equal(daedricShrine.TypeOfLocation, locationAsDaedricShrine.TypeOfLocation);
             Assert.Equal(daedricShrine.GeographicalDescription, locationAsDaedricShrine.GeographicalDescription);
         }
 
@@ -1195,7 +1195,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(standingStone.Id, locationAsStandingStone.Id);
             Assert.Equal(standingStone.Name, locationAsStandingStone.Name);
             Assert.Equal(standingStone.Description, locationAsStandingStone.Description);
-            Assert.Equal(LocationType.StandingStone, locationAsStandingStone.TypeOfLocation);
+            Assert.Equal(standingStone.TypeOfLocation, locationAsStandingStone.TypeOfLocation);
             Assert.Equal(standingStone.GeographicalDescription, locationAsStandingStone.GeographicalDescription);
         }
 
@@ -1248,7 +1248,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(standingStone.Name, locationAsStandingStone.Name);
             Assert.Equal(standingStone.Id, locationAsStandingStone.Id);
             Assert.Equal(standingStone.Description, locationAsStandingStone.Description);
-            Assert.Equal(LocationType.StandingStone, locationAsStandingStone.TypeOfLocation);
+            Assert.Equal(standingStone.TypeOfLocation, locationAsStandingStone.TypeOfLocation);
             Assert.Equal(standingStone.GeographicalDescription, locationAsStandingStone.GeographicalDescription);
         }
 
@@ -1301,7 +1301,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(standingStone.Id, locationAsStandingStone.Id);
             Assert.Equal(standingStone.Name, locationAsStandingStone.Name);
             Assert.Equal(standingStone.Description, locationAsStandingStone.Description);
-            Assert.Equal(LocationType.StandingStone, locationAsStandingStone.TypeOfLocation);
+            Assert.Equal(standingStone.TypeOfLocation, locationAsStandingStone.TypeOfLocation);
             Assert.Equal(standingStone.GeographicalDescription, locationAsStandingStone.GeographicalDescription);
         }
 
@@ -1341,6 +1341,220 @@ namespace Skyrim.Api.Test.Controllers
                 Name = "Test",
                 Description = "Test",
                 TypeOfLocation = LocationType.StandingStone,
+                GeographicalDescription = "        "
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+    }
+
+    public class CreateLocation_AsLandmark : LocationController_Tests
+    {
+        [Fact]
+        public async void WhenCreateLocationDtoHasRequiredValidPropertiesAsALandmark_ReturnsCreateAtActionWithLandmarkDetails()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Landmark",
+                TypeOfLocation = LocationType.Landmark,
+                GeographicalDescription = "Test Description"
+            };
+
+            var landmark = new Landmark
+            {
+                Id = 0,
+                Name = "Test Landmark",
+                TypeOfLocation = LocationType.Landmark,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(landmark);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var landmarkObject = new object();
+            var locationAsLandmark = new Landmark();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            landmarkObject = responseAsCreateAsActionResult.Value;
+
+            locationAsLandmark.Id = (int)landmarkObject.GetType().GetProperty("Id").GetValue(landmarkObject, null);
+            locationAsLandmark.Name = (string)landmarkObject.GetType().GetProperty("Name").GetValue(landmarkObject, null);
+            locationAsLandmark.TypeOfLocation = (LocationType)landmarkObject.GetType().GetProperty("TypeOfLocation").GetValue(landmarkObject, null);
+            locationAsLandmark.GeographicalDescription = (string)landmarkObject.GetType().GetProperty("GeographicalDescription").GetValue(landmarkObject, null);
+            locationAsLandmark.Description = (string)landmarkObject.GetType().GetProperty("Description").GetValue(landmarkObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(landmark.Id, locationAsLandmark.Id);
+            Assert.Equal(landmark.Name, locationAsLandmark.Name);
+            Assert.Equal(landmark.Description, locationAsLandmark.Description);
+            Assert.Equal(landmark.TypeOfLocation, locationAsLandmark.TypeOfLocation);
+            Assert.Equal(landmark.GeographicalDescription, locationAsLandmark.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasEmptySpacesForDescriptionALandmark_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Landmark",
+                Description = "    ",
+                TypeOfLocation = LocationType.Landmark,
+                GeographicalDescription = "Test Description"
+            };
+
+            var landmark = new Landmark
+            {
+                Id = 0,
+                Name = "Test Landmark",
+                Description = "",
+                TypeOfLocation = LocationType.Landmark,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(landmark);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var landmarkObject = new object();
+            var locationAsLandmark = new Landmark();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            landmarkObject = responseAsCreateAsActionResult.Value;
+
+            locationAsLandmark.Id = (int)landmarkObject.GetType().GetProperty("Id").GetValue(landmarkObject, null);
+            locationAsLandmark.Name = (string)landmarkObject.GetType().GetProperty("Name").GetValue(landmarkObject, null);
+            locationAsLandmark.TypeOfLocation = (LocationType)landmarkObject.GetType().GetProperty("TypeOfLocation").GetValue(landmarkObject, null);
+            locationAsLandmark.GeographicalDescription = (string)landmarkObject.GetType().GetProperty("GeographicalDescription").GetValue(landmarkObject, null);
+            locationAsLandmark.Description = (string)landmarkObject.GetType().GetProperty("Description").GetValue(landmarkObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(landmark.Name, locationAsLandmark.Name);
+            Assert.Equal(landmark.Id, locationAsLandmark.Id);
+            Assert.Equal(landmark.Description, locationAsLandmark.Description);
+            Assert.Equal(landmark.TypeOfLocation, locationAsLandmark.TypeOfLocation);
+            Assert.Equal(landmark.GeographicalDescription, locationAsLandmark.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullForDescriptionAsALandmark_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Landmark",
+                Description = null,
+                TypeOfLocation = LocationType.Landmark,
+                GeographicalDescription = "Test Description"
+            };
+
+            var landmark = new Landmark
+            {
+                Id = 0,
+                Name = "Test Landmark",
+                Description = null,
+                TypeOfLocation = LocationType.Landmark,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(landmark);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var landmarkObject = new object();
+            var locationAsLandmark = new Landmark();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            landmarkObject = responseAsCreateAsActionResult.Value;
+
+            locationAsLandmark.Id = (int)landmarkObject.GetType().GetProperty("Id").GetValue(landmarkObject, null);
+            locationAsLandmark.Name = (string)landmarkObject.GetType().GetProperty("Name").GetValue(landmarkObject, null);
+            locationAsLandmark.TypeOfLocation = (LocationType)landmarkObject.GetType().GetProperty("TypeOfLocation").GetValue(landmarkObject, null);
+            locationAsLandmark.GeographicalDescription = (string)landmarkObject.GetType().GetProperty("GeographicalDescription").GetValue(landmarkObject, null);
+            locationAsLandmark.Description = (string)landmarkObject.GetType().GetProperty("Description").GetValue(landmarkObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(landmark.Id, locationAsLandmark.Id);
+            Assert.Equal(landmark.Name, locationAsLandmark.Name);
+            Assert.Equal(landmark.Description, locationAsLandmark.Description);
+            Assert.Equal(landmark.TypeOfLocation, locationAsLandmark.TypeOfLocation);
+            Assert.Equal(landmark.GeographicalDescription, locationAsLandmark.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsALandmark_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "      ",
+                Description = "Test",
+                TypeOfLocation = LocationType.Landmark,
+                GeographicalDescription = "Test Description"
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsALandmark_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.Landmark,
                 GeographicalDescription = "        "
             };
 

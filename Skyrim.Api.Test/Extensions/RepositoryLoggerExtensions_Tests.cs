@@ -112,6 +112,127 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.StandingStone
                 }
             };
+            yield return new object[]
+            {
+                "Fatal Error for Landmark location",
+                new Exception(),
+                new Landmark
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Landmark
+                }
+            };
+        }
+
+        [Theory]
+        [MemberData(nameof(ErrorsAndLocationsForEachLocationType))]
+        public void WhenLoggerIsCalled_LogsErrorForCorrectLocationType(string description, Exception exception, Location location,
+            LocationType locationType)
+        {
+            // Arrange
+
+            // Act
+            _mockLoggerExtension.Object.LogError(exception, location);
+
+            // Assert
+            Assert.Equal(locationType, location.TypeOfLocation);
+        }
+        public static IEnumerable<object[]> ErrorsAndLocationsForEachLocationType()
+        {
+            yield return new object[]
+            {
+                "Fatal Error for City location",
+                new Exception(),
+                new City
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.City
+                },
+                LocationType.City
+            };
+            yield return new object[]
+            {
+                "Fatal Error for Town location",
+                new Exception(),
+                new Town
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Town
+                },
+                LocationType.Town
+            };
+            yield return new object[]
+            {
+                "Fatal Error for Homestead location",
+                new Exception(),
+                new Settlement
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Homestead
+                },
+                LocationType.Homestead
+            };
+            yield return new object[]
+            {
+                "Fatal Error for Settlement location",
+                new Exception(),
+                new Homestead
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Settlement
+                },
+                LocationType.Settlement
+            };
+            yield return new object[]
+            {
+                "Fatal Error for DaedricShrine location",
+                new Exception(),
+                new DaedricShrine
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.DaedricShrine
+                }
+                ,
+                LocationType.DaedricShrine
+            };
+            yield return new object[]
+            {
+                "Fatal Error for StandingStone location",
+                new Exception(),
+                new StandingStone
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.StandingStone
+                },
+                LocationType.StandingStone
+            };
+            yield return new object[]
+            {
+                "Fatal Error for Landmark location",
+                new Exception(),
+                new Landmark
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Landmark
+                },
+                LocationType.Landmark
+            };
         }
     }
 }

@@ -8,6 +8,7 @@ using Skyrim.Api.Domain.DTOs;
 using Skyrim.Api.Domain.Interfaces;
 using Skyrim.Api.Extensions.Interfaces;
 using Skyrim.Api.Repository.Interface;
+using Skyrim.Api.Test.TestHelpers;
 
 namespace Skyrim.Api.Test.Domains
 {
@@ -28,144 +29,6 @@ namespace Skyrim.Api.Test.Domains
             _locationDomain = new LocationDomain(_mockLocationRepository.Object, _mockCreateLocationDtoFormatHelper.Object,
                 _mockLoggerExtension.Object, _mockMapper.Object);
         }
-
-        protected static City CreateNewCity()
-        {
-            return new City
-            {
-                Id = 0,
-                Name = "Test",
-                Description = "Test",
-                TypeOfLocation = LocationType.City,
-                GeographicalDescription = "Test"
-            };
-        }
-
-        protected static Town CreateNewTown()
-        {
-            return new Town
-            {
-                Id = 0,
-                Name = "Test",
-                Description = "Test",
-                TypeOfLocation = LocationType.Town,
-                GeographicalDescription = "Test"
-            };
-        }
-
-        protected static Homestead CreateNewHomestead()
-        {
-            return new Homestead
-            {
-                Id = 0,
-                Name = "Test",
-                Description = "Test",
-                TypeOfLocation = LocationType.Homestead,
-                GeographicalDescription = "Test"
-            };
-        }
-
-        protected static Settlement CreateNewSettlement()
-        {
-            return new Settlement
-            {
-                Id = 0,
-                Name = "Test",
-                Description = "Test",
-                TypeOfLocation = LocationType.Settlement,
-                GeographicalDescription = "Test"
-            };
-        }
-
-        protected static DaedricShrine CreateNewDaedricShrine()
-        {
-            return new DaedricShrine
-            {
-                Id = 0,
-                Name = "Test",
-                Description = "Test",
-                TypeOfLocation = LocationType.DaedricShrine,
-                GeographicalDescription = "Test"
-            };
-        }
-
-        protected static StandingStone CreateNewStandingStone()
-        {
-            return new StandingStone
-            {
-                Id = 0,
-                Name = "Test",
-                Description = "Test",
-                TypeOfLocation = LocationType.StandingStone,
-                GeographicalDescription = "Test"
-            };
-        }
-
-        protected static CreateLocationDto CreateNewCreateLocationDtoAsCity()
-        {
-            return new CreateLocationDto
-            {
-                Name = "Test",
-                Description = "",
-                GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.City
-            };
-        }
-
-        protected static CreateLocationDto CreateNewCreateLocationDtoAsTown()
-        {
-            return new CreateLocationDto
-            {
-                Name = "Test",
-                Description = "",
-                GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.Town
-            };
-        }
-
-        protected static CreateLocationDto CreateNewCreateLocationDtoAsHomestead()
-        {
-            return new CreateLocationDto
-            {
-                Name = "Test",
-                Description = "",
-                GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.Homestead
-            };
-        }
-
-        protected static CreateLocationDto CreateNewCreateLocationDtoAsSettlement()
-        {
-            return new CreateLocationDto
-            {
-                Name = "Test",
-                Description = "",
-                GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.Settlement
-            };
-        }
-
-        protected static CreateLocationDto CreateNewCreateLocationDtoAsDaedricShrine()
-        {
-            return new CreateLocationDto
-            {
-                Name = "Test",
-                Description = "",
-                GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.DaedricShrine
-            };
-        }
-
-        protected static CreateLocationDto CreateNewCreateLocationDtoAsStandingStone()
-        {
-            return new CreateLocationDto
-            {
-                Name = "Test",
-                Description = "",
-                GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.StandingStone
-            };
-        }
     }
 
     public class CreateLocation : LocationDomain_Tests
@@ -177,17 +40,19 @@ namespace Skyrim.Api.Test.Domains
         {
             // Arrange
             if (type.TypeOfLocation == LocationType.City)
-                _mockMapper.Setup(x => x.Map<City>(It.IsAny<CreateLocationDto>())).Returns(CreateNewCity());
+                _mockMapper.Setup(x => x.Map<City>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewCity());
             else if (type.TypeOfLocation == LocationType.Town)
-                _mockMapper.Setup(x => x.Map<Town>(It.IsAny<CreateLocationDto>())).Returns(CreateNewTown());
+                _mockMapper.Setup(x => x.Map<Town>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewTown());
             else if (type.TypeOfLocation == LocationType.Homestead)
-                _mockMapper.Setup(x => x.Map<Homestead>(It.IsAny<CreateLocationDto>())).Returns(CreateNewHomestead());
+                _mockMapper.Setup(x => x.Map<Homestead>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewHomestead());
             else if (type.TypeOfLocation == LocationType.Settlement)
-                _mockMapper.Setup(x => x.Map<Settlement>(It.IsAny<CreateLocationDto>())).Returns(CreateNewSettlement());
+                _mockMapper.Setup(x => x.Map<Settlement>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewSettlement());
             else if (type.TypeOfLocation == LocationType.DaedricShrine)
-                _mockMapper.Setup(x => x.Map<DaedricShrine>(It.IsAny<CreateLocationDto>())).Returns(CreateNewDaedricShrine());
+                _mockMapper.Setup(x => x.Map<DaedricShrine>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewDaedricShrine());
             else if (type.TypeOfLocation == LocationType.StandingStone)
-                _mockMapper.Setup(x => x.Map<StandingStone>(It.IsAny<CreateLocationDto>())).Returns(CreateNewStandingStone());
+                _mockMapper.Setup(x => x.Map<StandingStone>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewStandingStone());
+            else if (type.TypeOfLocation == LocationType.Landmark)
+                _mockMapper.Setup(x => x.Map<Landmark>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewLandmark());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
             var completedCreateTask = Task<Location>.FromResult(taskType);
@@ -209,7 +74,7 @@ namespace Skyrim.Api.Test.Domains
             yield return new object[]
             {
                 "Valid properties for City Location",
-                CreateNewCreateLocationDtoAsCity(),
+                TestMethodHelpers.CreateNewCreateLocationDtoAsCity(),
                 new City
                 {
                     Id = 0,
@@ -230,7 +95,7 @@ namespace Skyrim.Api.Test.Domains
             yield return new object[]
             {
                 "Valid properties for Town Location",
-                CreateNewCreateLocationDtoAsTown(),
+                TestMethodHelpers.CreateNewCreateLocationDtoAsTown(),
                 new Town
                 {
                     Id = 0,
@@ -251,7 +116,7 @@ namespace Skyrim.Api.Test.Domains
             yield return new object[]
             {
                 "Valid properties for Homestead Location",
-                CreateNewCreateLocationDtoAsHomestead(),
+                TestMethodHelpers.CreateNewCreateLocationDtoAsHomestead(),
                 new Homestead
                 {
                     Id = 0,
@@ -272,7 +137,7 @@ namespace Skyrim.Api.Test.Domains
             yield return new object[]
             {
                 "Valid properties for Settlement Location",
-                CreateNewCreateLocationDtoAsSettlement(),
+                TestMethodHelpers.CreateNewCreateLocationDtoAsSettlement(),
                 new Settlement
                 {
                     Id = 0,
@@ -293,7 +158,7 @@ namespace Skyrim.Api.Test.Domains
             yield return new object[]
             {
                 "Valid properties for DaedricShrine Location",
-                CreateNewCreateLocationDtoAsDaedricShrine(),
+                TestMethodHelpers.CreateNewCreateLocationDtoAsDaedricShrine(),
                 new DaedricShrine
                 {
                     Id = 0,
@@ -314,7 +179,7 @@ namespace Skyrim.Api.Test.Domains
             yield return new object[]
             {
                 "Valid properties for StandingStone Location",
-                CreateNewCreateLocationDtoAsStandingStone(),
+                TestMethodHelpers.CreateNewCreateLocationDtoAsStandingStone(),
                 new StandingStone
                 {
                     Id = 0,
@@ -332,6 +197,27 @@ namespace Skyrim.Api.Test.Domains
                     GeographicalDescription = "Test"
                 }
             };
+            yield return new object[]
+            {
+                "Valid properties for Landmark Location",
+                TestMethodHelpers.CreateNewCreateLocationDtoAsLandmark(),
+                new Landmark
+                {
+                    Id = 0,
+                    Name = "Test",
+                    Description = "Test",
+                    TypeOfLocation = LocationType.Landmark,
+                    GeographicalDescription = "Test"
+                },
+                new Landmark
+                {
+                    Id = 0,
+                    Name = "Test",
+                    Description = "Test",
+                    TypeOfLocation = LocationType.Landmark,
+                    GeographicalDescription = "Test"
+                }
+            };
         }
 
         [Theory]
@@ -341,17 +227,19 @@ namespace Skyrim.Api.Test.Domains
         {
             // Arrange
             if (location.TypeOfLocation == LocationType.City)
-                _mockMapper.Setup(x => x.Map<City>(It.IsAny<CreateLocationDto>())).Returns(CreateNewCity());
+                _mockMapper.Setup(x => x.Map<City>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewCity());
             else if (location.TypeOfLocation == LocationType.Town)
-                _mockMapper.Setup(x => x.Map<Town>(It.IsAny<CreateLocationDto>())).Returns(CreateNewTown());
+                _mockMapper.Setup(x => x.Map<Town>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewTown());
             else if (location.TypeOfLocation == LocationType.Homestead)
-                _mockMapper.Setup(x => x.Map<Homestead>(It.IsAny<CreateLocationDto>())).Returns(CreateNewHomestead());
+                _mockMapper.Setup(x => x.Map<Homestead>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewHomestead());
             else if (location.TypeOfLocation == LocationType.Settlement)
-                _mockMapper.Setup(x => x.Map<Settlement>(It.IsAny<CreateLocationDto>())).Returns(CreateNewSettlement());
+                _mockMapper.Setup(x => x.Map<Settlement>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewSettlement());
             else if (location.TypeOfLocation == LocationType.DaedricShrine)
-                _mockMapper.Setup(x => x.Map<DaedricShrine>(It.IsAny<CreateLocationDto>())).Returns(CreateNewDaedricShrine());
+                _mockMapper.Setup(x => x.Map<DaedricShrine>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewDaedricShrine());
             else if (location.TypeOfLocation == LocationType.StandingStone)
-                _mockMapper.Setup(x => x.Map<StandingStone>(It.IsAny<CreateLocationDto>())).Returns(CreateNewStandingStone());
+                _mockMapper.Setup(x => x.Map<StandingStone>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewStandingStone());
+            else if (location.TypeOfLocation == LocationType.Landmark)
+                _mockMapper.Setup(x => x.Map<Landmark>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewLandmark());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
             var completedCreateTask = Task<Location>.FromResult(taskType);
@@ -372,6 +260,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Verify(x => x.Map<Settlement>(createLocationDto), Times.Once());
             else if (location.TypeOfLocation == LocationType.DaedricShrine)
                 _mockMapper.Verify(x => x.Map<DaedricShrine>(createLocationDto), Times.Once());
+            else if (location.TypeOfLocation == LocationType.Landmark)
+                _mockMapper.Verify(x => x.Map<Landmark>(createLocationDto), Times.Once());
         }
 
         [Theory]
@@ -419,6 +309,11 @@ namespace Skyrim.Api.Test.Domains
                 "Invalid properties for StandingStone",
                 new CreateLocationDto { TypeOfLocation = LocationType.StandingStone }
             };
+            yield return new object[]
+            {
+                "Invalid properties for Landmark",
+                new CreateLocationDto { TypeOfLocation = LocationType.Landmark }
+            };
         }
 
         [Theory]
@@ -438,6 +333,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<DaedricShrine>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
             else if (location.TypeOfLocation == LocationType.StandingStone)
                 _mockMapper.Setup(x => x.Map<StandingStone>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
+            else if (location.TypeOfLocation == LocationType.Landmark)
+                _mockMapper.Setup(x => x.Map<Landmark>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
 
@@ -453,38 +350,44 @@ namespace Skyrim.Api.Test.Domains
             yield return new object[]
             {
                 "Invalid properties for City",
-                CreateNewCity(),
-                CreateNewCreateLocationDtoAsCity(),
+                TestMethodHelpers.CreateNewCity(),
+                TestMethodHelpers.CreateNewCreateLocationDtoAsCity(),
             };
             yield return new object[]
             {
                 "Invalid properties for Town",
-                CreateNewTown(),
-                CreateNewCreateLocationDtoAsTown()
+                TestMethodHelpers.CreateNewTown(),
+                TestMethodHelpers.CreateNewCreateLocationDtoAsTown()
             };
             yield return new object[]
             {
                 "Invalid properties for Homestead",
-                CreateNewHomestead(),
-                CreateNewCreateLocationDtoAsHomestead()
+                TestMethodHelpers.CreateNewHomestead(),
+                TestMethodHelpers.CreateNewCreateLocationDtoAsHomestead()
             };
             yield return new object[]
             {
                 "Invalid properties for Settlement",
-                CreateNewSettlement(),
-                CreateNewCreateLocationDtoAsSettlement()
+                TestMethodHelpers.CreateNewSettlement(),
+                TestMethodHelpers.CreateNewCreateLocationDtoAsSettlement()
             };
             yield return new object[]
             {
                 "Invalid properties for DaedricShrine",
-                CreateNewDaedricShrine(),
-                CreateNewCreateLocationDtoAsDaedricShrine()
+                TestMethodHelpers.CreateNewDaedricShrine(),
+                TestMethodHelpers.CreateNewCreateLocationDtoAsDaedricShrine()
             };
             yield return new object[]
             {
                 "Invalid properties for StandingStone",
-                CreateNewStandingStone(),
-                CreateNewCreateLocationDtoAsStandingStone()
+                TestMethodHelpers.CreateNewStandingStone(),
+                TestMethodHelpers.CreateNewCreateLocationDtoAsStandingStone()
+            };
+            yield return new object[]
+            {
+                "Invalid properties for Landmark",
+                TestMethodHelpers.CreateNewLandmark(),
+                TestMethodHelpers.CreateNewCreateLocationDtoAsLandmark()
             };
         }
 
@@ -496,17 +399,19 @@ namespace Skyrim.Api.Test.Domains
         {
             // Arrange
             if (type.TypeOfLocation == LocationType.City)
-                _mockMapper.Setup(x => x.Map<City>(It.IsAny<CreateLocationDto>())).Returns(CreateNewCity());
+                _mockMapper.Setup(x => x.Map<City>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewCity());
             else if (type.TypeOfLocation == LocationType.Town)
-                _mockMapper.Setup(x => x.Map<Town>(It.IsAny<CreateLocationDto>())).Returns(CreateNewTown());
+                _mockMapper.Setup(x => x.Map<Town>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewTown());
             else if (type.TypeOfLocation == LocationType.Homestead)
-                _mockMapper.Setup(x => x.Map<Homestead>(It.IsAny<CreateLocationDto>())).Returns(CreateNewHomestead());
+                _mockMapper.Setup(x => x.Map<Homestead>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewHomestead());
             else if (type.TypeOfLocation == LocationType.Settlement)
-                _mockMapper.Setup(x => x.Map<Settlement>(It.IsAny<CreateLocationDto>())).Returns(CreateNewSettlement());
+                _mockMapper.Setup(x => x.Map<Settlement>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewSettlement());
             else if (type.TypeOfLocation == LocationType.DaedricShrine)
-                _mockMapper.Setup(x => x.Map<DaedricShrine>(It.IsAny<CreateLocationDto>())).Returns(CreateNewDaedricShrine());
+                _mockMapper.Setup(x => x.Map<DaedricShrine>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewDaedricShrine());
             else if (type.TypeOfLocation == LocationType.StandingStone)
-                _mockMapper.Setup(x => x.Map<StandingStone>(It.IsAny<CreateLocationDto>())).Returns(CreateNewStandingStone());
+                _mockMapper.Setup(x => x.Map<StandingStone>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewStandingStone());
+            else if (type.TypeOfLocation == LocationType.Landmark)
+                _mockMapper.Setup(x => x.Map<Landmark>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewLandmark());
 
             var completedCreateTask = Task<Location>.FromResult(taskType);
             _mockLocationRepository.Setup(x => x.SaveLocation(It.IsAny<Location>()))
@@ -533,9 +438,9 @@ namespace Skyrim.Api.Test.Domains
                         TypeOfLocation = LocationType.City,
                         GeographicalDescription = "Test"
                     },
-                    CreateNewCreateLocationDtoAsCity(),
-                    CreateNewCity(),
-                    CreateNewCity()
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsCity(),
+                    TestMethodHelpers.CreateNewCity(),
+                    TestMethodHelpers.CreateNewCity()
             };
             yield return new object[]
             {
@@ -546,9 +451,9 @@ namespace Skyrim.Api.Test.Domains
                         TypeOfLocation = LocationType.City,
                         GeographicalDescription = "Test"
                     },
-                    CreateNewCreateLocationDtoAsCity(),
-                    CreateNewCity(),
-                    CreateNewCity()
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsCity(),
+                    TestMethodHelpers.CreateNewCity(),
+                    TestMethodHelpers.CreateNewCity()
             };
             yield return new object[]
             {
@@ -560,9 +465,9 @@ namespace Skyrim.Api.Test.Domains
                         TypeOfLocation = LocationType.City,
                         GeographicalDescription = "Test"
                     },
-                    CreateNewCreateLocationDtoAsCity(),
-                    CreateNewCity(),
-                    CreateNewCity()
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsCity(),
+                    TestMethodHelpers.CreateNewCity(),
+                    TestMethodHelpers.CreateNewCity()
             };
             yield return new object[]
             {
@@ -574,9 +479,9 @@ namespace Skyrim.Api.Test.Domains
                         TypeOfLocation = LocationType.Town,
                         GeographicalDescription = "Test"
                     },
-                    CreateNewCreateLocationDtoAsTown(),
-                    CreateNewTown(),
-                    CreateNewTown()
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsTown(),
+                    TestMethodHelpers.CreateNewTown(),
+                    TestMethodHelpers.CreateNewTown()
             };
             yield return new object[]
             {
@@ -588,9 +493,9 @@ namespace Skyrim.Api.Test.Domains
                         TypeOfLocation = LocationType.Town,
                         GeographicalDescription = "Test"
                     },
-                    CreateNewCreateLocationDtoAsTown(),
-                    CreateNewTown(),
-                    CreateNewTown()
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsTown(),
+                    TestMethodHelpers.CreateNewTown(),
+                    TestMethodHelpers.CreateNewTown()
             };
             yield return new object[]
             {
@@ -602,9 +507,9 @@ namespace Skyrim.Api.Test.Domains
                         TypeOfLocation = LocationType.Town,
                         GeographicalDescription = "Test"
                     },
-                    CreateNewCreateLocationDtoAsTown(),
-                    CreateNewTown(),
-                    CreateNewTown()
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsTown(),
+                    TestMethodHelpers.CreateNewTown(),
+                    TestMethodHelpers.CreateNewTown()
             };
             yield return new object[]
             {
@@ -616,9 +521,9 @@ namespace Skyrim.Api.Test.Domains
                         TypeOfLocation = LocationType.Homestead,
                         GeographicalDescription = "Test"
                     },
-                    CreateNewCreateLocationDtoAsHomestead(),
-                    CreateNewHomestead(),
-                    CreateNewHomestead()
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsHomestead(),
+                    TestMethodHelpers.CreateNewHomestead(),
+                    TestMethodHelpers.CreateNewHomestead()
             };
             yield return new object[]
             {
@@ -630,9 +535,9 @@ namespace Skyrim.Api.Test.Domains
                         TypeOfLocation = LocationType.Homestead,
                         GeographicalDescription = "Test"
                     },
-                    CreateNewCreateLocationDtoAsHomestead(),
-                    CreateNewHomestead(),
-                    CreateNewHomestead()
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsHomestead(),
+                    TestMethodHelpers.CreateNewHomestead(),
+                    TestMethodHelpers.CreateNewHomestead()
             };
             yield return new object[]
             {
@@ -644,9 +549,9 @@ namespace Skyrim.Api.Test.Domains
                         TypeOfLocation = LocationType.Homestead,
                         GeographicalDescription = "Test"
                     },
-                    CreateNewCreateLocationDtoAsHomestead(),
-                    CreateNewHomestead(),
-                    CreateNewHomestead()
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsHomestead(),
+                    TestMethodHelpers.CreateNewHomestead(),
+                    TestMethodHelpers.CreateNewHomestead()
             };
             yield return new object[]
             {
@@ -658,9 +563,9 @@ namespace Skyrim.Api.Test.Domains
                         TypeOfLocation = LocationType.Settlement,
                         GeographicalDescription = "Test"
                     },
-                    CreateNewCreateLocationDtoAsSettlement(),
-                    CreateNewSettlement(),
-                    CreateNewSettlement()
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsSettlement(),
+                    TestMethodHelpers.CreateNewSettlement(),
+                    TestMethodHelpers.CreateNewSettlement()
             };
             yield return new object[]
             {
@@ -672,9 +577,9 @@ namespace Skyrim.Api.Test.Domains
                         TypeOfLocation = LocationType.Settlement,
                         GeographicalDescription = "Test"
                     },
-                    CreateNewCreateLocationDtoAsSettlement(),
-                    CreateNewSettlement(),
-                    CreateNewSettlement()
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsSettlement(),
+                    TestMethodHelpers.CreateNewSettlement(),
+                    TestMethodHelpers.CreateNewSettlement()
             };
             yield return new object[]
             {
@@ -686,9 +591,9 @@ namespace Skyrim.Api.Test.Domains
                         TypeOfLocation = LocationType.Settlement,
                         GeographicalDescription = "Test"
                     },
-                    CreateNewCreateLocationDtoAsSettlement(),
-                    CreateNewSettlement(),
-                    CreateNewSettlement()
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsSettlement(),
+                    TestMethodHelpers.CreateNewSettlement(),
+                    TestMethodHelpers.CreateNewSettlement()
             };
             yield return new object[]
             {
@@ -700,9 +605,9 @@ namespace Skyrim.Api.Test.Domains
                         TypeOfLocation = LocationType.DaedricShrine,
                         GeographicalDescription = "Test"
                     },
-                    CreateNewCreateLocationDtoAsDaedricShrine(),
-                    CreateNewDaedricShrine(),
-                    CreateNewDaedricShrine()
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsDaedricShrine(),
+                    TestMethodHelpers.CreateNewDaedricShrine(),
+                    TestMethodHelpers.CreateNewDaedricShrine()
             };
             yield return new object[]
             {
@@ -714,9 +619,9 @@ namespace Skyrim.Api.Test.Domains
                         TypeOfLocation = LocationType.DaedricShrine,
                         GeographicalDescription = "Test"
                     },
-                    CreateNewCreateLocationDtoAsDaedricShrine(),
-                    CreateNewDaedricShrine(),
-                    CreateNewDaedricShrine()
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsDaedricShrine(),
+                    TestMethodHelpers.CreateNewDaedricShrine(),
+                    TestMethodHelpers.CreateNewDaedricShrine()
             };
             yield return new object[]
             {
@@ -728,9 +633,9 @@ namespace Skyrim.Api.Test.Domains
                         TypeOfLocation = LocationType.DaedricShrine,
                         GeographicalDescription = "Test"
                     },
-                    CreateNewCreateLocationDtoAsDaedricShrine(),
-                    CreateNewDaedricShrine(),
-                    CreateNewDaedricShrine()
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsDaedricShrine(),
+                    TestMethodHelpers.CreateNewDaedricShrine(),
+                    TestMethodHelpers.CreateNewDaedricShrine()
             };
             yield return new object[]
             {
@@ -742,9 +647,9 @@ namespace Skyrim.Api.Test.Domains
                         TypeOfLocation = LocationType.StandingStone,
                         GeographicalDescription = "Test"
                     },
-                    CreateNewCreateLocationDtoAsStandingStone(),
-                    CreateNewStandingStone(),
-                    CreateNewStandingStone()
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsStandingStone(),
+                    TestMethodHelpers.CreateNewStandingStone(),
+                    TestMethodHelpers.CreateNewStandingStone()
             };
             yield return new object[]
             {
@@ -756,9 +661,9 @@ namespace Skyrim.Api.Test.Domains
                         TypeOfLocation = LocationType.StandingStone,
                         GeographicalDescription = "Test"
                     },
-                    CreateNewCreateLocationDtoAsStandingStone(),
-                    CreateNewStandingStone(),
-                    CreateNewStandingStone()
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsStandingStone(),
+                    TestMethodHelpers.CreateNewStandingStone(),
+                    TestMethodHelpers.CreateNewStandingStone()
             };
             yield return new object[]
             {
@@ -770,9 +675,51 @@ namespace Skyrim.Api.Test.Domains
                         TypeOfLocation = LocationType.StandingStone,
                         GeographicalDescription = "Test"
                     },
-                    CreateNewCreateLocationDtoAsStandingStone(),
-                    CreateNewStandingStone(),
-                    CreateNewStandingStone()
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsStandingStone(),
+                    TestMethodHelpers.CreateNewStandingStone(),
+                    TestMethodHelpers.CreateNewStandingStone()
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null description so it returns a Landmark with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = null,
+                        TypeOfLocation = LocationType.Landmark,
+                        GeographicalDescription = "Test"
+                    },
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsLandmark(),
+                    TestMethodHelpers.CreateNewLandmark(),
+                    TestMethodHelpers.CreateNewLandmark()
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has white spaces for description so it returns a Landmark with empty description",
+                new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = "     ",
+                        TypeOfLocation = LocationType.Landmark,
+                        GeographicalDescription = "Test"
+                    },
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsLandmark(),
+                    TestMethodHelpers.CreateNewLandmark(),
+                    TestMethodHelpers.CreateNewLandmark()
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has empty description so it returns a Landmark with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = "",
+                        TypeOfLocation = LocationType.Landmark,
+                        GeographicalDescription = "Test"
+                    },
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsLandmark(),
+                    TestMethodHelpers.CreateNewLandmark(),
+                    TestMethodHelpers.CreateNewLandmark()
             };
         }
 
@@ -1221,6 +1168,78 @@ namespace Skyrim.Api.Test.Domains
                         GeographicalDescription = " ",
                         Name = "Test",
                         TypeOfLocation = LocationType.StandingStone
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = null,
+                        TypeOfLocation = LocationType.Landmark
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has an empty name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = "",
+                        TypeOfLocation = LocationType.Landmark
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a white space name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = "   ",
+                        TypeOfLocation = LocationType.Landmark
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = null,
+                        Name = "Test",
+                        TypeOfLocation = LocationType.Landmark
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has an empty Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "",
+                        Name = "Test",
+                        TypeOfLocation = LocationType.Landmark
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a white space Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = " ",
+                        Name = "Test",
+                        TypeOfLocation = LocationType.Landmark
                     },
                     (CreateLocationDto)null
             };
