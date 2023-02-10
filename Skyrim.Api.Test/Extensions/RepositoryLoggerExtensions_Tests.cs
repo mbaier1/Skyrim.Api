@@ -136,6 +136,18 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.Camp
                 }
             };
+            yield return new object[]
+            {
+                "Fatal Error for Cave location",
+                new Exception(),
+                new Cave
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Cave
+                }
+            };
         }
 
         [Theory]
@@ -257,6 +269,19 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.Camp
                 },
                 LocationType.Camp
+            };
+            yield return new object[]
+            {
+                "Fatal Error for Cave location",
+                new Exception(),
+                new Cave
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Cave
+                },
+                LocationType.Cave
             };
         }
     }
