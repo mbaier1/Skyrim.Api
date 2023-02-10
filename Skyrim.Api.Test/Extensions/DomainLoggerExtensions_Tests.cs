@@ -147,6 +147,18 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.Cave
                 }
         };
+        yield return new object[]
+        {
+                "Fatal Error for Clearing location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Clearing
+                }
+        };
     }
 
     [Theory]
@@ -280,6 +292,19 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.Cave
                 },
                 LocationType.Cave
+        };
+        yield return new object[]
+        {
+                "Fatal Error for Clearing location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Clearing
+                },
+                LocationType.Clearing
         };
     }
 }

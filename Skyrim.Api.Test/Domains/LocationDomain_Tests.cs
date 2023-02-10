@@ -57,6 +57,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<Camp>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewCamp());
             else if (type.TypeOfLocation == LocationType.Cave)
                 _mockMapper.Setup(x => x.Map<Cave>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewCave());
+            else if (type.TypeOfLocation == LocationType.Clearing)
+                _mockMapper.Setup(x => x.Map<Clearing>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewClearing());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
             var completedCreateTask = Task<Location>.FromResult(taskType);
@@ -264,6 +266,27 @@ namespace Skyrim.Api.Test.Domains
                     GeographicalDescription = "Test"
                 }
             };
+            yield return new object[]
+            {
+                "Valid properties for Clearing Location",
+                TestMethodHelpers.CreateNewCreateLocationDtoAsClearing(),
+                new Clearing
+                {
+                    Id = 0,
+                    Name = "Test",
+                    Description = "Test",
+                    TypeOfLocation = LocationType.Clearing,
+                    GeographicalDescription = "Test"
+                },
+                new Clearing
+                {
+                    Id = 0,
+                    Name = "Test",
+                    Description = "Test",
+                    TypeOfLocation = LocationType.Clearing,
+                    GeographicalDescription = "Test"
+                }
+            };
         }
 
         [Theory]
@@ -290,6 +313,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<Camp>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewCamp());
             else if (location.TypeOfLocation == LocationType.Cave)
                 _mockMapper.Setup(x => x.Map<Cave>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewCave());
+            else if (location.TypeOfLocation == LocationType.Clearing)
+                _mockMapper.Setup(x => x.Map<Clearing>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewClearing());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
             var completedCreateTask = Task<Location>.FromResult(taskType);
@@ -316,6 +341,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Verify(x => x.Map<Camp>(createLocationDto), Times.Once());
             else if (location.TypeOfLocation == LocationType.Cave)
                 _mockMapper.Verify(x => x.Map<Cave>(createLocationDto), Times.Once());
+            else if (location.TypeOfLocation == LocationType.Clearing)
+                _mockMapper.Verify(x => x.Map<Clearing>(createLocationDto), Times.Once());
         }
 
         [Theory]
@@ -378,6 +405,11 @@ namespace Skyrim.Api.Test.Domains
                 "Invalid properties for Cave",
                 new CreateLocationDto { TypeOfLocation = LocationType.Cave }
             };
+            yield return new object[]
+            {
+                "Invalid properties for Clearing",
+                new CreateLocationDto { TypeOfLocation = LocationType.Clearing }
+            };
         }
 
         [Theory]
@@ -403,6 +435,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<Camp>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
             else if (location.TypeOfLocation == LocationType.Cave)
                 _mockMapper.Setup(x => x.Map<Cave>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
+            else if (location.TypeOfLocation == LocationType.Clearing)
+                _mockMapper.Setup(x => x.Map<Clearing>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
 
@@ -469,6 +503,12 @@ namespace Skyrim.Api.Test.Domains
                 TestMethodHelpers.CreateNewCave(),
                 TestMethodHelpers.CreateNewCreateLocationDtoAsCave()
             };
+            yield return new object[]
+            {
+                "Invalid properties for Clearing",
+                TestMethodHelpers.CreateNewClearing(),
+                TestMethodHelpers.CreateNewCreateLocationDtoAsClearing()
+            };
         }
 
         [Theory]
@@ -496,6 +536,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<Camp>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewCamp());
             else if (type.TypeOfLocation == LocationType.Cave)
                 _mockMapper.Setup(x => x.Map<Cave>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewCave());
+            else if (type.TypeOfLocation == LocationType.Clearing)
+                _mockMapper.Setup(x => x.Map<Clearing>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewClearing());
 
             var completedCreateTask = Task<Location>.FromResult(taskType);
             _mockLocationRepository.Setup(x => x.SaveLocation(It.IsAny<Location>()))
@@ -888,6 +930,48 @@ namespace Skyrim.Api.Test.Domains
                     TestMethodHelpers.CreateNewCreateLocationDtoAsCave(),
                     TestMethodHelpers.CreateNewCave(),
                     TestMethodHelpers.CreateNewCave()
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null description so it returns a Clearing with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = null,
+                        TypeOfLocation = LocationType.Clearing,
+                        GeographicalDescription = "Test"
+                    },
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsClearing(),
+                    TestMethodHelpers.CreateNewClearing(),
+                    TestMethodHelpers.CreateNewClearing()
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has white spaces for description so it returns a Clearing with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = "     ",
+                        TypeOfLocation = LocationType.Clearing,
+                        GeographicalDescription = "Test"
+                    },
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsClearing(),
+                    TestMethodHelpers.CreateNewClearing(),
+                    TestMethodHelpers.CreateNewClearing()
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has empty description so it returns a Clearing with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = "",
+                        TypeOfLocation = LocationType.Clearing,
+                        GeographicalDescription = "Test"
+                    },
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsClearing(),
+                    TestMethodHelpers.CreateNewClearing(),
+                    TestMethodHelpers.CreateNewClearing()
             };
         }
 
@@ -1552,6 +1636,78 @@ namespace Skyrim.Api.Test.Domains
                         GeographicalDescription = " ",
                         Name = "Test",
                         TypeOfLocation = LocationType.Cave
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = null,
+                        TypeOfLocation = LocationType.Clearing
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has an empty name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = "",
+                        TypeOfLocation = LocationType.Clearing
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a white space name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = "   ",
+                        TypeOfLocation = LocationType.Clearing
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = null,
+                        Name = "Test",
+                        TypeOfLocation = LocationType.Clearing
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has an empty Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "",
+                        Name = "Test",
+                        TypeOfLocation = LocationType.Clearing
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a white space Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = " ",
+                        Name = "Test",
+                        TypeOfLocation = LocationType.Clearing
                     },
                     (CreateLocationDto)null
             };
