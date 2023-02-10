@@ -150,6 +150,18 @@ namespace Skyrim.Api.Test.TestHelpers
             };
         }
 
+        public static DwarvenRuin CreateNewDwarvenRuin()
+        {
+            return new DwarvenRuin
+            {
+                Id = 0,
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.DwarvenRuin,
+                GeographicalDescription = "Test"
+            };
+        }
+
         public static CreateLocationDto CreateNewCreateLocationDtoAsCity()
         {
             return new CreateLocationDto
@@ -279,6 +291,17 @@ namespace Skyrim.Api.Test.TestHelpers
                 Description = "",
                 GeographicalDescription = "Test",
                 TypeOfLocation = LocationType.DragonLair
+            };
+        }
+
+        public static CreateLocationDto CreateNewCreateLocationDtoAsDwarvenRuin()
+        {
+            return new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "",
+                GeographicalDescription = "Test",
+                TypeOfLocation = LocationType.DwarvenRuin
             };
         }
     }

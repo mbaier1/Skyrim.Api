@@ -183,6 +183,18 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.DragonLair
                 }
         };
+        yield return new object[]
+        {
+                "Fatal Error for DwarvenRuin location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.DwarvenRuin
+                }
+        };
     }
 
     [Theory]
@@ -355,6 +367,19 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.DragonLair
                 },
                 LocationType.DragonLair
+        };
+        yield return new object[]
+        {
+                "Fatal Error for DwarvenRuin location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.DwarvenRuin
+                },
+                LocationType.DwarvenRuin
         };
     }
 }
