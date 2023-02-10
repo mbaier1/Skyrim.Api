@@ -2136,29 +2136,29 @@ namespace Skyrim.Api.Test.Controllers
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
-            var caveObject = new object();
-            var locationAsCave = new Cave();
+            var clearingObject = new object();
+            var locationAsClearing = new Clearing();
 
             // Act
 
             var response = await _locationsController.CreateLocation(createLocationDto);
             var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
-            caveObject = responseAsCreateAsActionResult.Value;
+            clearingObject = responseAsCreateAsActionResult.Value;
 
-            locationAsCave.Id = (int)caveObject.GetType().GetProperty("Id").GetValue(caveObject, null);
-            locationAsCave.Name = (string)caveObject.GetType().GetProperty("Name").GetValue(caveObject, null);
-            locationAsCave.TypeOfLocation = (LocationType)caveObject.GetType().GetProperty("TypeOfLocation").GetValue(caveObject, null);
-            locationAsCave.GeographicalDescription = (string)caveObject.GetType().GetProperty("GeographicalDescription").GetValue(caveObject, null);
-            locationAsCave.Description = (string)caveObject.GetType().GetProperty("Description").GetValue(caveObject, null);
+            locationAsClearing.Id = (int)clearingObject.GetType().GetProperty("Id").GetValue(clearingObject, null);
+            locationAsClearing.Name = (string)clearingObject.GetType().GetProperty("Name").GetValue(clearingObject, null);
+            locationAsClearing.TypeOfLocation = (LocationType)clearingObject.GetType().GetProperty("TypeOfLocation").GetValue(clearingObject, null);
+            locationAsClearing.GeographicalDescription = (string)clearingObject.GetType().GetProperty("GeographicalDescription").GetValue(clearingObject, null);
+            locationAsClearing.Description = (string)clearingObject.GetType().GetProperty("Description").GetValue(clearingObject, null);
 
             // Assert
 
             Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
-            Assert.Equal(clearing.Id, locationAsCave.Id);
-            Assert.Equal(clearing.Name, locationAsCave.Name);
-            Assert.Equal(clearing.Description, locationAsCave.Description);
-            Assert.Equal(clearing.TypeOfLocation, locationAsCave.TypeOfLocation);
-            Assert.Equal(clearing.GeographicalDescription, locationAsCave.GeographicalDescription);
+            Assert.Equal(clearing.Id, locationAsClearing.Id);
+            Assert.Equal(clearing.Name, locationAsClearing.Name);
+            Assert.Equal(clearing.Description, locationAsClearing.Description);
+            Assert.Equal(clearing.TypeOfLocation, locationAsClearing.TypeOfLocation);
+            Assert.Equal(clearing.GeographicalDescription, locationAsClearing.GeographicalDescription);
         }
 
         [Fact]
