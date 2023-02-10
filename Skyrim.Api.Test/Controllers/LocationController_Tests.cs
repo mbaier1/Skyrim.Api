@@ -1787,4 +1787,218 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
         }
     }
+
+    public class CreateLocation_AsCave : LocationController_Tests
+    {
+        [Fact]
+        public async void WhenCreateLocationDtoHasRequiredValidPropertiesAsACave_ReturnsCreateAtActionWithCaveDetails()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Cave",
+                TypeOfLocation = LocationType.Cave,
+                GeographicalDescription = "Test Description"
+            };
+
+            var cave = new Cave
+            {
+                Id = 0,
+                Name = "Test Cave",
+                TypeOfLocation = LocationType.Cave,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(cave);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var caveObject = new object();
+            var locationAsCave = new Cave();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            caveObject = responseAsCreateAsActionResult.Value;
+
+            locationAsCave.Id = (int)caveObject.GetType().GetProperty("Id").GetValue(caveObject, null);
+            locationAsCave.Name = (string)caveObject.GetType().GetProperty("Name").GetValue(caveObject, null);
+            locationAsCave.TypeOfLocation = (LocationType)caveObject.GetType().GetProperty("TypeOfLocation").GetValue(caveObject, null);
+            locationAsCave.GeographicalDescription = (string)caveObject.GetType().GetProperty("GeographicalDescription").GetValue(caveObject, null);
+            locationAsCave.Description = (string)caveObject.GetType().GetProperty("Description").GetValue(caveObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(cave.Id, locationAsCave.Id);
+            Assert.Equal(cave.Name, locationAsCave.Name);
+            Assert.Equal(cave.Description, locationAsCave.Description);
+            Assert.Equal(cave.TypeOfLocation, locationAsCave.TypeOfLocation);
+            Assert.Equal(cave.GeographicalDescription, locationAsCave.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasEmptySpacesForDescriptionACave_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Cave",
+                Description = "    ",
+                TypeOfLocation = LocationType.Cave,
+                GeographicalDescription = "Test Description"
+            };
+
+            var cave = new Cave
+            {
+                Id = 0,
+                Name = "Test Cave",
+                Description = "",
+                TypeOfLocation = LocationType.Cave,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(cave);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var caveObject = new object();
+            var locationAsCave = new Cave();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            caveObject = responseAsCreateAsActionResult.Value;
+
+            locationAsCave.Id = (int)caveObject.GetType().GetProperty("Id").GetValue(caveObject, null);
+            locationAsCave.Name = (string)caveObject.GetType().GetProperty("Name").GetValue(caveObject, null);
+            locationAsCave.TypeOfLocation = (LocationType)caveObject.GetType().GetProperty("TypeOfLocation").GetValue(caveObject, null);
+            locationAsCave.GeographicalDescription = (string)caveObject.GetType().GetProperty("GeographicalDescription").GetValue(caveObject, null);
+            locationAsCave.Description = (string)caveObject.GetType().GetProperty("Description").GetValue(caveObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(cave.Name, locationAsCave.Name);
+            Assert.Equal(cave.Id, locationAsCave.Id);
+            Assert.Equal(cave.Description, locationAsCave.Description);
+            Assert.Equal(cave.TypeOfLocation, locationAsCave.TypeOfLocation);
+            Assert.Equal(cave.GeographicalDescription, locationAsCave.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullForDescriptionAsACave_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Cave",
+                Description = null,
+                TypeOfLocation = LocationType.Cave,
+                GeographicalDescription = "Test Description"
+            };
+
+            var cave = new Cave
+            {
+                Id = 0,
+                Name = "Test Cave",
+                Description = null,
+                TypeOfLocation = LocationType.Cave,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(cave);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var caveObject = new object();
+            var locationAsCave = new Cave();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            caveObject = responseAsCreateAsActionResult.Value;
+
+            locationAsCave.Id = (int)caveObject.GetType().GetProperty("Id").GetValue(caveObject, null);
+            locationAsCave.Name = (string)caveObject.GetType().GetProperty("Name").GetValue(caveObject, null);
+            locationAsCave.TypeOfLocation = (LocationType)caveObject.GetType().GetProperty("TypeOfLocation").GetValue(caveObject, null);
+            locationAsCave.GeographicalDescription = (string)caveObject.GetType().GetProperty("GeographicalDescription").GetValue(caveObject, null);
+            locationAsCave.Description = (string)caveObject.GetType().GetProperty("Description").GetValue(caveObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(cave.Id, locationAsCave.Id);
+            Assert.Equal(cave.Name, locationAsCave.Name);
+            Assert.Equal(cave.Description, locationAsCave.Description);
+            Assert.Equal(cave.TypeOfLocation, locationAsCave.TypeOfLocation);
+            Assert.Equal(cave.GeographicalDescription, locationAsCave.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsACave_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "      ",
+                Description = "Test",
+                TypeOfLocation = LocationType.Cave,
+                GeographicalDescription = "Test Description"
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsACave_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.Cave,
+                GeographicalDescription = "        "
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+    }
 }

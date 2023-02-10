@@ -31,6 +31,7 @@ namespace Skyrim.Api.Data
         public DbSet<StandingStone> StandingStones { get; set; }
         public DbSet<Landmark> Landmarks { get; set; }
         public DbSet<Camp> Camps { get; set; }
+        public DbSet<Cave> Caves { get; set; }
 
         public DbSet<Guard> Guards { get; set; }
         public DbSet<PhyscialFightingShop> PhyscialFightingShops { get; set; }
