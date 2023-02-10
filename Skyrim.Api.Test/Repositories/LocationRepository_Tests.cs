@@ -85,6 +85,9 @@ namespace Skyrim.Api.Test.Repositories
                 case LocationType.DragonLair:
                     Assert.Equal(_context.DragonLairs.FirstOrDefault().Name, result.Name);
                     break;
+                case LocationType.DwarvenRuin:
+                    Assert.Equal(_context.DwarvenRuins.FirstOrDefault().Name, result.Name);
+                    break;
             }
         }
         public static IEnumerable<object[]> ValidLocationForEachLocationType()
@@ -148,6 +151,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Valid properties for a DragonLair",
                 TestMethodHelpers.CreateNewDragonLair()
+            };
+            yield return new object[]
+            {
+                "Valid properties for a DwarvenRuin",
+                TestMethodHelpers.CreateNewDwarvenRuin()
             };
         }
 
@@ -241,6 +249,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Invalid properties for DragonLair",
                 new DragonLair()
+            };
+            yield return new object[]
+            {
+                "Invalid properties for DwarvenRuin",
+                new DwarvenRuin()
             };
         }
 
