@@ -82,6 +82,9 @@ namespace Skyrim.Api.Test.Repositories
                 case LocationType.Dock:
                     Assert.Equal(_context.Docks.FirstOrDefault().Name, result.Name);
                     break;
+                case LocationType.DragonLair:
+                    Assert.Equal(_context.DragonLairs.FirstOrDefault().Name, result.Name);
+                    break;
             }
         }
         public static IEnumerable<object[]> ValidLocationForEachLocationType()
@@ -140,6 +143,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Valid properties for a Dock",
                 TestMethodHelpers.CreateNewDock()
+            };
+            yield return new object[]
+            {
+                "Valid properties for a DragonLair",
+                TestMethodHelpers.CreateNewDragonLair()
             };
         }
 
@@ -228,6 +236,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Invalid properties for Dock",
                 new Dock()
+            };
+            yield return new object[]
+            {
+                "Invalid properties for DragonLair",
+                new DragonLair()
             };
         }
 

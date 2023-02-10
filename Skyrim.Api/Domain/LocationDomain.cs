@@ -67,6 +67,8 @@ namespace Skyrim.Api.Domain
                         return _mapper.Map<Clearing>(createLocationDto);
                     case LocationType.Dock:
                         return _mapper.Map<Dock>(createLocationDto);
+                    case LocationType.DragonLair:
+                        return _mapper.Map<DragonLair>(createLocationDto);
                     default:
                         return null;
                 }
