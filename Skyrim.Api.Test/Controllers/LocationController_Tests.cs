@@ -2643,4 +2643,218 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
         }
     }
+
+    public class CreateLocation_AsDwarvenRuin : LocationController_Tests
+    {
+        [Fact]
+        public async void WhenCreateLocationDtoHasRequiredValidPropertiesAsADwarvenRuin_ReturnsCreateAtActionWithDwarvenRuinDetails()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test DwarvenRuin",
+                TypeOfLocation = LocationType.DwarvenRuin,
+                GeographicalDescription = "Test Description"
+            };
+
+            var dwarvenRuin = new DwarvenRuin
+            {
+                Id = 0,
+                Name = "Test DwarvenRuin",
+                TypeOfLocation = LocationType.DwarvenRuin,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(dwarvenRuin);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var dwarvenRuinObject = new object();
+            var locationAsDwarvenRuin = new DwarvenRuin();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            dwarvenRuinObject = responseAsCreateAsActionResult.Value;
+
+            locationAsDwarvenRuin.Id = (int)dwarvenRuinObject.GetType().GetProperty("Id").GetValue(dwarvenRuinObject, null);
+            locationAsDwarvenRuin.Name = (string)dwarvenRuinObject.GetType().GetProperty("Name").GetValue(dwarvenRuinObject, null);
+            locationAsDwarvenRuin.TypeOfLocation = (LocationType)dwarvenRuinObject.GetType().GetProperty("TypeOfLocation").GetValue(dwarvenRuinObject, null);
+            locationAsDwarvenRuin.GeographicalDescription = (string)dwarvenRuinObject.GetType().GetProperty("GeographicalDescription").GetValue(dwarvenRuinObject, null);
+            locationAsDwarvenRuin.Description = (string)dwarvenRuinObject.GetType().GetProperty("Description").GetValue(dwarvenRuinObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(dwarvenRuin.Id, locationAsDwarvenRuin.Id);
+            Assert.Equal(dwarvenRuin.Name, locationAsDwarvenRuin.Name);
+            Assert.Equal(dwarvenRuin.Description, locationAsDwarvenRuin.Description);
+            Assert.Equal(dwarvenRuin.TypeOfLocation, locationAsDwarvenRuin.TypeOfLocation);
+            Assert.Equal(dwarvenRuin.GeographicalDescription, locationAsDwarvenRuin.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasEmptySpacesForDescriptionADwarvenRuin_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test DwarvenRuin",
+                Description = "    ",
+                TypeOfLocation = LocationType.DwarvenRuin,
+                GeographicalDescription = "Test Description"
+            };
+
+            var dwarvenRuin = new DwarvenRuin
+            {
+                Id = 0,
+                Name = "Test DwarvenRuin",
+                Description = "",
+                TypeOfLocation = LocationType.DwarvenRuin,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(dwarvenRuin);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var dwarvenRuinObject = new object();
+            var locationAsDwarvenRuin = new DwarvenRuin();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            dwarvenRuinObject = responseAsCreateAsActionResult.Value;
+
+            locationAsDwarvenRuin.Id = (int)dwarvenRuinObject.GetType().GetProperty("Id").GetValue(dwarvenRuinObject, null);
+            locationAsDwarvenRuin.Name = (string)dwarvenRuinObject.GetType().GetProperty("Name").GetValue(dwarvenRuinObject, null);
+            locationAsDwarvenRuin.TypeOfLocation = (LocationType)dwarvenRuinObject.GetType().GetProperty("TypeOfLocation").GetValue(dwarvenRuinObject, null);
+            locationAsDwarvenRuin.GeographicalDescription = (string)dwarvenRuinObject.GetType().GetProperty("GeographicalDescription").GetValue(dwarvenRuinObject, null);
+            locationAsDwarvenRuin.Description = (string)dwarvenRuinObject.GetType().GetProperty("Description").GetValue(dwarvenRuinObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(dwarvenRuin.Name, locationAsDwarvenRuin.Name);
+            Assert.Equal(dwarvenRuin.Id, locationAsDwarvenRuin.Id);
+            Assert.Equal(dwarvenRuin.Description, locationAsDwarvenRuin.Description);
+            Assert.Equal(dwarvenRuin.TypeOfLocation, locationAsDwarvenRuin.TypeOfLocation);
+            Assert.Equal(dwarvenRuin.GeographicalDescription, locationAsDwarvenRuin.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullForDescriptionAsADwarvenRuin_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test DwarvenRuin",
+                Description = null,
+                TypeOfLocation = LocationType.DwarvenRuin,
+                GeographicalDescription = "Test Description"
+            };
+
+            var dwarvenRuin = new DwarvenRuin
+            {
+                Id = 0,
+                Name = "Test DwarvenRuin",
+                Description = null,
+                TypeOfLocation = LocationType.DwarvenRuin,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(dwarvenRuin);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var dwarvenRuinObject = new object();
+            var locationAsDwarvenRuin = new DwarvenRuin();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            dwarvenRuinObject = responseAsCreateAsActionResult.Value;
+
+            locationAsDwarvenRuin.Id = (int)dwarvenRuinObject.GetType().GetProperty("Id").GetValue(dwarvenRuinObject, null);
+            locationAsDwarvenRuin.Name = (string)dwarvenRuinObject.GetType().GetProperty("Name").GetValue(dwarvenRuinObject, null);
+            locationAsDwarvenRuin.TypeOfLocation = (LocationType)dwarvenRuinObject.GetType().GetProperty("TypeOfLocation").GetValue(dwarvenRuinObject, null);
+            locationAsDwarvenRuin.GeographicalDescription = (string)dwarvenRuinObject.GetType().GetProperty("GeographicalDescription").GetValue(dwarvenRuinObject, null);
+            locationAsDwarvenRuin.Description = (string)dwarvenRuinObject.GetType().GetProperty("Description").GetValue(dwarvenRuinObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(dwarvenRuin.Id, locationAsDwarvenRuin.Id);
+            Assert.Equal(dwarvenRuin.Name, locationAsDwarvenRuin.Name);
+            Assert.Equal(dwarvenRuin.Description, locationAsDwarvenRuin.Description);
+            Assert.Equal(dwarvenRuin.TypeOfLocation, locationAsDwarvenRuin.TypeOfLocation);
+            Assert.Equal(dwarvenRuin.GeographicalDescription, locationAsDwarvenRuin.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsADwarvenRuin_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "      ",
+                Description = "Test",
+                TypeOfLocation = LocationType.DwarvenRuin,
+                GeographicalDescription = "Test Description"
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsADwarvenRuin_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.DwarvenRuin,
+                GeographicalDescription = "        "
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+    }
 }
