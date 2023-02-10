@@ -1,5 +1,6 @@
 ﻿using Skyrim.Api.Domain.DTOs;
 using Skyrim.Api.Domain.Interfaces;
+using System.Text.RegularExpressions;
 
 namespace Skyrim.Api.Domain.DomainHelpers
 {
@@ -12,6 +13,7 @@ namespace Skyrim.Api.Domain.DomainHelpers
                 return null;
 
             createLocationDto = TrimWhiteSpaceProperties(createLocationDto);
+            createLocationDto.Name = FormatNameCorrectly(createLocationDto.Name);
 
             return createLocationDto;
         }
@@ -35,6 +37,11 @@ namespace Skyrim.Api.Domain.DomainHelpers
             createLocationDto.GeographicalDescription = createLocationDto.GeographicalDescription.Trim();
 
             return createLocationDto;
+        }
+
+        private string FormatNameCorrectly(string name)
+        {
+            return Regex.Replace(name.ToLower(), @"\b\w", (Match match) => match.ToString().ToUpper());
         }
     }
 }

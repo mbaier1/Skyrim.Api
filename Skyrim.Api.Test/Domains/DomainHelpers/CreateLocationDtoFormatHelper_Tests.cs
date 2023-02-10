@@ -1,6 +1,8 @@
 ﻿using Skyrim.Api.Data.Enums;
+using Skyrim.Api.Data.Models;
 using Skyrim.Api.Domain.DomainHelpers;
 using Skyrim.Api.Domain.DTOs;
+using Skyrim.Api.Test.TestHelpers;
 
 namespace Skyrim.Api.Test.Domains.DomainHelpers
 {
@@ -1406,6 +1408,131 @@ namespace Skyrim.Api.Test.Domains.DomainHelpers
                      TypeOfLocation = LocationType.Landmark
                  },
                  (CreateLocationDto)null
+            };
+        }
+
+        [Theory]
+        [MemberData(nameof(DifferentNameFormats))]
+        public void WithDifferentFormattedNames_ReturnsExpectedLocationFormattedCorrectly(string description, CreateLocationDto createLocationDto,
+            CreateLocationDto formattedCreateLocationDto)
+        {
+            // Arrange
+
+            // Act
+            var result = _createLocationDtoFormatHelper.FormatEntity(createLocationDto);
+
+            // Assert
+            Assert.Equal(formattedCreateLocationDto.Name, result.Name);
+        }
+        public static IEnumerable<object[]> DifferentNameFormats()
+        {
+            yield return new object[]
+            {
+                "All lowercase name",
+                    new CreateLocationDto
+                    {
+                        Name = "test",
+                        Description = null,
+                        TypeOfLocation = LocationType.City,
+                        GeographicalDescription = "Test"
+                    },
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = null,
+                        TypeOfLocation = LocationType.City,
+                        GeographicalDescription = "Test"
+                    }
+            };
+            yield return new object[]
+            {
+                "All uppercase name",
+                    new CreateLocationDto
+                    {
+                        Name = "TEST",
+                        Description = null,
+                        TypeOfLocation = LocationType.City,
+                        GeographicalDescription = "Test"
+                    },
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = null,
+                        TypeOfLocation = LocationType.City,
+                        GeographicalDescription = "Test"
+                    }
+            };
+            yield return new object[]
+            {
+                "Upper and lowercase name",
+                    new CreateLocationDto
+                    {
+                        Name = "tEsT",
+                        Description = null,
+                        TypeOfLocation = LocationType.City,
+                        GeographicalDescription = "Test"
+                    },
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = null,
+                        TypeOfLocation = LocationType.City,
+                        GeographicalDescription = "Test"
+                    }
+            };
+            yield return new object[]
+            {
+                "multiple lowercase words in name",
+                    new CreateLocationDto
+                    {
+                        Name = "test test test t",
+                        Description = null,
+                        TypeOfLocation = LocationType.City,
+                        GeographicalDescription = "Test"
+                    },
+                    new CreateLocationDto
+                    {
+                        Name = "Test Test Test T",
+                        Description = null,
+                        TypeOfLocation = LocationType.City,
+                        GeographicalDescription = "Test"
+                    }
+            };
+            yield return new object[]
+            {
+                "multiple uppercase words in name",
+                    new CreateLocationDto
+                    {
+                        Name = "TEST TEST TEST T",
+                        Description = null,
+                        TypeOfLocation = LocationType.City,
+                        GeographicalDescription = "Test"
+                    },
+                    new CreateLocationDto
+                    {
+                        Name = "Test Test Test T",
+                        Description = null,
+                        TypeOfLocation = LocationType.City,
+                        GeographicalDescription = "Test"
+                    }
+            };
+            yield return new object[]
+            {
+                "Mixed upper and lowercase words in name",
+                    new CreateLocationDto
+                    {
+                        Name = "tEsT TesT TESt t",
+                        Description = null,
+                        TypeOfLocation = LocationType.City,
+                        GeographicalDescription = "Test"
+                    },
+                    new CreateLocationDto
+                    {
+                        Name = "Test Test Test T",
+                        Description = null,
+                        TypeOfLocation = LocationType.City,
+                        GeographicalDescription = "Test"
+                    }
             };
         }
     }
