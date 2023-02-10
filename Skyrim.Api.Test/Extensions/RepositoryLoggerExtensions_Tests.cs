@@ -160,6 +160,18 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.Clearing
                 }
             };
+            yield return new object[]
+            {
+                "Fatal Error for Dock location",
+                new Exception(),
+                new Dock
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Dock
+                }
+            };
         }
 
         [Theory]
@@ -307,6 +319,19 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.Clearing
                 },
                 LocationType.Clearing
+            };
+            yield return new object[]
+            {
+                "Fatal Error for Dock location",
+                new Exception(),
+                new Dock
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Dock
+                },
+                LocationType.Dock
             };
         }
     }
