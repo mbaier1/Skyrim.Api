@@ -159,6 +159,18 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.Clearing
                 }
         };
+        yield return new object[]
+        {
+                "Fatal Error for Dock location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Dock
+                }
+        };
     }
 
     [Theory]
@@ -305,6 +317,19 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.Clearing
                 },
                 LocationType.Clearing
+        };
+        yield return new object[]
+        {
+                "Fatal Error for Dock location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Dock
+                },
+                LocationType.Dock
         };
     }
 }

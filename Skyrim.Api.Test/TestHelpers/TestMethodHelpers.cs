@@ -126,6 +126,18 @@ namespace Skyrim.Api.Test.TestHelpers
             };
         }
 
+        public static Dock CreateNewDock()
+        {
+            return new Dock
+            {
+                Id = 0,
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.Dock,
+                GeographicalDescription = "Test"
+            };
+        }
+
         public static CreateLocationDto CreateNewCreateLocationDtoAsCity()
         {
             return new CreateLocationDto
@@ -233,6 +245,17 @@ namespace Skyrim.Api.Test.TestHelpers
                 Description = "",
                 GeographicalDescription = "Test",
                 TypeOfLocation = LocationType.Clearing
+            };
+        }
+
+        public static CreateLocationDto CreateNewCreateLocationDtoAsDock()
+        {
+            return new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "",
+                GeographicalDescription = "Test",
+                TypeOfLocation = LocationType.Dock
             };
         }
     }

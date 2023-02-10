@@ -79,6 +79,9 @@ namespace Skyrim.Api.Test.Repositories
                 case LocationType.Clearing:
                     Assert.Equal(_context.Clearings.FirstOrDefault().Name, result.Name);
                     break;
+                case LocationType.Dock:
+                    Assert.Equal(_context.Docks.FirstOrDefault().Name, result.Name);
+                    break;
             }
         }
         public static IEnumerable<object[]> ValidLocationForEachLocationType()
@@ -132,6 +135,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Valid properties for a Clearing",
                 TestMethodHelpers.CreateNewClearing()
+            };
+            yield return new object[]
+            {
+                "Valid properties for a Dock",
+                TestMethodHelpers.CreateNewDock()
             };
         }
 
@@ -215,6 +223,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Invalid properties for Clearing",
                 new Clearing()
+            };
+            yield return new object[]
+            {
+                "Invalid properties for Dock",
+                new Dock()
             };
         }
 
