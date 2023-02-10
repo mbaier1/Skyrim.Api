@@ -4,7 +4,6 @@ using Skyrim.Api.Data;
 using Skyrim.Api.Data.AbstractModels;
 using Skyrim.Api.Data.Enums;
 using Skyrim.Api.Data.Models;
-using Skyrim.Api.Domain.DTOs;
 using Skyrim.Api.Extensions.Interfaces;
 using Skyrim.Api.Repository;
 using Skyrim.Api.Repository.Interface;
@@ -71,6 +70,9 @@ namespace Skyrim.Api.Test.Repositories
                 case LocationType.Landmark:
                     Assert.Equal(_context.Landmarks.FirstOrDefault().Name, result.Name);
                     break;
+                case LocationType.Camp:
+                    Assert.Equal(_context.Camps.FirstOrDefault().Name, result.Name);
+                    break;
             }
         }
         public static IEnumerable<object[]> ValidLocationForEachLocationType()
@@ -109,6 +111,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Valid properties for a Landmark",
                 TestMethodHelpers.CreateNewLandmark()
+            };
+            yield return new object[]
+            {
+                "Valid properties for a Camp",
+                TestMethodHelpers.CreateNewCamp()
             };
         }
 
@@ -177,6 +184,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Invalid properties for Landmark",
                 new Landmark()
+            };
+            yield return new object[]
+            {
+                "Invalid properties for Camp",
+                new Camp()
             };
         }
 

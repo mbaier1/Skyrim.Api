@@ -59,6 +59,8 @@ namespace Skyrim.Api.Domain
                         return _mapper.Map<StandingStone>(createLocationDto);
                     case LocationType.Landmark:
                         return _mapper.Map<Landmark>(createLocationDto);
+                    case LocationType.Camp:
+                        return _mapper.Map<Camp>(createLocationDto);
                     default:
                         return null;
                 }
