@@ -148,6 +148,18 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.Cave
                 }
             };
+            yield return new object[]
+            {
+                "Fatal Error for Clearing location",
+                new Exception(),
+                new Clearing
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Clearing
+                }
+            };
         }
 
         [Theory]
@@ -282,6 +294,19 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.Cave
                 },
                 LocationType.Cave
+            };
+            yield return new object[]
+            {
+                "Fatal Error for Clearing location",
+                new Exception(),
+                new Clearing
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Clearing
+                },
+                LocationType.Clearing
             };
         }
     }

@@ -2001,4 +2001,218 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
         }
     }
+
+    public class CreateLocation_AsClearing : LocationController_Tests
+    {
+        [Fact]
+        public async void WhenCreateLocationDtoHasRequiredValidPropertiesAsAClearing_ReturnsCreateAtActionWithClearingDetails()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Clearing",
+                TypeOfLocation = LocationType.Clearing,
+                GeographicalDescription = "Test Description"
+            };
+
+            var clearing = new Clearing
+            {
+                Id = 0,
+                Name = "Test Clearing",
+                TypeOfLocation = LocationType.Clearing,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(clearing);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var clearingObject = new object();
+            var locationAsClearing = new Clearing();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            clearingObject = responseAsCreateAsActionResult.Value;
+
+            locationAsClearing.Id = (int)clearingObject.GetType().GetProperty("Id").GetValue(clearingObject, null);
+            locationAsClearing.Name = (string)clearingObject.GetType().GetProperty("Name").GetValue(clearingObject, null);
+            locationAsClearing.TypeOfLocation = (LocationType)clearingObject.GetType().GetProperty("TypeOfLocation").GetValue(clearingObject, null);
+            locationAsClearing.GeographicalDescription = (string)clearingObject.GetType().GetProperty("GeographicalDescription").GetValue(clearingObject, null);
+            locationAsClearing.Description = (string)clearingObject.GetType().GetProperty("Description").GetValue(clearingObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(clearing.Id, locationAsClearing.Id);
+            Assert.Equal(clearing.Name, locationAsClearing.Name);
+            Assert.Equal(clearing.Description, locationAsClearing.Description);
+            Assert.Equal(clearing.TypeOfLocation, locationAsClearing.TypeOfLocation);
+            Assert.Equal(clearing.GeographicalDescription, locationAsClearing.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasEmptySpacesForDescriptionAClearing_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Clearing",
+                Description = "    ",
+                TypeOfLocation = LocationType.Clearing,
+                GeographicalDescription = "Test Description"
+            };
+
+            var clearing = new Clearing
+            {
+                Id = 0,
+                Name = "Test Clearing",
+                Description = "",
+                TypeOfLocation = LocationType.Clearing,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(clearing);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var clearingObject = new object();
+            var locationAsClearing = new Clearing();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            clearingObject = responseAsCreateAsActionResult.Value;
+
+            locationAsClearing.Id = (int)clearingObject.GetType().GetProperty("Id").GetValue(clearingObject, null);
+            locationAsClearing.Name = (string)clearingObject.GetType().GetProperty("Name").GetValue(clearingObject, null);
+            locationAsClearing.TypeOfLocation = (LocationType)clearingObject.GetType().GetProperty("TypeOfLocation").GetValue(clearingObject, null);
+            locationAsClearing.GeographicalDescription = (string)clearingObject.GetType().GetProperty("GeographicalDescription").GetValue(clearingObject, null);
+            locationAsClearing.Description = (string)clearingObject.GetType().GetProperty("Description").GetValue(clearingObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(clearing.Name, locationAsClearing.Name);
+            Assert.Equal(clearing.Id, locationAsClearing.Id);
+            Assert.Equal(clearing.Description, locationAsClearing.Description);
+            Assert.Equal(clearing.TypeOfLocation, locationAsClearing.TypeOfLocation);
+            Assert.Equal(clearing.GeographicalDescription, locationAsClearing.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullForDescriptionAsAClearing_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Clearing",
+                Description = null,
+                TypeOfLocation = LocationType.Clearing,
+                GeographicalDescription = "Test Description"
+            };
+
+            var clearing = new Clearing
+            {
+                Id = 0,
+                Name = "Test Clearing",
+                Description = null,
+                TypeOfLocation = LocationType.Clearing,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(clearing);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var clearingObject = new object();
+            var locationAsClearing = new Clearing();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            clearingObject = responseAsCreateAsActionResult.Value;
+
+            locationAsClearing.Id = (int)clearingObject.GetType().GetProperty("Id").GetValue(clearingObject, null);
+            locationAsClearing.Name = (string)clearingObject.GetType().GetProperty("Name").GetValue(clearingObject, null);
+            locationAsClearing.TypeOfLocation = (LocationType)clearingObject.GetType().GetProperty("TypeOfLocation").GetValue(clearingObject, null);
+            locationAsClearing.GeographicalDescription = (string)clearingObject.GetType().GetProperty("GeographicalDescription").GetValue(clearingObject, null);
+            locationAsClearing.Description = (string)clearingObject.GetType().GetProperty("Description").GetValue(clearingObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(clearing.Id, locationAsClearing.Id);
+            Assert.Equal(clearing.Name, locationAsClearing.Name);
+            Assert.Equal(clearing.Description, locationAsClearing.Description);
+            Assert.Equal(clearing.TypeOfLocation, locationAsClearing.TypeOfLocation);
+            Assert.Equal(clearing.GeographicalDescription, locationAsClearing.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsAClearing_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "      ",
+                Description = "Test",
+                TypeOfLocation = LocationType.Clearing,
+                GeographicalDescription = "Test Description"
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsAClearing_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.Clearing,
+                GeographicalDescription = "        "
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+    }
 }
