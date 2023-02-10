@@ -2429,4 +2429,218 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
         }
     }
+
+    public class CreateLocation_AsDragonLair : LocationController_Tests
+    {
+        [Fact]
+        public async void WhenCreateLocationDtoHasRequiredValidPropertiesAsADragonLair_ReturnsCreateAtActionWithDragonLairDetails()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test DragonLair",
+                TypeOfLocation = LocationType.DragonLair,
+                GeographicalDescription = "Test Description"
+            };
+
+            var dragonLair = new DragonLair
+            {
+                Id = 0,
+                Name = "Test DragonLair",
+                TypeOfLocation = LocationType.DragonLair,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(dragonLair);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var dragonLairObject = new object();
+            var locationAsDragonLair = new DragonLair();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            dragonLairObject = responseAsCreateAsActionResult.Value;
+
+            locationAsDragonLair.Id = (int)dragonLairObject.GetType().GetProperty("Id").GetValue(dragonLairObject, null);
+            locationAsDragonLair.Name = (string)dragonLairObject.GetType().GetProperty("Name").GetValue(dragonLairObject, null);
+            locationAsDragonLair.TypeOfLocation = (LocationType)dragonLairObject.GetType().GetProperty("TypeOfLocation").GetValue(dragonLairObject, null);
+            locationAsDragonLair.GeographicalDescription = (string)dragonLairObject.GetType().GetProperty("GeographicalDescription").GetValue(dragonLairObject, null);
+            locationAsDragonLair.Description = (string)dragonLairObject.GetType().GetProperty("Description").GetValue(dragonLairObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(dragonLair.Id, locationAsDragonLair.Id);
+            Assert.Equal(dragonLair.Name, locationAsDragonLair.Name);
+            Assert.Equal(dragonLair.Description, locationAsDragonLair.Description);
+            Assert.Equal(dragonLair.TypeOfLocation, locationAsDragonLair.TypeOfLocation);
+            Assert.Equal(dragonLair.GeographicalDescription, locationAsDragonLair.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasEmptySpacesForDescriptionADragonLair_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test DragonLair",
+                Description = "    ",
+                TypeOfLocation = LocationType.DragonLair,
+                GeographicalDescription = "Test Description"
+            };
+
+            var dragonLair = new DragonLair
+            {
+                Id = 0,
+                Name = "Test DragonLair",
+                Description = "",
+                TypeOfLocation = LocationType.DragonLair,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(dragonLair);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var dragonLairObject = new object();
+            var locationAsDragonLair = new DragonLair();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            dragonLairObject = responseAsCreateAsActionResult.Value;
+
+            locationAsDragonLair.Id = (int)dragonLairObject.GetType().GetProperty("Id").GetValue(dragonLairObject, null);
+            locationAsDragonLair.Name = (string)dragonLairObject.GetType().GetProperty("Name").GetValue(dragonLairObject, null);
+            locationAsDragonLair.TypeOfLocation = (LocationType)dragonLairObject.GetType().GetProperty("TypeOfLocation").GetValue(dragonLairObject, null);
+            locationAsDragonLair.GeographicalDescription = (string)dragonLairObject.GetType().GetProperty("GeographicalDescription").GetValue(dragonLairObject, null);
+            locationAsDragonLair.Description = (string)dragonLairObject.GetType().GetProperty("Description").GetValue(dragonLairObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(dragonLair.Name, locationAsDragonLair.Name);
+            Assert.Equal(dragonLair.Id, locationAsDragonLair.Id);
+            Assert.Equal(dragonLair.Description, locationAsDragonLair.Description);
+            Assert.Equal(dragonLair.TypeOfLocation, locationAsDragonLair.TypeOfLocation);
+            Assert.Equal(dragonLair.GeographicalDescription, locationAsDragonLair.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullForDescriptionAsADragonLair_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test DragonLair",
+                Description = null,
+                TypeOfLocation = LocationType.DragonLair,
+                GeographicalDescription = "Test Description"
+            };
+
+            var dragonLair = new DragonLair
+            {
+                Id = 0,
+                Name = "Test DragonLair",
+                Description = null,
+                TypeOfLocation = LocationType.DragonLair,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(dragonLair);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var dragonLairObject = new object();
+            var locationAsDragonLair = new DragonLair();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            dragonLairObject = responseAsCreateAsActionResult.Value;
+
+            locationAsDragonLair.Id = (int)dragonLairObject.GetType().GetProperty("Id").GetValue(dragonLairObject, null);
+            locationAsDragonLair.Name = (string)dragonLairObject.GetType().GetProperty("Name").GetValue(dragonLairObject, null);
+            locationAsDragonLair.TypeOfLocation = (LocationType)dragonLairObject.GetType().GetProperty("TypeOfLocation").GetValue(dragonLairObject, null);
+            locationAsDragonLair.GeographicalDescription = (string)dragonLairObject.GetType().GetProperty("GeographicalDescription").GetValue(dragonLairObject, null);
+            locationAsDragonLair.Description = (string)dragonLairObject.GetType().GetProperty("Description").GetValue(dragonLairObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(dragonLair.Id, locationAsDragonLair.Id);
+            Assert.Equal(dragonLair.Name, locationAsDragonLair.Name);
+            Assert.Equal(dragonLair.Description, locationAsDragonLair.Description);
+            Assert.Equal(dragonLair.TypeOfLocation, locationAsDragonLair.TypeOfLocation);
+            Assert.Equal(dragonLair.GeographicalDescription, locationAsDragonLair.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsADragonLair_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "      ",
+                Description = "Test",
+                TypeOfLocation = LocationType.DragonLair,
+                GeographicalDescription = "Test Description"
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsADragonLair_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.DragonLair,
+                GeographicalDescription = "        "
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+    }
 }

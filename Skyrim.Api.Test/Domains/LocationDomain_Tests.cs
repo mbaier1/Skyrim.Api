@@ -61,6 +61,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<Clearing>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewClearing());
             else if (type.TypeOfLocation == LocationType.Dock)
                 _mockMapper.Setup(x => x.Map<Dock>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewDock());
+            else if (type.TypeOfLocation == LocationType.DragonLair)
+                _mockMapper.Setup(x => x.Map<DragonLair>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewDragonLair());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
             var completedCreateTask = Task<Location>.FromResult(taskType);
@@ -310,6 +312,27 @@ namespace Skyrim.Api.Test.Domains
                     GeographicalDescription = "Test"
                 }
             };
+            yield return new object[]
+            {
+                "Valid properties for DragonLair Location",
+                TestMethodHelpers.CreateNewCreateLocationDtoAsDragonLair(),
+                new DragonLair
+                {
+                    Id = 0,
+                    Name = "Test",
+                    Description = "Test",
+                    TypeOfLocation = LocationType.DragonLair,
+                    GeographicalDescription = "Test"
+                },
+                new DragonLair
+                {
+                    Id = 0,
+                    Name = "Test",
+                    Description = "Test",
+                    TypeOfLocation = LocationType.DragonLair,
+                    GeographicalDescription = "Test"
+                }
+            };
         }
 
         [Theory]
@@ -340,6 +363,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<Clearing>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewClearing());
             else if (location.TypeOfLocation == LocationType.Dock)
                 _mockMapper.Setup(x => x.Map<Dock>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewDock());
+            else if (location.TypeOfLocation == LocationType.DragonLair)
+                _mockMapper.Setup(x => x.Map<DragonLair>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewDragonLair());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
             var completedCreateTask = Task<Location>.FromResult(taskType);
@@ -370,6 +395,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Verify(x => x.Map<Clearing>(createLocationDto), Times.Once());
             else if (location.TypeOfLocation == LocationType.Dock)
                 _mockMapper.Verify(x => x.Map<Dock>(createLocationDto), Times.Once());
+            else if (location.TypeOfLocation == LocationType.DragonLair)
+                _mockMapper.Verify(x => x.Map<DragonLair>(createLocationDto), Times.Once());
         }
 
         [Theory]
@@ -442,6 +469,11 @@ namespace Skyrim.Api.Test.Domains
                 "Invalid properties for Dock",
                 new CreateLocationDto { TypeOfLocation = LocationType.Dock }
             };
+            yield return new object[]
+            {
+                "Invalid properties for DragonLair",
+                new CreateLocationDto { TypeOfLocation = LocationType.DragonLair }
+            };
         }
 
         [Theory]
@@ -471,6 +503,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<Clearing>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
             else if (location.TypeOfLocation == LocationType.Dock)
                 _mockMapper.Setup(x => x.Map<Dock>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
+            else if (location.TypeOfLocation == LocationType.DragonLair)
+                _mockMapper.Setup(x => x.Map<DragonLair>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
 
@@ -549,6 +583,12 @@ namespace Skyrim.Api.Test.Domains
                 TestMethodHelpers.CreateNewDock(),
                 TestMethodHelpers.CreateNewCreateLocationDtoAsDock()
             };
+            yield return new object[]
+            {
+                "Invalid properties for DragonLair",
+                TestMethodHelpers.CreateNewDragonLair(),
+                TestMethodHelpers.CreateNewCreateLocationDtoAsDragonLair()
+            };
         }
 
         [Theory]
@@ -580,6 +620,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<Clearing>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewClearing());
             else if (type.TypeOfLocation == LocationType.Dock)
                 _mockMapper.Setup(x => x.Map<Dock>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewDock());
+            else if (type.TypeOfLocation == LocationType.DragonLair)
+                _mockMapper.Setup(x => x.Map<DragonLair>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewDragonLair());
 
             var completedCreateTask = Task<Location>.FromResult(taskType);
             _mockLocationRepository.Setup(x => x.SaveLocation(It.IsAny<Location>()))
@@ -1056,6 +1098,48 @@ namespace Skyrim.Api.Test.Domains
                     TestMethodHelpers.CreateNewCreateLocationDtoAsDock(),
                     TestMethodHelpers.CreateNewDock(),
                     TestMethodHelpers.CreateNewDock()
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null description so it returns a DragonLair with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = null,
+                        TypeOfLocation = LocationType.DragonLair,
+                        GeographicalDescription = "Test"
+                    },
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsDragonLair(),
+                    TestMethodHelpers.CreateNewDragonLair(),
+                    TestMethodHelpers.CreateNewDragonLair()
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has white spaces for description so it returns a DragonLair with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = "     ",
+                        TypeOfLocation = LocationType.DragonLair,
+                        GeographicalDescription = "Test"
+                    },
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsDragonLair(),
+                    TestMethodHelpers.CreateNewDragonLair(),
+                    TestMethodHelpers.CreateNewDragonLair()
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has empty description so it returns a DragonLair with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = "",
+                        TypeOfLocation = LocationType.DragonLair,
+                        GeographicalDescription = "Test"
+                    },
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsDragonLair(),
+                    TestMethodHelpers.CreateNewDragonLair(),
+                    TestMethodHelpers.CreateNewDragonLair()
             };
         }
 
@@ -1864,6 +1948,78 @@ namespace Skyrim.Api.Test.Domains
                         GeographicalDescription = " ",
                         Name = "Test",
                         TypeOfLocation = LocationType.Dock
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = null,
+                        TypeOfLocation = LocationType.DragonLair
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has an empty name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = "",
+                        TypeOfLocation = LocationType.DragonLair
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a white space name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = "   ",
+                        TypeOfLocation = LocationType.DragonLair
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = null,
+                        Name = "Test",
+                        TypeOfLocation = LocationType.DragonLair
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has an empty Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "",
+                        Name = "Test",
+                        TypeOfLocation = LocationType.DragonLair
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a white space Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = " ",
+                        Name = "Test",
+                        TypeOfLocation = LocationType.DragonLair
                     },
                     (CreateLocationDto)null
             };

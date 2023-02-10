@@ -19,6 +19,7 @@ namespace Skyrim.Api.Configurations
             CreateMap<Cave, CreateLocationDto>().ReverseMap();
             CreateMap<Clearing, CreateLocationDto>().ReverseMap();
             CreateMap<Dock, CreateLocationDto>().ReverseMap();
+            CreateMap<DragonLair, CreateLocationDto>().ReverseMap();
         }
     }
 }

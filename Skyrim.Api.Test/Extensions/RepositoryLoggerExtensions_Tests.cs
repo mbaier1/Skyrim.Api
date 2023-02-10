@@ -172,6 +172,18 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.Dock
                 }
             };
+            yield return new object[]
+            {
+                "Fatal Error for DragonLair location",
+                new Exception(),
+                new DragonLair
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.DragonLair
+                }
+            };
         }
 
         [Theory]
@@ -332,6 +344,19 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.Dock
                 },
                 LocationType.Dock
+            };
+            yield return new object[]
+            {
+                "Fatal Error for DragonLair location",
+                new Exception(),
+                new DragonLair
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.DragonLair
+                },
+                LocationType.DragonLair
             };
         }
     }
