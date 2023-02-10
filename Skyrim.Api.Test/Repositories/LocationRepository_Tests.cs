@@ -76,6 +76,9 @@ namespace Skyrim.Api.Test.Repositories
                 case LocationType.Cave:
                     Assert.Equal(_context.Caves.FirstOrDefault().Name, result.Name);
                     break;
+                case LocationType.Clearing:
+                    Assert.Equal(_context.Clearings.FirstOrDefault().Name, result.Name);
+                    break;
             }
         }
         public static IEnumerable<object[]> ValidLocationForEachLocationType()
@@ -124,6 +127,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Valid properties for a Cave",
                 TestMethodHelpers.CreateNewCave()
+            };
+            yield return new object[]
+            {
+                "Valid properties for a Clearing",
+                TestMethodHelpers.CreateNewClearing()
             };
         }
 
@@ -202,6 +210,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Invalid properties for Cave",
                 new Cave()
+            };
+            yield return new object[]
+            {
+                "Invalid properties for Clearing",
+                new Clearing()
             };
         }
 
