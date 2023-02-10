@@ -90,6 +90,18 @@ namespace Skyrim.Api.Test.TestHelpers
             };
         }
 
+        public static Camp CreateNewCamp()
+        {
+            return new Camp
+            {
+                Id = 0,
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.Camp,
+                GeographicalDescription = "Test"
+            };
+        }
+
         public static CreateLocationDto CreateNewCreateLocationDtoAsCity()
         {
             return new CreateLocationDto
@@ -164,6 +176,17 @@ namespace Skyrim.Api.Test.TestHelpers
                 Description = "",
                 GeographicalDescription = "Test",
                 TypeOfLocation = LocationType.Landmark
+            };
+        }
+
+        public static CreateLocationDto CreateNewCreateLocationDtoAsCamp()
+        {
+            return new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "",
+                GeographicalDescription = "Test",
+                TypeOfLocation = LocationType.Camp
             };
         }
     }

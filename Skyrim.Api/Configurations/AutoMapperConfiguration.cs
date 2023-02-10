@@ -15,6 +15,7 @@ namespace Skyrim.Api.Configurations
             CreateMap<DaedricShrine, CreateLocationDto>().ReverseMap();
             CreateMap<StandingStone, CreateLocationDto>().ReverseMap();
             CreateMap<Landmark, CreateLocationDto>().ReverseMap();
+            CreateMap<Camp, CreateLocationDto>().ReverseMap();
         }
     }
 }

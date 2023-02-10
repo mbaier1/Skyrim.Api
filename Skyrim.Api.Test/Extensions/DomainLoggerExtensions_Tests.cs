@@ -123,6 +123,18 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.Landmark
                 }
         };
+        yield return new object[]
+        {
+                "Fatal Error for Camp location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Camp
+                }
+        };
     }
 
     [Theory]
@@ -230,6 +242,19 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.Landmark
                 },
                 LocationType.Landmark
+        };
+        yield return new object[]
+        {
+                "Fatal Error for Camp location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Camp
+                },
+                LocationType.Camp
         };
     }
 }

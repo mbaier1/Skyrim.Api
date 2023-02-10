@@ -124,6 +124,18 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.Landmark
                 }
             };
+            yield return new object[]
+            {
+                "Fatal Error for Camp location",
+                new Exception(),
+                new Camp
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Camp
+                }
+            };
         }
 
         [Theory]
@@ -232,6 +244,19 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.Landmark
                 },
                 LocationType.Landmark
+            };
+            yield return new object[]
+            {
+                "Fatal Error for Camp location",
+                new Exception(),
+                new Camp
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Camp
+                },
+                LocationType.Camp
             };
         }
     }
