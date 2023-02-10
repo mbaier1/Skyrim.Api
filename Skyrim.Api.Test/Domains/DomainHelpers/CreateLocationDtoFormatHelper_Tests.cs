@@ -1535,5 +1535,23 @@ namespace Skyrim.Api.Test.Domains.DomainHelpers
                     }
             };
         }
+
+        [Fact]
+        public void WithCorrectlyFormattedName_ReturnsExpectedName()
+        {
+            // Arrange
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Test T D",
+                TypeOfLocation = LocationType.City,
+                GeographicalDescription = "Test"
+            };
+
+            // Act
+            var result = _createLocationDtoFormatHelper.FormatEntity(createLocationDto);
+
+            // Assert
+            Assert.Equal(createLocationDto.Name, result.Name);
+        }
     }
 }
