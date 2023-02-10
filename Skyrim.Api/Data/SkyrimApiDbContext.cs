@@ -34,6 +34,7 @@ namespace Skyrim.Api.Data
         public DbSet<Cave> Caves { get; set; }
         public DbSet<Clearing> Clearings { get; set; }
         public DbSet<Dock> Docks { get; set; }
+        public DbSet<DragonLair> DragonLairs { get; set; }
 
         public DbSet<Guard> Guards { get; set; }
         public DbSet<PhyscialFightingShop> PhyscialFightingShops { get; set; }

@@ -171,6 +171,18 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.Dock
                 }
         };
+        yield return new object[]
+        {
+                "Fatal Error for DragonLair location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.DragonLair
+                }
+        };
     }
 
     [Theory]
@@ -330,6 +342,19 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.Dock
                 },
                 LocationType.Dock
+        };
+        yield return new object[]
+        {
+                "Fatal Error for DragonLair location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.DragonLair
+                },
+                LocationType.DragonLair
         };
     }
 }
