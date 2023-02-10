@@ -65,6 +65,8 @@ namespace Skyrim.Api.Domain
                         return _mapper.Map<Cave>(createLocationDto);
                     case LocationType.Clearing:
                         return _mapper.Map<Clearing>(createLocationDto);
+                    case LocationType.Dock:
+                        return _mapper.Map<Dock>(createLocationDto);
                     default:
                         return null;
                 }

@@ -2215,4 +2215,218 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
         }
     }
+
+    public class CreateLocation_AsDock : LocationController_Tests
+    {
+        [Fact]
+        public async void WhenCreateLocationDtoHasRequiredValidPropertiesAsADock_ReturnsCreateAtActionWithDockDetails()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Dock",
+                TypeOfLocation = LocationType.Dock,
+                GeographicalDescription = "Test Description"
+            };
+
+            var dock = new Dock
+            {
+                Id = 0,
+                Name = "Test Dock",
+                TypeOfLocation = LocationType.Dock,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(dock);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var dockObject = new object();
+            var locationAsDock = new Dock();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            dockObject = responseAsCreateAsActionResult.Value;
+
+            locationAsDock.Id = (int)dockObject.GetType().GetProperty("Id").GetValue(dockObject, null);
+            locationAsDock.Name = (string)dockObject.GetType().GetProperty("Name").GetValue(dockObject, null);
+            locationAsDock.TypeOfLocation = (LocationType)dockObject.GetType().GetProperty("TypeOfLocation").GetValue(dockObject, null);
+            locationAsDock.GeographicalDescription = (string)dockObject.GetType().GetProperty("GeographicalDescription").GetValue(dockObject, null);
+            locationAsDock.Description = (string)dockObject.GetType().GetProperty("Description").GetValue(dockObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(dock.Id, locationAsDock.Id);
+            Assert.Equal(dock.Name, locationAsDock.Name);
+            Assert.Equal(dock.Description, locationAsDock.Description);
+            Assert.Equal(dock.TypeOfLocation, locationAsDock.TypeOfLocation);
+            Assert.Equal(dock.GeographicalDescription, locationAsDock.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasEmptySpacesForDescriptionADock_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Dock",
+                Description = "    ",
+                TypeOfLocation = LocationType.Dock,
+                GeographicalDescription = "Test Description"
+            };
+
+            var dock = new Dock
+            {
+                Id = 0,
+                Name = "Test Dock",
+                Description = "",
+                TypeOfLocation = LocationType.Dock,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(dock);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var dockObject = new object();
+            var locationAsDock = new Dock();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            dockObject = responseAsCreateAsActionResult.Value;
+
+            locationAsDock.Id = (int)dockObject.GetType().GetProperty("Id").GetValue(dockObject, null);
+            locationAsDock.Name = (string)dockObject.GetType().GetProperty("Name").GetValue(dockObject, null);
+            locationAsDock.TypeOfLocation = (LocationType)dockObject.GetType().GetProperty("TypeOfLocation").GetValue(dockObject, null);
+            locationAsDock.GeographicalDescription = (string)dockObject.GetType().GetProperty("GeographicalDescription").GetValue(dockObject, null);
+            locationAsDock.Description = (string)dockObject.GetType().GetProperty("Description").GetValue(dockObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(dock.Name, locationAsDock.Name);
+            Assert.Equal(dock.Id, locationAsDock.Id);
+            Assert.Equal(dock.Description, locationAsDock.Description);
+            Assert.Equal(dock.TypeOfLocation, locationAsDock.TypeOfLocation);
+            Assert.Equal(dock.GeographicalDescription, locationAsDock.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullForDescriptionAsADock_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Dock",
+                Description = null,
+                TypeOfLocation = LocationType.Dock,
+                GeographicalDescription = "Test Description"
+            };
+
+            var dock = new Dock
+            {
+                Id = 0,
+                Name = "Test Dock",
+                Description = null,
+                TypeOfLocation = LocationType.Dock,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(dock);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var dockObject = new object();
+            var locationAsDock = new Dock();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            dockObject = responseAsCreateAsActionResult.Value;
+
+            locationAsDock.Id = (int)dockObject.GetType().GetProperty("Id").GetValue(dockObject, null);
+            locationAsDock.Name = (string)dockObject.GetType().GetProperty("Name").GetValue(dockObject, null);
+            locationAsDock.TypeOfLocation = (LocationType)dockObject.GetType().GetProperty("TypeOfLocation").GetValue(dockObject, null);
+            locationAsDock.GeographicalDescription = (string)dockObject.GetType().GetProperty("GeographicalDescription").GetValue(dockObject, null);
+            locationAsDock.Description = (string)dockObject.GetType().GetProperty("Description").GetValue(dockObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(dock.Id, locationAsDock.Id);
+            Assert.Equal(dock.Name, locationAsDock.Name);
+            Assert.Equal(dock.Description, locationAsDock.Description);
+            Assert.Equal(dock.TypeOfLocation, locationAsDock.TypeOfLocation);
+            Assert.Equal(dock.GeographicalDescription, locationAsDock.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsADock_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "      ",
+                Description = "Test",
+                TypeOfLocation = LocationType.Dock,
+                GeographicalDescription = "Test Description"
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsADock_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.Dock,
+                GeographicalDescription = "        "
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+    }
 }
