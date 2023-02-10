@@ -73,6 +73,9 @@ namespace Skyrim.Api.Test.Repositories
                 case LocationType.Camp:
                     Assert.Equal(_context.Camps.FirstOrDefault().Name, result.Name);
                     break;
+                case LocationType.Cave:
+                    Assert.Equal(_context.Caves.FirstOrDefault().Name, result.Name);
+                    break;
             }
         }
         public static IEnumerable<object[]> ValidLocationForEachLocationType()
@@ -116,6 +119,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Valid properties for a Camp",
                 TestMethodHelpers.CreateNewCamp()
+            };
+            yield return new object[]
+            {
+                "Valid properties for a Cave",
+                TestMethodHelpers.CreateNewCave()
             };
         }
 
@@ -189,6 +197,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Invalid properties for Camp",
                 new Camp()
+            };
+            yield return new object[]
+            {
+                "Invalid properties for Cave",
+                new Cave()
             };
         }
 

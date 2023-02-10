@@ -61,6 +61,8 @@ namespace Skyrim.Api.Domain
                         return _mapper.Map<Landmark>(createLocationDto);
                     case LocationType.Camp:
                         return _mapper.Map<Camp>(createLocationDto);
+                    case LocationType.Cave:
+                        return _mapper.Map<Cave>(createLocationDto);
                     default:
                         return null;
                 }

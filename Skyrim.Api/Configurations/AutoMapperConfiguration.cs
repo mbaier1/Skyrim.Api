@@ -16,6 +16,7 @@ namespace Skyrim.Api.Configurations
             CreateMap<StandingStone, CreateLocationDto>().ReverseMap();
             CreateMap<Landmark, CreateLocationDto>().ReverseMap();
             CreateMap<Camp, CreateLocationDto>().ReverseMap();
+            CreateMap<Cave, CreateLocationDto>().ReverseMap();
         }
     }
 }
