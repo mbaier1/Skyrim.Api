@@ -196,6 +196,18 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.DwarvenRuin
                 }
             };
+            yield return new object[]
+            {
+                "Fatal Error for Farm location",
+                new Exception(),
+                new Farm
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Farm
+                }
+            };
         }
 
         [Theory]
@@ -382,6 +394,19 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.DwarvenRuin
                 },
                 LocationType.DwarvenRuin
+            };
+            yield return new object[]
+            {
+                "Fatal Error for Farm location",
+                new Exception(),
+                new Farm
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Farm
+                },
+                LocationType.Farm
             };
         }
     }

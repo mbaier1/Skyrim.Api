@@ -71,6 +71,8 @@ namespace Skyrim.Api.Domain
                         return _mapper.Map<DragonLair>(createLocationDto);
                     case LocationType.DwarvenRuin:
                         return _mapper.Map<DwarvenRuin>(createLocationDto);
+                    case LocationType.Farm:
+                        return _mapper.Map<Farm>(createLocationDto);
                     default:
                         return null;
                 }
