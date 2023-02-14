@@ -65,6 +65,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<DragonLair>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewDragonLair());
             else if (type.TypeOfLocation == LocationType.DwarvenRuin)
                 _mockMapper.Setup(x => x.Map<DwarvenRuin>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewDwarvenRuin());
+            else if (type.TypeOfLocation == LocationType.Farm)
+                _mockMapper.Setup(x => x.Map<Farm>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewFarm());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
             var completedCreateTask = Task<Location>.FromResult(taskType);
@@ -356,6 +358,27 @@ namespace Skyrim.Api.Test.Domains
                     GeographicalDescription = "Test"
                 }
             };
+            yield return new object[]
+            {
+                "Valid properties for Farm Location",
+                TestMethodHelpers.CreateNewCreateLocationDtoAsFarm(),
+                new Farm
+                {
+                    Id = 0,
+                    Name = "Test",
+                    Description = "Test",
+                    TypeOfLocation = LocationType.Farm,
+                    GeographicalDescription = "Test"
+                },
+                new Farm
+                {
+                    Id = 0,
+                    Name = "Test",
+                    Description = "Test",
+                    TypeOfLocation = LocationType.Farm,
+                    GeographicalDescription = "Test"
+                }
+            };
         }
 
         [Theory]
@@ -390,6 +413,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<DragonLair>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewDragonLair());
             else if (location.TypeOfLocation == LocationType.DwarvenRuin)
                 _mockMapper.Setup(x => x.Map<DwarvenRuin>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewDwarvenRuin());
+            else if (location.TypeOfLocation == LocationType.Farm)
+                _mockMapper.Setup(x => x.Map<Farm>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewFarm());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
             var completedCreateTask = Task<Location>.FromResult(taskType);
@@ -424,6 +449,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Verify(x => x.Map<DragonLair>(createLocationDto), Times.Once());
             else if (location.TypeOfLocation == LocationType.DwarvenRuin)
                 _mockMapper.Verify(x => x.Map<DwarvenRuin>(createLocationDto), Times.Once());
+            else if (location.TypeOfLocation == LocationType.Farm)
+                _mockMapper.Verify(x => x.Map<Farm>(createLocationDto), Times.Once());
         }
 
         [Theory]
@@ -506,6 +533,11 @@ namespace Skyrim.Api.Test.Domains
                 "Invalid properties for DwarvenRuin",
                 new CreateLocationDto { TypeOfLocation = LocationType.DwarvenRuin }
             };
+            yield return new object[]
+            {
+                "Invalid properties for Farm",
+                new CreateLocationDto { TypeOfLocation = LocationType.Farm }
+            };
         }
 
         [Theory]
@@ -539,6 +571,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<DragonLair>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
             else if (location.TypeOfLocation == LocationType.DwarvenRuin)
                 _mockMapper.Setup(x => x.Map<DwarvenRuin>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
+            else if (location.TypeOfLocation == LocationType.Farm)
+                _mockMapper.Setup(x => x.Map<Farm>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
 
@@ -629,6 +663,12 @@ namespace Skyrim.Api.Test.Domains
                 TestMethodHelpers.CreateNewDwarvenRuin(),
                 TestMethodHelpers.CreateNewCreateLocationDtoAsDwarvenRuin()
             };
+            yield return new object[]
+            {
+                "Invalid properties for Farm",
+                TestMethodHelpers.CreateNewFarm(),
+                TestMethodHelpers.CreateNewCreateLocationDtoAsFarm()
+            };
         }
 
         [Theory]
@@ -664,6 +704,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<DragonLair>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewDragonLair());
             else if (type.TypeOfLocation == LocationType.DwarvenRuin)
                 _mockMapper.Setup(x => x.Map<DwarvenRuin>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewDwarvenRuin());
+            else if (type.TypeOfLocation == LocationType.Farm)
+                _mockMapper.Setup(x => x.Map<Farm>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewFarm());
 
             var completedCreateTask = Task<Location>.FromResult(taskType);
             _mockLocationRepository.Setup(x => x.SaveLocation(It.IsAny<Location>()))
@@ -1224,6 +1266,48 @@ namespace Skyrim.Api.Test.Domains
                     TestMethodHelpers.CreateNewCreateLocationDtoAsDwarvenRuin(),
                     TestMethodHelpers.CreateNewDwarvenRuin(),
                     TestMethodHelpers.CreateNewDwarvenRuin()
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null description so it returns a Farm with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = null,
+                        TypeOfLocation = LocationType.Farm,
+                        GeographicalDescription = "Test"
+                    },
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsFarm(),
+                    TestMethodHelpers.CreateNewFarm(),
+                    TestMethodHelpers.CreateNewFarm()
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has white spaces for description so it returns a Farm with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = "     ",
+                        TypeOfLocation = LocationType.Farm,
+                        GeographicalDescription = "Test"
+                    },
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsFarm(),
+                    TestMethodHelpers.CreateNewFarm(),
+                    TestMethodHelpers.CreateNewFarm()
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has empty description so it returns a Farm with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = "",
+                        TypeOfLocation = LocationType.Farm,
+                        GeographicalDescription = "Test"
+                    },
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsFarm(),
+                    TestMethodHelpers.CreateNewFarm(),
+                    TestMethodHelpers.CreateNewFarm()
             };
         }
 
@@ -2176,6 +2260,78 @@ namespace Skyrim.Api.Test.Domains
                         GeographicalDescription = " ",
                         Name = "Test",
                         TypeOfLocation = LocationType.DwarvenRuin
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = null,
+                        TypeOfLocation = LocationType.Farm
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has an empty name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = "",
+                        TypeOfLocation = LocationType.Farm
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a white space name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = "   ",
+                        TypeOfLocation = LocationType.Farm
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = null,
+                        Name = "Test",
+                        TypeOfLocation = LocationType.Farm
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has an empty Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "",
+                        Name = "Test",
+                        TypeOfLocation = LocationType.Farm
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a white space Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = " ",
+                        Name = "Test",
+                        TypeOfLocation = LocationType.Farm
                     },
                     (CreateLocationDto)null
             };

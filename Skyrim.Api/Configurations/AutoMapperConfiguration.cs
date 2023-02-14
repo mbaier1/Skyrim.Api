@@ -21,6 +21,7 @@ namespace Skyrim.Api.Configurations
             CreateMap<Dock, CreateLocationDto>().ReverseMap();
             CreateMap<DragonLair, CreateLocationDto>().ReverseMap();
             CreateMap<DwarvenRuin, CreateLocationDto>().ReverseMap();
+            CreateMap<Farm, CreateLocationDto>().ReverseMap();
         }
     }
 }

@@ -88,6 +88,9 @@ namespace Skyrim.Api.Test.Repositories
                 case LocationType.DwarvenRuin:
                     Assert.Equal(_context.DwarvenRuins.FirstOrDefault().Name, result.Name);
                     break;
+                case LocationType.Farm:
+                    Assert.Equal(_context.Farms.FirstOrDefault().Name, result.Name);
+                    break;
             }
         }
         public static IEnumerable<object[]> ValidLocationForEachLocationType()
@@ -156,6 +159,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Valid properties for a DwarvenRuin",
                 TestMethodHelpers.CreateNewDwarvenRuin()
+            };
+            yield return new object[]
+            {
+                "Valid properties for a Farm",
+                TestMethodHelpers.CreateNewFarm()
             };
         }
 
@@ -254,6 +262,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Invalid properties for DwarvenRuin",
                 new DwarvenRuin()
+            };
+            yield return new object[]
+            {
+                "Invalid properties for Farm",
+                new Farm()
             };
         }
 
