@@ -231,6 +231,18 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.GiantCamp
                 }
         };
+        yield return new object[]
+        {
+                "Fatal Error for Grove location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Grove
+                }
+        };
     }
 
     [Theory]
@@ -455,6 +467,19 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.GiantCamp
                 },
                 LocationType.GiantCamp
+        };
+        yield return new object[]
+        {
+                "Fatal Error for Grove location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Grove
+                },
+                LocationType.Grove
         };
     }
 }

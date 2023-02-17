@@ -232,6 +232,18 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.GiantCamp
                 }
             };
+            yield return new object[]
+            {
+                "Fatal Error for Grove location",
+                new Exception(),
+                new Grove
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Grove
+                }
+            };
         }
 
         [Theory]
@@ -457,6 +469,19 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.GiantCamp
                 },
                 LocationType.GiantCamp
+            };
+            yield return new object[]
+            {
+                "Fatal Error for Grove location",
+                new Exception(),
+                new Grove
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Grove
+                },
+                LocationType.Grove
             };
         }
     }
