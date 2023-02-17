@@ -510,6 +510,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Verify(x => x.Map<Settlement>(createLocationDto), Times.Once());
             else if (location.TypeOfLocation == LocationType.DaedricShrine)
                 _mockMapper.Verify(x => x.Map<DaedricShrine>(createLocationDto), Times.Once());
+            else if (location.TypeOfLocation == LocationType.StandingStone)
+                _mockMapper.Verify(x => x.Map<StandingStone>(createLocationDto), Times.Once());
             else if (location.TypeOfLocation == LocationType.Landmark)
                 _mockMapper.Verify(x => x.Map<Landmark>(createLocationDto), Times.Once());
             else if (location.TypeOfLocation == LocationType.Camp)
