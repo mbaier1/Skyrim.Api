@@ -75,6 +75,8 @@ namespace Skyrim.Api.Domain
                         return _mapper.Map<Farm>(createLocationDto);
                     case LocationType.Fort:
                         return _mapper.Map<Fort>(createLocationDto);
+                    case LocationType.GiantCamp:
+                        return _mapper.Map<GiantCamp>(createLocationDto);
                     default:
                         return null;
                 }

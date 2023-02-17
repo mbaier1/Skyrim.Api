@@ -69,6 +69,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<Farm>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewFarm());
             else if (type.TypeOfLocation == LocationType.Fort)
                 _mockMapper.Setup(x => x.Map<Fort>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewFort());
+            else if (type.TypeOfLocation == LocationType.GiantCamp)
+                _mockMapper.Setup(x => x.Map<GiantCamp>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewGiantCamp());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
             var completedCreateTask = Task<Location>.FromResult(taskType);
@@ -402,6 +404,27 @@ namespace Skyrim.Api.Test.Domains
                     GeographicalDescription = "Test"
                 }
             };
+            yield return new object[]
+            {
+                "Valid properties for GiantCamp Location",
+                TestMethodHelpers.CreateNewCreateLocationDtoAsGiantCamp(),
+                new GiantCamp
+                {
+                    Id = 0,
+                    Name = "Test",
+                    Description = "Test",
+                    TypeOfLocation = LocationType.GiantCamp,
+                    GeographicalDescription = "Test"
+                },
+                new GiantCamp
+                {
+                    Id = 0,
+                    Name = "Test",
+                    Description = "Test",
+                    TypeOfLocation = LocationType.GiantCamp,
+                    GeographicalDescription = "Test"
+                }
+            };
         }
 
         [Theory]
@@ -440,6 +463,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<Farm>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewFarm());
             else if (location.TypeOfLocation == LocationType.Fort)
                 _mockMapper.Setup(x => x.Map<Fort>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewFort());
+            else if (location.TypeOfLocation == LocationType.GiantCamp)
+                _mockMapper.Setup(x => x.Map<GiantCamp>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewGiantCamp());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
             var completedCreateTask = Task<Location>.FromResult(taskType);
@@ -568,6 +593,11 @@ namespace Skyrim.Api.Test.Domains
                 "Invalid properties for Fort",
                 new CreateLocationDto { TypeOfLocation = LocationType.Fort }
             };
+            yield return new object[]
+            {
+                "Invalid properties for GiantCamp",
+                new CreateLocationDto { TypeOfLocation = LocationType.GiantCamp }
+            };
         }
 
         [Theory]
@@ -605,6 +635,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<Farm>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
             else if (location.TypeOfLocation == LocationType.Fort)
                 _mockMapper.Setup(x => x.Map<Fort>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
+            else if (location.TypeOfLocation == LocationType.GiantCamp)
+                _mockMapper.Setup(x => x.Map<GiantCamp>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
 
@@ -707,6 +739,12 @@ namespace Skyrim.Api.Test.Domains
                 TestMethodHelpers.CreateNewFort(),
                 TestMethodHelpers.CreateNewCreateLocationDtoAsFort()
             };
+            yield return new object[]
+           {
+                "Invalid properties for GiantCamp",
+                TestMethodHelpers.CreateNewGiantCamp(),
+                TestMethodHelpers.CreateNewCreateLocationDtoAsGiantCamp()
+           };
         }
 
         [Theory]
@@ -746,6 +784,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<Farm>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewFarm());
             else if (type.TypeOfLocation == LocationType.Fort)
                 _mockMapper.Setup(x => x.Map<Fort>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewFort());
+            else if (type.TypeOfLocation == LocationType.GiantCamp)
+                _mockMapper.Setup(x => x.Map<GiantCamp>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewGiantCamp());
 
             var completedCreateTask = Task<Location>.FromResult(taskType);
             _mockLocationRepository.Setup(x => x.SaveLocation(It.IsAny<Location>()))
@@ -1390,6 +1430,48 @@ namespace Skyrim.Api.Test.Domains
                     TestMethodHelpers.CreateNewCreateLocationDtoAsFort(),
                     TestMethodHelpers.CreateNewFort(),
                     TestMethodHelpers.CreateNewFort()
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null description so it returns a GiantCamp with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = null,
+                        TypeOfLocation = LocationType.GiantCamp,
+                        GeographicalDescription = "Test"
+                    },
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsGiantCamp(),
+                    TestMethodHelpers.CreateNewGiantCamp(),
+                    TestMethodHelpers.CreateNewGiantCamp()
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has white spaces for description so it returns a GiantCamp with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = "     ",
+                        TypeOfLocation = LocationType.GiantCamp,
+                        GeographicalDescription = "Test"
+                    },
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsGiantCamp(),
+                    TestMethodHelpers.CreateNewGiantCamp(),
+                    TestMethodHelpers.CreateNewGiantCamp()
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has empty description so it returns a GiantCamp with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = "",
+                        TypeOfLocation = LocationType.GiantCamp,
+                        GeographicalDescription = "Test"
+                    },
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsGiantCamp(),
+                    TestMethodHelpers.CreateNewGiantCamp(),
+                    TestMethodHelpers.CreateNewGiantCamp()
             };
         }
 
@@ -2486,6 +2568,78 @@ namespace Skyrim.Api.Test.Domains
                         GeographicalDescription = " ",
                         Name = "Test",
                         TypeOfLocation = LocationType.Fort
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = null,
+                        TypeOfLocation = LocationType.GiantCamp
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has an empty name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = "",
+                        TypeOfLocation = LocationType.GiantCamp
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a white space name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = "   ",
+                        TypeOfLocation = LocationType.GiantCamp
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = null,
+                        Name = "Test",
+                        TypeOfLocation = LocationType.GiantCamp
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has an empty Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "",
+                        Name = "Test",
+                        TypeOfLocation = LocationType.GiantCamp
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a white space Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = " ",
+                        Name = "Test",
+                        TypeOfLocation = LocationType.GiantCamp
                     },
                     (CreateLocationDto)null
             };

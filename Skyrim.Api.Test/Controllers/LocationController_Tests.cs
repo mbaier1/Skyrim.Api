@@ -2867,7 +2867,7 @@ namespace Skyrim.Api.Test.Controllers
 
             var createLocationDto = new CreateLocationDto
             {
-                Name = "Test fort",
+                Name = "Test giantCamp",
                 TypeOfLocation = LocationType.Farm,
                 GeographicalDescription = "Test Description"
             };
@@ -3267,6 +3267,220 @@ namespace Skyrim.Api.Test.Controllers
                 Name = "Test",
                 Description = "Test",
                 TypeOfLocation = LocationType.Fort,
+                GeographicalDescription = "        "
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+    }
+
+    public class CreateLocation_AsGiantCamp : LocationController_Tests
+    {
+        [Fact]
+        public async void WhenCreateLocationDtoHasRequiredValidPropertiesAsAGiantCamp_ReturnsCreateAtActionWithGiantCampDetails()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test GiantCamp",
+                TypeOfLocation = LocationType.GiantCamp,
+                GeographicalDescription = "Test Description"
+            };
+
+            var giantCamp = new GiantCamp
+            {
+                Id = 0,
+                Name = "Test GiantCamp",
+                TypeOfLocation = LocationType.GiantCamp,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(giantCamp);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var giantCampObject = new object();
+            var locationAsGiantCamp = new GiantCamp();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            giantCampObject = responseAsCreateAsActionResult.Value;
+
+            locationAsGiantCamp.Id = (int)giantCampObject.GetType().GetProperty("Id").GetValue(giantCampObject, null);
+            locationAsGiantCamp.Name = (string)giantCampObject.GetType().GetProperty("Name").GetValue(giantCampObject, null);
+            locationAsGiantCamp.TypeOfLocation = (LocationType)giantCampObject.GetType().GetProperty("TypeOfLocation").GetValue(giantCampObject, null);
+            locationAsGiantCamp.GeographicalDescription = (string)giantCampObject.GetType().GetProperty("GeographicalDescription").GetValue(giantCampObject, null);
+            locationAsGiantCamp.Description = (string)giantCampObject.GetType().GetProperty("Description").GetValue(giantCampObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(giantCamp.Id, locationAsGiantCamp.Id);
+            Assert.Equal(giantCamp.Name, locationAsGiantCamp.Name);
+            Assert.Equal(giantCamp.Description, locationAsGiantCamp.Description);
+            Assert.Equal(giantCamp.TypeOfLocation, locationAsGiantCamp.TypeOfLocation);
+            Assert.Equal(giantCamp.GeographicalDescription, locationAsGiantCamp.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasEmptySpacesForDescriptionAGiantCamp_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test GiantCamp",
+                Description = "    ",
+                TypeOfLocation = LocationType.GiantCamp,
+                GeographicalDescription = "Test Description"
+            };
+
+            var giantCamp = new GiantCamp
+            {
+                Id = 0,
+                Name = "Test GiantCamp",
+                Description = "",
+                TypeOfLocation = LocationType.GiantCamp,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(giantCamp);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var giantCampObject = new object();
+            var locationAsGiantCamp = new Fort();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            giantCampObject = responseAsCreateAsActionResult.Value;
+
+            locationAsGiantCamp.Id = (int)giantCampObject.GetType().GetProperty("Id").GetValue(giantCampObject, null);
+            locationAsGiantCamp.Name = (string)giantCampObject.GetType().GetProperty("Name").GetValue(giantCampObject, null);
+            locationAsGiantCamp.TypeOfLocation = (LocationType)giantCampObject.GetType().GetProperty("TypeOfLocation").GetValue(giantCampObject, null);
+            locationAsGiantCamp.GeographicalDescription = (string)giantCampObject.GetType().GetProperty("GeographicalDescription").GetValue(giantCampObject, null);
+            locationAsGiantCamp.Description = (string)giantCampObject.GetType().GetProperty("Description").GetValue(giantCampObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(giantCamp.Name, locationAsGiantCamp.Name);
+            Assert.Equal(giantCamp.Id, locationAsGiantCamp.Id);
+            Assert.Equal(giantCamp.Description, locationAsGiantCamp.Description);
+            Assert.Equal(giantCamp.TypeOfLocation, locationAsGiantCamp.TypeOfLocation);
+            Assert.Equal(giantCamp.GeographicalDescription, locationAsGiantCamp.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullForDescriptionAsAGiantCamp_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test GiantCamp",
+                Description = null,
+                TypeOfLocation = LocationType.GiantCamp,
+                GeographicalDescription = "Test Description"
+            };
+
+            var giantCamp = new GiantCamp
+            {
+                Id = 0,
+                Name = "Test GiantCamp",
+                Description = null,
+                TypeOfLocation = LocationType.GiantCamp,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(giantCamp);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var giantCampObject = new object();
+            var locationAsGiantCamp = new GiantCamp();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            giantCampObject = responseAsCreateAsActionResult.Value;
+
+            locationAsGiantCamp.Id = (int)giantCampObject.GetType().GetProperty("Id").GetValue(giantCampObject, null);
+            locationAsGiantCamp.Name = (string)giantCampObject.GetType().GetProperty("Name").GetValue(giantCampObject, null);
+            locationAsGiantCamp.TypeOfLocation = (LocationType)giantCampObject.GetType().GetProperty("TypeOfLocation").GetValue(giantCampObject, null);
+            locationAsGiantCamp.GeographicalDescription = (string)giantCampObject.GetType().GetProperty("GeographicalDescription").GetValue(giantCampObject, null);
+            locationAsGiantCamp.Description = (string)giantCampObject.GetType().GetProperty("Description").GetValue(giantCampObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(giantCamp.Id, locationAsGiantCamp.Id);
+            Assert.Equal(giantCamp.Name, locationAsGiantCamp.Name);
+            Assert.Equal(giantCamp.Description, locationAsGiantCamp.Description);
+            Assert.Equal(giantCamp.TypeOfLocation, locationAsGiantCamp.TypeOfLocation);
+            Assert.Equal(giantCamp.GeographicalDescription, locationAsGiantCamp.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsAGiantCamp_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "      ",
+                Description = "Test",
+                TypeOfLocation = LocationType.GiantCamp,
+                GeographicalDescription = "Test Description"
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsAGiantCamp_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.GiantCamp,
                 GeographicalDescription = "        "
             };
 
