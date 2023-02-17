@@ -526,10 +526,14 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Verify(x => x.Map<DwarvenRuin>(createLocationDto), Times.Once());
             else if (location.TypeOfLocation == LocationType.Farm)
                 _mockMapper.Verify(x => x.Map<Farm>(createLocationDto), Times.Once());
+            else if (location.TypeOfLocation == LocationType.Fort)
+                _mockMapper.Verify(x => x.Map<Fort>(createLocationDto), Times.Once());
             else if (location.TypeOfLocation == LocationType.GiantCamp)
                 _mockMapper.Verify(x => x.Map<GiantCamp>(createLocationDto), Times.Once());
             else if (location.TypeOfLocation == LocationType.Grove)
                 _mockMapper.Verify(x => x.Map<Grove>(createLocationDto), Times.Once());
+            else
+                Assert.True(false);
         }
 
         [Theory]

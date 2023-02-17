@@ -3607,7 +3607,7 @@ namespace Skyrim.Api.Test.Controllers
         }
 
         [Fact]
-        public async void WhenCreateLocationDtoHasNullForDescriptionAsAGiantCamp_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        public async void WhenCreateLocationDtoHasNullForDescriptionAsAGrove_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
         {
             // Arrange
 
