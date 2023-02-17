@@ -2,7 +2,6 @@
 using Skyrim.Api.Data.AbstractModels;
 using Skyrim.Api.Data.Interfaces;
 using Skyrim.Api.Data.Models;
-using System;
 
 namespace Skyrim.Api.Data
 {
@@ -36,6 +35,8 @@ namespace Skyrim.Api.Data
         public DbSet<Dock> Docks { get; set; }
         public DbSet<DragonLair> DragonLairs { get; set; }
         public DbSet<DwarvenRuin> DwarvenRuins { get; set; }
+        public DbSet<Farm> Farms { get; set; }
+        public DbSet<Fort> Forts { get; set; }
 
         public DbSet<Guard> Guards { get; set; }
         public DbSet<PhyscialFightingShop> PhyscialFightingShops { get; set; }

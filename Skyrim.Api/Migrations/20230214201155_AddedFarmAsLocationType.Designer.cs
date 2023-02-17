@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Skyrim.Api.Data;
 
@@ -11,13 +12,15 @@ using Skyrim.Api.Data;
 namespace Skyrim.Api.Migrations
 {
     [DbContext(typeof(SkyrimApiDbContext))]
-    partial class SkyrimApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230214201155_AddedFarmAsLocationType")]
+    partial class AddedFarmAsLocationType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.3")
+                .HasAnnotation("ProductVersion", "7.0.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -253,13 +256,6 @@ namespace Skyrim.Api.Migrations
                     b.HasBaseType("Skyrim.Api.Data.AbstractModels.Location");
 
                     b.ToTable("Farms");
-                });
-
-            modelBuilder.Entity("Skyrim.Api.Data.Models.Fort", b =>
-                {
-                    b.HasBaseType("Skyrim.Api.Data.AbstractModels.Location");
-
-                    b.ToTable("Forts");
                 });
 
             modelBuilder.Entity("Skyrim.Api.Data.Models.Homestead", b =>

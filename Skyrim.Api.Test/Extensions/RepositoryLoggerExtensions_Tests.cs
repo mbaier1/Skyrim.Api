@@ -196,6 +196,30 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.DwarvenRuin
                 }
             };
+            yield return new object[]
+            {
+                "Fatal Error for Farm location",
+                new Exception(),
+                new Farm
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Farm
+                }
+            };
+            yield return new object[]
+            {
+                "Fatal Error for Fort location",
+                new Exception(),
+                new Fort
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Fort
+                }
+            };
         }
 
         [Theory]
@@ -382,6 +406,32 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.DwarvenRuin
                 },
                 LocationType.DwarvenRuin
+            };
+            yield return new object[]
+            {
+                "Fatal Error for Farm location",
+                new Exception(),
+                new Farm
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Farm
+                },
+                LocationType.Farm
+            };
+            yield return new object[]
+            {
+                "Fatal Error for Fort location",
+                new Exception(),
+                new Fort
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Fort
+                },
+                LocationType.Fort
             };
         }
     }

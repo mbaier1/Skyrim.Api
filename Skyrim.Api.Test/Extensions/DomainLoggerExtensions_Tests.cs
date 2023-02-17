@@ -195,6 +195,30 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.DwarvenRuin
                 }
         };
+        yield return new object[]
+        {
+                "Fatal Error for Farm location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Farm
+                }
+        };
+        yield return new object[]
+        {
+                "Fatal Error for Fort location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Fort
+                }
+        };
     }
 
     [Theory]
@@ -380,6 +404,32 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.DwarvenRuin
                 },
                 LocationType.DwarvenRuin
+        };
+        yield return new object[]
+        {
+                "Fatal Error for Farm location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Farm
+                },
+                LocationType.Farm
+        };
+        yield return new object[]
+        {
+                "Fatal Error for Fort location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Fort
+                },
+                LocationType.Fort
         };
     }
 }
