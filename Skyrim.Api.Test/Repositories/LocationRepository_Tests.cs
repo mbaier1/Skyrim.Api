@@ -97,6 +97,9 @@ namespace Skyrim.Api.Test.Repositories
                 case LocationType.GiantCamp:
                     Assert.Equal(_context.GiantCamps.FirstOrDefault().Name, result.Name);
                     break;
+                case LocationType.Grove:
+                    Assert.Equal(_context.Groves.FirstOrDefault().Name, result.Name);
+                    break;
             }
         }
         public static IEnumerable<object[]> ValidLocationForEachLocationType()
@@ -180,6 +183,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Valid properties for a GiantCamp",
                 TestMethodHelpers.CreateNewGiantCamp()
+            };
+            yield return new object[]
+            {
+                "Valid properties for a Grove",
+                TestMethodHelpers.CreateNewGrove()
             };
         }
 
@@ -293,6 +301,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Invalid properties for GiantCamp",
                 new GiantCamp()
+            };
+            yield return new object[]
+            {
+                "Invalid properties for Grove",
+                new Grove()
             };
         }
 
