@@ -94,6 +94,9 @@ namespace Skyrim.Api.Test.Repositories
                 case LocationType.Fort:
                     Assert.Equal(_context.Forts.FirstOrDefault().Name, result.Name);
                     break;
+                case LocationType.GiantCamp:
+                    Assert.Equal(_context.GiantCamps.FirstOrDefault().Name, result.Name);
+                    break;
             }
         }
         public static IEnumerable<object[]> ValidLocationForEachLocationType()
@@ -172,6 +175,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Valid properties for a Fort",
                 TestMethodHelpers.CreateNewFort()
+            };
+            yield return new object[]
+            {
+                "Valid properties for a GiantCamp",
+                TestMethodHelpers.CreateNewGiantCamp()
             };
         }
 
@@ -280,6 +288,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Invalid properties for Fort",
                 new Fort()
+            };
+            yield return new object[]
+            {
+                "Invalid properties for GiantCamp",
+                new GiantCamp()
             };
         }
 

@@ -198,6 +198,17 @@ namespace Skyrim.Api.Test.Domains.DomainHelpers
                     TypeOfLocation = LocationType.Fort
                 }
             };
+            yield return new object[]
+            {
+                "Valid properties for a GiantCamp Location",
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.GiantCamp
+                }
+            };
         }
 
         [Theory]
@@ -1838,6 +1849,114 @@ namespace Skyrim.Api.Test.Domains.DomainHelpers
                      GeographicalDescription = "Test"
                  }
             };
+            yield return new object[]
+            {
+                "CreateLocationDto has a null description for GiantCamp so it returns with an empty description",
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = null,
+                     TypeOfLocation = LocationType.GiantCamp,
+                     GeographicalDescription = "Test"
+                 },
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = "",
+                     TypeOfLocation = LocationType.GiantCamp,
+                     GeographicalDescription = "Test"
+                 }
+            };
+            yield return new object[]
+            {
+                "CreateLocationDto has white spaces for description for GiantCamp so it returns with an empty description",
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = "     ",
+                     TypeOfLocation = LocationType.GiantCamp,
+                     GeographicalDescription = "Test"
+                 },
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = "",
+                     TypeOfLocation = LocationType.GiantCamp,
+                     GeographicalDescription = "Test"
+                 }
+            };
+            yield return new object[]
+            {
+                "CreateLocationDto has empty description for GiantCamp so it returns with an empty description",
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = "",
+                     TypeOfLocation = LocationType.GiantCamp,
+                     GeographicalDescription = "Test"
+                 },
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = "",
+                     TypeOfLocation = LocationType.GiantCamp,
+                     GeographicalDescription = "Test"
+                 }
+            };
+            yield return new object[]
+            {
+                "CreateLocationDto has white space in the name for GiantCamp so it returns with an empty description",
+                 new CreateLocationDto
+                 {
+                     Name = "  Test   ",
+                     Description = "Test",
+                     TypeOfLocation = LocationType.GiantCamp,
+                     GeographicalDescription = "Test"
+                 },
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = "Test",
+                     TypeOfLocation = LocationType.GiantCamp,
+                     GeographicalDescription = "Test"
+                 }
+            };
+            yield return new object[]
+            {
+                "CreateLocationDto has white space in the description for GiantCamp so it returns with an empty description",
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = "  Test",
+                     TypeOfLocation = LocationType.GiantCamp,
+                     GeographicalDescription = "Test"
+                 },
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = "Test",
+                     TypeOfLocation = LocationType.GiantCamp,
+                     GeographicalDescription = "Test"
+                 }
+            };
+            yield return new object[]
+            {
+                "CreateLocationDto has white space in the geographical description for GiantCamp so it returns with an empty description",
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = "Test",
+                     TypeOfLocation = LocationType.GiantCamp,
+                     GeographicalDescription = "Test    "
+                 },
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = "Test",
+                     TypeOfLocation = LocationType.GiantCamp,
+                     GeographicalDescription = "Test"
+                 }
+            };
         }
 
         [Theory]
@@ -2932,6 +3051,78 @@ namespace Skyrim.Api.Test.Domains.DomainHelpers
                      Description = "Test",
                      GeographicalDescription = " ",
                      TypeOfLocation = LocationType.Fort
+                 },
+                 (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                "CreateLocationDto has a null name for GiantCamp",
+                 new CreateLocationDto
+                 {
+                     Name = null,
+                     Description = "Test",
+                     GeographicalDescription = "Test",
+                     TypeOfLocation = LocationType.GiantCamp
+                 },
+                 (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                "CreateLocationDto has has an empty name for GiantCamp",
+                 new CreateLocationDto
+                 {
+                     Name = "",
+                     Description = "Test",
+                     GeographicalDescription = "Test",
+                     TypeOfLocation = LocationType.GiantCamp
+                 },
+                 (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                "CreateLocationDto has has a white space name for GiantCamp",
+                 new CreateLocationDto
+                 {
+                     Name = " ",
+                     Description = "Test",
+                     GeographicalDescription = "Test",
+                     TypeOfLocation = LocationType.GiantCamp
+                 },
+                 (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                "CreateLocationDto has a null Geographic Description for GiantCamp",
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = "Test",
+                     GeographicalDescription = null,
+                     TypeOfLocation = LocationType.GiantCamp
+                 },
+                 (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                "CreateLocationDto has an empty Geographic Description for GiantCamp",
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = "Test",
+                     GeographicalDescription = "",
+                     TypeOfLocation = LocationType.GiantCamp
+                 },
+                 (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                "CreateLocationDto has a white space Geographic Description name for GiantCamp",
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = "Test",
+                     GeographicalDescription = " ",
+                     TypeOfLocation = LocationType.GiantCamp
                  },
                  (CreateLocationDto)null
             };

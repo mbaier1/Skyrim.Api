@@ -219,6 +219,18 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.Fort
                 }
         };
+        yield return new object[]
+        {
+                "Fatal Error for GiantCamp location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.GiantCamp
+                }
+        };
     }
 
     [Theory]
@@ -430,6 +442,19 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.Fort
                 },
                 LocationType.Fort
+        };
+        yield return new object[]
+        {
+                "Fatal Error for GiantCamp location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.GiantCamp
+                },
+                LocationType.GiantCamp
         };
     }
 }

@@ -220,6 +220,18 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.Fort
                 }
             };
+            yield return new object[]
+            {
+                "Fatal Error for GiantCamp location",
+                new Exception(),
+                new GiantCamp
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.GiantCamp
+                }
+            };
         }
 
         [Theory]
@@ -432,6 +444,19 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.Fort
                 },
                 LocationType.Fort
+            };
+            yield return new object[]
+            {
+                "Fatal Error for GiantCamp location",
+                new Exception(),
+                new GiantCamp
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.GiantCamp
+                },
+                LocationType.GiantCamp
             };
         }
     }
