@@ -186,6 +186,18 @@ namespace Skyrim.Api.Test.TestHelpers
             };
         }
 
+        public static GiantCamp CreateNewGiantCamp()
+        {
+            return new GiantCamp
+            {
+                Id = 0,
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.GiantCamp,
+                GeographicalDescription = "Test"
+            };
+        }
+
         public static CreateLocationDto CreateNewCreateLocationDtoAsCity()
         {
             return new CreateLocationDto
@@ -348,6 +360,17 @@ namespace Skyrim.Api.Test.TestHelpers
                 Description = "",
                 GeographicalDescription = "Test",
                 TypeOfLocation = LocationType.Fort
+            };
+        }
+
+        public static CreateLocationDto CreateNewCreateLocationDtoAsGiantCamp()
+        {
+            return new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "",
+                GeographicalDescription = "Test",
+                TypeOfLocation = LocationType.GiantCamp
             };
         }
     }
