@@ -73,6 +73,8 @@ namespace Skyrim.Api.Domain
                         return _mapper.Map<DwarvenRuin>(createLocationDto);
                     case LocationType.Farm:
                         return _mapper.Map<Farm>(createLocationDto);
+                    case LocationType.Fort:
+                        return _mapper.Map<Fort>(createLocationDto);
                     default:
                         return null;
                 }

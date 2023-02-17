@@ -67,6 +67,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<DwarvenRuin>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewDwarvenRuin());
             else if (type.TypeOfLocation == LocationType.Farm)
                 _mockMapper.Setup(x => x.Map<Farm>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewFarm());
+            else if (type.TypeOfLocation == LocationType.Fort)
+                _mockMapper.Setup(x => x.Map<Fort>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewFort());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
             var completedCreateTask = Task<Location>.FromResult(taskType);
@@ -379,6 +381,27 @@ namespace Skyrim.Api.Test.Domains
                     GeographicalDescription = "Test"
                 }
             };
+            yield return new object[]
+            {
+                "Valid properties for Fort Location",
+                TestMethodHelpers.CreateNewCreateLocationDtoAsFort(),
+                new Fort
+                {
+                    Id = 0,
+                    Name = "Test",
+                    Description = "Test",
+                    TypeOfLocation = LocationType.Fort,
+                    GeographicalDescription = "Test"
+                },
+                new Fort
+                {
+                    Id = 0,
+                    Name = "Test",
+                    Description = "Test",
+                    TypeOfLocation = LocationType.Fort,
+                    GeographicalDescription = "Test"
+                }
+            };
         }
 
         [Theory]
@@ -415,6 +438,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<DwarvenRuin>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewDwarvenRuin());
             else if (location.TypeOfLocation == LocationType.Farm)
                 _mockMapper.Setup(x => x.Map<Farm>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewFarm());
+            else if (location.TypeOfLocation == LocationType.Fort)
+                _mockMapper.Setup(x => x.Map<Fort>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewFort());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
             var completedCreateTask = Task<Location>.FromResult(taskType);
@@ -538,6 +563,11 @@ namespace Skyrim.Api.Test.Domains
                 "Invalid properties for Farm",
                 new CreateLocationDto { TypeOfLocation = LocationType.Farm }
             };
+            yield return new object[]
+            {
+                "Invalid properties for Fort",
+                new CreateLocationDto { TypeOfLocation = LocationType.Fort }
+            };
         }
 
         [Theory]
@@ -573,6 +603,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<DwarvenRuin>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
             else if (location.TypeOfLocation == LocationType.Farm)
                 _mockMapper.Setup(x => x.Map<Farm>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
+            else if (location.TypeOfLocation == LocationType.Fort)
+                _mockMapper.Setup(x => x.Map<Fort>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
 
@@ -669,6 +701,12 @@ namespace Skyrim.Api.Test.Domains
                 TestMethodHelpers.CreateNewFarm(),
                 TestMethodHelpers.CreateNewCreateLocationDtoAsFarm()
             };
+            yield return new object[]
+            {
+                "Invalid properties for Fort",
+                TestMethodHelpers.CreateNewFort(),
+                TestMethodHelpers.CreateNewCreateLocationDtoAsFort()
+            };
         }
 
         [Theory]
@@ -706,6 +744,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<DwarvenRuin>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewDwarvenRuin());
             else if (type.TypeOfLocation == LocationType.Farm)
                 _mockMapper.Setup(x => x.Map<Farm>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewFarm());
+            else if (type.TypeOfLocation == LocationType.Fort)
+                _mockMapper.Setup(x => x.Map<Fort>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewFort());
 
             var completedCreateTask = Task<Location>.FromResult(taskType);
             _mockLocationRepository.Setup(x => x.SaveLocation(It.IsAny<Location>()))
@@ -1308,6 +1348,48 @@ namespace Skyrim.Api.Test.Domains
                     TestMethodHelpers.CreateNewCreateLocationDtoAsFarm(),
                     TestMethodHelpers.CreateNewFarm(),
                     TestMethodHelpers.CreateNewFarm()
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null description so it returns a Fort with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = null,
+                        TypeOfLocation = LocationType.Fort,
+                        GeographicalDescription = "Test"
+                    },
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsFort(),
+                    TestMethodHelpers.CreateNewFort(),
+                    TestMethodHelpers.CreateNewFort()
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has white spaces for description so it returns a Fort with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = "     ",
+                        TypeOfLocation = LocationType.Fort,
+                        GeographicalDescription = "Test"
+                    },
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsFort(),
+                    TestMethodHelpers.CreateNewFort(),
+                    TestMethodHelpers.CreateNewFort()
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has empty description so it returns a Fort with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = "",
+                        TypeOfLocation = LocationType.Fort,
+                        GeographicalDescription = "Test"
+                    },
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsFort(),
+                    TestMethodHelpers.CreateNewFort(),
+                    TestMethodHelpers.CreateNewFort()
             };
         }
 
@@ -2332,6 +2414,78 @@ namespace Skyrim.Api.Test.Domains
                         GeographicalDescription = " ",
                         Name = "Test",
                         TypeOfLocation = LocationType.Farm
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = null,
+                        TypeOfLocation = LocationType.Fort
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has an empty name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = "",
+                        TypeOfLocation = LocationType.Fort
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a white space name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = "   ",
+                        TypeOfLocation = LocationType.Fort
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = null,
+                        Name = "Test",
+                        TypeOfLocation = LocationType.Fort
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has an empty Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "",
+                        Name = "Test",
+                        TypeOfLocation = LocationType.Fort
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a white space Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = " ",
+                        Name = "Test",
+                        TypeOfLocation = LocationType.Fort
                     },
                     (CreateLocationDto)null
             };
