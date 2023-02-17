@@ -208,6 +208,18 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.Farm
                 }
             };
+            yield return new object[]
+            {
+                "Fatal Error for Fort location",
+                new Exception(),
+                new Fort
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Fort
+                }
+            };
         }
 
         [Theory]
@@ -407,6 +419,19 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.Farm
                 },
                 LocationType.Farm
+            };
+            yield return new object[]
+            {
+                "Fatal Error for Fort location",
+                new Exception(),
+                new Fort
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Fort
+                },
+                LocationType.Fort
             };
         }
     }

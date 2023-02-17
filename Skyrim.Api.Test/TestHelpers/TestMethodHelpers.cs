@@ -174,6 +174,18 @@ namespace Skyrim.Api.Test.TestHelpers
             };
         }
 
+        public static Fort CreateNewFort()
+        {
+            return new Fort
+            {
+                Id = 0,
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.Fort,
+                GeographicalDescription = "Test"
+            };
+        }
+
         public static CreateLocationDto CreateNewCreateLocationDtoAsCity()
         {
             return new CreateLocationDto
@@ -325,6 +337,17 @@ namespace Skyrim.Api.Test.TestHelpers
                 Description = "",
                 GeographicalDescription = "Test",
                 TypeOfLocation = LocationType.Farm
+            };
+        }
+
+        public static CreateLocationDto CreateNewCreateLocationDtoAsFort()
+        {
+            return new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "",
+                GeographicalDescription = "Test",
+                TypeOfLocation = LocationType.Fort
             };
         }
     }

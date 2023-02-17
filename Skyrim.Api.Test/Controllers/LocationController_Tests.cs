@@ -2867,7 +2867,7 @@ namespace Skyrim.Api.Test.Controllers
 
             var createLocationDto = new CreateLocationDto
             {
-                Name = "Test farm",
+                Name = "Test fort",
                 TypeOfLocation = LocationType.Farm,
                 GeographicalDescription = "Test Description"
             };
@@ -3053,6 +3053,220 @@ namespace Skyrim.Api.Test.Controllers
                 Name = "Test",
                 Description = "Test",
                 TypeOfLocation = LocationType.Farm,
+                GeographicalDescription = "        "
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+    }
+
+    public class CreateLocation_AsFort : LocationController_Tests
+    {
+        [Fact]
+        public async void WhenCreateLocationDtoHasRequiredValidPropertiesAsAFort_ReturnsCreateAtActionWithFortDetails()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Fort",
+                TypeOfLocation = LocationType.Fort,
+                GeographicalDescription = "Test Description"
+            };
+
+            var fort = new Fort
+            {
+                Id = 0,
+                Name = "Test Fort",
+                TypeOfLocation = LocationType.Fort,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(fort);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var fortObject = new object();
+            var locationAsFort = new Fort();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            fortObject = responseAsCreateAsActionResult.Value;
+
+            locationAsFort.Id = (int)fortObject.GetType().GetProperty("Id").GetValue(fortObject, null);
+            locationAsFort.Name = (string)fortObject.GetType().GetProperty("Name").GetValue(fortObject, null);
+            locationAsFort.TypeOfLocation = (LocationType)fortObject.GetType().GetProperty("TypeOfLocation").GetValue(fortObject, null);
+            locationAsFort.GeographicalDescription = (string)fortObject.GetType().GetProperty("GeographicalDescription").GetValue(fortObject, null);
+            locationAsFort.Description = (string)fortObject.GetType().GetProperty("Description").GetValue(fortObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(fort.Id, locationAsFort.Id);
+            Assert.Equal(fort.Name, locationAsFort.Name);
+            Assert.Equal(fort.Description, locationAsFort.Description);
+            Assert.Equal(fort.TypeOfLocation, locationAsFort.TypeOfLocation);
+            Assert.Equal(fort.GeographicalDescription, locationAsFort.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasEmptySpacesForDescriptionAFort_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Fort",
+                Description = "    ",
+                TypeOfLocation = LocationType.Fort,
+                GeographicalDescription = "Test Description"
+            };
+
+            var fort = new Fort
+            {
+                Id = 0,
+                Name = "Test Fort",
+                Description = "",
+                TypeOfLocation = LocationType.Fort,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(fort);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var fortObject = new object();
+            var locationAsFort = new Fort();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            fortObject = responseAsCreateAsActionResult.Value;
+
+            locationAsFort.Id = (int)fortObject.GetType().GetProperty("Id").GetValue(fortObject, null);
+            locationAsFort.Name = (string)fortObject.GetType().GetProperty("Name").GetValue(fortObject, null);
+            locationAsFort.TypeOfLocation = (LocationType)fortObject.GetType().GetProperty("TypeOfLocation").GetValue(fortObject, null);
+            locationAsFort.GeographicalDescription = (string)fortObject.GetType().GetProperty("GeographicalDescription").GetValue(fortObject, null);
+            locationAsFort.Description = (string)fortObject.GetType().GetProperty("Description").GetValue(fortObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(fort.Name, locationAsFort.Name);
+            Assert.Equal(fort.Id, locationAsFort.Id);
+            Assert.Equal(fort.Description, locationAsFort.Description);
+            Assert.Equal(fort.TypeOfLocation, locationAsFort.TypeOfLocation);
+            Assert.Equal(fort.GeographicalDescription, locationAsFort.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullForDescriptionAsAFort_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Fort",
+                Description = null,
+                TypeOfLocation = LocationType.Fort,
+                GeographicalDescription = "Test Description"
+            };
+
+            var fort = new Fort
+            {
+                Id = 0,
+                Name = "Test Fort",
+                Description = null,
+                TypeOfLocation = LocationType.Fort,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(fort);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var fortObject = new object();
+            var locationAsFort = new Fort();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            fortObject = responseAsCreateAsActionResult.Value;
+
+            locationAsFort.Id = (int)fortObject.GetType().GetProperty("Id").GetValue(fortObject, null);
+            locationAsFort.Name = (string)fortObject.GetType().GetProperty("Name").GetValue(fortObject, null);
+            locationAsFort.TypeOfLocation = (LocationType)fortObject.GetType().GetProperty("TypeOfLocation").GetValue(fortObject, null);
+            locationAsFort.GeographicalDescription = (string)fortObject.GetType().GetProperty("GeographicalDescription").GetValue(fortObject, null);
+            locationAsFort.Description = (string)fortObject.GetType().GetProperty("Description").GetValue(fortObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(fort.Id, locationAsFort.Id);
+            Assert.Equal(fort.Name, locationAsFort.Name);
+            Assert.Equal(fort.Description, locationAsFort.Description);
+            Assert.Equal(fort.TypeOfLocation, locationAsFort.TypeOfLocation);
+            Assert.Equal(fort.GeographicalDescription, locationAsFort.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsAFort_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "      ",
+                Description = "Test",
+                TypeOfLocation = LocationType.Fort,
+                GeographicalDescription = "Test Description"
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsAFort_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.Fort,
                 GeographicalDescription = "        "
             };
 
