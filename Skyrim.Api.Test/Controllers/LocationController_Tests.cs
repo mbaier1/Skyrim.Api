@@ -2867,7 +2867,7 @@ namespace Skyrim.Api.Test.Controllers
 
             var createLocationDto = new CreateLocationDto
             {
-                Name = "Test giantCamp",
+                Name = "Test grove",
                 TypeOfLocation = LocationType.Farm,
                 GeographicalDescription = "Test Description"
             };
@@ -3481,6 +3481,220 @@ namespace Skyrim.Api.Test.Controllers
                 Name = "Test",
                 Description = "Test",
                 TypeOfLocation = LocationType.GiantCamp,
+                GeographicalDescription = "        "
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+    }
+
+    public class CreateLocation_AsGrove : LocationController_Tests
+    {
+        [Fact]
+        public async void WhenCreateLocationDtoHasRequiredValidPropertiesAsAGrove_ReturnsCreateAtActionWithGroveDetails()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Grove",
+                TypeOfLocation = LocationType.Grove,
+                GeographicalDescription = "Test Description"
+            };
+
+            var grove = new Grove
+            {
+                Id = 0,
+                Name = "Test Grove",
+                TypeOfLocation = LocationType.Grove,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(grove);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var groveObject = new object();
+            var locationAsGrove = new Grove();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            groveObject = responseAsCreateAsActionResult.Value;
+
+            locationAsGrove.Id = (int)groveObject.GetType().GetProperty("Id").GetValue(groveObject, null);
+            locationAsGrove.Name = (string)groveObject.GetType().GetProperty("Name").GetValue(groveObject, null);
+            locationAsGrove.TypeOfLocation = (LocationType)groveObject.GetType().GetProperty("TypeOfLocation").GetValue(groveObject, null);
+            locationAsGrove.GeographicalDescription = (string)groveObject.GetType().GetProperty("GeographicalDescription").GetValue(groveObject, null);
+            locationAsGrove.Description = (string)groveObject.GetType().GetProperty("Description").GetValue(groveObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(grove.Id, locationAsGrove.Id);
+            Assert.Equal(grove.Name, locationAsGrove.Name);
+            Assert.Equal(grove.Description, locationAsGrove.Description);
+            Assert.Equal(grove.TypeOfLocation, locationAsGrove.TypeOfLocation);
+            Assert.Equal(grove.GeographicalDescription, locationAsGrove.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasEmptySpacesForDescriptionAGrove_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Grove",
+                Description = "    ",
+                TypeOfLocation = LocationType.Grove,
+                GeographicalDescription = "Test Description"
+            };
+
+            var grove = new Grove
+            {
+                Id = 0,
+                Name = "Test Grove",
+                Description = "",
+                TypeOfLocation = LocationType.Grove,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(grove);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var groveObject = new object();
+            var locationAsGrove = new Grove();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            groveObject = responseAsCreateAsActionResult.Value;
+
+            locationAsGrove.Id = (int)groveObject.GetType().GetProperty("Id").GetValue(groveObject, null);
+            locationAsGrove.Name = (string)groveObject.GetType().GetProperty("Name").GetValue(groveObject, null);
+            locationAsGrove.TypeOfLocation = (LocationType)groveObject.GetType().GetProperty("TypeOfLocation").GetValue(groveObject, null);
+            locationAsGrove.GeographicalDescription = (string)groveObject.GetType().GetProperty("GeographicalDescription").GetValue(groveObject, null);
+            locationAsGrove.Description = (string)groveObject.GetType().GetProperty("Description").GetValue(groveObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(grove.Name, locationAsGrove.Name);
+            Assert.Equal(grove.Id, locationAsGrove.Id);
+            Assert.Equal(grove.Description, locationAsGrove.Description);
+            Assert.Equal(grove.TypeOfLocation, locationAsGrove.TypeOfLocation);
+            Assert.Equal(grove.GeographicalDescription, locationAsGrove.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullForDescriptionAsAGiantCamp_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Grove",
+                Description = null,
+                TypeOfLocation = LocationType.Grove,
+                GeographicalDescription = "Test Description"
+            };
+
+            var grove = new Grove
+            {
+                Id = 0,
+                Name = "Test Grove",
+                Description = null,
+                TypeOfLocation = LocationType.Grove,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(grove);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var groveObject = new object();
+            var locationAsGrove = new Grove();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            groveObject = responseAsCreateAsActionResult.Value;
+
+            locationAsGrove.Id = (int)groveObject.GetType().GetProperty("Id").GetValue(groveObject, null);
+            locationAsGrove.Name = (string)groveObject.GetType().GetProperty("Name").GetValue(groveObject, null);
+            locationAsGrove.TypeOfLocation = (LocationType)groveObject.GetType().GetProperty("TypeOfLocation").GetValue(groveObject, null);
+            locationAsGrove.GeographicalDescription = (string)groveObject.GetType().GetProperty("GeographicalDescription").GetValue(groveObject, null);
+            locationAsGrove.Description = (string)groveObject.GetType().GetProperty("Description").GetValue(groveObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(grove.Id, locationAsGrove.Id);
+            Assert.Equal(grove.Name, locationAsGrove.Name);
+            Assert.Equal(grove.Description, locationAsGrove.Description);
+            Assert.Equal(grove.TypeOfLocation, locationAsGrove.TypeOfLocation);
+            Assert.Equal(grove.GeographicalDescription, locationAsGrove.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsAGrove_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "      ",
+                Description = "Test",
+                TypeOfLocation = LocationType.Grove,
+                GeographicalDescription = "Test Description"
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsAGrove_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.Grove,
                 GeographicalDescription = "        "
             };
 

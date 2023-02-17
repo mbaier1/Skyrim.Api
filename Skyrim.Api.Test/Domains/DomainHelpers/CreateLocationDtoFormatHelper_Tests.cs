@@ -209,6 +209,17 @@ namespace Skyrim.Api.Test.Domains.DomainHelpers
                     TypeOfLocation = LocationType.GiantCamp
                 }
             };
+            yield return new object[]
+            {
+                "Valid properties for a Grove Location",
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Grove
+                }
+            };
         }
 
         [Theory]
@@ -1957,6 +1968,114 @@ namespace Skyrim.Api.Test.Domains.DomainHelpers
                      GeographicalDescription = "Test"
                  }
             };
+            yield return new object[]
+            {
+                "CreateLocationDto has a null description for Grove so it returns with an empty description",
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = null,
+                     TypeOfLocation = LocationType.Grove,
+                     GeographicalDescription = "Test"
+                 },
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = "",
+                     TypeOfLocation = LocationType.Grove,
+                     GeographicalDescription = "Test"
+                 }
+            };
+            yield return new object[]
+            {
+                "CreateLocationDto has white spaces for description for Grove so it returns with an empty description",
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = "     ",
+                     TypeOfLocation = LocationType.Grove,
+                     GeographicalDescription = "Test"
+                 },
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = "",
+                     TypeOfLocation = LocationType.Grove,
+                     GeographicalDescription = "Test"
+                 }
+            };
+            yield return new object[]
+            {
+                "CreateLocationDto has empty description for Grove so it returns with an empty description",
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = "",
+                     TypeOfLocation = LocationType.Grove,
+                     GeographicalDescription = "Test"
+                 },
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = "",
+                     TypeOfLocation = LocationType.Grove,
+                     GeographicalDescription = "Test"
+                 }
+            };
+            yield return new object[]
+            {
+                "CreateLocationDto has white space in the name for Grove so it returns with an empty description",
+                 new CreateLocationDto
+                 {
+                     Name = "  Test   ",
+                     Description = "Test",
+                     TypeOfLocation = LocationType.Grove,
+                     GeographicalDescription = "Test"
+                 },
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = "Test",
+                     TypeOfLocation = LocationType.Grove,
+                     GeographicalDescription = "Test"
+                 }
+            };
+            yield return new object[]
+            {
+                "CreateLocationDto has white space in the description for Grove so it returns with an empty description",
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = "  Test",
+                     TypeOfLocation = LocationType.Grove,
+                     GeographicalDescription = "Test"
+                 },
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = "Test",
+                     TypeOfLocation = LocationType.Grove,
+                     GeographicalDescription = "Test"
+                 }
+            };
+            yield return new object[]
+            {
+                "CreateLocationDto has white space in the geographical description for Grove so it returns with an empty description",
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = "Test",
+                     TypeOfLocation = LocationType.Grove,
+                     GeographicalDescription = "Test    "
+                 },
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = "Test",
+                     TypeOfLocation = LocationType.Grove,
+                     GeographicalDescription = "Test"
+                 }
+            };
         }
 
         [Theory]
@@ -3123,6 +3242,78 @@ namespace Skyrim.Api.Test.Domains.DomainHelpers
                      Description = "Test",
                      GeographicalDescription = " ",
                      TypeOfLocation = LocationType.GiantCamp
+                 },
+                 (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                "CreateLocationDto has a null name for Grove",
+                 new CreateLocationDto
+                 {
+                     Name = null,
+                     Description = "Test",
+                     GeographicalDescription = "Test",
+                     TypeOfLocation = LocationType.Grove
+                 },
+                 (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                "CreateLocationDto has has an empty name for Grove",
+                 new CreateLocationDto
+                 {
+                     Name = "",
+                     Description = "Test",
+                     GeographicalDescription = "Test",
+                     TypeOfLocation = LocationType.Grove
+                 },
+                 (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                "CreateLocationDto has has a white space name for Grove",
+                 new CreateLocationDto
+                 {
+                     Name = " ",
+                     Description = "Test",
+                     GeographicalDescription = "Test",
+                     TypeOfLocation = LocationType.Grove
+                 },
+                 (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                "CreateLocationDto has a null Geographic Description for Grove",
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = "Test",
+                     GeographicalDescription = null,
+                     TypeOfLocation = LocationType.Grove
+                 },
+                 (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                "CreateLocationDto has an empty Geographic Description for Grove",
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = "Test",
+                     GeographicalDescription = "",
+                     TypeOfLocation = LocationType.Grove
+                 },
+                 (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                "CreateLocationDto has a white space Geographic Description name for Grove",
+                 new CreateLocationDto
+                 {
+                     Name = "Test",
+                     Description = "Test",
+                     GeographicalDescription = " ",
+                     TypeOfLocation = LocationType.Grove
                  },
                  (CreateLocationDto)null
             };
