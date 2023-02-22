@@ -243,6 +243,18 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.Grove
                 }
         };
+        yield return new object[]
+        {
+                "Fatal Error for ImperialCamp location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.ImperialCamp
+                }
+        };
     }
 
     [Theory]
@@ -480,6 +492,19 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.Grove
                 },
                 LocationType.Grove
+        };
+        yield return new object[]
+        {
+                "Fatal Error for ImperialCamp location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.ImperialCamp
+                },
+                LocationType.ImperialCamp
         };
     }
 }

@@ -244,6 +244,18 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.Grove
                 }
             };
+            yield return new object[]
+            {
+                "Fatal Error for ImperialCamp location",
+                new Exception(),
+                new ImperialCamp
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.ImperialCamp
+                }
+            };
         }
 
         [Theory]
@@ -482,6 +494,19 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.Grove
                 },
                 LocationType.Grove
+            };
+            yield return new object[]
+            {
+                "Fatal Error for ImperialCamp location",
+                new Exception(),
+                new ImperialCamp
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.ImperialCamp
+                },
+                LocationType.ImperialCamp
             };
         }
     }

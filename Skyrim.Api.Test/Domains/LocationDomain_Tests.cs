@@ -73,6 +73,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<GiantCamp>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewGiantCamp());
             else if (type.TypeOfLocation == LocationType.Grove)
                 _mockMapper.Setup(x => x.Map<Grove>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewGrove());
+            else if (type.TypeOfLocation == LocationType.ImperialCamp)
+                _mockMapper.Setup(x => x.Map<ImperialCamp>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewImperialCamp());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
             var completedCreateTask = Task<Location>.FromResult(taskType);
@@ -448,6 +450,27 @@ namespace Skyrim.Api.Test.Domains
                     GeographicalDescription = "Test"
                 }
             };
+            yield return new object[]
+            {
+                "Valid properties for ImperialCamp Location",
+                TestMethodHelpers.CreateNewCreateLocationDtoAsImperialCamp(),
+                new ImperialCamp
+                {
+                    Id = 0,
+                    Name = "Test",
+                    Description = "Test",
+                    TypeOfLocation = LocationType.ImperialCamp,
+                    GeographicalDescription = "Test"
+                },
+                new ImperialCamp
+                {
+                    Id = 0,
+                    Name = "Test",
+                    Description = "Test",
+                    TypeOfLocation = LocationType.ImperialCamp,
+                    GeographicalDescription = "Test"
+                }
+            };
         }
 
         [Theory]
@@ -490,6 +513,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<GiantCamp>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewGiantCamp());
             else if (location.TypeOfLocation == LocationType.Grove)
                 _mockMapper.Setup(x => x.Map<Grove>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewGrove());
+            else if (location.TypeOfLocation == LocationType.ImperialCamp)
+                _mockMapper.Setup(x => x.Map<ImperialCamp>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewImperialCamp());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
             var completedCreateTask = Task<Location>.FromResult(taskType);
@@ -534,6 +559,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Verify(x => x.Map<GiantCamp>(createLocationDto), Times.Once());
             else if (location.TypeOfLocation == LocationType.Grove)
                 _mockMapper.Verify(x => x.Map<Grove>(createLocationDto), Times.Once());
+            else if (location.TypeOfLocation == LocationType.ImperialCamp)
+                _mockMapper.Verify(x => x.Map<ImperialCamp>(createLocationDto), Times.Once());
             else
                 Assert.True(false);
         }
@@ -638,6 +665,11 @@ namespace Skyrim.Api.Test.Domains
                 "Invalid properties for Grove",
                 new CreateLocationDto { TypeOfLocation = LocationType.Grove }
             };
+            yield return new object[]
+            {
+                "Invalid properties for ImperialCamp",
+                new CreateLocationDto { TypeOfLocation = LocationType.ImperialCamp }
+            };
         }
 
         [Theory]
@@ -679,6 +711,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<GiantCamp>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
             else if (location.TypeOfLocation == LocationType.Grove)
                 _mockMapper.Setup(x => x.Map<Grove>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
+            else if (location.TypeOfLocation == LocationType.ImperialCamp)
+                _mockMapper.Setup(x => x.Map<ImperialCamp>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
 
@@ -793,6 +827,12 @@ namespace Skyrim.Api.Test.Domains
                 TestMethodHelpers.CreateNewGrove(),
                 TestMethodHelpers.CreateNewCreateLocationDtoAsGrove()
            };
+            yield return new object[]
+           {
+                "Invalid properties for ImperialCamp",
+                TestMethodHelpers.CreateNewImperialCamp(),
+                TestMethodHelpers.CreateNewCreateLocationDtoAsImperialCamp()
+           };
         }
 
         [Theory]
@@ -836,6 +876,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<GiantCamp>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewGiantCamp());
             else if (type.TypeOfLocation == LocationType.Grove)
                 _mockMapper.Setup(x => x.Map<Grove>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewGrove());
+            else if (type.TypeOfLocation == LocationType.ImperialCamp)
+                _mockMapper.Setup(x => x.Map<ImperialCamp>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewImperialCamp());
 
             var completedCreateTask = Task<Location>.FromResult(taskType);
             _mockLocationRepository.Setup(x => x.SaveLocation(It.IsAny<Location>()))
@@ -1564,6 +1606,48 @@ namespace Skyrim.Api.Test.Domains
                     TestMethodHelpers.CreateNewCreateLocationDtoAsGrove(),
                     TestMethodHelpers.CreateNewGrove(),
                     TestMethodHelpers.CreateNewGrove()
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null description so it returns a ImperialCamp with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = null,
+                        TypeOfLocation = LocationType.ImperialCamp,
+                        GeographicalDescription = "Test"
+                    },
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsImperialCamp(),
+                    TestMethodHelpers.CreateNewImperialCamp(),
+                    TestMethodHelpers.CreateNewImperialCamp()
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has white spaces for description so it returns a ImperialCamp with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = "     ",
+                        TypeOfLocation = LocationType.ImperialCamp,
+                        GeographicalDescription = "Test"
+                    },
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsImperialCamp(),
+                    TestMethodHelpers.CreateNewImperialCamp(),
+                    TestMethodHelpers.CreateNewImperialCamp()
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has empty description so it returns a ImperialCamp with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = "",
+                        TypeOfLocation = LocationType.ImperialCamp,
+                        GeographicalDescription = "Test"
+                    },
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsImperialCamp(),
+                    TestMethodHelpers.CreateNewImperialCamp(),
+                    TestMethodHelpers.CreateNewImperialCamp()
             };
         }
 
@@ -2804,6 +2888,78 @@ namespace Skyrim.Api.Test.Domains
                         GeographicalDescription = " ",
                         Name = "Test",
                         TypeOfLocation = LocationType.Grove
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = null,
+                        TypeOfLocation = LocationType.ImperialCamp
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has an empty name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = "",
+                        TypeOfLocation = LocationType.ImperialCamp
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a white space name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = "   ",
+                        TypeOfLocation = LocationType.ImperialCamp
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = null,
+                        Name = "Test",
+                        TypeOfLocation = LocationType.ImperialCamp
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has an empty Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "",
+                        Name = "Test",
+                        TypeOfLocation = LocationType.ImperialCamp
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a white space Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = " ",
+                        Name = "Test",
+                        TypeOfLocation = LocationType.ImperialCamp
                     },
                     (CreateLocationDto)null
             };
