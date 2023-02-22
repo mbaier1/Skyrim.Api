@@ -79,6 +79,8 @@ namespace Skyrim.Api.Domain
                         return _mapper.Map<GiantCamp>(createLocationDto);
                     case LocationType.Grove:
                         return _mapper.Map<Grove>(createLocationDto);
+                    case LocationType.ImperialCamp:
+                        return _mapper.Map<ImperialCamp>(createLocationDto);
                     default:
                         return null;
                 }

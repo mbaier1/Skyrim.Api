@@ -25,6 +25,7 @@ namespace Skyrim.Api.Configurations
             CreateMap<Fort, CreateLocationDto>().ReverseMap();
             CreateMap<GiantCamp, CreateLocationDto>().ReverseMap();
             CreateMap<Grove, CreateLocationDto>().ReverseMap();
+            CreateMap<ImperialCamp, CreateLocationDto>().ReverseMap();
         }
     }
 }

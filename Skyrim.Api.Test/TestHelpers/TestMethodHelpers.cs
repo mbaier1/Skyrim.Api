@@ -210,6 +210,18 @@ namespace Skyrim.Api.Test.TestHelpers
             };
         }
 
+        public static ImperialCamp CreateNewImperialCamp()
+        {
+            return new ImperialCamp
+            {
+                Id = 0,
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.ImperialCamp,
+                GeographicalDescription = "Test"
+            };
+        }
+
         public static CreateLocationDto CreateNewCreateLocationDtoAsCity()
         {
             return new CreateLocationDto
@@ -394,6 +406,17 @@ namespace Skyrim.Api.Test.TestHelpers
                 Description = "",
                 GeographicalDescription = "Test",
                 TypeOfLocation = LocationType.Grove
+            };
+        }
+
+        public static CreateLocationDto CreateNewCreateLocationDtoAsImperialCamp()
+        {
+            return new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "",
+                GeographicalDescription = "Test",
+                TypeOfLocation = LocationType.ImperialCamp
             };
         }
     }
