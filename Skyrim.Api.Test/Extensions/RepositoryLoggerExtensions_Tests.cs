@@ -256,6 +256,18 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.ImperialCamp
                 }
             };
+            yield return new object[]
+            {
+                "Fatal Error for LightHouse location",
+                new Exception(),
+                new LightHouse
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.LightHouse
+                }
+            };
         }
 
         [Theory]
@@ -507,6 +519,19 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.ImperialCamp
                 },
                 LocationType.ImperialCamp
+            };
+            yield return new object[]
+            {
+                "Fatal Error for LightHouse location",
+                new Exception(),
+                new LightHouse
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.LightHouse
+                },
+                LocationType.LightHouse
             };
         }
     }

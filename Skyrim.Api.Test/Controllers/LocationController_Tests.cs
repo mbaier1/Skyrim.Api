@@ -2867,7 +2867,7 @@ namespace Skyrim.Api.Test.Controllers
 
             var createLocationDto = new CreateLocationDto
             {
-                Name = "Test imperialCamp",
+                Name = "Test lightHouse",
                 TypeOfLocation = LocationType.Farm,
                 GeographicalDescription = "Test Description"
             };
@@ -3909,6 +3909,220 @@ namespace Skyrim.Api.Test.Controllers
                 Name = "Test",
                 Description = "Test",
                 TypeOfLocation = LocationType.ImperialCamp,
+                GeographicalDescription = "        "
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+    }
+
+    public class CreateLocation_AsLightHouse : LocationController_Tests
+    {
+        [Fact]
+        public async void WhenCreateLocationDtoHasRequiredValidPropertiesAsALightHouse_ReturnsCreateAtActionWithLightHouseDetails()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test LightHouse",
+                TypeOfLocation = LocationType.LightHouse,
+                GeographicalDescription = "Test Description"
+            };
+
+            var lightHouse = new LightHouse
+            {
+                Id = 0,
+                Name = "Test LightHouse",
+                TypeOfLocation = LocationType.LightHouse,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(lightHouse);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var lightHouseObject = new object();
+            var locationAsLightHouse = new LightHouse();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            lightHouseObject = responseAsCreateAsActionResult.Value;
+
+            locationAsLightHouse.Id = (int)lightHouseObject.GetType().GetProperty("Id").GetValue(lightHouseObject, null);
+            locationAsLightHouse.Name = (string)lightHouseObject.GetType().GetProperty("Name").GetValue(lightHouseObject, null);
+            locationAsLightHouse.TypeOfLocation = (LocationType)lightHouseObject.GetType().GetProperty("TypeOfLocation").GetValue(lightHouseObject, null);
+            locationAsLightHouse.GeographicalDescription = (string)lightHouseObject.GetType().GetProperty("GeographicalDescription").GetValue(lightHouseObject, null);
+            locationAsLightHouse.Description = (string)lightHouseObject.GetType().GetProperty("Description").GetValue(lightHouseObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(lightHouse.Id, locationAsLightHouse.Id);
+            Assert.Equal(lightHouse.Name, locationAsLightHouse.Name);
+            Assert.Equal(lightHouse.Description, locationAsLightHouse.Description);
+            Assert.Equal(lightHouse.TypeOfLocation, locationAsLightHouse.TypeOfLocation);
+            Assert.Equal(lightHouse.GeographicalDescription, locationAsLightHouse.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasEmptySpacesForDescriptionALightHouse_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test LightHouse",
+                Description = "    ",
+                TypeOfLocation = LocationType.LightHouse,
+                GeographicalDescription = "Test Description"
+            };
+
+            var lightHouse = new LightHouse
+            {
+                Id = 0,
+                Name = "Test LightHouse",
+                Description = "",
+                TypeOfLocation = LocationType.LightHouse,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(lightHouse);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var lightHouseObject = new object();
+            var locationAsLightHouse = new LightHouse();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            lightHouseObject = responseAsCreateAsActionResult.Value;
+
+            locationAsLightHouse.Id = (int)lightHouseObject.GetType().GetProperty("Id").GetValue(lightHouseObject, null);
+            locationAsLightHouse.Name = (string)lightHouseObject.GetType().GetProperty("Name").GetValue(lightHouseObject, null);
+            locationAsLightHouse.TypeOfLocation = (LocationType)lightHouseObject.GetType().GetProperty("TypeOfLocation").GetValue(lightHouseObject, null);
+            locationAsLightHouse.GeographicalDescription = (string)lightHouseObject.GetType().GetProperty("GeographicalDescription").GetValue(lightHouseObject, null);
+            locationAsLightHouse.Description = (string)lightHouseObject.GetType().GetProperty("Description").GetValue(lightHouseObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(lightHouse.Name, locationAsLightHouse.Name);
+            Assert.Equal(lightHouse.Id, locationAsLightHouse.Id);
+            Assert.Equal(lightHouse.Description, locationAsLightHouse.Description);
+            Assert.Equal(lightHouse.TypeOfLocation, locationAsLightHouse.TypeOfLocation);
+            Assert.Equal(lightHouse.GeographicalDescription, locationAsLightHouse.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullForDescriptionAsALightHouse_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test LightHouse",
+                Description = null,
+                TypeOfLocation = LocationType.LightHouse,
+                GeographicalDescription = "Test Description"
+            };
+
+            var lightHouse = new LightHouse
+            {
+                Id = 0,
+                Name = "Test LightHouse",
+                Description = null,
+                TypeOfLocation = LocationType.LightHouse,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(lightHouse);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var lightHouseObject = new object();
+            var locationAsLightHouse = new LightHouse();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            lightHouseObject = responseAsCreateAsActionResult.Value;
+
+            locationAsLightHouse.Id = (int)lightHouseObject.GetType().GetProperty("Id").GetValue(lightHouseObject, null);
+            locationAsLightHouse.Name = (string)lightHouseObject.GetType().GetProperty("Name").GetValue(lightHouseObject, null);
+            locationAsLightHouse.TypeOfLocation = (LocationType)lightHouseObject.GetType().GetProperty("TypeOfLocation").GetValue(lightHouseObject, null);
+            locationAsLightHouse.GeographicalDescription = (string)lightHouseObject.GetType().GetProperty("GeographicalDescription").GetValue(lightHouseObject, null);
+            locationAsLightHouse.Description = (string)lightHouseObject.GetType().GetProperty("Description").GetValue(lightHouseObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(lightHouse.Id, locationAsLightHouse.Id);
+            Assert.Equal(lightHouse.Name, locationAsLightHouse.Name);
+            Assert.Equal(lightHouse.Description, locationAsLightHouse.Description);
+            Assert.Equal(lightHouse.TypeOfLocation, locationAsLightHouse.TypeOfLocation);
+            Assert.Equal(lightHouse.GeographicalDescription, locationAsLightHouse.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsALightHouse_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "      ",
+                Description = "Test",
+                TypeOfLocation = LocationType.LightHouse,
+                GeographicalDescription = "Test Description"
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsALightHouse_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.LightHouse,
                 GeographicalDescription = "        "
             };
 
