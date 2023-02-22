@@ -222,6 +222,18 @@ namespace Skyrim.Api.Test.TestHelpers
             };
         }
 
+        public static LightHouse CreateNewLightHouse()
+        {
+            return new LightHouse
+            {
+                Id = 0,
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.LightHouse,
+                GeographicalDescription = "Test"
+            };
+        }
+
         public static CreateLocationDto CreateNewCreateLocationDtoAsCity()
         {
             return new CreateLocationDto
@@ -417,6 +429,17 @@ namespace Skyrim.Api.Test.TestHelpers
                 Description = "",
                 GeographicalDescription = "Test",
                 TypeOfLocation = LocationType.ImperialCamp
+            };
+        }
+
+        public static CreateLocationDto CreateNewCreateLocationDtoAsLightHouse()
+        {
+            return new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "",
+                GeographicalDescription = "Test",
+                TypeOfLocation = LocationType.LightHouse
             };
         }
     }
