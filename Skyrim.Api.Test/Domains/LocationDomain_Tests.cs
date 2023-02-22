@@ -1693,7 +1693,7 @@ namespace Skyrim.Api.Test.Domains
             };
             yield return new object[]
             {
-                    "CreateLocationDto has a null description so it returns a ImperLightHouseialCamp with empty description",
+                    "CreateLocationDto has a null description so it returns a LightHouse with empty description",
                     new CreateLocationDto
                     {
                         Name = "Test",
