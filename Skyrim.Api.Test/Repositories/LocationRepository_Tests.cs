@@ -197,6 +197,11 @@ namespace Skyrim.Api.Test.Repositories
                 "Valid properties for a ImperialCamp",
                 TestMethodHelpers.CreateNewImperialCamp()
             };
+            yield return new object[]
+            {
+                "Valid properties for a LightHouse",
+                TestMethodHelpers.CreateNewLightHouse()
+            };
         }
 
         [Theory]
@@ -319,6 +324,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Invalid properties for ImperialCamp",
                 new ImperialCamp()
+            };
+            yield return new object[]
+            {
+                "Invalid properties for LightHouse",
+                new LightHouse()
             };
         }
 

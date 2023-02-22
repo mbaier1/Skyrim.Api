@@ -255,6 +255,18 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.ImperialCamp
                 }
         };
+        yield return new object[]
+        {
+                "Fatal Error for LightHouse location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.LightHouse
+                }
+        };
     }
 
     [Theory]
@@ -505,6 +517,19 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.ImperialCamp
                 },
                 LocationType.ImperialCamp
+        };
+        yield return new object[]
+        {
+                "Fatal Error for LightHouse location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.LightHouse
+                },
+                LocationType.LightHouse
         };
     }
 }
