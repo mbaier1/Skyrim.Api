@@ -41,6 +41,7 @@ namespace Skyrim.Api.Data
         public DbSet<Grove> Groves { get; set; }
         public DbSet<ImperialCamp> ImperialCamps { get; set; }
         public DbSet<LightHouse> LightHouses { get; set; }
+        public DbSet<Mine> Mines { get; set; }
 
         public DbSet<Guard> Guards { get; set; }
         public DbSet<PhyscialFightingShop> PhyscialFightingShops { get; set; }
