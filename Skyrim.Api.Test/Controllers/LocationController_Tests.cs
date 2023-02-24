@@ -2867,7 +2867,7 @@ namespace Skyrim.Api.Test.Controllers
 
             var createLocationDto = new CreateLocationDto
             {
-                Name = "Test lightHouse",
+                Name = "Test mine",
                 TypeOfLocation = LocationType.Farm,
                 GeographicalDescription = "Test Description"
             };
@@ -4123,6 +4123,220 @@ namespace Skyrim.Api.Test.Controllers
                 Name = "Test",
                 Description = "Test",
                 TypeOfLocation = LocationType.LightHouse,
+                GeographicalDescription = "        "
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+    }
+
+    public class CreateLocation_AsMine : LocationController_Tests
+    {
+        [Fact]
+        public async void WhenCreateLocationDtoHasRequiredValidPropertiesAsAMine_ReturnsCreateAtActionWithMineDetails()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Mine",
+                TypeOfLocation = LocationType.Mine,
+                GeographicalDescription = "Test Description"
+            };
+
+            var mine = new Mine
+            {
+                Id = 0,
+                Name = "Test Mine",
+                TypeOfLocation = LocationType.Mine,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(mine);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var mineObject = new object();
+            var locationAsMine = new Mine();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            mineObject = responseAsCreateAsActionResult.Value;
+
+            locationAsMine.Id = (int)mineObject.GetType().GetProperty("Id").GetValue(mineObject, null);
+            locationAsMine.Name = (string)mineObject.GetType().GetProperty("Name").GetValue(mineObject, null);
+            locationAsMine.TypeOfLocation = (LocationType)mineObject.GetType().GetProperty("TypeOfLocation").GetValue(mineObject, null);
+            locationAsMine.GeographicalDescription = (string)mineObject.GetType().GetProperty("GeographicalDescription").GetValue(mineObject, null);
+            locationAsMine.Description = (string)mineObject.GetType().GetProperty("Description").GetValue(mineObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(mine.Id, locationAsMine.Id);
+            Assert.Equal(mine.Name, locationAsMine.Name);
+            Assert.Equal(mine.Description, locationAsMine.Description);
+            Assert.Equal(mine.TypeOfLocation, locationAsMine.TypeOfLocation);
+            Assert.Equal(mine.GeographicalDescription, locationAsMine.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasEmptySpacesForDescriptionAMine_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Mine",
+                Description = "    ",
+                TypeOfLocation = LocationType.Mine,
+                GeographicalDescription = "Test Description"
+            };
+
+            var mine = new Mine
+            {
+                Id = 0,
+                Name = "Test Mine",
+                Description = "",
+                TypeOfLocation = LocationType.Mine,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(mine);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var mineObject = new object();
+            var locationAsMine = new Mine();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            mineObject = responseAsCreateAsActionResult.Value;
+
+            locationAsMine.Id = (int)mineObject.GetType().GetProperty("Id").GetValue(mineObject, null);
+            locationAsMine.Name = (string)mineObject.GetType().GetProperty("Name").GetValue(mineObject, null);
+            locationAsMine.TypeOfLocation = (LocationType)mineObject.GetType().GetProperty("TypeOfLocation").GetValue(mineObject, null);
+            locationAsMine.GeographicalDescription = (string)mineObject.GetType().GetProperty("GeographicalDescription").GetValue(mineObject, null);
+            locationAsMine.Description = (string)mineObject.GetType().GetProperty("Description").GetValue(mineObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(mine.Name, locationAsMine.Name);
+            Assert.Equal(mine.Id, locationAsMine.Id);
+            Assert.Equal(mine.Description, locationAsMine.Description);
+            Assert.Equal(mine.TypeOfLocation, locationAsMine.TypeOfLocation);
+            Assert.Equal(mine.GeographicalDescription, locationAsMine.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullForDescriptionAsAMine_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Mine",
+                Description = null,
+                TypeOfLocation = LocationType.Mine,
+                GeographicalDescription = "Test Description"
+            };
+
+            var mine = new Mine
+            {
+                Id = 0,
+                Name = "Test Mine",
+                Description = null,
+                TypeOfLocation = LocationType.Mine,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(mine);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var mineObject = new object();
+            var locationAsMine = new Mine();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            mineObject = responseAsCreateAsActionResult.Value;
+
+            locationAsMine.Id = (int)mineObject.GetType().GetProperty("Id").GetValue(mineObject, null);
+            locationAsMine.Name = (string)mineObject.GetType().GetProperty("Name").GetValue(mineObject, null);
+            locationAsMine.TypeOfLocation = (LocationType)mineObject.GetType().GetProperty("TypeOfLocation").GetValue(mineObject, null);
+            locationAsMine.GeographicalDescription = (string)mineObject.GetType().GetProperty("GeographicalDescription").GetValue(mineObject, null);
+            locationAsMine.Description = (string)mineObject.GetType().GetProperty("Description").GetValue(mineObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(mine.Id, locationAsMine.Id);
+            Assert.Equal(mine.Name, locationAsMine.Name);
+            Assert.Equal(mine.Description, locationAsMine.Description);
+            Assert.Equal(mine.TypeOfLocation, locationAsMine.TypeOfLocation);
+            Assert.Equal(mine.GeographicalDescription, locationAsMine.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsAMine_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "      ",
+                Description = "Test",
+                TypeOfLocation = LocationType.Mine,
+                GeographicalDescription = "Test Description"
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsAMine_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.Mine,
                 GeographicalDescription = "        "
             };
 

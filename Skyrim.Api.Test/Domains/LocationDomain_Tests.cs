@@ -77,6 +77,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<ImperialCamp>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewImperialCamp());
             else if (type.TypeOfLocation == LocationType.LightHouse)
                 _mockMapper.Setup(x => x.Map<LightHouse>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewLightHouse());
+            else if (type.TypeOfLocation == LocationType.Mine)
+                _mockMapper.Setup(x => x.Map<Mine>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewMine());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
             var completedCreateTask = Task<Location>.FromResult(taskType);
@@ -494,6 +496,27 @@ namespace Skyrim.Api.Test.Domains
                     GeographicalDescription = "Test"
                 }
             };
+            yield return new object[]
+            {
+                "Valid properties for Mine Location",
+                TestMethodHelpers.CreateNewCreateLocationDtoAsMine(),
+                new Mine
+                {
+                    Id = 0,
+                    Name = "Test",
+                    Description = "Test",
+                    TypeOfLocation = LocationType.Mine,
+                    GeographicalDescription = "Test"
+                },
+                new Mine
+                {
+                    Id = 0,
+                    Name = "Test",
+                    Description = "Test",
+                    TypeOfLocation = LocationType.Mine,
+                    GeographicalDescription = "Test"
+                }
+            };
         }
 
         [Theory]
@@ -540,6 +563,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<ImperialCamp>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewImperialCamp());
             else if (location.TypeOfLocation == LocationType.LightHouse)
                 _mockMapper.Setup(x => x.Map<LightHouse>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewLightHouse());
+            else if (location.TypeOfLocation == LocationType.Mine)
+                _mockMapper.Setup(x => x.Map<Mine>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewMine());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
             var completedCreateTask = Task<Location>.FromResult(taskType);
@@ -588,6 +613,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Verify(x => x.Map<ImperialCamp>(createLocationDto), Times.Once());
             else if (location.TypeOfLocation == LocationType.LightHouse)
                 _mockMapper.Verify(x => x.Map<LightHouse>(createLocationDto), Times.Once());
+            else if (location.TypeOfLocation == LocationType.Mine)
+                _mockMapper.Verify(x => x.Map<Mine>(createLocationDto), Times.Once());
             else
                 Assert.True(false);
         }
@@ -702,6 +729,11 @@ namespace Skyrim.Api.Test.Domains
                 "Invalid properties for LightHouse",
                 new CreateLocationDto { TypeOfLocation = LocationType.LightHouse }
             };
+            yield return new object[]
+            {
+                "Invalid properties for Mine",
+                new CreateLocationDto { TypeOfLocation = LocationType.Mine }
+            };
         }
 
         [Theory]
@@ -747,6 +779,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<ImperialCamp>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
             else if (location.TypeOfLocation == LocationType.LightHouse)
                 _mockMapper.Setup(x => x.Map<LightHouse>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
+            else if (location.TypeOfLocation == LocationType.Mine)
+                _mockMapper.Setup(x => x.Map<Mine>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
 
@@ -873,6 +907,12 @@ namespace Skyrim.Api.Test.Domains
                 TestMethodHelpers.CreateNewLightHouse(),
                 TestMethodHelpers.CreateNewCreateLocationDtoAsLightHouse()
            };
+            yield return new object[]
+           {
+                "Invalid properties for Mine",
+                TestMethodHelpers.CreateNewMine(),
+                TestMethodHelpers.CreateNewCreateLocationDtoAsMine()
+           };
         }
 
         [Theory]
@@ -920,6 +960,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<ImperialCamp>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewImperialCamp());
             else if (type.TypeOfLocation == LocationType.LightHouse)
                 _mockMapper.Setup(x => x.Map<LightHouse>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewLightHouse());
+            else if (type.TypeOfLocation == LocationType.Mine)
+                _mockMapper.Setup(x => x.Map<Mine>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewMine());
 
             var completedCreateTask = Task<Location>.FromResult(taskType);
             _mockLocationRepository.Setup(x => x.SaveLocation(It.IsAny<Location>()))
@@ -1732,6 +1774,48 @@ namespace Skyrim.Api.Test.Domains
                     TestMethodHelpers.CreateNewCreateLocationDtoAsLightHouse(),
                     TestMethodHelpers.CreateNewLightHouse(),
                     TestMethodHelpers.CreateNewLightHouse()
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null description so it returns a Mine with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = null,
+                        TypeOfLocation = LocationType.Mine,
+                        GeographicalDescription = "Test"
+                    },
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsMine(),
+                    TestMethodHelpers.CreateNewMine(),
+                    TestMethodHelpers.CreateNewMine()
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has white spaces for description so it returns a Mine with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = "     ",
+                        TypeOfLocation = LocationType.Mine,
+                        GeographicalDescription = "Test"
+                    },
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsMine(),
+                    TestMethodHelpers.CreateNewMine(),
+                    TestMethodHelpers.CreateNewMine()
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has empty description so it returns a Mine with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = "",
+                        TypeOfLocation = LocationType.Mine,
+                        GeographicalDescription = "Test"
+                    },
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsMine(),
+                    TestMethodHelpers.CreateNewMine(),
+                    TestMethodHelpers.CreateNewMine()
             };
         }
 
@@ -3116,6 +3200,78 @@ namespace Skyrim.Api.Test.Domains
                         GeographicalDescription = " ",
                         Name = "Test",
                         TypeOfLocation = LocationType.LightHouse
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = null,
+                        TypeOfLocation = LocationType.Mine
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has an empty name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = "",
+                        TypeOfLocation = LocationType.Mine
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a white space name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = "   ",
+                        TypeOfLocation = LocationType.Mine
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = null,
+                        Name = "Test",
+                        TypeOfLocation = LocationType.Mine
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has an empty Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "",
+                        Name = "Test",
+                        TypeOfLocation = LocationType.Mine
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a white space Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = " ",
+                        Name = "Test",
+                        TypeOfLocation = LocationType.Mine
                     },
                     (CreateLocationDto)null
             };
