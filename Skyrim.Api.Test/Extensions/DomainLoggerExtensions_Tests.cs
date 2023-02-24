@@ -267,6 +267,18 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.LightHouse
                 }
         };
+        yield return new object[]
+        {
+                "Fatal Error for Mine location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Mine
+                }
+        };
     }
 
     [Theory]
@@ -530,6 +542,19 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.LightHouse
                 },
                 LocationType.LightHouse
+        };
+        yield return new object[]
+        {
+                "Fatal Error for Mine location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Mine
+                },
+                LocationType.Mine
         };
     }
 }

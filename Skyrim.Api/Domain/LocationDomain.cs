@@ -83,6 +83,8 @@ namespace Skyrim.Api.Domain
                         return _mapper.Map<ImperialCamp>(createLocationDto);
                     case LocationType.LightHouse:
                         return _mapper.Map<LightHouse>(createLocationDto);
+                    case LocationType.Mine:
+                        return _mapper.Map<Mine>(createLocationDto);
                     default:
                         return null;
                 }

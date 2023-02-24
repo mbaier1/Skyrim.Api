@@ -27,6 +27,7 @@ namespace Skyrim.Api.Configurations
             CreateMap<Grove, CreateLocationDto>().ReverseMap();
             CreateMap<ImperialCamp, CreateLocationDto>().ReverseMap();
             CreateMap<LightHouse, CreateLocationDto>().ReverseMap();
+            CreateMap<Mine, CreateLocationDto>().ReverseMap();
         }
     }
 }

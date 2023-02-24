@@ -268,6 +268,18 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.LightHouse
                 }
             };
+            yield return new object[]
+            {
+                "Fatal Error for Mine location",
+                new Exception(),
+                new Mine
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Mine
+                }
+            };
         }
 
         [Theory]
@@ -532,6 +544,19 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.LightHouse
                 },
                 LocationType.LightHouse
+            };
+            yield return new object[]
+            {
+                "Fatal Error for Mine location",
+                new Exception(),
+                new Mine
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Mine
+                },
+                LocationType.Mine
             };
         }
     }
