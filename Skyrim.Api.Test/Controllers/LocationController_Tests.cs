@@ -2867,7 +2867,7 @@ namespace Skyrim.Api.Test.Controllers
 
             var createLocationDto = new CreateLocationDto
             {
-                Name = "Test nordicTower",
+                Name = "Test orcStronghold",
                 TypeOfLocation = LocationType.Farm,
                 GeographicalDescription = "Test Description"
             };
@@ -4425,9 +4425,9 @@ namespace Skyrim.Api.Test.Controllers
             var nordicTower = new NordicTower
             {
                 Id = 0,
-                Name = "Test Mine",
+                Name = "Test NordicTower",
                 Description = "",
-                TypeOfLocation = LocationType.Mine,
+                TypeOfLocation = LocationType.NordicTower,
                 GeographicalDescription = "Test Description"
             };
 
@@ -4551,6 +4551,220 @@ namespace Skyrim.Api.Test.Controllers
                 Name = "Test",
                 Description = "Test",
                 TypeOfLocation = LocationType.NordicTower,
+                GeographicalDescription = "        "
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+    }
+
+    public class CreateLocation_AsOrcStronghold : LocationController_Tests
+    {
+        [Fact]
+        public async void WhenCreateLocationDtoHasRequiredValidPropertiesAsAnOrcStronghold_ReturnsCreateAtActionWithOrcStrongholdDetails()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test OrcStronghold",
+                TypeOfLocation = LocationType.OrcStronghold,
+                GeographicalDescription = "Test Description"
+            };
+
+            var orcStronghold = new OrcStronghold
+            {
+                Id = 0,
+                Name = "Test OrcStronghold",
+                TypeOfLocation = LocationType.OrcStronghold,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(orcStronghold);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var orcStrongholdObject = new object();
+            var locationAsOrcStronghold = new OrcStronghold();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            orcStrongholdObject = responseAsCreateAsActionResult.Value;
+
+            locationAsOrcStronghold.Id = (int)orcStrongholdObject.GetType().GetProperty("Id").GetValue(orcStrongholdObject, null);
+            locationAsOrcStronghold.Name = (string)orcStrongholdObject.GetType().GetProperty("Name").GetValue(orcStrongholdObject, null);
+            locationAsOrcStronghold.TypeOfLocation = (LocationType)orcStrongholdObject.GetType().GetProperty("TypeOfLocation").GetValue(orcStrongholdObject, null);
+            locationAsOrcStronghold.GeographicalDescription = (string)orcStrongholdObject.GetType().GetProperty("GeographicalDescription").GetValue(orcStrongholdObject, null);
+            locationAsOrcStronghold.Description = (string)orcStrongholdObject.GetType().GetProperty("Description").GetValue(orcStrongholdObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(orcStronghold.Id, locationAsOrcStronghold.Id);
+            Assert.Equal(orcStronghold.Name, locationAsOrcStronghold.Name);
+            Assert.Equal(orcStronghold.Description, locationAsOrcStronghold.Description);
+            Assert.Equal(orcStronghold.TypeOfLocation, locationAsOrcStronghold.TypeOfLocation);
+            Assert.Equal(orcStronghold.GeographicalDescription, locationAsOrcStronghold.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasEmptySpacesForDescriptionAOrcStronghold_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test OrcStronghold",
+                Description = "    ",
+                TypeOfLocation = LocationType.OrcStronghold,
+                GeographicalDescription = "Test Description"
+            };
+
+            var orcStronghold = new OrcStronghold
+            {
+                Id = 0,
+                Name = "Test OrcStronghold",
+                Description = "",
+                TypeOfLocation = LocationType.OrcStronghold,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(orcStronghold);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var orcStrongholdObject = new object();
+            var locationAsOrcStronghold = new OrcStronghold();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            orcStrongholdObject = responseAsCreateAsActionResult.Value;
+
+            locationAsOrcStronghold.Id = (int)orcStrongholdObject.GetType().GetProperty("Id").GetValue(orcStrongholdObject, null);
+            locationAsOrcStronghold.Name = (string)orcStrongholdObject.GetType().GetProperty("Name").GetValue(orcStrongholdObject, null);
+            locationAsOrcStronghold.TypeOfLocation = (LocationType)orcStrongholdObject.GetType().GetProperty("TypeOfLocation").GetValue(orcStrongholdObject, null);
+            locationAsOrcStronghold.GeographicalDescription = (string)orcStrongholdObject.GetType().GetProperty("GeographicalDescription").GetValue(orcStrongholdObject, null);
+            locationAsOrcStronghold.Description = (string)orcStrongholdObject.GetType().GetProperty("Description").GetValue(orcStrongholdObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(orcStronghold.Name, locationAsOrcStronghold.Name);
+            Assert.Equal(orcStronghold.Id, locationAsOrcStronghold.Id);
+            Assert.Equal(orcStronghold.Description, locationAsOrcStronghold.Description);
+            Assert.Equal(orcStronghold.TypeOfLocation, locationAsOrcStronghold.TypeOfLocation);
+            Assert.Equal(orcStronghold.GeographicalDescription, locationAsOrcStronghold.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullForDescriptionAsAnOrcStronghold_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test OrcStronghold",
+                Description = null,
+                TypeOfLocation = LocationType.OrcStronghold,
+                GeographicalDescription = "Test Description"
+            };
+
+            var orcStronghold = new OrcStronghold
+            {
+                Id = 0,
+                Name = "Test OrcStronghold",
+                Description = null,
+                TypeOfLocation = LocationType.OrcStronghold,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(orcStronghold);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var orcStrongholdObject = new object();
+            var locationAsOrcStronghold = new OrcStronghold();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            orcStrongholdObject = responseAsCreateAsActionResult.Value;
+
+            locationAsOrcStronghold.Id = (int)orcStrongholdObject.GetType().GetProperty("Id").GetValue(orcStrongholdObject, null);
+            locationAsOrcStronghold.Name = (string)orcStrongholdObject.GetType().GetProperty("Name").GetValue(orcStrongholdObject, null);
+            locationAsOrcStronghold.TypeOfLocation = (LocationType)orcStrongholdObject.GetType().GetProperty("TypeOfLocation").GetValue(orcStrongholdObject, null);
+            locationAsOrcStronghold.GeographicalDescription = (string)orcStrongholdObject.GetType().GetProperty("GeographicalDescription").GetValue(orcStrongholdObject, null);
+            locationAsOrcStronghold.Description = (string)orcStrongholdObject.GetType().GetProperty("Description").GetValue(orcStrongholdObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(orcStronghold.Id, locationAsOrcStronghold.Id);
+            Assert.Equal(orcStronghold.Name, locationAsOrcStronghold.Name);
+            Assert.Equal(orcStronghold.Description, locationAsOrcStronghold.Description);
+            Assert.Equal(orcStronghold.TypeOfLocation, locationAsOrcStronghold.TypeOfLocation);
+            Assert.Equal(orcStronghold.GeographicalDescription, locationAsOrcStronghold.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsAnOrcStronghold_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "      ",
+                Description = "Test",
+                TypeOfLocation = LocationType.OrcStronghold,
+                GeographicalDescription = "Test Description"
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsAOrcStronghold_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.OrcStronghold,
                 GeographicalDescription = "        "
             };
 

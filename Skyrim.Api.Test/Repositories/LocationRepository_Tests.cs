@@ -112,6 +112,9 @@ namespace Skyrim.Api.Test.Repositories
                 case LocationType.NordicTower:
                     Assert.Equal(_context.NordicTowers.FirstOrDefault().Name, result.Name);
                     break;
+                case LocationType.OrcStronghold:
+                    Assert.Equal(_context.OrcStrongholds.FirstOrDefault().Name, result.Name);
+                    break;
                 default:
                     Assert.True(false);
                     break;
@@ -223,6 +226,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Valid properties for a NordicTower",
                 TestMethodHelpers.CreateNewNordicTower()
+            };
+            yield return new object[]
+            {
+                "Valid properties for a OrcStronghold",
+                TestMethodHelpers.CreateNewOrcStronghold()
             };
         }
 
@@ -361,6 +369,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Invalid properties for NordicTower",
                 new NordicTower()
+            };
+            yield return new object[]
+            {
+                "Invalid properties for OrcStronghold",
+                new OrcStronghold()
             };
         }
 

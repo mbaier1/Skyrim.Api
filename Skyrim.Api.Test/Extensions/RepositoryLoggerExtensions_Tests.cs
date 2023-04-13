@@ -292,6 +292,18 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.NordicTower
                 }
             };
+            yield return new object[]
+            {
+                "Fatal Error for OrcStronghold location",
+                new Exception(),
+                new OrcStronghold
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.OrcStronghold
+                }
+            };
         }
 
         [Theory]
@@ -582,6 +594,19 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.NordicTower
                 },
                 LocationType.NordicTower
+            };
+            yield return new object[]
+            {
+                "Fatal Error for OrcStronghold location",
+                new Exception(),
+                new OrcStronghold
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.OrcStronghold
+                },
+                LocationType.OrcStronghold
             };
         }
     }
