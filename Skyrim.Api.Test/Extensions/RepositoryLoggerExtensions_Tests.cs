@@ -328,6 +328,18 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.Ruin
                 }
             };
+            yield return new object[]
+            {
+                "Fatal Error for Shack location",
+                new Exception(),
+                new Shack
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Shack
+                }
+            };
         }
 
         [Theory]
@@ -657,6 +669,19 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.Ruin
                 },
                 LocationType.Ruin
+            };
+            yield return new object[]
+            {
+                "Fatal Error for Shack location",
+                new Exception(),
+                new Shack
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Shack
+                },
+                LocationType.Shack
             };
         }
     }
