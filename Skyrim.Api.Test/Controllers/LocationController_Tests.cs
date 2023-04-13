@@ -2867,7 +2867,7 @@ namespace Skyrim.Api.Test.Controllers
 
             var createLocationDto = new CreateLocationDto
             {
-                Name = "Test orcStronghold",
+                Name = "Test pass",
                 TypeOfLocation = LocationType.Farm,
                 GeographicalDescription = "Test Description"
             };
@@ -4765,6 +4765,220 @@ namespace Skyrim.Api.Test.Controllers
                 Name = "Test",
                 Description = "Test",
                 TypeOfLocation = LocationType.OrcStronghold,
+                GeographicalDescription = "        "
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+    }
+
+    public class CreateLocation_AsPass : LocationController_Tests
+    {
+        [Fact]
+        public async void WhenCreateLocationDtoHasRequiredValidPropertiesAsAPass_ReturnsCreateAtActionWithPassDetails()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Pass",
+                TypeOfLocation = LocationType.Pass,
+                GeographicalDescription = "Test Description"
+            };
+
+            var pass = new Pass
+            {
+                Id = 0,
+                Name = "Test Pass",
+                TypeOfLocation = LocationType.Pass,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(pass);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var passObject = new object();
+            var locationAsPass = new Pass();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            passObject = responseAsCreateAsActionResult.Value;
+
+            locationAsPass.Id = (int)passObject.GetType().GetProperty("Id").GetValue(passObject, null);
+            locationAsPass.Name = (string)passObject.GetType().GetProperty("Name").GetValue(passObject, null);
+            locationAsPass.TypeOfLocation = (LocationType)passObject.GetType().GetProperty("TypeOfLocation").GetValue(passObject, null);
+            locationAsPass.GeographicalDescription = (string)passObject.GetType().GetProperty("GeographicalDescription").GetValue(passObject, null);
+            locationAsPass.Description = (string)passObject.GetType().GetProperty("Description").GetValue(passObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(pass.Id, locationAsPass.Id);
+            Assert.Equal(pass.Name, locationAsPass.Name);
+            Assert.Equal(pass.Description, locationAsPass.Description);
+            Assert.Equal(pass.TypeOfLocation, locationAsPass.TypeOfLocation);
+            Assert.Equal(pass.GeographicalDescription, locationAsPass.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasEmptySpacesForDescriptionAPass_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Pass",
+                Description = "    ",
+                TypeOfLocation = LocationType.Pass,
+                GeographicalDescription = "Test Description"
+            };
+
+            var pass = new Pass
+            {
+                Id = 0,
+                Name = "Test Pass",
+                Description = "",
+                TypeOfLocation = LocationType.Pass,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(pass);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var passObject = new object();
+            var locationAsPass = new Pass();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            passObject = responseAsCreateAsActionResult.Value;
+
+            locationAsPass.Id = (int)passObject.GetType().GetProperty("Id").GetValue(passObject, null);
+            locationAsPass.Name = (string)passObject.GetType().GetProperty("Name").GetValue(passObject, null);
+            locationAsPass.TypeOfLocation = (LocationType)passObject.GetType().GetProperty("TypeOfLocation").GetValue(passObject, null);
+            locationAsPass.GeographicalDescription = (string)passObject.GetType().GetProperty("GeographicalDescription").GetValue(passObject, null);
+            locationAsPass.Description = (string)passObject.GetType().GetProperty("Description").GetValue(passObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(pass.Name, locationAsPass.Name);
+            Assert.Equal(pass.Id, locationAsPass.Id);
+            Assert.Equal(pass.Description, locationAsPass.Description);
+            Assert.Equal(pass.TypeOfLocation, locationAsPass.TypeOfLocation);
+            Assert.Equal(pass.GeographicalDescription, locationAsPass.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullForDescriptionAsAPass_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Pass",
+                Description = null,
+                TypeOfLocation = LocationType.Pass,
+                GeographicalDescription = "Test Description"
+            };
+
+            var pass = new Pass
+            {
+                Id = 0,
+                Name = "Test Pass",
+                Description = null,
+                TypeOfLocation = LocationType.Pass,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(pass);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var passObject = new object();
+            var locationAsPass = new Pass();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            passObject = responseAsCreateAsActionResult.Value;
+
+            locationAsPass.Id = (int)passObject.GetType().GetProperty("Id").GetValue(passObject, null);
+            locationAsPass.Name = (string)passObject.GetType().GetProperty("Name").GetValue(passObject, null);
+            locationAsPass.TypeOfLocation = (LocationType)passObject.GetType().GetProperty("TypeOfLocation").GetValue(passObject, null);
+            locationAsPass.GeographicalDescription = (string)passObject.GetType().GetProperty("GeographicalDescription").GetValue(passObject, null);
+            locationAsPass.Description = (string)passObject.GetType().GetProperty("Description").GetValue(passObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(pass.Id, locationAsPass.Id);
+            Assert.Equal(pass.Name, locationAsPass.Name);
+            Assert.Equal(pass.Description, locationAsPass.Description);
+            Assert.Equal(pass.TypeOfLocation, locationAsPass.TypeOfLocation);
+            Assert.Equal(pass.GeographicalDescription, locationAsPass.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsAPass_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "      ",
+                Description = "Test",
+                TypeOfLocation = LocationType.Pass,
+                GeographicalDescription = "Test Description"
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsAPass_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.Pass,
                 GeographicalDescription = "        "
             };
 

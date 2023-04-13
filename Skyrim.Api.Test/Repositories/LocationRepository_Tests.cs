@@ -115,6 +115,9 @@ namespace Skyrim.Api.Test.Repositories
                 case LocationType.OrcStronghold:
                     Assert.Equal(_context.OrcStrongholds.FirstOrDefault().Name, result.Name);
                     break;
+                case LocationType.Pass:
+                    Assert.Equal(_context.Passes.FirstOrDefault().Name, result.Name);
+                    break;
                 default:
                     Assert.True(false);
                     break;
@@ -231,6 +234,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Valid properties for a OrcStronghold",
                 TestMethodHelpers.CreateNewOrcStronghold()
+            };
+            yield return new object[]
+            {
+                "Valid properties for a Pass",
+                TestMethodHelpers.CreateNewPass()
             };
         }
 
@@ -374,6 +382,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Invalid properties for OrcStronghold",
                 new OrcStronghold()
+            };
+            yield return new object[]
+            {
+                "Invalid properties for Pass",
+                new Pass()
             };
         }
 
