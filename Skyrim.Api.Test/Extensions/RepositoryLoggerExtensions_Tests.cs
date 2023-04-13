@@ -304,6 +304,30 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.OrcStronghold
                 }
             };
+            yield return new object[]
+            {
+                "Fatal Error for Pass location",
+                new Exception(),
+                new Pass
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Pass
+                }
+            };
+            yield return new object[]
+            {
+                "Fatal Error for Ruin location",
+                new Exception(),
+                new Ruin
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Ruin
+                }
+            };
         }
 
         [Theory]
@@ -607,6 +631,32 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.OrcStronghold
                 },
                 LocationType.OrcStronghold
+            };
+            yield return new object[]
+            {
+                "Fatal Error for Pass location",
+                new Exception(),
+                new Pass
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Pass
+                },
+                LocationType.Pass
+            };
+            yield return new object[]
+            {
+                "Fatal Error for Ruin location",
+                new Exception(),
+                new Ruin
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Ruin
+                },
+                LocationType.Ruin
             };
         }
     }

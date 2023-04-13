@@ -89,6 +89,10 @@ namespace Skyrim.Api.Domain
                         return _mapper.Map<NordicTower>(createLocationDto);
                     case LocationType.OrcStronghold:
                         return _mapper.Map<OrcStronghold>(createLocationDto);
+                    case LocationType.Pass:
+                        return _mapper.Map<Pass>(createLocationDto);
+                    case LocationType.Ruin:
+                        return _mapper.Map<Ruin>(createLocationDto);
                     default:
                         return null;
                 }

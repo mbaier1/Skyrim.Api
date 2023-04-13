@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Skyrim.Api.Data;
 
@@ -11,9 +12,11 @@ using Skyrim.Api.Data;
 namespace Skyrim.Api.Migrations
 {
     [DbContext(typeof(SkyrimApiDbContext))]
-    partial class SkyrimApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230413160552_AddedPassAsLocationType")]
+    partial class AddedPassAsLocationType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -330,13 +333,6 @@ namespace Skyrim.Api.Migrations
                     b.HasBaseType("Skyrim.Api.Data.AbstractModels.Location");
 
                     b.ToTable("Passes");
-                });
-
-            modelBuilder.Entity("Skyrim.Api.Data.Models.Ruin", b =>
-                {
-                    b.HasBaseType("Skyrim.Api.Data.AbstractModels.Location");
-
-                    b.ToTable("Ruins");
                 });
 
             modelBuilder.Entity("Skyrim.Api.Data.Models.Settlement", b =>

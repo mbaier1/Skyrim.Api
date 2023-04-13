@@ -30,6 +30,8 @@ namespace Skyrim.Api.Configurations
             CreateMap<Mine, CreateLocationDto>().ReverseMap();
             CreateMap<NordicTower, CreateLocationDto>().ReverseMap();
             CreateMap<OrcStronghold, CreateLocationDto>().ReverseMap();
+            CreateMap<Pass, CreateLocationDto>().ReverseMap();
+            CreateMap<Ruin, CreateLocationDto>().ReverseMap();
         }
     }
 }
