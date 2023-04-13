@@ -109,6 +109,9 @@ namespace Skyrim.Api.Test.Repositories
                 case LocationType.Mine:
                     Assert.Equal(_context.Mines.FirstOrDefault().Name, result.Name);
                     break;
+                case LocationType.NordicTower:
+                    Assert.Equal(_context.NordicTowers.FirstOrDefault().Name, result.Name);
+                    break;
                 default:
                     Assert.True(false);
                     break;
@@ -215,6 +218,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Valid properties for a Mine",
                 TestMethodHelpers.CreateNewMine()
+            };
+            yield return new object[]
+            {
+                "Valid properties for a NordicTower",
+                TestMethodHelpers.CreateNewNordicTower()
             };
         }
 
@@ -348,6 +356,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Invalid properties for Mine",
                 new Mine()
+            };
+            yield return new object[]
+            {
+                "Invalid properties for NordicTower",
+                new NordicTower()
             };
         }
 

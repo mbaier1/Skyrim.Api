@@ -280,6 +280,18 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.Mine
                 }
             };
+            yield return new object[]
+            {
+                "Fatal Error for NordicTower location",
+                new Exception(),
+                new NordicTower
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.NordicTower
+                }
+            };
         }
 
         [Theory]
@@ -557,6 +569,19 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.Mine
                 },
                 LocationType.Mine
+            };
+            yield return new object[]
+            {
+                "Fatal Error for NordicTower location",
+                new Exception(),
+                new NordicTower
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.NordicTower
+                },
+                LocationType.NordicTower
             };
         }
     }
