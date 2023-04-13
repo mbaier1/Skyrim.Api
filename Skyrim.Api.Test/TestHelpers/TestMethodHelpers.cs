@@ -306,6 +306,30 @@ namespace Skyrim.Api.Test.TestHelpers
             };
         }
 
+        public static Ship CreateNewShip()
+        {
+            return new Ship
+            {
+                Id = 0,
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.Ship,
+                GeographicalDescription = "Test"
+            };
+        }
+
+        public static Shipwreck CreateNewShipwreck()
+        {
+            return new Shipwreck
+            {
+                Id = 0,
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.Shipwreck,
+                GeographicalDescription = "Test"
+            };
+        }
+
         public static CreateLocationDto CreateNewCreateLocationDtoAsCity()
         {
             return new CreateLocationDto
@@ -578,6 +602,28 @@ namespace Skyrim.Api.Test.TestHelpers
                 Description = "",
                 GeographicalDescription = "Test",
                 TypeOfLocation = LocationType.Shack
+            };
+        }
+
+        public static CreateLocationDto CreateNewCreateLocationDtoAsShip()
+        {
+            return new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "",
+                GeographicalDescription = "Test",
+                TypeOfLocation = LocationType.Ship
+            };
+        }
+
+        public static CreateLocationDto CreateNewCreateLocationDtoAsShipwreck()
+        {
+            return new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "",
+                GeographicalDescription = "Test",
+                TypeOfLocation = LocationType.Shipwreck
             };
         }
     }

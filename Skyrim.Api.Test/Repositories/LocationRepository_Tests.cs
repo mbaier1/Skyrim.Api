@@ -124,6 +124,12 @@ namespace Skyrim.Api.Test.Repositories
                 case LocationType.Shack:
                     Assert.Equal(_context.Shacks.FirstOrDefault().Name, result.Name);
                     break;
+                case LocationType.Ship:
+                    Assert.Equal(_context.Ships.FirstOrDefault().Name, result.Name);
+                    break;
+                case LocationType.Shipwreck:
+                    Assert.Equal(_context.Shipwrecks.FirstOrDefault().Name, result.Name);
+                    break;
                 default:
                     Assert.True(false);
                     break;
@@ -255,6 +261,16 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Valid properties for a Shack",
                 TestMethodHelpers.CreateNewShack()
+            };
+            yield return new object[]
+            {
+                "Valid properties for a Ship",
+                TestMethodHelpers.CreateNewShip()
+            };
+            yield return new object[]
+            {
+                "Valid properties for a Shipwreck",
+                TestMethodHelpers.CreateNewShipwreck()
             };
         }
 
@@ -413,6 +429,16 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Invalid properties for Shack",
                 new Shack()
+            };
+            yield return new object[]
+            {
+                "Invalid properties for Ship",
+                new Ship()
+            };
+            yield return new object[]
+            {
+                "Invalid properties for Shipwreck",
+                new Shipwreck()
             };
         }
 

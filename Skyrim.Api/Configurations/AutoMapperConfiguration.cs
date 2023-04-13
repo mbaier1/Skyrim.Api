@@ -33,6 +33,8 @@ namespace Skyrim.Api.Configurations
             CreateMap<Pass, CreateLocationDto>().ReverseMap();
             CreateMap<Ruin, CreateLocationDto>().ReverseMap();
             CreateMap<Shack, CreateLocationDto>().ReverseMap();
+            CreateMap<Ship, CreateLocationDto>().ReverseMap();
+            CreateMap<Shipwreck, CreateLocationDto>().ReverseMap();
         }
     }
 }
