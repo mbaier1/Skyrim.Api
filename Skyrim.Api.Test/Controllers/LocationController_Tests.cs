@@ -2867,7 +2867,7 @@ namespace Skyrim.Api.Test.Controllers
 
             var createLocationDto = new CreateLocationDto
             {
-                Name = "Test mine",
+                Name = "Test nordicTower",
                 TypeOfLocation = LocationType.Farm,
                 GeographicalDescription = "Test Description"
             };
@@ -4337,6 +4337,220 @@ namespace Skyrim.Api.Test.Controllers
                 Name = "Test",
                 Description = "Test",
                 TypeOfLocation = LocationType.Mine,
+                GeographicalDescription = "        "
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+    }
+
+    public class CreateLocation_AsNordicTower : LocationController_Tests
+    {
+        [Fact]
+        public async void WhenCreateLocationDtoHasRequiredValidPropertiesAsANordicTower_ReturnsCreateAtActionWithNordicTowerDetails()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test NordicTower",
+                TypeOfLocation = LocationType.NordicTower,
+                GeographicalDescription = "Test Description"
+            };
+
+            var nordicTower = new NordicTower
+            {
+                Id = 0,
+                Name = "Test NordicTower",
+                TypeOfLocation = LocationType.NordicTower,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(nordicTower);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var nordicTowerObject = new object();
+            var locationAsNordicTower = new NordicTower();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            nordicTowerObject = responseAsCreateAsActionResult.Value;
+
+            locationAsNordicTower.Id = (int)nordicTowerObject.GetType().GetProperty("Id").GetValue(nordicTowerObject, null);
+            locationAsNordicTower.Name = (string)nordicTowerObject.GetType().GetProperty("Name").GetValue(nordicTowerObject, null);
+            locationAsNordicTower.TypeOfLocation = (LocationType)nordicTowerObject.GetType().GetProperty("TypeOfLocation").GetValue(nordicTowerObject, null);
+            locationAsNordicTower.GeographicalDescription = (string)nordicTowerObject.GetType().GetProperty("GeographicalDescription").GetValue(nordicTowerObject, null);
+            locationAsNordicTower.Description = (string)nordicTowerObject.GetType().GetProperty("Description").GetValue(nordicTowerObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(nordicTower.Id, locationAsNordicTower.Id);
+            Assert.Equal(nordicTower.Name, locationAsNordicTower.Name);
+            Assert.Equal(nordicTower.Description, locationAsNordicTower.Description);
+            Assert.Equal(nordicTower.TypeOfLocation, locationAsNordicTower.TypeOfLocation);
+            Assert.Equal(nordicTower.GeographicalDescription, locationAsNordicTower.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasEmptySpacesForDescriptionANordicTower_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test NordicTower",
+                Description = "    ",
+                TypeOfLocation = LocationType.NordicTower,
+                GeographicalDescription = "Test Description"
+            };
+
+            var nordicTower = new NordicTower
+            {
+                Id = 0,
+                Name = "Test Mine",
+                Description = "",
+                TypeOfLocation = LocationType.Mine,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(nordicTower);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var nordicTowerObject = new object();
+            var locationAsNordicTower = new NordicTower();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            nordicTowerObject = responseAsCreateAsActionResult.Value;
+
+            locationAsNordicTower.Id = (int)nordicTowerObject.GetType().GetProperty("Id").GetValue(nordicTowerObject, null);
+            locationAsNordicTower.Name = (string)nordicTowerObject.GetType().GetProperty("Name").GetValue(nordicTowerObject, null);
+            locationAsNordicTower.TypeOfLocation = (LocationType)nordicTowerObject.GetType().GetProperty("TypeOfLocation").GetValue(nordicTowerObject, null);
+            locationAsNordicTower.GeographicalDescription = (string)nordicTowerObject.GetType().GetProperty("GeographicalDescription").GetValue(nordicTowerObject, null);
+            locationAsNordicTower.Description = (string)nordicTowerObject.GetType().GetProperty("Description").GetValue(nordicTowerObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(nordicTower.Name, locationAsNordicTower.Name);
+            Assert.Equal(nordicTower.Id, locationAsNordicTower.Id);
+            Assert.Equal(nordicTower.Description, locationAsNordicTower.Description);
+            Assert.Equal(nordicTower.TypeOfLocation, locationAsNordicTower.TypeOfLocation);
+            Assert.Equal(nordicTower.GeographicalDescription, locationAsNordicTower.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullForDescriptionAsANordicTower_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test NordicTower",
+                Description = null,
+                TypeOfLocation = LocationType.NordicTower,
+                GeographicalDescription = "Test Description"
+            };
+
+            var nordicTower = new NordicTower
+            {
+                Id = 0,
+                Name = "Test NordicTower",
+                Description = null,
+                TypeOfLocation = LocationType.NordicTower,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(nordicTower);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var nordicTowerObject = new object();
+            var locationAsNordicTower = new NordicTower();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            nordicTowerObject = responseAsCreateAsActionResult.Value;
+
+            locationAsNordicTower.Id = (int)nordicTowerObject.GetType().GetProperty("Id").GetValue(nordicTowerObject, null);
+            locationAsNordicTower.Name = (string)nordicTowerObject.GetType().GetProperty("Name").GetValue(nordicTowerObject, null);
+            locationAsNordicTower.TypeOfLocation = (LocationType)nordicTowerObject.GetType().GetProperty("TypeOfLocation").GetValue(nordicTowerObject, null);
+            locationAsNordicTower.GeographicalDescription = (string)nordicTowerObject.GetType().GetProperty("GeographicalDescription").GetValue(nordicTowerObject, null);
+            locationAsNordicTower.Description = (string)nordicTowerObject.GetType().GetProperty("Description").GetValue(nordicTowerObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(nordicTower.Id, locationAsNordicTower.Id);
+            Assert.Equal(nordicTower.Name, locationAsNordicTower.Name);
+            Assert.Equal(nordicTower.Description, locationAsNordicTower.Description);
+            Assert.Equal(nordicTower.TypeOfLocation, locationAsNordicTower.TypeOfLocation);
+            Assert.Equal(nordicTower.GeographicalDescription, locationAsNordicTower.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsANordicTower_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "      ",
+                Description = "Test",
+                TypeOfLocation = LocationType.NordicTower,
+                GeographicalDescription = "Test Description"
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsANordicTowerReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.NordicTower,
                 GeographicalDescription = "        "
             };
 

@@ -246,6 +246,18 @@ namespace Skyrim.Api.Test.TestHelpers
             };
         }
 
+        public static NordicTower CreateNewNordicTower()
+        {
+            return new NordicTower
+            {
+                Id = 0,
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.NordicTower,
+                GeographicalDescription = "Test"
+            };
+        }
+
         public static CreateLocationDto CreateNewCreateLocationDtoAsCity()
         {
             return new CreateLocationDto
@@ -463,6 +475,17 @@ namespace Skyrim.Api.Test.TestHelpers
                 Description = "",
                 GeographicalDescription = "Test",
                 TypeOfLocation = LocationType.Mine
+            };
+        }
+
+        public static CreateLocationDto CreateNewCreateLocationDtoAsNordicTower()
+        {
+            return new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "",
+                GeographicalDescription = "Test",
+                TypeOfLocation = LocationType.NordicTower
             };
         }
     }

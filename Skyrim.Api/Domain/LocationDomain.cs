@@ -85,6 +85,8 @@ namespace Skyrim.Api.Domain
                         return _mapper.Map<LightHouse>(createLocationDto);
                     case LocationType.Mine:
                         return _mapper.Map<Mine>(createLocationDto);
+                    case LocationType.NordicTower:
+                        return _mapper.Map<NordicTower>(createLocationDto);
                     default:
                         return null;
                 }

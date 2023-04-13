@@ -279,6 +279,18 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.Mine
                 }
         };
+        yield return new object[]
+        {
+                "Fatal Error for NordicTower location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.NordicTower
+                }
+        };
     }
 
     [Theory]
@@ -555,6 +567,19 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.Mine
                 },
                 LocationType.Mine
+        };
+        yield return new object[]
+        {
+                "Fatal Error for NordicTower location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.NordicTower
+                },
+                LocationType.NordicTower
         };
     }
 }
