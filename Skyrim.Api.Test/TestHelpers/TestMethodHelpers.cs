@@ -282,6 +282,18 @@ namespace Skyrim.Api.Test.TestHelpers
             };
         }
 
+        public static Ruin CreateNewRuin()
+        {
+            return new Ruin
+            {
+                Id = 0,
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.Ruin,
+                GeographicalDescription = "Test"
+            };
+        }
+
         public static CreateLocationDto CreateNewCreateLocationDtoAsCity()
         {
             return new CreateLocationDto
@@ -532,6 +544,17 @@ namespace Skyrim.Api.Test.TestHelpers
                 Description = "",
                 GeographicalDescription = "Test",
                 TypeOfLocation = LocationType.Pass
+            };
+        }
+
+        public static CreateLocationDto CreateNewCreateLocationDtoAsRuin()
+        {
+            return new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "",
+                GeographicalDescription = "Test",
+                TypeOfLocation = LocationType.Ruin
             };
         }
     }

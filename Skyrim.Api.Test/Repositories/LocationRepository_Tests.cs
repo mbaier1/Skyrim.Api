@@ -118,6 +118,9 @@ namespace Skyrim.Api.Test.Repositories
                 case LocationType.Pass:
                     Assert.Equal(_context.Passes.FirstOrDefault().Name, result.Name);
                     break;
+                case LocationType.Ruin:
+                    Assert.Equal(_context.Ruins.FirstOrDefault().Name, result.Name);
+                    break;
                 default:
                     Assert.True(false);
                     break;
@@ -239,6 +242,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Valid properties for a Pass",
                 TestMethodHelpers.CreateNewPass()
+            };
+            yield return new object[]
+            {
+                "Valid properties for a Ruin",
+                TestMethodHelpers.CreateNewRuin()
             };
         }
 
@@ -387,6 +395,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Invalid properties for Pass",
                 new Pass()
+            };
+            yield return new object[]
+            {
+                "Invalid properties for Ruin",
+                new Ruin()
             };
         }
 

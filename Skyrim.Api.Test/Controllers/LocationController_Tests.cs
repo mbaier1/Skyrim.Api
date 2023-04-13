@@ -2867,7 +2867,7 @@ namespace Skyrim.Api.Test.Controllers
 
             var createLocationDto = new CreateLocationDto
             {
-                Name = "Test pass",
+                Name = "Test ruin",
                 TypeOfLocation = LocationType.Farm,
                 GeographicalDescription = "Test Description"
             };
@@ -4979,6 +4979,220 @@ namespace Skyrim.Api.Test.Controllers
                 Name = "Test",
                 Description = "Test",
                 TypeOfLocation = LocationType.Pass,
+                GeographicalDescription = "        "
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+    }
+
+    public class CreateLocation_AsRuin : LocationController_Tests
+    {
+        [Fact]
+        public async void WhenCreateLocationDtoHasRequiredValidPropertiesAsARuin_ReturnsCreateAtActionWithPassDetails()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Ruin",
+                TypeOfLocation = LocationType.Ruin,
+                GeographicalDescription = "Test Description"
+            };
+
+            var ruin = new Ruin
+            {
+                Id = 0,
+                Name = "Test Ruin",
+                TypeOfLocation = LocationType.Ruin,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(ruin);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var ruinObject = new object();
+            var locationAsRuin = new Pass();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            ruinObject = responseAsCreateAsActionResult.Value;
+
+            locationAsRuin.Id = (int)ruinObject.GetType().GetProperty("Id").GetValue(ruinObject, null);
+            locationAsRuin.Name = (string)ruinObject.GetType().GetProperty("Name").GetValue(ruinObject, null);
+            locationAsRuin.TypeOfLocation = (LocationType)ruinObject.GetType().GetProperty("TypeOfLocation").GetValue(ruinObject, null);
+            locationAsRuin.GeographicalDescription = (string)ruinObject.GetType().GetProperty("GeographicalDescription").GetValue(ruinObject, null);
+            locationAsRuin.Description = (string)ruinObject.GetType().GetProperty("Description").GetValue(ruinObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(ruin.Id, locationAsRuin.Id);
+            Assert.Equal(ruin.Name, locationAsRuin.Name);
+            Assert.Equal(ruin.Description, locationAsRuin.Description);
+            Assert.Equal(ruin.TypeOfLocation, locationAsRuin.TypeOfLocation);
+            Assert.Equal(ruin.GeographicalDescription, locationAsRuin.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasEmptySpacesForDescriptionARuin_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Ruin",
+                Description = "    ",
+                TypeOfLocation = LocationType.Ruin,
+                GeographicalDescription = "Test Description"
+            };
+
+            var ruin = new Ruin
+            {
+                Id = 0,
+                Name = "Test Ruin",
+                Description = "",
+                TypeOfLocation = LocationType.Ruin,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(ruin);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var ruinObject = new object();
+            var locationAsRuin = new Ruin();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            ruinObject = responseAsCreateAsActionResult.Value;
+
+            locationAsRuin.Id = (int)ruinObject.GetType().GetProperty("Id").GetValue(ruinObject, null);
+            locationAsRuin.Name = (string)ruinObject.GetType().GetProperty("Name").GetValue(ruinObject, null);
+            locationAsRuin.TypeOfLocation = (LocationType)ruinObject.GetType().GetProperty("TypeOfLocation").GetValue(ruinObject, null);
+            locationAsRuin.GeographicalDescription = (string)ruinObject.GetType().GetProperty("GeographicalDescription").GetValue(ruinObject, null);
+            locationAsRuin.Description = (string)ruinObject.GetType().GetProperty("Description").GetValue(ruinObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(ruin.Name, locationAsRuin.Name);
+            Assert.Equal(ruin.Id, locationAsRuin.Id);
+            Assert.Equal(ruin.Description, locationAsRuin.Description);
+            Assert.Equal(ruin.TypeOfLocation, locationAsRuin.TypeOfLocation);
+            Assert.Equal(ruin.GeographicalDescription, locationAsRuin.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullForDescriptionAsARuin_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Ruin",
+                Description = null,
+                TypeOfLocation = LocationType.Ruin,
+                GeographicalDescription = "Test Description"
+            };
+
+            var ruin = new Ruin
+            {
+                Id = 0,
+                Name = "Test Ruin",
+                Description = null,
+                TypeOfLocation = LocationType.Ruin,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(ruin);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var ruinObject = new object();
+            var locationAsRuin = new Ruin();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            ruinObject = responseAsCreateAsActionResult.Value;
+
+            locationAsRuin.Id = (int)ruinObject.GetType().GetProperty("Id").GetValue(ruinObject, null);
+            locationAsRuin.Name = (string)ruinObject.GetType().GetProperty("Name").GetValue(ruinObject, null);
+            locationAsRuin.TypeOfLocation = (LocationType)ruinObject.GetType().GetProperty("TypeOfLocation").GetValue(ruinObject, null);
+            locationAsRuin.GeographicalDescription = (string)ruinObject.GetType().GetProperty("GeographicalDescription").GetValue(ruinObject, null);
+            locationAsRuin.Description = (string)ruinObject.GetType().GetProperty("Description").GetValue(ruinObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(ruin.Id, locationAsRuin.Id);
+            Assert.Equal(ruin.Name, locationAsRuin.Name);
+            Assert.Equal(ruin.Description, locationAsRuin.Description);
+            Assert.Equal(ruin.TypeOfLocation, locationAsRuin.TypeOfLocation);
+            Assert.Equal(ruin.GeographicalDescription, locationAsRuin.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsARuin_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "      ",
+                Description = "Test",
+                TypeOfLocation = LocationType.Ruin,
+                GeographicalDescription = "Test Description"
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsARuin_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.Ruin,
                 GeographicalDescription = "        "
             };
 

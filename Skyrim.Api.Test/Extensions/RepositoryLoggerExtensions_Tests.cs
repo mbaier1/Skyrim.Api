@@ -316,6 +316,18 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.Pass
                 }
             };
+            yield return new object[]
+            {
+                "Fatal Error for Ruin location",
+                new Exception(),
+                new Ruin
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Ruin
+                }
+            };
         }
 
         [Theory]
@@ -632,6 +644,19 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.Pass
                 },
                 LocationType.Pass
+            };
+            yield return new object[]
+            {
+                "Fatal Error for Ruin location",
+                new Exception(),
+                new Ruin
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Ruin
+                },
+                LocationType.Ruin
             };
         }
     }

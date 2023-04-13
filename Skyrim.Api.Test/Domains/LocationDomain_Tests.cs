@@ -85,6 +85,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<OrcStronghold>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewOrcStronghold());
             else if (type.TypeOfLocation == LocationType.Pass)
                 _mockMapper.Setup(x => x.Map<Pass>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewPass());
+            else if (type.TypeOfLocation == LocationType.Ruin)
+                _mockMapper.Setup(x => x.Map<Ruin>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewRuin());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
             var completedCreateTask = Task<Location>.FromResult(taskType);
@@ -586,6 +588,27 @@ namespace Skyrim.Api.Test.Domains
                     GeographicalDescription = "Test"
                 }
             };
+            yield return new object[]
+            {
+                "Valid properties for Ruin Location",
+                TestMethodHelpers.CreateNewCreateLocationDtoAsRuin(),
+                new Ruin
+                {
+                    Id = 0,
+                    Name = "Test",
+                    Description = "Test",
+                    TypeOfLocation = LocationType.Ruin,
+                    GeographicalDescription = "Test"
+                },
+                new Ruin
+                {
+                    Id = 0,
+                    Name = "Test",
+                    Description = "Test",
+                    TypeOfLocation = LocationType.Ruin,
+                    GeographicalDescription = "Test"
+                }
+            };
         }
 
         [Theory]
@@ -640,6 +663,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<OrcStronghold>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewOrcStronghold());
             else if (location.TypeOfLocation == LocationType.Pass)
                 _mockMapper.Setup(x => x.Map<Pass>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewPass());
+            else if (location.TypeOfLocation == LocationType.Ruin)
+                _mockMapper.Setup(x => x.Map<Ruin>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewRuin());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
             var completedCreateTask = Task<Location>.FromResult(taskType);
@@ -696,6 +721,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Verify(x => x.Map<OrcStronghold>(createLocationDto), Times.Once());
             else if (location.TypeOfLocation == LocationType.Pass)
                 _mockMapper.Verify(x => x.Map<Pass>(createLocationDto), Times.Once());
+            else if (location.TypeOfLocation == LocationType.Ruin)
+                _mockMapper.Verify(x => x.Map<Ruin>(createLocationDto), Times.Once());
             else
                 Assert.True(false);
         }
@@ -830,6 +857,11 @@ namespace Skyrim.Api.Test.Domains
                 "Invalid properties for Pass",
                 new CreateLocationDto { TypeOfLocation = LocationType.Pass }
             };
+            yield return new object[]
+            {
+                "Invalid properties for Ruin",
+                new CreateLocationDto { TypeOfLocation = LocationType.Ruin }
+            };
         }
 
         [Theory]
@@ -883,6 +915,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<OrcStronghold>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
             else if (location.TypeOfLocation == LocationType.Pass)
                 _mockMapper.Setup(x => x.Map<Pass>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
+            else if (location.TypeOfLocation == LocationType.Ruin)
+                _mockMapper.Setup(x => x.Map<Ruin>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
 
@@ -1033,6 +1067,12 @@ namespace Skyrim.Api.Test.Domains
                 TestMethodHelpers.CreateNewPass(),
                 TestMethodHelpers.CreateNewCreateLocationDtoAsPass()
            };
+            yield return new object[]
+           {
+                "Invalid properties for Ruin",
+                TestMethodHelpers.CreateNewRuin(),
+                TestMethodHelpers.CreateNewCreateLocationDtoAsRuin()
+           };
         }
 
         [Theory]
@@ -1088,6 +1128,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<OrcStronghold>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewOrcStronghold());
             else if (type.TypeOfLocation == LocationType.Pass)
                 _mockMapper.Setup(x => x.Map<Pass>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewPass());
+            else if (type.TypeOfLocation == LocationType.Ruin)
+                _mockMapper.Setup(x => x.Map<Ruin>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewRuin());
 
             var completedCreateTask = Task<Location>.FromResult(taskType);
             _mockLocationRepository.Setup(x => x.SaveLocation(It.IsAny<Location>()))
@@ -2068,6 +2110,48 @@ namespace Skyrim.Api.Test.Domains
                     TestMethodHelpers.CreateNewCreateLocationDtoAsPass(),
                     TestMethodHelpers.CreateNewPass(),
                     TestMethodHelpers.CreateNewPass()
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null description so it returns a Ruin with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = null,
+                        TypeOfLocation = LocationType.Ruin,
+                        GeographicalDescription = "Test"
+                    },
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsRuin(),
+                    TestMethodHelpers.CreateNewRuin(),
+                    TestMethodHelpers.CreateNewRuin()
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has white spaces for description so it returns a Ruin with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = "     ",
+                        TypeOfLocation = LocationType.Ruin,
+                        GeographicalDescription = "Test"
+                    },
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsRuin(),
+                    TestMethodHelpers.CreateNewRuin(),
+                    TestMethodHelpers.CreateNewRuin()
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has empty description so it returns a Ruin with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = "",
+                        TypeOfLocation = LocationType.Ruin,
+                        GeographicalDescription = "Test"
+                    },
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsRuin(),
+                    TestMethodHelpers.CreateNewRuin(),
+                    TestMethodHelpers.CreateNewRuin()
             };
         }
 
@@ -3740,6 +3824,78 @@ namespace Skyrim.Api.Test.Domains
                         GeographicalDescription = " ",
                         Name = "Test",
                         TypeOfLocation = LocationType.Pass
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = null,
+                        TypeOfLocation = LocationType.Ruin
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has an empty name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = "",
+                        TypeOfLocation = LocationType.Ruin
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a white space name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = "   ",
+                        TypeOfLocation = LocationType.Ruin
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = null,
+                        Name = "Test",
+                        TypeOfLocation = LocationType.Ruin
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has an empty Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "",
+                        Name = "Test",
+                        TypeOfLocation = LocationType.Ruin
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a white space Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = " ",
+                        Name = "Test",
+                        TypeOfLocation = LocationType.Ruin
                     },
                     (CreateLocationDto)null
             };
