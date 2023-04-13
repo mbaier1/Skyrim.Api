@@ -258,6 +258,18 @@ namespace Skyrim.Api.Test.TestHelpers
             };
         }
 
+        public static OrcStronghold CreateNewOrcStronghold()
+        {
+            return new OrcStronghold
+            {
+                Id = 0,
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.OrcStronghold,
+                GeographicalDescription = "Test"
+            };
+        }
+
         public static CreateLocationDto CreateNewCreateLocationDtoAsCity()
         {
             return new CreateLocationDto
@@ -486,6 +498,17 @@ namespace Skyrim.Api.Test.TestHelpers
                 Description = "",
                 GeographicalDescription = "Test",
                 TypeOfLocation = LocationType.NordicTower
+            };
+        }
+
+        public static CreateLocationDto CreateNewCreateLocationDtoAsOrcStronghold()
+        {
+            return new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "",
+                GeographicalDescription = "Test",
+                TypeOfLocation = LocationType.OrcStronghold
             };
         }
     }

@@ -81,6 +81,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<Mine>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewMine());
             else if (type.TypeOfLocation == LocationType.NordicTower)
                 _mockMapper.Setup(x => x.Map<NordicTower>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewNordicTower());
+            else if (type.TypeOfLocation == LocationType.OrcStronghold)
+                _mockMapper.Setup(x => x.Map<OrcStronghold>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewOrcStronghold());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
             var completedCreateTask = Task<Location>.FromResult(taskType);
@@ -540,6 +542,27 @@ namespace Skyrim.Api.Test.Domains
                     GeographicalDescription = "Test"
                 }
             };
+            yield return new object[]
+            {
+                "Valid properties for OrcStronghold Location",
+                TestMethodHelpers.CreateNewCreateLocationDtoAsOrcStronghold(),
+                new OrcStronghold
+                {
+                    Id = 0,
+                    Name = "Test",
+                    Description = "Test",
+                    TypeOfLocation = LocationType.OrcStronghold,
+                    GeographicalDescription = "Test"
+                },
+                new OrcStronghold
+                {
+                    Id = 0,
+                    Name = "Test",
+                    Description = "Test",
+                    TypeOfLocation = LocationType.OrcStronghold,
+                    GeographicalDescription = "Test"
+                }
+            };
         }
 
         [Theory]
@@ -590,6 +613,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<Mine>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewMine());
             else if (location.TypeOfLocation == LocationType.NordicTower)
                 _mockMapper.Setup(x => x.Map<NordicTower>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewNordicTower());
+            else if (location.TypeOfLocation == LocationType.OrcStronghold)
+                _mockMapper.Setup(x => x.Map<OrcStronghold>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewOrcStronghold());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
             var completedCreateTask = Task<Location>.FromResult(taskType);
@@ -642,6 +667,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Verify(x => x.Map<Mine>(createLocationDto), Times.Once());
             else if (location.TypeOfLocation == LocationType.NordicTower)
                 _mockMapper.Verify(x => x.Map<NordicTower>(createLocationDto), Times.Once());
+            else if (location.TypeOfLocation == LocationType.OrcStronghold)
+                _mockMapper.Verify(x => x.Map<OrcStronghold>(createLocationDto), Times.Once());
             else
                 Assert.True(false);
         }
@@ -766,6 +793,11 @@ namespace Skyrim.Api.Test.Domains
                 "Invalid properties for NordicTower",
                 new CreateLocationDto { TypeOfLocation = LocationType.NordicTower }
             };
+            yield return new object[]
+            {
+                "Invalid properties for OrcStronghold",
+                new CreateLocationDto { TypeOfLocation = LocationType.OrcStronghold }
+            };
         }
 
         [Theory]
@@ -815,6 +847,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<Mine>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
             else if (location.TypeOfLocation == LocationType.NordicTower)
                 _mockMapper.Setup(x => x.Map<NordicTower>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
+            else if (location.TypeOfLocation == LocationType.OrcStronghold)
+                _mockMapper.Setup(x => x.Map<OrcStronghold>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
 
@@ -953,6 +987,12 @@ namespace Skyrim.Api.Test.Domains
                 TestMethodHelpers.CreateNewNordicTower(),
                 TestMethodHelpers.CreateNewCreateLocationDtoAsNordicTower()
            };
+            yield return new object[]
+           {
+                "Invalid properties for OrcStronghold",
+                TestMethodHelpers.CreateNewOrcStronghold(),
+                TestMethodHelpers.CreateNewCreateLocationDtoAsOrcStronghold()
+           };
         }
 
         [Theory]
@@ -1004,6 +1044,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<Mine>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewMine());
             else if (type.TypeOfLocation == LocationType.NordicTower)
                 _mockMapper.Setup(x => x.Map<NordicTower>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewNordicTower());
+            else if (type.TypeOfLocation == LocationType.OrcStronghold)
+                _mockMapper.Setup(x => x.Map<OrcStronghold>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewOrcStronghold());
 
             var completedCreateTask = Task<Location>.FromResult(taskType);
             _mockLocationRepository.Setup(x => x.SaveLocation(It.IsAny<Location>()))
@@ -1900,6 +1942,48 @@ namespace Skyrim.Api.Test.Domains
                     TestMethodHelpers.CreateNewCreateLocationDtoAsNordicTower(),
                     TestMethodHelpers.CreateNewNordicTower(),
                     TestMethodHelpers.CreateNewNordicTower()
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null description so it returns a OrcStronghold with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = null,
+                        TypeOfLocation = LocationType.OrcStronghold,
+                        GeographicalDescription = "Test"
+                    },
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsOrcStronghold(),
+                    TestMethodHelpers.CreateNewOrcStronghold(),
+                    TestMethodHelpers.CreateNewOrcStronghold()
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has white spaces for description so it returns a OrcStronghold with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = "     ",
+                        TypeOfLocation = LocationType.OrcStronghold,
+                        GeographicalDescription = "Test"
+                    },
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsOrcStronghold(),
+                    TestMethodHelpers.CreateNewOrcStronghold(),
+                    TestMethodHelpers.CreateNewOrcStronghold()
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has empty description so it returns a OrcStronghold with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = "",
+                        TypeOfLocation = LocationType.OrcStronghold,
+                        GeographicalDescription = "Test"
+                    },
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsOrcStronghold(),
+                    TestMethodHelpers.CreateNewOrcStronghold(),
+                    TestMethodHelpers.CreateNewOrcStronghold()
             };
         }
 
@@ -3428,6 +3512,78 @@ namespace Skyrim.Api.Test.Domains
                         GeographicalDescription = " ",
                         Name = "Test",
                         TypeOfLocation = LocationType.NordicTower
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = null,
+                        TypeOfLocation = LocationType.OrcStronghold
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has an empty name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = "",
+                        TypeOfLocation = LocationType.OrcStronghold
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a white space name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = "   ",
+                        TypeOfLocation = LocationType.OrcStronghold
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = null,
+                        Name = "Test",
+                        TypeOfLocation = LocationType.OrcStronghold
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has an empty Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "",
+                        Name = "Test",
+                        TypeOfLocation = LocationType.OrcStronghold
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a white space Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = " ",
+                        Name = "Test",
+                        TypeOfLocation = LocationType.OrcStronghold
                     },
                     (CreateLocationDto)null
             };

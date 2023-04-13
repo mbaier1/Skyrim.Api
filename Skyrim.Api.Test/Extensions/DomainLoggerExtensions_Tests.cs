@@ -291,6 +291,18 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.NordicTower
                 }
         };
+        yield return new object[]
+        {
+                "Fatal Error for OrcStronghold location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.OrcStronghold
+                }
+        };
     }
 
     [Theory]
@@ -580,6 +592,19 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.NordicTower
                 },
                 LocationType.NordicTower
+        };
+        yield return new object[]
+        {
+                "Fatal Error for OrcStronghold location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.OrcStronghold
+                },
+                LocationType.OrcStronghold
         };
     }
 }

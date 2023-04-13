@@ -43,6 +43,7 @@ namespace Skyrim.Api.Data
         public DbSet<LightHouse> LightHouses { get; set; }
         public DbSet<Mine> Mines { get; set; }
         public DbSet<NordicTower> NordicTowers { get; set; }
+        public DbSet<OrcStronghold> OrcStrongholds { get; set; }
 
         public DbSet<Guard> Guards { get; set; }
         public DbSet<PhyscialFightingShop> PhyscialFightingShops { get; set; }
