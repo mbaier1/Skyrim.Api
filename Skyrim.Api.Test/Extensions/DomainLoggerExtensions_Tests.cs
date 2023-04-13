@@ -315,6 +315,18 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.Pass
                 }
         };
+        yield return new object[]
+        {
+                "Fatal Error for Ruin location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Ruin
+                }
+        };
     }
 
     [Theory]
@@ -630,6 +642,19 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.Pass
                 },
                 LocationType.Pass
+        };
+        yield return new object[]
+        {
+                "Fatal Error for Ruin location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Ruin
+                },
+                LocationType.Ruin
         };
     }
 }
