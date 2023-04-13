@@ -5001,7 +5001,7 @@ namespace Skyrim.Api.Test.Controllers
     public class CreateLocation_AsRuin : LocationController_Tests
     {
         [Fact]
-        public async void WhenCreateLocationDtoHasRequiredValidPropertiesAsARuin_ReturnsCreateAtActionWithPassDetails()
+        public async void WhenCreateLocationDtoHasRequiredValidPropertiesAsARuin_ReturnsCreateAtActionWithRuinDetails()
         {
             // Arrange
 
@@ -5027,7 +5027,7 @@ namespace Skyrim.Api.Test.Controllers
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
             var ruinObject = new object();
-            var locationAsRuin = new Pass();
+            var locationAsRuin = new Ruin();
 
             // Act
 
