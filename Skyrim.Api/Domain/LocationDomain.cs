@@ -93,6 +93,8 @@ namespace Skyrim.Api.Domain
                         return _mapper.Map<Pass>(createLocationDto);
                     case LocationType.Ruin:
                         return _mapper.Map<Ruin>(createLocationDto);
+                    case LocationType.Shack:
+                        return _mapper.Map<Shack>(createLocationDto);
                     default:
                         return null;
                 }

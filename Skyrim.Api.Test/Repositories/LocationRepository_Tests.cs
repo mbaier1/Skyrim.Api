@@ -121,6 +121,9 @@ namespace Skyrim.Api.Test.Repositories
                 case LocationType.Ruin:
                     Assert.Equal(_context.Ruins.FirstOrDefault().Name, result.Name);
                     break;
+                case LocationType.Shack:
+                    Assert.Equal(_context.Shacks.FirstOrDefault().Name, result.Name);
+                    break;
                 default:
                     Assert.True(false);
                     break;
@@ -247,6 +250,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Valid properties for a Ruin",
                 TestMethodHelpers.CreateNewRuin()
+            };
+            yield return new object[]
+            {
+                "Valid properties for a Shack",
+                TestMethodHelpers.CreateNewShack()
             };
         }
 
@@ -400,6 +408,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Invalid properties for Ruin",
                 new Ruin()
+            };
+            yield return new object[]
+            {
+                "Invalid properties for Shack",
+                new Shack()
             };
         }
 

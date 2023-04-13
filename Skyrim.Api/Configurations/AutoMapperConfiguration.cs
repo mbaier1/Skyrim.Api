@@ -32,6 +32,7 @@ namespace Skyrim.Api.Configurations
             CreateMap<OrcStronghold, CreateLocationDto>().ReverseMap();
             CreateMap<Pass, CreateLocationDto>().ReverseMap();
             CreateMap<Ruin, CreateLocationDto>().ReverseMap();
+            CreateMap<Shack, CreateLocationDto>().ReverseMap();
         }
     }
 }
