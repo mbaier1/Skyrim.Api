@@ -2867,7 +2867,7 @@ namespace Skyrim.Api.Test.Controllers
 
             var createLocationDto = new CreateLocationDto
             {
-                Name = "Test shack",
+                Name = "Test ship",
                 TypeOfLocation = LocationType.Farm,
                 GeographicalDescription = "Test Description"
             };
@@ -5407,6 +5407,434 @@ namespace Skyrim.Api.Test.Controllers
                 Name = "Test",
                 Description = "Test",
                 TypeOfLocation = LocationType.Shack,
+                GeographicalDescription = "        "
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+    }
+
+    public class CreateLocation_AsShip : LocationController_Tests
+    {
+        [Fact]
+        public async void WhenCreateLocationDtoHasRequiredValidPropertiesAsAShip_ReturnsCreateAtActionWithShipDetails()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Ship",
+                TypeOfLocation = LocationType.Ship,
+                GeographicalDescription = "Test Description"
+            };
+
+            var ship = new Ship
+            {
+                Id = 0,
+                Name = "Test Shipwreck",
+                TypeOfLocation = LocationType.Ship,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(ship);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var shipObject = new object();
+            var locationAsShip = new Ship();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            shipObject = responseAsCreateAsActionResult.Value;
+
+            locationAsShip.Id = (int)shipObject.GetType().GetProperty("Id").GetValue(shipObject, null);
+            locationAsShip.Name = (string)shipObject.GetType().GetProperty("Name").GetValue(shipObject, null);
+            locationAsShip.TypeOfLocation = (LocationType)shipObject.GetType().GetProperty("TypeOfLocation").GetValue(shipObject, null);
+            locationAsShip.GeographicalDescription = (string)shipObject.GetType().GetProperty("GeographicalDescription").GetValue(shipObject, null);
+            locationAsShip.Description = (string)shipObject.GetType().GetProperty("Description").GetValue(shipObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(ship.Id, locationAsShip.Id);
+            Assert.Equal(ship.Name, locationAsShip.Name);
+            Assert.Equal(ship.Description, locationAsShip.Description);
+            Assert.Equal(ship.TypeOfLocation, locationAsShip.TypeOfLocation);
+            Assert.Equal(ship.GeographicalDescription, locationAsShip.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasEmptySpacesForDescriptionAShip_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Ship",
+                Description = "    ",
+                TypeOfLocation = LocationType.Ship,
+                GeographicalDescription = "Test Description"
+            };
+
+            var ship = new Ship
+            {
+                Id = 0,
+                Name = "Test Shipwreck",
+                Description = "",
+                TypeOfLocation = LocationType.Shipwreck,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(ship);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var shipObject = new object();
+            var locationAsShip = new Ship();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            shipObject = responseAsCreateAsActionResult.Value;
+
+            locationAsShip.Id = (int)shipObject.GetType().GetProperty("Id").GetValue(shipObject, null);
+            locationAsShip.Name = (string)shipObject.GetType().GetProperty("Name").GetValue(shipObject, null);
+            locationAsShip.TypeOfLocation = (LocationType)shipObject.GetType().GetProperty("TypeOfLocation").GetValue(shipObject, null);
+            locationAsShip.GeographicalDescription = (string)shipObject.GetType().GetProperty("GeographicalDescription").GetValue(shipObject, null);
+            locationAsShip.Description = (string)shipObject.GetType().GetProperty("Description").GetValue(shipObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(ship.Name, locationAsShip.Name);
+            Assert.Equal(ship.Id, locationAsShip.Id);
+            Assert.Equal(ship.Description, locationAsShip.Description);
+            Assert.Equal(ship.TypeOfLocation, locationAsShip.TypeOfLocation);
+            Assert.Equal(ship.GeographicalDescription, locationAsShip.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullForDescriptionAsAShip_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Ship",
+                Description = null,
+                TypeOfLocation = LocationType.Ship,
+                GeographicalDescription = "Test Description"
+            };
+
+            var ship = new Ship
+            {
+                Id = 0,
+                Name = "Test Shipwreck",
+                Description = null,
+                TypeOfLocation = LocationType.Shipwreck,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(ship);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var shipObject = new object();
+            var locationAsShip = new Ship();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            shipObject = responseAsCreateAsActionResult.Value;
+
+            locationAsShip.Id = (int)shipObject.GetType().GetProperty("Id").GetValue(shipObject, null);
+            locationAsShip.Name = (string)shipObject.GetType().GetProperty("Name").GetValue(shipObject, null);
+            locationAsShip.TypeOfLocation = (LocationType)shipObject.GetType().GetProperty("TypeOfLocation").GetValue(shipObject, null);
+            locationAsShip.GeographicalDescription = (string)shipObject.GetType().GetProperty("GeographicalDescription").GetValue(shipObject, null);
+            locationAsShip.Description = (string)shipObject.GetType().GetProperty("Description").GetValue(shipObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(ship.Id, locationAsShip.Id);
+            Assert.Equal(ship.Name, locationAsShip.Name);
+            Assert.Equal(ship.Description, locationAsShip.Description);
+            Assert.Equal(ship.TypeOfLocation, locationAsShip.TypeOfLocation);
+            Assert.Equal(ship.GeographicalDescription, locationAsShip.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsAShip_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "      ",
+                Description = "Test",
+                TypeOfLocation = LocationType.Ship,
+                GeographicalDescription = "Test Description"
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsAShip_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.Ship,
+                GeographicalDescription = "        "
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+    }
+
+    public class CreateLocation_AsShipwreck : LocationController_Tests
+    {
+        [Fact]
+        public async void WhenCreateLocationDtoHasRequiredValidPropertiesAsAShipwreck_ReturnsCreateAtActionWithShipwreckDetails()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Shipwreck",
+                TypeOfLocation = LocationType.Shipwreck,
+                GeographicalDescription = "Test Description"
+            };
+
+            var shipwreck = new Shipwreck
+            {
+                Id = 0,
+                Name = "Test Shipwreck",
+                TypeOfLocation = LocationType.Shipwreck,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(shipwreck);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var shipwreckObject = new object();
+            var locationAsShipwreck = new Shipwreck();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            shipwreckObject = responseAsCreateAsActionResult.Value;
+
+            locationAsShipwreck.Id = (int)shipwreckObject.GetType().GetProperty("Id").GetValue(shipwreckObject, null);
+            locationAsShipwreck.Name = (string)shipwreckObject.GetType().GetProperty("Name").GetValue(shipwreckObject, null);
+            locationAsShipwreck.TypeOfLocation = (LocationType)shipwreckObject.GetType().GetProperty("TypeOfLocation").GetValue(shipwreckObject, null);
+            locationAsShipwreck.GeographicalDescription = (string)shipwreckObject.GetType().GetProperty("GeographicalDescription").GetValue(shipwreckObject, null);
+            locationAsShipwreck.Description = (string)shipwreckObject.GetType().GetProperty("Description").GetValue(shipwreckObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(shipwreck.Id, locationAsShipwreck.Id);
+            Assert.Equal(shipwreck.Name, locationAsShipwreck.Name);
+            Assert.Equal(shipwreck.Description, locationAsShipwreck.Description);
+            Assert.Equal(shipwreck.TypeOfLocation, locationAsShipwreck.TypeOfLocation);
+            Assert.Equal(shipwreck.GeographicalDescription, locationAsShipwreck.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasEmptySpacesForDescriptionAShipwreck_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Shipwreck",
+                Description = "    ",
+                TypeOfLocation = LocationType.Shipwreck,
+                GeographicalDescription = "Test Description"
+            };
+
+            var shipwreck = new Shipwreck
+            {
+                Id = 0,
+                Name = "Test Shipwreck",
+                Description = "",
+                TypeOfLocation = LocationType.Shipwreck,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(shipwreck);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var shipwreckObject = new object();
+            var locationAsShipwreck = new Shipwreck();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            shipwreckObject = responseAsCreateAsActionResult.Value;
+
+            locationAsShipwreck.Id = (int)shipwreckObject.GetType().GetProperty("Id").GetValue(shipwreckObject, null);
+            locationAsShipwreck.Name = (string)shipwreckObject.GetType().GetProperty("Name").GetValue(shipwreckObject, null);
+            locationAsShipwreck.TypeOfLocation = (LocationType)shipwreckObject.GetType().GetProperty("TypeOfLocation").GetValue(shipwreckObject, null);
+            locationAsShipwreck.GeographicalDescription = (string)shipwreckObject.GetType().GetProperty("GeographicalDescription").GetValue(shipwreckObject, null);
+            locationAsShipwreck.Description = (string)shipwreckObject.GetType().GetProperty("Description").GetValue(shipwreckObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(shipwreck.Name, locationAsShipwreck.Name);
+            Assert.Equal(shipwreck.Id, locationAsShipwreck.Id);
+            Assert.Equal(shipwreck.Description, locationAsShipwreck.Description);
+            Assert.Equal(shipwreck.TypeOfLocation, locationAsShipwreck.TypeOfLocation);
+            Assert.Equal(shipwreck.GeographicalDescription, locationAsShipwreck.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullForDescriptionAsAShipwreck_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Shipwreck",
+                Description = null,
+                TypeOfLocation = LocationType.Shipwreck,
+                GeographicalDescription = "Test Description"
+            };
+
+            var shipwreck = new Shipwreck
+            {
+                Id = 0,
+                Name = "Test Shipwreck",
+                Description = null,
+                TypeOfLocation = LocationType.Shipwreck,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(shipwreck);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var shipwreckObject = new object();
+            var locationAsShipwreck = new Shipwreck();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            shipwreckObject = responseAsCreateAsActionResult.Value;
+
+            locationAsShipwreck.Id = (int)shipwreckObject.GetType().GetProperty("Id").GetValue(shipwreckObject, null);
+            locationAsShipwreck.Name = (string)shipwreckObject.GetType().GetProperty("Name").GetValue(shipwreckObject, null);
+            locationAsShipwreck.TypeOfLocation = (LocationType)shipwreckObject.GetType().GetProperty("TypeOfLocation").GetValue(shipwreckObject, null);
+            locationAsShipwreck.GeographicalDescription = (string)shipwreckObject.GetType().GetProperty("GeographicalDescription").GetValue(shipwreckObject, null);
+            locationAsShipwreck.Description = (string)shipwreckObject.GetType().GetProperty("Description").GetValue(shipwreckObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(shipwreck.Id, locationAsShipwreck.Id);
+            Assert.Equal(shipwreck.Name, locationAsShipwreck.Name);
+            Assert.Equal(shipwreck.Description, locationAsShipwreck.Description);
+            Assert.Equal(shipwreck.TypeOfLocation, locationAsShipwreck.TypeOfLocation);
+            Assert.Equal(shipwreck.GeographicalDescription, locationAsShipwreck.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsAShipwreck_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "      ",
+                Description = "Test",
+                TypeOfLocation = LocationType.Shipwreck,
+                GeographicalDescription = "Test Description"
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsAShipwreck_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.Shipwreck,
                 GeographicalDescription = "        "
             };
 
