@@ -327,6 +327,18 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.Ruin
                 }
         };
+        yield return new object[]
+        {
+                "Fatal Error for Shack location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Shack
+                }
+        };
     }
 
     [Theory]
@@ -655,6 +667,19 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.Ruin
                 },
                 LocationType.Ruin
+        };
+        yield return new object[]
+        {
+                "Fatal Error for Shack location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Shack
+                },
+                LocationType.Shack
         };
     }
 }

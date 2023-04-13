@@ -2867,7 +2867,7 @@ namespace Skyrim.Api.Test.Controllers
 
             var createLocationDto = new CreateLocationDto
             {
-                Name = "Test ruin",
+                Name = "Test shack",
                 TypeOfLocation = LocationType.Farm,
                 GeographicalDescription = "Test Description"
             };
@@ -5193,6 +5193,220 @@ namespace Skyrim.Api.Test.Controllers
                 Name = "Test",
                 Description = "Test",
                 TypeOfLocation = LocationType.Ruin,
+                GeographicalDescription = "        "
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+    }
+
+    public class CreateLocation_AsShack : LocationController_Tests
+    {
+        [Fact]
+        public async void WhenCreateLocationDtoHasRequiredValidPropertiesAsAShack_ReturnsCreateAtActionWithShackDetails()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Shack",
+                TypeOfLocation = LocationType.Shack,
+                GeographicalDescription = "Test Description"
+            };
+
+            var shack = new Shack
+            {
+                Id = 0,
+                Name = "Test Shack",
+                TypeOfLocation = LocationType.Shack,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(shack);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var shackObject = new object();
+            var locationAsShack = new Shack();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            shackObject = responseAsCreateAsActionResult.Value;
+
+            locationAsShack.Id = (int)shackObject.GetType().GetProperty("Id").GetValue(shackObject, null);
+            locationAsShack.Name = (string)shackObject.GetType().GetProperty("Name").GetValue(shackObject, null);
+            locationAsShack.TypeOfLocation = (LocationType)shackObject.GetType().GetProperty("TypeOfLocation").GetValue(shackObject, null);
+            locationAsShack.GeographicalDescription = (string)shackObject.GetType().GetProperty("GeographicalDescription").GetValue(shackObject, null);
+            locationAsShack.Description = (string)shackObject.GetType().GetProperty("Description").GetValue(shackObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(shack.Id, locationAsShack.Id);
+            Assert.Equal(shack.Name, locationAsShack.Name);
+            Assert.Equal(shack.Description, locationAsShack.Description);
+            Assert.Equal(shack.TypeOfLocation, locationAsShack.TypeOfLocation);
+            Assert.Equal(shack.GeographicalDescription, locationAsShack.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasEmptySpacesForDescriptionAShack_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Shack",
+                Description = "    ",
+                TypeOfLocation = LocationType.Shack,
+                GeographicalDescription = "Test Description"
+            };
+
+            var shack = new Shack
+            {
+                Id = 0,
+                Name = "Test Shack",
+                Description = "",
+                TypeOfLocation = LocationType.Shack,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(shack);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var ShackObject = new object();
+            var locationAsShack = new Shack();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            ShackObject = responseAsCreateAsActionResult.Value;
+
+            locationAsShack.Id = (int)ShackObject.GetType().GetProperty("Id").GetValue(ShackObject, null);
+            locationAsShack.Name = (string)ShackObject.GetType().GetProperty("Name").GetValue(ShackObject, null);
+            locationAsShack.TypeOfLocation = (LocationType)ShackObject.GetType().GetProperty("TypeOfLocation").GetValue(ShackObject, null);
+            locationAsShack.GeographicalDescription = (string)ShackObject.GetType().GetProperty("GeographicalDescription").GetValue(ShackObject, null);
+            locationAsShack.Description = (string)ShackObject.GetType().GetProperty("Description").GetValue(ShackObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(shack.Name, locationAsShack.Name);
+            Assert.Equal(shack.Id, locationAsShack.Id);
+            Assert.Equal(shack.Description, locationAsShack.Description);
+            Assert.Equal(shack.TypeOfLocation, locationAsShack.TypeOfLocation);
+            Assert.Equal(shack.GeographicalDescription, locationAsShack.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullForDescriptionAsAShack_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Shack",
+                Description = null,
+                TypeOfLocation = LocationType.Shack,
+                GeographicalDescription = "Test Description"
+            };
+
+            var shack = new Shack
+            {
+                Id = 0,
+                Name = "Test Shack",
+                Description = null,
+                TypeOfLocation = LocationType.Shack,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(shack);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var shackObject = new object();
+            var locationAsShack = new Shack();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            shackObject = responseAsCreateAsActionResult.Value;
+
+            locationAsShack.Id = (int)shackObject.GetType().GetProperty("Id").GetValue(shackObject, null);
+            locationAsShack.Name = (string)shackObject.GetType().GetProperty("Name").GetValue(shackObject, null);
+            locationAsShack.TypeOfLocation = (LocationType)shackObject.GetType().GetProperty("TypeOfLocation").GetValue(shackObject, null);
+            locationAsShack.GeographicalDescription = (string)shackObject.GetType().GetProperty("GeographicalDescription").GetValue(shackObject, null);
+            locationAsShack.Description = (string)shackObject.GetType().GetProperty("Description").GetValue(shackObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(shack.Id, locationAsShack.Id);
+            Assert.Equal(shack.Name, locationAsShack.Name);
+            Assert.Equal(shack.Description, locationAsShack.Description);
+            Assert.Equal(shack.TypeOfLocation, locationAsShack.TypeOfLocation);
+            Assert.Equal(shack.GeographicalDescription, locationAsShack.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsAShack_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "      ",
+                Description = "Test",
+                TypeOfLocation = LocationType.Shack,
+                GeographicalDescription = "Test Description"
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsAShack_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.Shack,
                 GeographicalDescription = "        "
             };
 

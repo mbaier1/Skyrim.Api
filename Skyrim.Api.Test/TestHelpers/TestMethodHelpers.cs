@@ -294,6 +294,18 @@ namespace Skyrim.Api.Test.TestHelpers
             };
         }
 
+        public static Shack CreateNewShack()
+        {
+            return new Shack
+            {
+                Id = 0,
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.Shack,
+                GeographicalDescription = "Test"
+            };
+        }
+
         public static CreateLocationDto CreateNewCreateLocationDtoAsCity()
         {
             return new CreateLocationDto
@@ -555,6 +567,17 @@ namespace Skyrim.Api.Test.TestHelpers
                 Description = "",
                 GeographicalDescription = "Test",
                 TypeOfLocation = LocationType.Ruin
+            };
+        }
+
+        public static CreateLocationDto CreateNewCreateLocationDtoAsShack()
+        {
+            return new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "",
+                GeographicalDescription = "Test",
+                TypeOfLocation = LocationType.Shack
             };
         }
     }
