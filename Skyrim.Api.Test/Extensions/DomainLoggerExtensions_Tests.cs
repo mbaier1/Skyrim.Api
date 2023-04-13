@@ -339,6 +339,30 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.Shack
                 }
         };
+        yield return new object[]
+        {
+                "Fatal Error for Ship location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Ship
+                }
+        };
+        yield return new object[]
+        {
+                "Fatal Error for Shipwreck location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Shipwreck
+                }
+        };
     }
 
     [Theory]
@@ -680,6 +704,32 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.Shack
                 },
                 LocationType.Shack
+        };
+        yield return new object[]
+        {
+                "Fatal Error for Ship location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Ship
+                },
+                LocationType.Ship
+        };
+        yield return new object[]
+        {
+                "Fatal Error for Shipwreck location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Shipwreck
+                },
+                LocationType.Shipwreck
         };
     }
 }

@@ -340,6 +340,30 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.Shack
                 }
             };
+            yield return new object[]
+            {
+                "Fatal Error for Ship location",
+                new Exception(),
+                new Ship
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Ship
+                }
+            };
+            yield return new object[]
+            {
+                "Fatal Error for Shipwreck location",
+                new Exception(),
+                new Shipwreck
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Shipwreck
+                }
+            };
         }
 
         [Theory]
@@ -682,6 +706,32 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.Shack
                 },
                 LocationType.Shack
+            };
+            yield return new object[]
+            {
+                "Fatal Error for Ship location",
+                new Exception(),
+                new Ship
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Ship
+                },
+                LocationType.Ship
+            };
+            yield return new object[]
+            {
+                "Fatal Error for Shipwreck location",
+                new Exception(),
+                new Shipwreck
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Shipwreck
+                },
+                LocationType.Shipwreck
             };
         }
     }
