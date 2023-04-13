@@ -303,6 +303,18 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.OrcStronghold
                 }
         };
+        yield return new object[]
+        {
+                "Fatal Error for Pass location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Pass
+                }
+        };
     }
 
     [Theory]
@@ -605,6 +617,19 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.OrcStronghold
                 },
                 LocationType.OrcStronghold
+        };
+        yield return new object[]
+        {
+                "Fatal Error for Pass location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Pass
+                },
+                LocationType.Pass
         };
     }
 }

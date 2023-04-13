@@ -304,6 +304,18 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.OrcStronghold
                 }
             };
+            yield return new object[]
+            {
+                "Fatal Error for Pass location",
+                new Exception(),
+                new Pass
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Pass
+                }
+            };
         }
 
         [Theory]
@@ -607,6 +619,19 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.OrcStronghold
                 },
                 LocationType.OrcStronghold
+            };
+            yield return new object[]
+            {
+                "Fatal Error for Pass location",
+                new Exception(),
+                new Pass
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Pass
+                },
+                LocationType.Pass
             };
         }
     }

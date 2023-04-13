@@ -270,6 +270,18 @@ namespace Skyrim.Api.Test.TestHelpers
             };
         }
 
+        public static Pass CreateNewPass()
+        {
+            return new Pass
+            {
+                Id = 0,
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.Pass,
+                GeographicalDescription = "Test"
+            };
+        }
+
         public static CreateLocationDto CreateNewCreateLocationDtoAsCity()
         {
             return new CreateLocationDto
@@ -509,6 +521,17 @@ namespace Skyrim.Api.Test.TestHelpers
                 Description = "",
                 GeographicalDescription = "Test",
                 TypeOfLocation = LocationType.OrcStronghold
+            };
+        }
+
+        public static CreateLocationDto CreateNewCreateLocationDtoAsPass()
+        {
+            return new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "",
+                GeographicalDescription = "Test",
+                TypeOfLocation = LocationType.Pass
             };
         }
     }
