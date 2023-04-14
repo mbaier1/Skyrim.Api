@@ -474,6 +474,18 @@ namespace Skyrim.Api.Test.TestHelpers
             };
         }
 
+        public static UnmarkedLocation CreateNewUnmarkedLocation()
+        {
+            return new UnmarkedLocation
+            {
+                Id = 0,
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.UnmarkedLocation,
+                GeographicalDescription = "Test"
+            };
+        }
+
         public static CreateLocationDto CreateNewCreateLocationDtoAsCity()
         {
             return new CreateLocationDto
@@ -900,6 +912,17 @@ namespace Skyrim.Api.Test.TestHelpers
                 Description = "",
                 GeographicalDescription = "Test",
                 TypeOfLocation = LocationType.GuildHeadquarter
+            };
+        }
+
+        public static CreateLocationDto CreateNewCreateLocationDtoAsUnmarkedLocation()
+        {
+            return new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "",
+                GeographicalDescription = "Test",
+                TypeOfLocation = LocationType.UnmarkedLocation
             };
         }
     }

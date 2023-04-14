@@ -8421,4 +8421,218 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
         }
     }
+
+    public class CreateLocation_AsUnmarkedLocation : LocationController_Tests
+    {
+        [Fact]
+        public async void WhenCreateLocationDtoHasRequiredValidPropertiesAsAUnmarkedLocation_ReturnsCreateAtActionWithGuildUnmarkedLocationDetails()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test UnmarkedLocation",
+                TypeOfLocation = LocationType.UnmarkedLocation,
+                GeographicalDescription = "Test UnmarkedLocation"
+            };
+
+            var unmarkedLocation = new UnmarkedLocation
+            {
+                Id = 0,
+                Name = "Test UnmarkedLocation",
+                TypeOfLocation = LocationType.UnmarkedLocation,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(unmarkedLocation);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var unmarkedLocationObject = new object();
+            var locationAsUnmarkedLocation = new UnmarkedLocation();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            unmarkedLocationObject = responseAsCreateAsActionResult.Value;
+
+            locationAsUnmarkedLocation.Id = (int)unmarkedLocationObject.GetType().GetProperty("Id").GetValue(unmarkedLocationObject, null);
+            locationAsUnmarkedLocation.Name = (string)unmarkedLocationObject.GetType().GetProperty("Name").GetValue(unmarkedLocationObject, null);
+            locationAsUnmarkedLocation.TypeOfLocation = (LocationType)unmarkedLocationObject.GetType().GetProperty("TypeOfLocation").GetValue(unmarkedLocationObject, null);
+            locationAsUnmarkedLocation.GeographicalDescription = (string)unmarkedLocationObject.GetType().GetProperty("GeographicalDescription").GetValue(unmarkedLocationObject, null);
+            locationAsUnmarkedLocation.Description = (string)unmarkedLocationObject.GetType().GetProperty("Description").GetValue(unmarkedLocationObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(unmarkedLocation.Id, locationAsUnmarkedLocation.Id);
+            Assert.Equal(unmarkedLocation.Name, locationAsUnmarkedLocation.Name);
+            Assert.Equal(unmarkedLocation.Description, locationAsUnmarkedLocation.Description);
+            Assert.Equal(unmarkedLocation.TypeOfLocation, locationAsUnmarkedLocation.TypeOfLocation);
+            Assert.Equal(unmarkedLocation.GeographicalDescription, locationAsUnmarkedLocation.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasEmptySpacesForDescriptionAUnmarkedLocation_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test UnmarkedLocation",
+                Description = "    ",
+                TypeOfLocation = LocationType.UnmarkedLocation,
+                GeographicalDescription = "Test Description"
+            };
+
+            var unmarkedLocation = new UnmarkedLocation
+            {
+                Id = 0,
+                Name = "Test UnmarkedLocation",
+                Description = "",
+                TypeOfLocation = LocationType.UnmarkedLocation,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(unmarkedLocation);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var unmarkedLocationObject = new object();
+            var locationAsUnmarkedLocation = new UnmarkedLocation();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            unmarkedLocationObject = responseAsCreateAsActionResult.Value;
+
+            locationAsUnmarkedLocation.Id = (int)unmarkedLocationObject.GetType().GetProperty("Id").GetValue(unmarkedLocationObject, null);
+            locationAsUnmarkedLocation.Name = (string)unmarkedLocationObject.GetType().GetProperty("Name").GetValue(unmarkedLocationObject, null);
+            locationAsUnmarkedLocation.TypeOfLocation = (LocationType)unmarkedLocationObject.GetType().GetProperty("TypeOfLocation").GetValue(unmarkedLocationObject, null);
+            locationAsUnmarkedLocation.GeographicalDescription = (string)unmarkedLocationObject.GetType().GetProperty("GeographicalDescription").GetValue(unmarkedLocationObject, null);
+            locationAsUnmarkedLocation.Description = (string)unmarkedLocationObject.GetType().GetProperty("Description").GetValue(unmarkedLocationObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(unmarkedLocation.Name, locationAsUnmarkedLocation.Name);
+            Assert.Equal(unmarkedLocation.Id, locationAsUnmarkedLocation.Id);
+            Assert.Equal(unmarkedLocation.Description, locationAsUnmarkedLocation.Description);
+            Assert.Equal(unmarkedLocation.TypeOfLocation, locationAsUnmarkedLocation.TypeOfLocation);
+            Assert.Equal(unmarkedLocation.GeographicalDescription, locationAsUnmarkedLocation.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullForDescriptionAsAUnmarkedLocation_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test UnmarkedLocation",
+                Description = null,
+                TypeOfLocation = LocationType.UnmarkedLocation,
+                GeographicalDescription = "Test Description"
+            };
+
+            var unmarkedLocation = new UnmarkedLocation
+            {
+                Id = 0,
+                Name = "Test UnmarkedLocation",
+                Description = null,
+                TypeOfLocation = LocationType.UnmarkedLocation,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(unmarkedLocation);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var unmarkedLocationObject = new object();
+            var locationAsUnmarkedLocation = new UnmarkedLocation();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            unmarkedLocationObject = responseAsCreateAsActionResult.Value;
+
+            locationAsUnmarkedLocation.Id = (int)unmarkedLocationObject.GetType().GetProperty("Id").GetValue(unmarkedLocationObject, null);
+            locationAsUnmarkedLocation.Name = (string)unmarkedLocationObject.GetType().GetProperty("Name").GetValue(unmarkedLocationObject, null);
+            locationAsUnmarkedLocation.TypeOfLocation = (LocationType)unmarkedLocationObject.GetType().GetProperty("TypeOfLocation").GetValue(unmarkedLocationObject, null);
+            locationAsUnmarkedLocation.GeographicalDescription = (string)unmarkedLocationObject.GetType().GetProperty("GeographicalDescription").GetValue(unmarkedLocationObject, null);
+            locationAsUnmarkedLocation.Description = (string)unmarkedLocationObject.GetType().GetProperty("Description").GetValue(unmarkedLocationObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(unmarkedLocation.Id, locationAsUnmarkedLocation.Id);
+            Assert.Equal(unmarkedLocation.Name, locationAsUnmarkedLocation.Name);
+            Assert.Equal(unmarkedLocation.Description, locationAsUnmarkedLocation.Description);
+            Assert.Equal(unmarkedLocation.TypeOfLocation, locationAsUnmarkedLocation.TypeOfLocation);
+            Assert.Equal(unmarkedLocation.GeographicalDescription, locationAsUnmarkedLocation.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsAUnmarkedLocation_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "      ",
+                Description = "Test",
+                TypeOfLocation = LocationType.UnmarkedLocation,
+                GeographicalDescription = "Test Description"
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsAUnmarkedLocation_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.UnmarkedLocation,
+                GeographicalDescription = "        "
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+    }
 }

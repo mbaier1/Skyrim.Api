@@ -508,6 +508,18 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.GuildHeadquarter
                 }
             };
+            yield return new object[]
+            {
+                "Fatal Error for UnmarkedLocation location",
+                new Exception(),
+                new UnmarkedLocation
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.UnmarkedLocation
+                }
+            };
         }
 
         [Theory]
@@ -1032,6 +1044,19 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.GuildHeadquarter
                 },
                 LocationType.GuildHeadquarter
+            };
+            yield return new object[]
+            {
+                "Fatal Error for UnmarkedLocation location",
+                new Exception(),
+                new UnmarkedLocation
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.UnmarkedLocation
+                },
+                LocationType.UnmarkedLocation
             };
         }
     }
