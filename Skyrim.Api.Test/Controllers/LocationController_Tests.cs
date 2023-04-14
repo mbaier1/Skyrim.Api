@@ -6311,7 +6311,7 @@ namespace Skyrim.Api.Test.Controllers
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
             var tombObject = new object();
-            var locationATomb = new Tomb();
+            var locationAsTomb = new Tomb();
 
             // Act
 
@@ -6319,20 +6319,20 @@ namespace Skyrim.Api.Test.Controllers
             var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
             tombObject = responseAsCreateAsActionResult.Value;
 
-            locationATomb.Id = (int)tombObject.GetType().GetProperty("Id").GetValue(tombObject, null);
-            locationATomb.Name = (string)tombObject.GetType().GetProperty("Name").GetValue(tombObject, null);
-            locationATomb.TypeOfLocation = (LocationType)tombObject.GetType().GetProperty("TypeOfLocation").GetValue(tombObject, null);
-            locationATomb.GeographicalDescription = (string)tombObject.GetType().GetProperty("GeographicalDescription").GetValue(tombObject, null);
-            locationATomb.Description = (string)tombObject.GetType().GetProperty("Description").GetValue(tombObject, null);
+            locationAsTomb.Id = (int)tombObject.GetType().GetProperty("Id").GetValue(tombObject, null);
+            locationAsTomb.Name = (string)tombObject.GetType().GetProperty("Name").GetValue(tombObject, null);
+            locationAsTomb.TypeOfLocation = (LocationType)tombObject.GetType().GetProperty("TypeOfLocation").GetValue(tombObject, null);
+            locationAsTomb.GeographicalDescription = (string)tombObject.GetType().GetProperty("GeographicalDescription").GetValue(tombObject, null);
+            locationAsTomb.Description = (string)tombObject.GetType().GetProperty("Description").GetValue(tombObject, null);
 
             // Assert
 
             Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
-            Assert.Equal(tomb.Id, locationATomb.Id);
-            Assert.Equal(tomb.Name, locationATomb.Name);
-            Assert.Equal(tomb.Description, locationATomb.Description);
-            Assert.Equal(tomb.TypeOfLocation, locationATomb.TypeOfLocation);
-            Assert.Equal(tomb.GeographicalDescription, locationATomb.GeographicalDescription);
+            Assert.Equal(tomb.Id, locationAsTomb.Id);
+            Assert.Equal(tomb.Name, locationAsTomb.Name);
+            Assert.Equal(tomb.Description, locationAsTomb.Description);
+            Assert.Equal(tomb.TypeOfLocation, locationAsTomb.TypeOfLocation);
+            Assert.Equal(tomb.GeographicalDescription, locationAsTomb.GeographicalDescription);
         }
 
         [Fact]
@@ -6477,6 +6477,220 @@ namespace Skyrim.Api.Test.Controllers
                 Name = "Test",
                 Description = "Test",
                 TypeOfLocation = LocationType.Tomb,
+                GeographicalDescription = "        "
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+    }
+
+    public class CreateLocation_AsWatchtower : LocationController_Tests
+    {
+        [Fact]
+        public async void WhenCreateLocationDtoHasRequiredValidPropertiesAsAWatchtower_ReturnsCreateAtActionWithWatchtowerDetails()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Watchtower",
+                TypeOfLocation = LocationType.Watchtower,
+                GeographicalDescription = "Test Watchtower"
+            };
+
+            var watchtower = new Watchtower
+            {
+                Id = 0,
+                Name = "Test Watchtower",
+                TypeOfLocation = LocationType.Watchtower,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(watchtower);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var watchtowerObject = new object();
+            var locationAsWatchtower = new Watchtower();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            watchtowerObject = responseAsCreateAsActionResult.Value;
+
+            locationAsWatchtower.Id = (int)watchtowerObject.GetType().GetProperty("Id").GetValue(watchtowerObject, null);
+            locationAsWatchtower.Name = (string)watchtowerObject.GetType().GetProperty("Name").GetValue(watchtowerObject, null);
+            locationAsWatchtower.TypeOfLocation = (LocationType)watchtowerObject.GetType().GetProperty("TypeOfLocation").GetValue(watchtowerObject, null);
+            locationAsWatchtower.GeographicalDescription = (string)watchtowerObject.GetType().GetProperty("GeographicalDescription").GetValue(watchtowerObject, null);
+            locationAsWatchtower.Description = (string)watchtowerObject.GetType().GetProperty("Description").GetValue(watchtowerObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(watchtower.Id, locationAsWatchtower.Id);
+            Assert.Equal(watchtower.Name, locationAsWatchtower.Name);
+            Assert.Equal(watchtower.Description, locationAsWatchtower.Description);
+            Assert.Equal(watchtower.TypeOfLocation, locationAsWatchtower.TypeOfLocation);
+            Assert.Equal(watchtower.GeographicalDescription, locationAsWatchtower.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasEmptySpacesForDescriptionAWatchtower_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Watchtower",
+                Description = "    ",
+                TypeOfLocation = LocationType.Watchtower,
+                GeographicalDescription = "Test Description"
+            };
+
+            var watchtower = new Watchtower
+            {
+                Id = 0,
+                Name = "Test Watchtower",
+                Description = "",
+                TypeOfLocation = LocationType.Watchtower,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(watchtower);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var watchtowerObject = new object();
+            var locationAsWatchtower = new Watchtower();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            watchtowerObject = responseAsCreateAsActionResult.Value;
+
+            locationAsWatchtower.Id = (int)watchtowerObject.GetType().GetProperty("Id").GetValue(watchtowerObject, null);
+            locationAsWatchtower.Name = (string)watchtowerObject.GetType().GetProperty("Name").GetValue(watchtowerObject, null);
+            locationAsWatchtower.TypeOfLocation = (LocationType)watchtowerObject.GetType().GetProperty("TypeOfLocation").GetValue(watchtowerObject, null);
+            locationAsWatchtower.GeographicalDescription = (string)watchtowerObject.GetType().GetProperty("GeographicalDescription").GetValue(watchtowerObject, null);
+            locationAsWatchtower.Description = (string)watchtowerObject.GetType().GetProperty("Description").GetValue(watchtowerObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(watchtower.Name, locationAsWatchtower.Name);
+            Assert.Equal(watchtower.Id, locationAsWatchtower.Id);
+            Assert.Equal(watchtower.Description, locationAsWatchtower.Description);
+            Assert.Equal(watchtower.TypeOfLocation, locationAsWatchtower.TypeOfLocation);
+            Assert.Equal(watchtower.GeographicalDescription, locationAsWatchtower.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullForDescriptionAsAWatchtower_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Watchtower",
+                Description = null,
+                TypeOfLocation = LocationType.Watchtower,
+                GeographicalDescription = "Test Description"
+            };
+
+            var watchtower = new Watchtower
+            {
+                Id = 0,
+                Name = "Test Watchtower",
+                Description = null,
+                TypeOfLocation = LocationType.Watchtower,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(watchtower);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var watchtowerObject = new object();
+            var locationAsWatchtower = new Watchtower();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            watchtowerObject = responseAsCreateAsActionResult.Value;
+
+            locationAsWatchtower.Id = (int)watchtowerObject.GetType().GetProperty("Id").GetValue(watchtowerObject, null);
+            locationAsWatchtower.Name = (string)watchtowerObject.GetType().GetProperty("Name").GetValue(watchtowerObject, null);
+            locationAsWatchtower.TypeOfLocation = (LocationType)watchtowerObject.GetType().GetProperty("TypeOfLocation").GetValue(watchtowerObject, null);
+            locationAsWatchtower.GeographicalDescription = (string)watchtowerObject.GetType().GetProperty("GeographicalDescription").GetValue(watchtowerObject, null);
+            locationAsWatchtower.Description = (string)watchtowerObject.GetType().GetProperty("Description").GetValue(watchtowerObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(watchtower.Id, locationAsWatchtower.Id);
+            Assert.Equal(watchtower.Name, locationAsWatchtower.Name);
+            Assert.Equal(watchtower.Description, locationAsWatchtower.Description);
+            Assert.Equal(watchtower.TypeOfLocation, locationAsWatchtower.TypeOfLocation);
+            Assert.Equal(watchtower.GeographicalDescription, locationAsWatchtower.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsAWatchtower_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "      ",
+                Description = "Test",
+                TypeOfLocation = LocationType.Watchtower,
+                GeographicalDescription = "Test Description"
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsAWatchtower_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.Watchtower,
                 GeographicalDescription = "        "
             };
 

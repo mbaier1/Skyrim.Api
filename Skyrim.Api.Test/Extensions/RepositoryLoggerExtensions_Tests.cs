@@ -400,6 +400,18 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.Tomb
                 }
             };
+            yield return new object[]
+            {
+                "Fatal Error for Watchtower location",
+                new Exception(),
+                new Watchtower
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Watchtower
+                }
+            };
         }
 
         [Theory]
@@ -807,6 +819,19 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.Tomb
                 },
                 LocationType.Tomb
+            };
+            yield return new object[]
+            {
+                "Fatal Error for Watchtower location",
+                new Exception(),
+                new Watchtower
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Watchtower
+                },
+                LocationType.Watchtower
             };
         }
     }
