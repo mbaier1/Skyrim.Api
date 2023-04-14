@@ -471,6 +471,18 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.Temple
                 }
         };
+        yield return new object[]
+        {
+                "Fatal Error for WordWall location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.WordWall
+                }
+        };
     }
 
     [Theory]
@@ -955,6 +967,19 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.Temple
                 },
                 LocationType.Temple
+        };
+        yield return new object[]
+        {
+                "Fatal Error for WordWall location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.WordWall
+                },
+                LocationType.WordWall
         };
     }
 }

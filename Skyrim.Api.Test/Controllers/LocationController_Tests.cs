@@ -7673,7 +7673,7 @@ namespace Skyrim.Api.Test.Controllers
         }
 
         [Fact]
-        public async void WhenCreateLocationDtoHasNullForDescriptionAsAnTemple_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        public async void WhenCreateLocationDtoHasNullForDescriptionAsATemple_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
         {
             // Arrange
 
@@ -7761,6 +7761,220 @@ namespace Skyrim.Api.Test.Controllers
                 Name = "Test",
                 Description = "Test",
                 TypeOfLocation = LocationType.Temple,
+                GeographicalDescription = "        "
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+    }
+
+    public class CreateLocation_AsWordWall : LocationController_Tests
+    {
+        [Fact]
+        public async void WhenCreateLocationDtoHasRequiredValidPropertiesAsAWordWall_ReturnsCreateAtActionWithWordWallDetails()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test WordWall",
+                TypeOfLocation = LocationType.WordWall,
+                GeographicalDescription = "Test WordWall"
+            };
+
+            var wordWall = new WordWall
+            {
+                Id = 0,
+                Name = "Test WordWall",
+                TypeOfLocation = LocationType.WordWall,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(wordWall);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var wordWallObject = new object();
+            var locationAsWordWall = new WordWall();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            wordWallObject = responseAsCreateAsActionResult.Value;
+
+            locationAsWordWall.Id = (int)wordWallObject.GetType().GetProperty("Id").GetValue(wordWallObject, null);
+            locationAsWordWall.Name = (string)wordWallObject.GetType().GetProperty("Name").GetValue(wordWallObject, null);
+            locationAsWordWall.TypeOfLocation = (LocationType)wordWallObject.GetType().GetProperty("TypeOfLocation").GetValue(wordWallObject, null);
+            locationAsWordWall.GeographicalDescription = (string)wordWallObject.GetType().GetProperty("GeographicalDescription").GetValue(wordWallObject, null);
+            locationAsWordWall.Description = (string)wordWallObject.GetType().GetProperty("Description").GetValue(wordWallObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(wordWall.Id, locationAsWordWall.Id);
+            Assert.Equal(wordWall.Name, locationAsWordWall.Name);
+            Assert.Equal(wordWall.Description, locationAsWordWall.Description);
+            Assert.Equal(wordWall.TypeOfLocation, locationAsWordWall.TypeOfLocation);
+            Assert.Equal(wordWall.GeographicalDescription, locationAsWordWall.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasEmptySpacesForDescriptionAWordWall_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test WordWall",
+                Description = "    ",
+                TypeOfLocation = LocationType.WordWall,
+                GeographicalDescription = "Test Description"
+            };
+
+            var wordWall = new WordWall
+            {
+                Id = 0,
+                Name = "Test WordWall",
+                Description = "",
+                TypeOfLocation = LocationType.WordWall,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(wordWall);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var wordWallObject = new object();
+            var locationAsWordWall = new WordWall();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            wordWallObject = responseAsCreateAsActionResult.Value;
+
+            locationAsWordWall.Id = (int)wordWallObject.GetType().GetProperty("Id").GetValue(wordWallObject, null);
+            locationAsWordWall.Name = (string)wordWallObject.GetType().GetProperty("Name").GetValue(wordWallObject, null);
+            locationAsWordWall.TypeOfLocation = (LocationType)wordWallObject.GetType().GetProperty("TypeOfLocation").GetValue(wordWallObject, null);
+            locationAsWordWall.GeographicalDescription = (string)wordWallObject.GetType().GetProperty("GeographicalDescription").GetValue(wordWallObject, null);
+            locationAsWordWall.Description = (string)wordWallObject.GetType().GetProperty("Description").GetValue(wordWallObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(wordWall.Name, locationAsWordWall.Name);
+            Assert.Equal(wordWall.Id, locationAsWordWall.Id);
+            Assert.Equal(wordWall.Description, locationAsWordWall.Description);
+            Assert.Equal(wordWall.TypeOfLocation, locationAsWordWall.TypeOfLocation);
+            Assert.Equal(wordWall.GeographicalDescription, locationAsWordWall.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullForDescriptionAsAWordWall_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test WordWall",
+                Description = null,
+                TypeOfLocation = LocationType.WordWall,
+                GeographicalDescription = "Test Description"
+            };
+
+            var wordWall = new WordWall
+            {
+                Id = 0,
+                Name = "Test WordWall",
+                Description = null,
+                TypeOfLocation = LocationType.WordWall,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(wordWall);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var wordWallObject = new object();
+            var locationAsWordWall = new WordWall();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            wordWallObject = responseAsCreateAsActionResult.Value;
+
+            locationAsWordWall.Id = (int)wordWallObject.GetType().GetProperty("Id").GetValue(wordWallObject, null);
+            locationAsWordWall.Name = (string)wordWallObject.GetType().GetProperty("Name").GetValue(wordWallObject, null);
+            locationAsWordWall.TypeOfLocation = (LocationType)wordWallObject.GetType().GetProperty("TypeOfLocation").GetValue(wordWallObject, null);
+            locationAsWordWall.GeographicalDescription = (string)wordWallObject.GetType().GetProperty("GeographicalDescription").GetValue(wordWallObject, null);
+            locationAsWordWall.Description = (string)wordWallObject.GetType().GetProperty("Description").GetValue(wordWallObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(wordWall.Id, locationAsWordWall.Id);
+            Assert.Equal(wordWall.Name, locationAsWordWall.Name);
+            Assert.Equal(wordWall.Description, locationAsWordWall.Description);
+            Assert.Equal(wordWall.TypeOfLocation, locationAsWordWall.TypeOfLocation);
+            Assert.Equal(wordWall.GeographicalDescription, locationAsWordWall.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsAWordWall_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "      ",
+                Description = "Test",
+                TypeOfLocation = LocationType.WordWall,
+                GeographicalDescription = "Test Description"
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsAWordWall_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.WordWall,
                 GeographicalDescription = "        "
             };
 

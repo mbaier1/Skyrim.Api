@@ -157,6 +157,9 @@ namespace Skyrim.Api.Test.Repositories
                 case LocationType.Temple:
                     Assert.Equal(_context.Temples.FirstOrDefault().Name, result.Name);
                     break;
+                case LocationType.WordWall:
+                    Assert.Equal(_context.WordWalls.FirstOrDefault().Name, result.Name);
+                    break;
                 default:
                     Assert.True(false);
                     break;
@@ -343,6 +346,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Valid properties for a Temple",
                 TestMethodHelpers.CreateNewTemple()
+            };
+            yield return new object[]
+            {
+                "Valid properties for a WordWall",
+                TestMethodHelpers.CreateNewWordWall()
             };
         }
 
@@ -556,6 +564,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Invalid properties for Temple",
                 new Temple()
+            };
+            yield return new object[]
+            {
+                "Invalid properties for WordWall",
+                new WordWall()
             };
         }
 

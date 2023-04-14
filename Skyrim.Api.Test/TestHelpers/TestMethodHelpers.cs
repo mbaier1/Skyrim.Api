@@ -438,6 +438,18 @@ namespace Skyrim.Api.Test.TestHelpers
             };
         }
 
+        public static WordWall CreateNewWordWall()
+        {
+            return new WordWall
+            {
+                Id = 0,
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.WordWall,
+                GeographicalDescription = "Test"
+            };
+        }
+
         public static CreateLocationDto CreateNewCreateLocationDtoAsCity()
         {
             return new CreateLocationDto
@@ -831,6 +843,17 @@ namespace Skyrim.Api.Test.TestHelpers
                 Description = "",
                 GeographicalDescription = "Test",
                 TypeOfLocation = LocationType.Temple
+            };
+        }
+
+        public static CreateLocationDto CreateNewCreateLocationDtoAsWordWall()
+        {
+            return new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "",
+                GeographicalDescription = "Test",
+                TypeOfLocation = LocationType.WordWall
             };
         }
     }
