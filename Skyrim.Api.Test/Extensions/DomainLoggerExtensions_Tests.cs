@@ -447,6 +447,18 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.BodyOfWater
                 }
         };
+        yield return new object[]
+        {
+                "Fatal Error for InnOrTavern location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.InnOrTavern
+                }
+        };
     }
 
     [Theory]
@@ -905,6 +917,19 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.BodyOfWater
                 },
                 LocationType.BodyOfWater
+        };
+        yield return new object[]
+        {
+                "Fatal Error for InnOrTavern location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.InnOrTavern
+                },
+                LocationType.InnOrTavern
         };
     }
 }
