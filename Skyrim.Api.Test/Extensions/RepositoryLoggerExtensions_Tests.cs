@@ -460,6 +460,18 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.InnOrTavern
                 }
             };
+            yield return new object[]
+            {
+                "Fatal Error for Temple location",
+                new Exception(),
+                new Temple
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Temple
+                }
+            };
         }
 
         [Theory]
@@ -932,6 +944,19 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.InnOrTavern
                 },
                 LocationType.InnOrTavern
+            };
+            yield return new object[]
+            {
+                "Fatal Error for Temple location",
+                new Exception(),
+                new Temple
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Temple
+                },
+                LocationType.Temple
             };
         }
     }

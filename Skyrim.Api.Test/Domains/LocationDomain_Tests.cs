@@ -109,6 +109,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<BodyOfWater>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewBodyOfWater());
             else if (type.TypeOfLocation == LocationType.InnOrTavern)
                 _mockMapper.Setup(x => x.Map<InnOrTavern>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewInnOrTavern());
+            else if (type.TypeOfLocation == LocationType.Temple)
+                _mockMapper.Setup(x => x.Map<Temple>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewTemple());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
             var completedCreateTask = Task<Location>.FromResult(taskType);
@@ -862,6 +864,27 @@ namespace Skyrim.Api.Test.Domains
                     GeographicalDescription = "Test"
                 }
             };
+            yield return new object[]
+            {
+                "Valid properties for Temple Location",
+                TestMethodHelpers.CreateNewCreateLocationDtoAsTemple(),
+                new Temple
+                {
+                    Id = 0,
+                    Name = "Test",
+                    Description = "Test",
+                    TypeOfLocation = LocationType.Temple,
+                    GeographicalDescription = "Test"
+                },
+                new Temple
+                {
+                    Id = 0,
+                    Name = "Test",
+                    Description = "Test",
+                    TypeOfLocation = LocationType.Temple,
+                    GeographicalDescription = "Test"
+                }
+            };
         }
 
         [Theory]
@@ -940,6 +963,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<BodyOfWater>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewBodyOfWater());
             else if (location.TypeOfLocation == LocationType.InnOrTavern)
                 _mockMapper.Setup(x => x.Map<InnOrTavern>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewInnOrTavern());
+            else if (location.TypeOfLocation == LocationType.Temple)
+                _mockMapper.Setup(x => x.Map<Temple>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewTemple());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
             var completedCreateTask = Task<Location>.FromResult(taskType);
@@ -1020,6 +1045,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Verify(x => x.Map<BodyOfWater>(createLocationDto), Times.Once());
             else if (location.TypeOfLocation == LocationType.InnOrTavern)
                 _mockMapper.Verify(x => x.Map<InnOrTavern>(createLocationDto), Times.Once());
+            else if (location.TypeOfLocation == LocationType.Temple)
+                _mockMapper.Verify(x => x.Map<Temple>(createLocationDto), Times.Once());
             else
                 Assert.True(false);
         }
@@ -1214,6 +1241,11 @@ namespace Skyrim.Api.Test.Domains
                 "Invalid properties for InnOrTavern",
                 new CreateLocationDto { TypeOfLocation = LocationType.InnOrTavern }
             };
+            yield return new object[]
+            {
+                "Invalid properties for Temple",
+                new CreateLocationDto { TypeOfLocation = LocationType.Temple }
+            };
         }
 
         [Theory]
@@ -1291,6 +1323,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<BodyOfWater>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
             else if (location.TypeOfLocation == LocationType.InnOrTavern)
                 _mockMapper.Setup(x => x.Map<InnOrTavern>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
+            else if (location.TypeOfLocation == LocationType.Temple)
+                _mockMapper.Setup(x => x.Map<Temple>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
 
@@ -1513,6 +1547,12 @@ namespace Skyrim.Api.Test.Domains
                 TestMethodHelpers.CreateNewInnOrTavern(),
                 TestMethodHelpers.CreateNewCreateLocationDtoAsInnOrTavern()
            };
+            yield return new object[]
+           {
+                "Invalid properties for Temple",
+                TestMethodHelpers.CreateNewTemple(),
+                TestMethodHelpers.CreateNewCreateLocationDtoAsTemple()
+           };
         }
 
         [Theory]
@@ -1592,6 +1632,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<BodyOfWater>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewBodyOfWater());
             else if (type.TypeOfLocation == LocationType.InnOrTavern)
                 _mockMapper.Setup(x => x.Map<InnOrTavern>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewInnOrTavern());
+            else if (type.TypeOfLocation == LocationType.Temple)
+                _mockMapper.Setup(x => x.Map<Temple>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewTemple());
 
             var completedCreateTask = Task<Location>.FromResult(taskType);
             _mockLocationRepository.Setup(x => x.SaveLocation(It.IsAny<Location>()))
@@ -3076,6 +3118,48 @@ namespace Skyrim.Api.Test.Domains
                     TestMethodHelpers.CreateNewCreateLocationDtoAsInnOrTavern(),
                     TestMethodHelpers.CreateNewInnOrTavern(),
                     TestMethodHelpers.CreateNewInnOrTavern()
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null description so it returns a Temple with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = null,
+                        TypeOfLocation = LocationType.Temple,
+                        GeographicalDescription = "Test"
+                    },
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsTemple(),
+                    TestMethodHelpers.CreateNewTemple(),
+                    TestMethodHelpers.CreateNewTemple()
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has white spaces for description so it returns a Temple with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = "     ",
+                        TypeOfLocation = LocationType.Temple,
+                        GeographicalDescription = "Test"
+                    },
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsTemple(),
+                    TestMethodHelpers.CreateNewTemple(),
+                    TestMethodHelpers.CreateNewTemple()
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has empty description so it returns a Temple with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = "",
+                        TypeOfLocation = LocationType.Temple,
+                        GeographicalDescription = "Test"
+                    },
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsTemple(),
+                    TestMethodHelpers.CreateNewTemple(),
+                    TestMethodHelpers.CreateNewTemple()
             };
         }
 
@@ -5612,6 +5696,78 @@ namespace Skyrim.Api.Test.Domains
                         GeographicalDescription = " ",
                         Name = "Test",
                         TypeOfLocation = LocationType.InnOrTavern
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = null,
+                        TypeOfLocation = LocationType.Temple
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has an empty name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = "",
+                        TypeOfLocation = LocationType.Temple
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a white space name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = "   ",
+                        TypeOfLocation = LocationType.Temple
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = null,
+                        Name = "Test",
+                        TypeOfLocation = LocationType.Temple
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has an empty Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "",
+                        Name = "Test",
+                        TypeOfLocation = LocationType.Temple
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a white space Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = " ",
+                        Name = "Test",
+                        TypeOfLocation = LocationType.Temple
                     },
                     (CreateLocationDto)null
             };
