@@ -496,6 +496,18 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.Castle
                 }
             };
+            yield return new object[]
+            {
+                "Fatal Error for GuildHeadquarter location",
+                new Exception(),
+                new GuildHeadquarter
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.GuildHeadquarter
+                }
+            };
         }
 
         [Theory]
@@ -1007,6 +1019,19 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.Castle
                 },
                 LocationType.Castle
+            };
+            yield return new object[]
+            {
+                "Fatal Error for GuildHeadquarter location",
+                new Exception(),
+                new GuildHeadquarter
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.GuildHeadquarter
+                },
+                LocationType.GuildHeadquarter
             };
         }
     }

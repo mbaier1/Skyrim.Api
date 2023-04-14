@@ -8207,4 +8207,218 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
         }
     }
+
+    public class CreateLocation_AsGuildHeadquarter : LocationController_Tests
+    {
+        [Fact]
+        public async void WhenCreateLocationDtoHasRequiredValidPropertiesAsAGuildHeadquarter_ReturnsCreateAtActionWithGuildHeadquarterDetails()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test GuildHeadquarter",
+                TypeOfLocation = LocationType.GuildHeadquarter,
+                GeographicalDescription = "Test GuildHeadquarter"
+            };
+
+            var guildHeadquarter = new GuildHeadquarter
+            {
+                Id = 0,
+                Name = "Test GuildHeadquarter",
+                TypeOfLocation = LocationType.GuildHeadquarter,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(guildHeadquarter);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var guildHeadquarterObject = new object();
+            var locationAsGuildHeadquarter = new GuildHeadquarter();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            guildHeadquarterObject = responseAsCreateAsActionResult.Value;
+
+            locationAsGuildHeadquarter.Id = (int)guildHeadquarterObject.GetType().GetProperty("Id").GetValue(guildHeadquarterObject, null);
+            locationAsGuildHeadquarter.Name = (string)guildHeadquarterObject.GetType().GetProperty("Name").GetValue(guildHeadquarterObject, null);
+            locationAsGuildHeadquarter.TypeOfLocation = (LocationType)guildHeadquarterObject.GetType().GetProperty("TypeOfLocation").GetValue(guildHeadquarterObject, null);
+            locationAsGuildHeadquarter.GeographicalDescription = (string)guildHeadquarterObject.GetType().GetProperty("GeographicalDescription").GetValue(guildHeadquarterObject, null);
+            locationAsGuildHeadquarter.Description = (string)guildHeadquarterObject.GetType().GetProperty("Description").GetValue(guildHeadquarterObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(guildHeadquarter.Id, locationAsGuildHeadquarter.Id);
+            Assert.Equal(guildHeadquarter.Name, locationAsGuildHeadquarter.Name);
+            Assert.Equal(guildHeadquarter.Description, locationAsGuildHeadquarter.Description);
+            Assert.Equal(guildHeadquarter.TypeOfLocation, locationAsGuildHeadquarter.TypeOfLocation);
+            Assert.Equal(guildHeadquarter.GeographicalDescription, locationAsGuildHeadquarter.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasEmptySpacesForDescriptionAGuildHeadquarter_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test GuildHeadquarter",
+                Description = "    ",
+                TypeOfLocation = LocationType.GuildHeadquarter,
+                GeographicalDescription = "Test Description"
+            };
+
+            var guildHeadquarter = new GuildHeadquarter
+            {
+                Id = 0,
+                Name = "Test GuildHeadquarter",
+                Description = "",
+                TypeOfLocation = LocationType.GuildHeadquarter,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(guildHeadquarter);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var guildHeadquarterObject = new object();
+            var locationAsGuildHeadquarter = new GuildHeadquarter();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            guildHeadquarterObject = responseAsCreateAsActionResult.Value;
+
+            locationAsGuildHeadquarter.Id = (int)guildHeadquarterObject.GetType().GetProperty("Id").GetValue(guildHeadquarterObject, null);
+            locationAsGuildHeadquarter.Name = (string)guildHeadquarterObject.GetType().GetProperty("Name").GetValue(guildHeadquarterObject, null);
+            locationAsGuildHeadquarter.TypeOfLocation = (LocationType)guildHeadquarterObject.GetType().GetProperty("TypeOfLocation").GetValue(guildHeadquarterObject, null);
+            locationAsGuildHeadquarter.GeographicalDescription = (string)guildHeadquarterObject.GetType().GetProperty("GeographicalDescription").GetValue(guildHeadquarterObject, null);
+            locationAsGuildHeadquarter.Description = (string)guildHeadquarterObject.GetType().GetProperty("Description").GetValue(guildHeadquarterObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(guildHeadquarter.Name, locationAsGuildHeadquarter.Name);
+            Assert.Equal(guildHeadquarter.Id, locationAsGuildHeadquarter.Id);
+            Assert.Equal(guildHeadquarter.Description, locationAsGuildHeadquarter.Description);
+            Assert.Equal(guildHeadquarter.TypeOfLocation, locationAsGuildHeadquarter.TypeOfLocation);
+            Assert.Equal(guildHeadquarter.GeographicalDescription, locationAsGuildHeadquarter.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullForDescriptionAsAGuildHeadquarter_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test GuildHeadquarter",
+                Description = null,
+                TypeOfLocation = LocationType.GuildHeadquarter,
+                GeographicalDescription = "Test Description"
+            };
+
+            var guildHeadquarter = new GuildHeadquarter
+            {
+                Id = 0,
+                Name = "Test GuildHeadquarter",
+                Description = null,
+                TypeOfLocation = LocationType.GuildHeadquarter,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(guildHeadquarter);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var guildHeadquarterObject = new object();
+            var locationAsGuildHeadquarter = new GuildHeadquarter();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            guildHeadquarterObject = responseAsCreateAsActionResult.Value;
+
+            locationAsGuildHeadquarter.Id = (int)guildHeadquarterObject.GetType().GetProperty("Id").GetValue(guildHeadquarterObject, null);
+            locationAsGuildHeadquarter.Name = (string)guildHeadquarterObject.GetType().GetProperty("Name").GetValue(guildHeadquarterObject, null);
+            locationAsGuildHeadquarter.TypeOfLocation = (LocationType)guildHeadquarterObject.GetType().GetProperty("TypeOfLocation").GetValue(guildHeadquarterObject, null);
+            locationAsGuildHeadquarter.GeographicalDescription = (string)guildHeadquarterObject.GetType().GetProperty("GeographicalDescription").GetValue(guildHeadquarterObject, null);
+            locationAsGuildHeadquarter.Description = (string)guildHeadquarterObject.GetType().GetProperty("Description").GetValue(guildHeadquarterObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(guildHeadquarter.Id, locationAsGuildHeadquarter.Id);
+            Assert.Equal(guildHeadquarter.Name, locationAsGuildHeadquarter.Name);
+            Assert.Equal(guildHeadquarter.Description, locationAsGuildHeadquarter.Description);
+            Assert.Equal(guildHeadquarter.TypeOfLocation, locationAsGuildHeadquarter.TypeOfLocation);
+            Assert.Equal(guildHeadquarter.GeographicalDescription, locationAsGuildHeadquarter.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsAGuildHeadquarter_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "      ",
+                Description = "Test",
+                TypeOfLocation = LocationType.GuildHeadquarter,
+                GeographicalDescription = "Test Description"
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsAGuildHeadquarter_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.GuildHeadquarter,
+                GeographicalDescription = "        "
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+    }
 }
