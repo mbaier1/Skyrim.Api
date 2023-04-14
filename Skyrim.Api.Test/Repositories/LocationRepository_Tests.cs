@@ -154,6 +154,9 @@ namespace Skyrim.Api.Test.Repositories
                 case LocationType.InnOrTavern:
                     Assert.Equal(_context.InnsOrTaverns.FirstOrDefault().Name, result.Name);
                     break;
+                case LocationType.Temple:
+                    Assert.Equal(_context.Temples.FirstOrDefault().Name, result.Name);
+                    break;
                 default:
                     Assert.True(false);
                     break;
@@ -335,6 +338,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Valid properties for a InnOrTavern",
                 TestMethodHelpers.CreateNewInnOrTavern()
+            };
+            yield return new object[]
+            {
+                "Valid properties for a Temple",
+                TestMethodHelpers.CreateNewTemple()
             };
         }
 
@@ -543,6 +551,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Invalid properties for InnOrTavern",
                 new InnOrTavern()
+            };
+            yield return new object[]
+            {
+                "Invalid properties for Temple",
+                new Temple()
             };
         }
 

@@ -459,6 +459,18 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.InnOrTavern
                 }
         };
+        yield return new object[]
+        {
+                "Fatal Error for Temple location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Temple
+                }
+        };
     }
 
     [Theory]
@@ -930,6 +942,19 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.InnOrTavern
                 },
                 LocationType.InnOrTavern
+        };
+        yield return new object[]
+        {
+                "Fatal Error for Temple location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Temple
+                },
+                LocationType.Temple
         };
     }
 }
