@@ -6709,4 +6709,218 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
         }
     }
+
+    public class CreateLocation_AsWheatMill : LocationController_Tests
+    {
+        [Fact]
+        public async void WhenCreateLocationDtoHasRequiredValidPropertiesAsAWheatMill_ReturnsCreateAtActionWithWheatMillDetails()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test WheatMill",
+                TypeOfLocation = LocationType.WheatMill,
+                GeographicalDescription = "Test WheatMill"
+            };
+
+            var wheatMill = new WheatMill
+            {
+                Id = 0,
+                Name = "Test WheatMill",
+                TypeOfLocation = LocationType.WheatMill,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(wheatMill);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var wheatMillObject = new object();
+            var locationAsWheatMill = new WheatMill();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            wheatMillObject = responseAsCreateAsActionResult.Value;
+
+            locationAsWheatMill.Id = (int)wheatMillObject.GetType().GetProperty("Id").GetValue(wheatMillObject, null);
+            locationAsWheatMill.Name = (string)wheatMillObject.GetType().GetProperty("Name").GetValue(wheatMillObject, null);
+            locationAsWheatMill.TypeOfLocation = (LocationType)wheatMillObject.GetType().GetProperty("TypeOfLocation").GetValue(wheatMillObject, null);
+            locationAsWheatMill.GeographicalDescription = (string)wheatMillObject.GetType().GetProperty("GeographicalDescription").GetValue(wheatMillObject, null);
+            locationAsWheatMill.Description = (string)wheatMillObject.GetType().GetProperty("Description").GetValue(wheatMillObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(wheatMill.Id, locationAsWheatMill.Id);
+            Assert.Equal(wheatMill.Name, locationAsWheatMill.Name);
+            Assert.Equal(wheatMill.Description, locationAsWheatMill.Description);
+            Assert.Equal(wheatMill.TypeOfLocation, locationAsWheatMill.TypeOfLocation);
+            Assert.Equal(wheatMill.GeographicalDescription, locationAsWheatMill.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasEmptySpacesForDescriptionAWheatMill_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test WheatMill",
+                Description = "    ",
+                TypeOfLocation = LocationType.WheatMill,
+                GeographicalDescription = "Test Description"
+            };
+
+            var wheatMill = new WheatMill
+            {
+                Id = 0,
+                Name = "Test WheatMill",
+                Description = "",
+                TypeOfLocation = LocationType.WheatMill,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(wheatMill);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var wheatMillObject = new object();
+            var locationAsWheatMill = new WheatMill();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            wheatMillObject = responseAsCreateAsActionResult.Value;
+
+            locationAsWheatMill.Id = (int)wheatMillObject.GetType().GetProperty("Id").GetValue(wheatMillObject, null);
+            locationAsWheatMill.Name = (string)wheatMillObject.GetType().GetProperty("Name").GetValue(wheatMillObject, null);
+            locationAsWheatMill.TypeOfLocation = (LocationType)wheatMillObject.GetType().GetProperty("TypeOfLocation").GetValue(wheatMillObject, null);
+            locationAsWheatMill.GeographicalDescription = (string)wheatMillObject.GetType().GetProperty("GeographicalDescription").GetValue(wheatMillObject, null);
+            locationAsWheatMill.Description = (string)wheatMillObject.GetType().GetProperty("Description").GetValue(wheatMillObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(wheatMill.Name, locationAsWheatMill.Name);
+            Assert.Equal(wheatMill.Id, locationAsWheatMill.Id);
+            Assert.Equal(wheatMill.Description, locationAsWheatMill.Description);
+            Assert.Equal(wheatMill.TypeOfLocation, locationAsWheatMill.TypeOfLocation);
+            Assert.Equal(wheatMill.GeographicalDescription, locationAsWheatMill.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullForDescriptionAsAWheatMill_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test WheatMill",
+                Description = null,
+                TypeOfLocation = LocationType.WheatMill,
+                GeographicalDescription = "Test Description"
+            };
+
+            var wheatMill = new WheatMill
+            {
+                Id = 0,
+                Name = "Test WheatMill",
+                Description = null,
+                TypeOfLocation = LocationType.WheatMill,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(wheatMill);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var wheatMillObject = new object();
+            var locationAsWheatMill = new WheatMill();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            wheatMillObject = responseAsCreateAsActionResult.Value;
+
+            locationAsWheatMill.Id = (int)wheatMillObject.GetType().GetProperty("Id").GetValue(wheatMillObject, null);
+            locationAsWheatMill.Name = (string)wheatMillObject.GetType().GetProperty("Name").GetValue(wheatMillObject, null);
+            locationAsWheatMill.TypeOfLocation = (LocationType)wheatMillObject.GetType().GetProperty("TypeOfLocation").GetValue(wheatMillObject, null);
+            locationAsWheatMill.GeographicalDescription = (string)wheatMillObject.GetType().GetProperty("GeographicalDescription").GetValue(wheatMillObject, null);
+            locationAsWheatMill.Description = (string)wheatMillObject.GetType().GetProperty("Description").GetValue(wheatMillObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(wheatMill.Id, locationAsWheatMill.Id);
+            Assert.Equal(wheatMill.Name, locationAsWheatMill.Name);
+            Assert.Equal(wheatMill.Description, locationAsWheatMill.Description);
+            Assert.Equal(wheatMill.TypeOfLocation, locationAsWheatMill.TypeOfLocation);
+            Assert.Equal(wheatMill.GeographicalDescription, locationAsWheatMill.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsAWheatMill_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "      ",
+                Description = "Test",
+                TypeOfLocation = LocationType.WheatMill,
+                GeographicalDescription = "Test Description"
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsAWheatMill_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.WheatMill,
+                GeographicalDescription = "        "
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+    }
 }

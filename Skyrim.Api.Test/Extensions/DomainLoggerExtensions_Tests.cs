@@ -411,6 +411,18 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.Watchtower
                 }
         };
+        yield return new object[]
+        {
+                "Fatal Error for WheatMill location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.WheatMill
+                }
+        };
     }
 
     [Theory]
@@ -830,6 +842,19 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.Watchtower
                 },
                 LocationType.Watchtower
+        };
+        yield return new object[]
+        {
+                "Fatal Error for WheatMill location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.WheatMill
+                },
+                LocationType.WheatMill
         };
     }
 }

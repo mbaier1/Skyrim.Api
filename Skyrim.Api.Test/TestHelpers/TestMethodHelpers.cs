@@ -378,6 +378,18 @@ namespace Skyrim.Api.Test.TestHelpers
             };
         }
 
+        public static WheatMill CreateNewWheatMill()
+        {
+            return new WheatMill
+            {
+                Id = 0,
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.WheatMill,
+                GeographicalDescription = "Test"
+            };
+        }
+
         public static CreateLocationDto CreateNewCreateLocationDtoAsCity()
         {
             return new CreateLocationDto
@@ -716,6 +728,17 @@ namespace Skyrim.Api.Test.TestHelpers
                 Description = "",
                 GeographicalDescription = "Test",
                 TypeOfLocation = LocationType.Watchtower
+            };
+        }
+
+        public static CreateLocationDto CreateNewCreateLocationDtoAsWheatMill()
+        {
+            return new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "",
+                GeographicalDescription = "Test",
+                TypeOfLocation = LocationType.WheatMill
             };
         }
     }
