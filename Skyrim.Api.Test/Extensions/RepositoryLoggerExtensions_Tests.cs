@@ -472,6 +472,18 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.Temple
                 }
             };
+            yield return new object[]
+            {
+                "Fatal Error for WordWall location",
+                new Exception(),
+                new WordWall
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.WordWall
+                }
+            };
         }
 
         [Theory]
@@ -957,6 +969,19 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.Temple
                 },
                 LocationType.Temple
+            };
+            yield return new object[]
+            {
+                "Fatal Error for WordWall location",
+                new Exception(),
+                new WordWall
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.WordWall
+                },
+                LocationType.WordWall
             };
         }
     }

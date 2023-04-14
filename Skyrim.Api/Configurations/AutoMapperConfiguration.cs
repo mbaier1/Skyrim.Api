@@ -44,6 +44,7 @@ namespace Skyrim.Api.Configurations
             CreateMap<BodyOfWater, CreateLocationDto>().ReverseMap();
             CreateMap<InnOrTavern, CreateLocationDto>().ReverseMap();
             CreateMap<Temple, CreateLocationDto>().ReverseMap();
+            CreateMap<WordWall, CreateLocationDto>().ReverseMap();
         }
     }
 }

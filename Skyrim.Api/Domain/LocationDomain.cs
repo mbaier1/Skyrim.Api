@@ -117,6 +117,8 @@ namespace Skyrim.Api.Domain
                         return _mapper.Map<InnOrTavern>(createLocationDto);
                     case LocationType.Temple:
                         return _mapper.Map<Temple>(createLocationDto);
+                    case LocationType.WordWall:
+                        return _mapper.Map<WordWall>(createLocationDto);
                     default:
                         return null;
                 }
