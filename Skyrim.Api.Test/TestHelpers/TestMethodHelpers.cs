@@ -462,6 +462,18 @@ namespace Skyrim.Api.Test.TestHelpers
             };
         }
 
+        public static GuildHeadquarter CreateNewGuildHeadquarter()
+        {
+            return new GuildHeadquarter
+            {
+                Id = 0,
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.GuildHeadquarter,
+                GeographicalDescription = "Test"
+            };
+        }
+
         public static CreateLocationDto CreateNewCreateLocationDtoAsCity()
         {
             return new CreateLocationDto
@@ -877,6 +889,17 @@ namespace Skyrim.Api.Test.TestHelpers
                 Description = "",
                 GeographicalDescription = "Test",
                 TypeOfLocation = LocationType.Castle
+            };
+        }
+
+        public static CreateLocationDto CreateNewCreateLocationDtoAsGuildHeadquarter()
+        {
+            return new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "",
+                GeographicalDescription = "Test",
+                TypeOfLocation = LocationType.GuildHeadquarter
             };
         }
     }
