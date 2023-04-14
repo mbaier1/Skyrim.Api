@@ -424,6 +424,18 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.WheatMill
                 }
             };
+            yield return new object[]
+            {
+                "Fatal Error for LumberMill location",
+                new Exception(),
+                new LumberMill
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.LumberMill
+                }
+            };
         }
 
         [Theory]
@@ -857,6 +869,19 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.WheatMill
                 },
                 LocationType.WheatMill
+            };
+            yield return new object[]
+            {
+                "Fatal Error for LumberMill location",
+                new Exception(),
+                new LumberMill
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.LumberMill
+                },
+                LocationType.LumberMill
             };
         }
     }

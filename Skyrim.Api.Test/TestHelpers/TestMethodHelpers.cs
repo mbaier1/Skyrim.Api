@@ -390,6 +390,18 @@ namespace Skyrim.Api.Test.TestHelpers
             };
         }
 
+        public static LumberMill CreateNewLumberMill()
+        {
+            return new LumberMill
+            {
+                Id = 0,
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.LumberMill,
+                GeographicalDescription = "Test"
+            };
+        }
+
         public static CreateLocationDto CreateNewCreateLocationDtoAsCity()
         {
             return new CreateLocationDto
@@ -739,6 +751,17 @@ namespace Skyrim.Api.Test.TestHelpers
                 Description = "",
                 GeographicalDescription = "Test",
                 TypeOfLocation = LocationType.WheatMill
+            };
+        }
+
+        public static CreateLocationDto CreateNewCreateLocationDtoAsLumberMill()
+        {
+            return new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "",
+                GeographicalDescription = "Test",
+                TypeOfLocation = LocationType.LumberMill
             };
         }
     }

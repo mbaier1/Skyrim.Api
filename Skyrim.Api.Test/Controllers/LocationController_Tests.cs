@@ -6923,4 +6923,218 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
         }
     }
+
+    public class CreateLocation_AsLumberMill : LocationController_Tests
+    {
+        [Fact]
+        public async void WhenCreateLocationDtoHasRequiredValidPropertiesAsALumberMill_ReturnsCreateAtActionWithLumberMillDetails()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test LumberMill",
+                TypeOfLocation = LocationType.LumberMill,
+                GeographicalDescription = "Test LumberMill"
+            };
+
+            var lumberMill = new LumberMill
+            {
+                Id = 0,
+                Name = "Test LumberMill",
+                TypeOfLocation = LocationType.LumberMill,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(lumberMill);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var lumberMillObject = new object();
+            var locationAsLumberMill = new LumberMill();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            lumberMillObject = responseAsCreateAsActionResult.Value;
+
+            locationAsLumberMill.Id = (int)lumberMillObject.GetType().GetProperty("Id").GetValue(lumberMillObject, null);
+            locationAsLumberMill.Name = (string)lumberMillObject.GetType().GetProperty("Name").GetValue(lumberMillObject, null);
+            locationAsLumberMill.TypeOfLocation = (LocationType)lumberMillObject.GetType().GetProperty("TypeOfLocation").GetValue(lumberMillObject, null);
+            locationAsLumberMill.GeographicalDescription = (string)lumberMillObject.GetType().GetProperty("GeographicalDescription").GetValue(lumberMillObject, null);
+            locationAsLumberMill.Description = (string)lumberMillObject.GetType().GetProperty("Description").GetValue(lumberMillObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(lumberMill.Id, locationAsLumberMill.Id);
+            Assert.Equal(lumberMill.Name, locationAsLumberMill.Name);
+            Assert.Equal(lumberMill.Description, locationAsLumberMill.Description);
+            Assert.Equal(lumberMill.TypeOfLocation, locationAsLumberMill.TypeOfLocation);
+            Assert.Equal(lumberMill.GeographicalDescription, locationAsLumberMill.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasEmptySpacesForDescriptionALumberMill_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test LumberMill",
+                Description = "    ",
+                TypeOfLocation = LocationType.LumberMill,
+                GeographicalDescription = "Test Description"
+            };
+
+            var lumberMill = new LumberMill
+            {
+                Id = 0,
+                Name = "Test LumberMill",
+                Description = "",
+                TypeOfLocation = LocationType.LumberMill,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(lumberMill);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var lumberMillObject = new object();
+            var locationAsLumberMill = new LumberMill();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            lumberMillObject = responseAsCreateAsActionResult.Value;
+
+            locationAsLumberMill.Id = (int)lumberMillObject.GetType().GetProperty("Id").GetValue(lumberMillObject, null);
+            locationAsLumberMill.Name = (string)lumberMillObject.GetType().GetProperty("Name").GetValue(lumberMillObject, null);
+            locationAsLumberMill.TypeOfLocation = (LocationType)lumberMillObject.GetType().GetProperty("TypeOfLocation").GetValue(lumberMillObject, null);
+            locationAsLumberMill.GeographicalDescription = (string)lumberMillObject.GetType().GetProperty("GeographicalDescription").GetValue(lumberMillObject, null);
+            locationAsLumberMill.Description = (string)lumberMillObject.GetType().GetProperty("Description").GetValue(lumberMillObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(lumberMill.Name, locationAsLumberMill.Name);
+            Assert.Equal(lumberMill.Id, locationAsLumberMill.Id);
+            Assert.Equal(lumberMill.Description, locationAsLumberMill.Description);
+            Assert.Equal(lumberMill.TypeOfLocation, locationAsLumberMill.TypeOfLocation);
+            Assert.Equal(lumberMill.GeographicalDescription, locationAsLumberMill.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullForDescriptionAsALumberMill_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test LumberMill",
+                Description = null,
+                TypeOfLocation = LocationType.LumberMill,
+                GeographicalDescription = "Test Description"
+            };
+
+            var lumberMill = new LumberMill
+            {
+                Id = 0,
+                Name = "Test LumberMill",
+                Description = null,
+                TypeOfLocation = LocationType.LumberMill,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(lumberMill);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var lumberMillObject = new object();
+            var locationAsLumberMill = new LumberMill();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            lumberMillObject = responseAsCreateAsActionResult.Value;
+
+            locationAsLumberMill.Id = (int)lumberMillObject.GetType().GetProperty("Id").GetValue(lumberMillObject, null);
+            locationAsLumberMill.Name = (string)lumberMillObject.GetType().GetProperty("Name").GetValue(lumberMillObject, null);
+            locationAsLumberMill.TypeOfLocation = (LocationType)lumberMillObject.GetType().GetProperty("TypeOfLocation").GetValue(lumberMillObject, null);
+            locationAsLumberMill.GeographicalDescription = (string)lumberMillObject.GetType().GetProperty("GeographicalDescription").GetValue(lumberMillObject, null);
+            locationAsLumberMill.Description = (string)lumberMillObject.GetType().GetProperty("Description").GetValue(lumberMillObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(lumberMill.Id, locationAsLumberMill.Id);
+            Assert.Equal(lumberMill.Name, locationAsLumberMill.Name);
+            Assert.Equal(lumberMill.Description, locationAsLumberMill.Description);
+            Assert.Equal(lumberMill.TypeOfLocation, locationAsLumberMill.TypeOfLocation);
+            Assert.Equal(lumberMill.GeographicalDescription, locationAsLumberMill.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsALumberMill_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "      ",
+                Description = "Test",
+                TypeOfLocation = LocationType.LumberMill,
+                GeographicalDescription = "Test Description"
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsALumberMill_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.LumberMill,
+                GeographicalDescription = "        "
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+    }
 }

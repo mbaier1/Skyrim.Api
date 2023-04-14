@@ -145,6 +145,9 @@ namespace Skyrim.Api.Test.Repositories
                 case LocationType.WheatMill:
                     Assert.Equal(_context.WheatMills.FirstOrDefault().Name, result.Name);
                     break;
+                case LocationType.LumberMill:
+                    Assert.Equal(_context.LumberMills.FirstOrDefault().Name, result.Name);
+                    break;
                 default:
                     Assert.True(false);
                     break;
@@ -311,6 +314,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Valid properties for a WheatMill",
                 TestMethodHelpers.CreateNewWheatMill()
+            };
+            yield return new object[]
+            {
+                "Valid properties for a LumberMill",
+                TestMethodHelpers.CreateNewLumberMill()
             };
         }
 
@@ -504,6 +512,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Invalid properties for WheatMill",
                 new WheatMill()
+            };
+            yield return new object[]
+            {
+                "Invalid properties for LumberMill",
+                new LumberMill()
             };
         }
 
