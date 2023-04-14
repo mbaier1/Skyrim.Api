@@ -363,6 +363,18 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.Shipwreck
                 }
         };
+        yield return new object[]
+        {
+                "Fatal Error for Stable location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Stable
+                }
+        };
     }
 
     [Theory]
@@ -730,6 +742,19 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.Shipwreck
                 },
                 LocationType.Shipwreck
+        };
+        yield return new object[]
+        {
+                "Fatal Error for Stable location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Stable
+                },
+                LocationType.Stable
         };
     }
 }

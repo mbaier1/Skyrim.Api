@@ -99,6 +99,8 @@ namespace Skyrim.Api.Domain
                         return _mapper.Map<Ship>(createLocationDto);
                     case LocationType.Shipwreck:
                         return _mapper.Map<Shipwreck>(createLocationDto);
+                    case LocationType.Stable:
+                        return _mapper.Map<Stable>(createLocationDto);
                     default:
                         return null;
                 }

@@ -93,6 +93,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<Ship>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewShip());
             else if (type.TypeOfLocation == LocationType.Shipwreck)
                 _mockMapper.Setup(x => x.Map<Shipwreck>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewShipwreck());
+            else if (type.TypeOfLocation == LocationType.Stable)
+                _mockMapper.Setup(x => x.Map<Stable>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewStable());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
             var completedCreateTask = Task<Location>.FromResult(taskType);
@@ -678,6 +680,27 @@ namespace Skyrim.Api.Test.Domains
                     GeographicalDescription = "Test"
                 }
             };
+            yield return new object[]
+            {
+                "Valid properties for Stable Location",
+                TestMethodHelpers.CreateNewCreateLocationDtoAsStable(),
+                new Stable
+                {
+                    Id = 0,
+                    Name = "Test",
+                    Description = "Test",
+                    TypeOfLocation = LocationType.Stable,
+                    GeographicalDescription = "Test"
+                },
+                new Stable
+                {
+                    Id = 0,
+                    Name = "Test",
+                    Description = "Test",
+                    TypeOfLocation = LocationType.Stable,
+                    GeographicalDescription = "Test"
+                }
+            };
         }
 
         [Theory]
@@ -740,6 +763,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<Ship>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewShip());
             else if (location.TypeOfLocation == LocationType.Shipwreck)
                 _mockMapper.Setup(x => x.Map<Shipwreck>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewShipwreck());
+            else if (location.TypeOfLocation == LocationType.Stable)
+                _mockMapper.Setup(x => x.Map<Stable>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewStable());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
             var completedCreateTask = Task<Location>.FromResult(taskType);
@@ -804,6 +829,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Verify(x => x.Map<Ship>(createLocationDto), Times.Once());
             else if (location.TypeOfLocation == LocationType.Shipwreck)
                 _mockMapper.Verify(x => x.Map<Shipwreck>(createLocationDto), Times.Once());
+            else if (location.TypeOfLocation == LocationType.Stable)
+                _mockMapper.Verify(x => x.Map<Stable>(createLocationDto), Times.Once());
             else
                 Assert.True(false);
         }
@@ -958,6 +985,11 @@ namespace Skyrim.Api.Test.Domains
                 "Invalid properties for Shipwreck",
                 new CreateLocationDto { TypeOfLocation = LocationType.Shipwreck }
             };
+            yield return new object[]
+            {
+                "Invalid properties for Stable",
+                new CreateLocationDto { TypeOfLocation = LocationType.Stable }
+            };
         }
 
         [Theory]
@@ -1019,6 +1051,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<Ship>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
             else if (location.TypeOfLocation == LocationType.Shipwreck)
                 _mockMapper.Setup(x => x.Map<Shipwreck>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
+            else if (location.TypeOfLocation == LocationType.Stable)
+                _mockMapper.Setup(x => x.Map<Stable>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
 
@@ -1193,6 +1227,12 @@ namespace Skyrim.Api.Test.Domains
                 TestMethodHelpers.CreateNewShipwreck(),
                 TestMethodHelpers.CreateNewCreateLocationDtoAsShipwreck()
            };
+            yield return new object[]
+           {
+                "Invalid properties for Stable",
+                TestMethodHelpers.CreateNewStable(),
+                TestMethodHelpers.CreateNewCreateLocationDtoAsStable()
+           };
         }
 
         [Theory]
@@ -1256,6 +1296,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<Ship>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewShip());
             else if (type.TypeOfLocation == LocationType.Shipwreck)
                 _mockMapper.Setup(x => x.Map<Shipwreck>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewShipwreck());
+            else if (type.TypeOfLocation == LocationType.Stable)
+                _mockMapper.Setup(x => x.Map<Stable>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewStable());
 
             var completedCreateTask = Task<Location>.FromResult(taskType);
             _mockLocationRepository.Setup(x => x.SaveLocation(It.IsAny<Location>()))
@@ -2404,6 +2446,48 @@ namespace Skyrim.Api.Test.Domains
                     TestMethodHelpers.CreateNewCreateLocationDtoAsShipwreck(),
                     TestMethodHelpers.CreateNewShipwreck(),
                     TestMethodHelpers.CreateNewShipwreck()
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null description so it returns a Stable with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = null,
+                        TypeOfLocation = LocationType.Stable,
+                        GeographicalDescription = "Test"
+                    },
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsStable(),
+                    TestMethodHelpers.CreateNewStable(),
+                    TestMethodHelpers.CreateNewStable()
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has white spaces for description so it returns a Stable with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = "     ",
+                        TypeOfLocation = LocationType.Stable,
+                        GeographicalDescription = "Test"
+                    },
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsStable(),
+                    TestMethodHelpers.CreateNewStable(),
+                    TestMethodHelpers.CreateNewStable()
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has empty description so it returns a Stable with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = "",
+                        TypeOfLocation = LocationType.Stable,
+                        GeographicalDescription = "Test"
+                    },
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsStable(),
+                    TestMethodHelpers.CreateNewStable(),
+                    TestMethodHelpers.CreateNewStable()
             };
         }
 
@@ -4364,6 +4448,78 @@ namespace Skyrim.Api.Test.Domains
                         GeographicalDescription = " ",
                         Name = "Test",
                         TypeOfLocation = LocationType.Shipwreck
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = null,
+                        TypeOfLocation = LocationType.Stable
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has an empty name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = "",
+                        TypeOfLocation = LocationType.Stable
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a white space name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = "   ",
+                        TypeOfLocation = LocationType.Stable
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = null,
+                        Name = "Test",
+                        TypeOfLocation = LocationType.Stable
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has an empty Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "",
+                        Name = "Test",
+                        TypeOfLocation = LocationType.Stable
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a white space Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = " ",
+                        Name = "Test",
+                        TypeOfLocation = LocationType.Stable
                     },
                     (CreateLocationDto)null
             };

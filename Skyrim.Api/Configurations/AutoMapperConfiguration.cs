@@ -35,6 +35,7 @@ namespace Skyrim.Api.Configurations
             CreateMap<Shack, CreateLocationDto>().ReverseMap();
             CreateMap<Ship, CreateLocationDto>().ReverseMap();
             CreateMap<Shipwreck, CreateLocationDto>().ReverseMap();
+            CreateMap<Stable, CreateLocationDto>().ReverseMap();
         }
     }
 }
