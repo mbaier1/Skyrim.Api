@@ -133,6 +133,9 @@ namespace Skyrim.Api.Test.Repositories
                 case LocationType.Stable:
                     Assert.Equal(_context.Stables.FirstOrDefault().Name, result.Name);
                     break;
+                case LocationType.StormcloakCamp:
+                    Assert.Equal(_context.StormcloakCamps.FirstOrDefault().Name, result.Name);
+                    break;
                 default:
                     Assert.True(false);
                     break;
@@ -279,6 +282,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Valid properties for a Stable",
                 TestMethodHelpers.CreateNewStable()
+            };
+            yield return new object[]
+            {
+                "Valid properties for a StormcloakCamp",
+                TestMethodHelpers.CreateNewStormcloakCamp()
             };
         }
 
@@ -452,6 +460,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Invalid properties for Stable",
                 new Stable()
+            };
+            yield return new object[]
+            {
+                "Invalid properties for StormcloakCamp",
+                new StormcloakCamp()
             };
         }
 

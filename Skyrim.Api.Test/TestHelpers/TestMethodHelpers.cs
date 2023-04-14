@@ -342,6 +342,18 @@ namespace Skyrim.Api.Test.TestHelpers
             };
         }
 
+        public static StormcloakCamp CreateNewStormcloakCamp()
+        {
+            return new StormcloakCamp
+            {
+                Id = 0,
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.StormcloakCamp,
+                GeographicalDescription = "Test"
+            };
+        }
+
         public static CreateLocationDto CreateNewCreateLocationDtoAsCity()
         {
             return new CreateLocationDto
@@ -647,6 +659,17 @@ namespace Skyrim.Api.Test.TestHelpers
                 Description = "",
                 GeographicalDescription = "Test",
                 TypeOfLocation = LocationType.Stable
+            };
+        }
+
+        public static CreateLocationDto CreateNewCreateLocationDtoAsStormcloakCamp()
+        {
+            return new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "",
+                GeographicalDescription = "Test",
+                TypeOfLocation = LocationType.StormcloakCamp
             };
         }
     }

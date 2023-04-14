@@ -30,7 +30,7 @@
         Ship = 26,
         Shipwreck = 27,
         Stable = 28,
-        StormcloackCamp = 29,
+        StormcloakCamp = 29,
         Tomb = 30,
         Watchtower = 31,
         WheatMill = 32,
