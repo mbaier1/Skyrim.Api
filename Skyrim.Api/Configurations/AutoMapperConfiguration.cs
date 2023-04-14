@@ -42,6 +42,7 @@ namespace Skyrim.Api.Configurations
             CreateMap<WheatMill, CreateLocationDto>().ReverseMap();
             CreateMap<LumberMill, CreateLocationDto>().ReverseMap();
             CreateMap<BodyOfWater, CreateLocationDto>().ReverseMap();
+            CreateMap<InnOrTavern, CreateLocationDto>().ReverseMap();
         }
     }
 }

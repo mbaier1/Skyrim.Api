@@ -448,6 +448,18 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.BodyOfWater
                 }
             };
+            yield return new object[]
+            {
+                "Fatal Error for InnOrTavern location",
+                new Exception(),
+                new InnOrTavern
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.InnOrTavern
+                }
+            };
         }
 
         [Theory]
@@ -907,6 +919,19 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.BodyOfWater
                 },
                 LocationType.BodyOfWater
+            };
+            yield return new object[]
+            {
+                "Fatal Error for InnOrTavern location",
+                new Exception(),
+                new InnOrTavern
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.InnOrTavern
+                },
+                LocationType.InnOrTavern
             };
         }
     }
