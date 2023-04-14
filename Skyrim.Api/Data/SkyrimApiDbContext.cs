@@ -51,6 +51,7 @@ namespace Skyrim.Api.Data
         public DbSet<Shipwreck> Shipwrecks { get; set; }
         public DbSet<Stable> Stables { get; set; }
         public DbSet<StormcloakCamp> StormcloakCamps { get; set; }
+        public DbSet<Tomb> Tombs { get; set; }
 
         public DbSet<Guard> Guards { get; set; }
         public DbSet<PhyscialFightingShop> PhyscialFightingShops { get; set; }
