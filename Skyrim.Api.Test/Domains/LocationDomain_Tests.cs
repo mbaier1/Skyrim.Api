@@ -105,6 +105,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<WheatMill>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewWheatMill());
             else if (type.TypeOfLocation == LocationType.LumberMill)
                 _mockMapper.Setup(x => x.Map<LumberMill>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewLumberMill());
+            else if (type.TypeOfLocation == LocationType.BodyOfWater)
+                _mockMapper.Setup(x => x.Map<BodyOfWater>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewBodyOfWater());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
             var completedCreateTask = Task<Location>.FromResult(taskType);
@@ -816,6 +818,27 @@ namespace Skyrim.Api.Test.Domains
                     GeographicalDescription = "Test"
                 }
             };
+            yield return new object[]
+            {
+                "Valid properties for BodyOfWater Location",
+                TestMethodHelpers.CreateNewCreateLocationDtoAsBodyOfWater(),
+                new BodyOfWater
+                {
+                    Id = 0,
+                    Name = "Test",
+                    Description = "Test",
+                    TypeOfLocation = LocationType.BodyOfWater,
+                    GeographicalDescription = "Test"
+                },
+                new BodyOfWater
+                {
+                    Id = 0,
+                    Name = "Test",
+                    Description = "Test",
+                    TypeOfLocation = LocationType.BodyOfWater,
+                    GeographicalDescription = "Test"
+                }
+            };
         }
 
         [Theory]
@@ -890,6 +913,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<WheatMill>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewWheatMill());
             else if (location.TypeOfLocation == LocationType.LumberMill)
                 _mockMapper.Setup(x => x.Map<LumberMill>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewLumberMill());
+            else if (location.TypeOfLocation == LocationType.BodyOfWater)
+                _mockMapper.Setup(x => x.Map<BodyOfWater>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewBodyOfWater());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
             var completedCreateTask = Task<Location>.FromResult(taskType);
@@ -966,6 +991,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Verify(x => x.Map<WheatMill>(createLocationDto), Times.Once());
             else if (location.TypeOfLocation == LocationType.LumberMill)
                 _mockMapper.Verify(x => x.Map<LumberMill>(createLocationDto), Times.Once());
+            else if (location.TypeOfLocation == LocationType.BodyOfWater)
+                _mockMapper.Verify(x => x.Map<BodyOfWater>(createLocationDto), Times.Once());
             else
                 Assert.True(false);
         }
@@ -1150,6 +1177,11 @@ namespace Skyrim.Api.Test.Domains
                 "Invalid properties for LumberMill",
                 new CreateLocationDto { TypeOfLocation = LocationType.LumberMill }
             };
+            yield return new object[]
+            {
+                "Invalid properties for BodyOfWater",
+                new CreateLocationDto { TypeOfLocation = LocationType.BodyOfWater }
+            };
         }
 
         [Theory]
@@ -1223,6 +1255,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<WheatMill>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
             else if (location.TypeOfLocation == LocationType.LumberMill)
                 _mockMapper.Setup(x => x.Map<LumberMill>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
+            else if (location.TypeOfLocation == LocationType.BodyOfWater)
+                _mockMapper.Setup(x => x.Map<BodyOfWater>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
 
@@ -1433,6 +1467,12 @@ namespace Skyrim.Api.Test.Domains
                 TestMethodHelpers.CreateNewLumberMill(),
                 TestMethodHelpers.CreateNewCreateLocationDtoAsLumberMill()
            };
+            yield return new object[]
+           {
+                "Invalid properties for BodyOfWater",
+                TestMethodHelpers.CreateNewBodyOfWater(),
+                TestMethodHelpers.CreateNewCreateLocationDtoAsBodyOfWater()
+           };
         }
 
         [Theory]
@@ -1508,6 +1548,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<WheatMill>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewWheatMill());
             else if (type.TypeOfLocation == LocationType.LumberMill)
                 _mockMapper.Setup(x => x.Map<LumberMill>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewLumberMill());
+            else if (type.TypeOfLocation == LocationType.BodyOfWater)
+                _mockMapper.Setup(x => x.Map<BodyOfWater>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewBodyOfWater());
 
             var completedCreateTask = Task<Location>.FromResult(taskType);
             _mockLocationRepository.Setup(x => x.SaveLocation(It.IsAny<Location>()))
@@ -2908,6 +2950,48 @@ namespace Skyrim.Api.Test.Domains
                     TestMethodHelpers.CreateNewCreateLocationDtoAsLumberMill(),
                     TestMethodHelpers.CreateNewLumberMill(),
                     TestMethodHelpers.CreateNewLumberMill()
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null description so it returns a BodyOfWater with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = null,
+                        TypeOfLocation = LocationType.BodyOfWater,
+                        GeographicalDescription = "Test"
+                    },
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsBodyOfWater(),
+                    TestMethodHelpers.CreateNewBodyOfWater(),
+                    TestMethodHelpers.CreateNewBodyOfWater()
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has white spaces for description so it returns a BodyOfWater with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = "     ",
+                        TypeOfLocation = LocationType.BodyOfWater,
+                        GeographicalDescription = "Test"
+                    },
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsBodyOfWater(),
+                    TestMethodHelpers.CreateNewBodyOfWater(),
+                    TestMethodHelpers.CreateNewBodyOfWater()
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has empty description so it returns a BodyOfWater with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = "",
+                        TypeOfLocation = LocationType.BodyOfWater,
+                        GeographicalDescription = "Test"
+                    },
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsBodyOfWater(),
+                    TestMethodHelpers.CreateNewBodyOfWater(),
+                    TestMethodHelpers.CreateNewBodyOfWater()
             };
         }
 
@@ -5300,6 +5384,78 @@ namespace Skyrim.Api.Test.Domains
                         GeographicalDescription = " ",
                         Name = "Test",
                         TypeOfLocation = LocationType.LumberMill
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = null,
+                        TypeOfLocation = LocationType.BodyOfWater
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has an empty name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = "",
+                        TypeOfLocation = LocationType.BodyOfWater
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a white space name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = "   ",
+                        TypeOfLocation = LocationType.BodyOfWater
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = null,
+                        Name = "Test",
+                        TypeOfLocation = LocationType.BodyOfWater
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has an empty Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "",
+                        Name = "Test",
+                        TypeOfLocation = LocationType.BodyOfWater
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a white space Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = " ",
+                        Name = "Test",
+                        TypeOfLocation = LocationType.BodyOfWater
                     },
                     (CreateLocationDto)null
             };

@@ -111,6 +111,8 @@ namespace Skyrim.Api.Domain
                         return _mapper.Map<WheatMill>(createLocationDto);
                     case LocationType.LumberMill:
                         return _mapper.Map<LumberMill>(createLocationDto);
+                    case LocationType.BodyOfWater:
+                        return _mapper.Map<BodyOfWater>(createLocationDto);
                     default:
                         return null;
                 }

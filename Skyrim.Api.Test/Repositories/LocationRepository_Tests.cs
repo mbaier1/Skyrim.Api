@@ -148,6 +148,9 @@ namespace Skyrim.Api.Test.Repositories
                 case LocationType.LumberMill:
                     Assert.Equal(_context.LumberMills.FirstOrDefault().Name, result.Name);
                     break;
+                case LocationType.BodyOfWater:
+                    Assert.Equal(_context.BodiesOfWater.FirstOrDefault().Name, result.Name);
+                    break;
                 default:
                     Assert.True(false);
                     break;
@@ -319,6 +322,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Valid properties for a LumberMill",
                 TestMethodHelpers.CreateNewLumberMill()
+            };
+            yield return new object[]
+            {
+                "Valid properties for a BodyOfWater",
+                TestMethodHelpers.CreateNewBodyOfWater()
             };
         }
 
@@ -517,6 +525,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Invalid properties for LumberMill",
                 new LumberMill()
+            };
+            yield return new object[]
+            {
+                "Invalid properties for BodyOfWater",
+                new BodyOfWater()
             };
         }
 
