@@ -49,6 +49,7 @@ namespace Skyrim.Api.Data
         public DbSet<Shack> Shacks { get; set; }
         public DbSet<Ship> Ships { get; set; }
         public DbSet<Shipwreck> Shipwrecks { get; set; }
+        public DbSet<Stable> Stables { get; set; }
 
         public DbSet<Guard> Guards { get; set; }
         public DbSet<PhyscialFightingShop> PhyscialFightingShops { get; set; }

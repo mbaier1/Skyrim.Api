@@ -364,6 +364,18 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.Shipwreck
                 }
             };
+            yield return new object[]
+            {
+                "Fatal Error for Stable location",
+                new Exception(),
+                new Stable
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Stable
+                }
+            };
         }
 
         [Theory]
@@ -732,6 +744,19 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.Shipwreck
                 },
                 LocationType.Shipwreck
+            };
+            yield return new object[]
+            {
+                "Fatal Error for Stable location",
+                new Exception(),
+                new Stable
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Stable
+                },
+                LocationType.Stable
             };
         }
     }

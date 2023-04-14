@@ -330,6 +330,18 @@ namespace Skyrim.Api.Test.TestHelpers
             };
         }
 
+        public static Stable CreateNewStable()
+        {
+            return new Stable
+            {
+                Id = 0,
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.Stable,
+                GeographicalDescription = "Test"
+            };
+        }
+
         public static CreateLocationDto CreateNewCreateLocationDtoAsCity()
         {
             return new CreateLocationDto
@@ -624,6 +636,17 @@ namespace Skyrim.Api.Test.TestHelpers
                 Description = "",
                 GeographicalDescription = "Test",
                 TypeOfLocation = LocationType.Shipwreck
+            };
+        }
+
+        public static CreateLocationDto CreateNewCreateLocationDtoAsStable()
+        {
+            return new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "",
+                GeographicalDescription = "Test",
+                TypeOfLocation = LocationType.Stable
             };
         }
     }

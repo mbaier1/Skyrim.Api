@@ -5853,4 +5853,218 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
         }
     }
+
+    public class CreateLocation_AsStable : LocationController_Tests
+    {
+        [Fact]
+        public async void WhenCreateLocationDtoHasRequiredValidPropertiesAsAStable_ReturnsCreateAtActionWithStableDetails()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Stable",
+                TypeOfLocation = LocationType.Stable,
+                GeographicalDescription = "Test Description"
+            };
+
+            var stable = new Stable
+            {
+                Id = 0,
+                Name = "Test Stable",
+                TypeOfLocation = LocationType.Stable,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(stable);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var stableObject = new object();
+            var locationAsStable = new Stable();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            stableObject = responseAsCreateAsActionResult.Value;
+
+            locationAsStable.Id = (int)stableObject.GetType().GetProperty("Id").GetValue(stableObject, null);
+            locationAsStable.Name = (string)stableObject.GetType().GetProperty("Name").GetValue(stableObject, null);
+            locationAsStable.TypeOfLocation = (LocationType)stableObject.GetType().GetProperty("TypeOfLocation").GetValue(stableObject, null);
+            locationAsStable.GeographicalDescription = (string)stableObject.GetType().GetProperty("GeographicalDescription").GetValue(stableObject, null);
+            locationAsStable.Description = (string)stableObject.GetType().GetProperty("Description").GetValue(stableObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(stable.Id, locationAsStable.Id);
+            Assert.Equal(stable.Name, locationAsStable.Name);
+            Assert.Equal(stable.Description, locationAsStable.Description);
+            Assert.Equal(stable.TypeOfLocation, locationAsStable.TypeOfLocation);
+            Assert.Equal(stable.GeographicalDescription, locationAsStable.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasEmptySpacesForDescriptionAStable_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Stable",
+                Description = "    ",
+                TypeOfLocation = LocationType.Stable,
+                GeographicalDescription = "Test Description"
+            };
+
+            var stable = new Stable
+            {
+                Id = 0,
+                Name = "Test Stable",
+                Description = "",
+                TypeOfLocation = LocationType.Stable,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(stable);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var stableObject = new object();
+            var locationAsStable = new Stable();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            stableObject = responseAsCreateAsActionResult.Value;
+
+            locationAsStable.Id = (int)stableObject.GetType().GetProperty("Id").GetValue(stableObject, null);
+            locationAsStable.Name = (string)stableObject.GetType().GetProperty("Name").GetValue(stableObject, null);
+            locationAsStable.TypeOfLocation = (LocationType)stableObject.GetType().GetProperty("TypeOfLocation").GetValue(stableObject, null);
+            locationAsStable.GeographicalDescription = (string)stableObject.GetType().GetProperty("GeographicalDescription").GetValue(stableObject, null);
+            locationAsStable.Description = (string)stableObject.GetType().GetProperty("Description").GetValue(stableObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(stable.Name, locationAsStable.Name);
+            Assert.Equal(stable.Id, locationAsStable.Id);
+            Assert.Equal(stable.Description, locationAsStable.Description);
+            Assert.Equal(stable.TypeOfLocation, locationAsStable.TypeOfLocation);
+            Assert.Equal(stable.GeographicalDescription, locationAsStable.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullForDescriptionAsAStable_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Stable",
+                Description = null,
+                TypeOfLocation = LocationType.Stable,
+                GeographicalDescription = "Test Description"
+            };
+
+            var stable = new Stable
+            {
+                Id = 0,
+                Name = "Test Stable",
+                Description = null,
+                TypeOfLocation = LocationType.Stable,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(stable);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var stableObject = new object();
+            var locationAsStable = new Stable();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            stableObject = responseAsCreateAsActionResult.Value;
+
+            locationAsStable.Id = (int)stableObject.GetType().GetProperty("Id").GetValue(stableObject, null);
+            locationAsStable.Name = (string)stableObject.GetType().GetProperty("Name").GetValue(stableObject, null);
+            locationAsStable.TypeOfLocation = (LocationType)stableObject.GetType().GetProperty("TypeOfLocation").GetValue(stableObject, null);
+            locationAsStable.GeographicalDescription = (string)stableObject.GetType().GetProperty("GeographicalDescription").GetValue(stableObject, null);
+            locationAsStable.Description = (string)stableObject.GetType().GetProperty("Description").GetValue(stableObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(stable.Id, locationAsStable.Id);
+            Assert.Equal(stable.Name, locationAsStable.Name);
+            Assert.Equal(stable.Description, locationAsStable.Description);
+            Assert.Equal(stable.TypeOfLocation, locationAsStable.TypeOfLocation);
+            Assert.Equal(stable.GeographicalDescription, locationAsStable.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsAStable_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "      ",
+                Description = "Test",
+                TypeOfLocation = LocationType.Stable,
+                GeographicalDescription = "Test Description"
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsAStable_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.Stable,
+                GeographicalDescription = "        "
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+    }
 }
