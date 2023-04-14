@@ -151,6 +151,9 @@ namespace Skyrim.Api.Test.Repositories
                 case LocationType.BodyOfWater:
                     Assert.Equal(_context.BodiesOfWater.FirstOrDefault().Name, result.Name);
                     break;
+                case LocationType.InnOrTavern:
+                    Assert.Equal(_context.InnsOrTaverns.FirstOrDefault().Name, result.Name);
+                    break;
                 default:
                     Assert.True(false);
                     break;
@@ -327,6 +330,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Valid properties for a BodyOfWater",
                 TestMethodHelpers.CreateNewBodyOfWater()
+            };
+            yield return new object[]
+            {
+                "Valid properties for a InnOrTavern",
+                TestMethodHelpers.CreateNewInnOrTavern()
             };
         }
 
@@ -530,6 +538,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Invalid properties for BodyOfWater",
                 new BodyOfWater()
+            };
+            yield return new object[]
+            {
+                "Invalid properties for InnOrTavern",
+                new InnOrTavern()
             };
         }
 

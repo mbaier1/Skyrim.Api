@@ -7351,4 +7351,218 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
         }
     }
+
+    public class CreateLocation_AsInnOrTavern : LocationController_Tests
+    {
+        [Fact]
+        public async void WhenCreateLocationDtoHasRequiredValidPropertiesAsAnInnOrTavern_ReturnsCreateAtActionWithInnOrTavernDetails()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test InnOrTavern",
+                TypeOfLocation = LocationType.InnOrTavern,
+                GeographicalDescription = "Test InnOrTavern"
+            };
+
+            var innOrTavern = new InnOrTavern
+            {
+                Id = 0,
+                Name = "Test InnOrTavern",
+                TypeOfLocation = LocationType.InnOrTavern,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(innOrTavern);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var InnOrTavernObject = new object();
+            var locationAsInnOrTavern = new InnOrTavern();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            InnOrTavernObject = responseAsCreateAsActionResult.Value;
+
+            locationAsInnOrTavern.Id = (int)InnOrTavernObject.GetType().GetProperty("Id").GetValue(InnOrTavernObject, null);
+            locationAsInnOrTavern.Name = (string)InnOrTavernObject.GetType().GetProperty("Name").GetValue(InnOrTavernObject, null);
+            locationAsInnOrTavern.TypeOfLocation = (LocationType)InnOrTavernObject.GetType().GetProperty("TypeOfLocation").GetValue(InnOrTavernObject, null);
+            locationAsInnOrTavern.GeographicalDescription = (string)InnOrTavernObject.GetType().GetProperty("GeographicalDescription").GetValue(InnOrTavernObject, null);
+            locationAsInnOrTavern.Description = (string)InnOrTavernObject.GetType().GetProperty("Description").GetValue(InnOrTavernObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(innOrTavern.Id, locationAsInnOrTavern.Id);
+            Assert.Equal(innOrTavern.Name, locationAsInnOrTavern.Name);
+            Assert.Equal(innOrTavern.Description, locationAsInnOrTavern.Description);
+            Assert.Equal(innOrTavern.TypeOfLocation, locationAsInnOrTavern.TypeOfLocation);
+            Assert.Equal(innOrTavern.GeographicalDescription, locationAsInnOrTavern.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasEmptySpacesForDescriptionAnInnOrTavern_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test InnOrTavern",
+                Description = "    ",
+                TypeOfLocation = LocationType.InnOrTavern,
+                GeographicalDescription = "Test Description"
+            };
+
+            var innOrTavern = new InnOrTavern
+            {
+                Id = 0,
+                Name = "Test InnOrTavern",
+                Description = "",
+                TypeOfLocation = LocationType.InnOrTavern,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(innOrTavern);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var innOrTavernObject = new object();
+            var locationAsInnOrTavern = new InnOrTavern();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            innOrTavernObject = responseAsCreateAsActionResult.Value;
+
+            locationAsInnOrTavern.Id = (int)innOrTavernObject.GetType().GetProperty("Id").GetValue(innOrTavernObject, null);
+            locationAsInnOrTavern.Name = (string)innOrTavernObject.GetType().GetProperty("Name").GetValue(innOrTavernObject, null);
+            locationAsInnOrTavern.TypeOfLocation = (LocationType)innOrTavernObject.GetType().GetProperty("TypeOfLocation").GetValue(innOrTavernObject, null);
+            locationAsInnOrTavern.GeographicalDescription = (string)innOrTavernObject.GetType().GetProperty("GeographicalDescription").GetValue(innOrTavernObject, null);
+            locationAsInnOrTavern.Description = (string)innOrTavernObject.GetType().GetProperty("Description").GetValue(innOrTavernObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(innOrTavern.Name, locationAsInnOrTavern.Name);
+            Assert.Equal(innOrTavern.Id, locationAsInnOrTavern.Id);
+            Assert.Equal(innOrTavern.Description, locationAsInnOrTavern.Description);
+            Assert.Equal(innOrTavern.TypeOfLocation, locationAsInnOrTavern.TypeOfLocation);
+            Assert.Equal(innOrTavern.GeographicalDescription, locationAsInnOrTavern.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullForDescriptionAsAnInnOrTavern_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test InnOrTavern",
+                Description = null,
+                TypeOfLocation = LocationType.InnOrTavern,
+                GeographicalDescription = "Test Description"
+            };
+
+            var innOrTavern = new InnOrTavern
+            {
+                Id = 0,
+                Name = "Test InnOrTavern",
+                Description = null,
+                TypeOfLocation = LocationType.InnOrTavern,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(innOrTavern);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var innOrTavernObject = new object();
+            var locationAsInnOrTavern = new InnOrTavern();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            innOrTavernObject = responseAsCreateAsActionResult.Value;
+
+            locationAsInnOrTavern.Id = (int)innOrTavernObject.GetType().GetProperty("Id").GetValue(innOrTavernObject, null);
+            locationAsInnOrTavern.Name = (string)innOrTavernObject.GetType().GetProperty("Name").GetValue(innOrTavernObject, null);
+            locationAsInnOrTavern.TypeOfLocation = (LocationType)innOrTavernObject.GetType().GetProperty("TypeOfLocation").GetValue(innOrTavernObject, null);
+            locationAsInnOrTavern.GeographicalDescription = (string)innOrTavernObject.GetType().GetProperty("GeographicalDescription").GetValue(innOrTavernObject, null);
+            locationAsInnOrTavern.Description = (string)innOrTavernObject.GetType().GetProperty("Description").GetValue(innOrTavernObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(innOrTavern.Id, locationAsInnOrTavern.Id);
+            Assert.Equal(innOrTavern.Name, locationAsInnOrTavern.Name);
+            Assert.Equal(innOrTavern.Description, locationAsInnOrTavern.Description);
+            Assert.Equal(innOrTavern.TypeOfLocation, locationAsInnOrTavern.TypeOfLocation);
+            Assert.Equal(innOrTavern.GeographicalDescription, locationAsInnOrTavern.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsAnInnOrTavern_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "      ",
+                Description = "Test",
+                TypeOfLocation = LocationType.InnOrTavern,
+                GeographicalDescription = "Test Description"
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsAnInnOrTavern_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.InnOrTavern,
+                GeographicalDescription = "        "
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+    }
 }
