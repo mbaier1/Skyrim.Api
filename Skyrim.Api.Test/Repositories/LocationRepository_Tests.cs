@@ -142,6 +142,9 @@ namespace Skyrim.Api.Test.Repositories
                 case LocationType.Watchtower:
                     Assert.Equal(_context.Watchtowers.FirstOrDefault().Name, result.Name);
                     break;
+                case LocationType.WheatMill:
+                    Assert.Equal(_context.WheatMills.FirstOrDefault().Name, result.Name);
+                    break;
                 default:
                     Assert.True(false);
                     break;
@@ -303,6 +306,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Valid properties for a Watchtower",
                 TestMethodHelpers.CreateNewWatchtower()
+            };
+            yield return new object[]
+            {
+                "Valid properties for a WheatMill",
+                TestMethodHelpers.CreateNewWheatMill()
             };
         }
 
@@ -491,6 +499,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Invalid properties for Watchtower",
                 new Watchtower()
+            };
+            yield return new object[]
+            {
+                "Invalid properties for WheatMill",
+                new WheatMill()
             };
         }
 

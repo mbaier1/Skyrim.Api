@@ -412,6 +412,18 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.Watchtower
                 }
             };
+            yield return new object[]
+            {
+                "Fatal Error for WheatMill location",
+                new Exception(),
+                new WheatMill
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.WheatMill
+                }
+            };
         }
 
         [Theory]
@@ -832,6 +844,19 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.Watchtower
                 },
                 LocationType.Watchtower
+            };
+            yield return new object[]
+            {
+                "Fatal Error for WheatMill location",
+                new Exception(),
+                new WheatMill
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.WheatMill
+                },
+                LocationType.WheatMill
             };
         }
     }
