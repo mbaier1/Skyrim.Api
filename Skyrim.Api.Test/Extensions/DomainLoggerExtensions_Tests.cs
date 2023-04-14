@@ -495,6 +495,18 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.Castle
                 }
         };
+        yield return new object[]
+        {
+                "Fatal Error for GuildHeadquarter location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.GuildHeadquarter
+                }
+        };
     }
 
     [Theory]
@@ -1005,6 +1017,19 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.Castle
                 },
                 LocationType.Castle
+        };
+        yield return new object[]
+        {
+                "Fatal Error for GuildHeadquarter location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.GuildHeadquarter
+                },
+                LocationType.GuildHeadquarter
         };
     }
 }

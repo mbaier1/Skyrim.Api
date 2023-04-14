@@ -163,6 +163,9 @@ namespace Skyrim.Api.Test.Repositories
                 case LocationType.Castle:
                     Assert.Equal(_context.Castles.FirstOrDefault().Name, result.Name);
                     break;
+                case LocationType.GuildHeadquarter:
+                    Assert.Equal(_context.GuildHeadquarters.FirstOrDefault().Name, result.Name);
+                    break;
                 default:
                     Assert.True(false);
                     break;
@@ -359,6 +362,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Valid properties for a Castle",
                 TestMethodHelpers.CreateNewCastle()
+            };
+            yield return new object[]
+            {
+                "Valid properties for a GuildHeadquarter",
+                TestMethodHelpers.CreateNewGuildHeadquarter()
             };
         }
 
@@ -582,6 +590,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Invalid properties for Castle",
                 new Data.Models.Castle()
+            };
+            yield return new object[]
+            {
+                "Invalid properties for GuildHeadquarter",
+                new GuildHeadquarter()
             };
         }
 
