@@ -507,6 +507,18 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.GuildHeadquarter
                 }
         };
+        yield return new object[]
+        {
+                "Fatal Error for UnmarkedLocation location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.UnmarkedLocation
+                }
+        };
     }
 
     [Theory]
@@ -1030,6 +1042,19 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.GuildHeadquarter
                 },
                 LocationType.GuildHeadquarter
+        };
+        yield return new object[]
+        {
+                "Fatal Error for UnmarkedLocation location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.UnmarkedLocation
+                },
+                LocationType.UnmarkedLocation
         };
     }
 }
