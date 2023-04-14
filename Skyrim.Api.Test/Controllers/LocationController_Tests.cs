@@ -6067,4 +6067,218 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
         }
     }
+
+    public class CreateLocation_AsStormcloakCamp : LocationController_Tests
+    {
+        [Fact]
+        public async void WhenCreateLocationDtoHasRequiredValidPropertiesAsAStormcloakCamp_ReturnsCreateAtActionWithStormcloakCampDetails()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test StormcloakCamp",
+                TypeOfLocation = LocationType.StormcloakCamp,
+                GeographicalDescription = "Test Description"
+            };
+
+            var stormcloakCamp = new StormcloakCamp
+            {
+                Id = 0,
+                Name = "Test StormcloakCamp",
+                TypeOfLocation = LocationType.StormcloakCamp,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(stormcloakCamp);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var stormcloakCampObject = new object();
+            var locationAsStormcloakCamp = new StormcloakCamp();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            stormcloakCampObject = responseAsCreateAsActionResult.Value;
+
+            locationAsStormcloakCamp.Id = (int)stormcloakCampObject.GetType().GetProperty("Id").GetValue(stormcloakCampObject, null);
+            locationAsStormcloakCamp.Name = (string)stormcloakCampObject.GetType().GetProperty("Name").GetValue(stormcloakCampObject, null);
+            locationAsStormcloakCamp.TypeOfLocation = (LocationType)stormcloakCampObject.GetType().GetProperty("TypeOfLocation").GetValue(stormcloakCampObject, null);
+            locationAsStormcloakCamp.GeographicalDescription = (string)stormcloakCampObject.GetType().GetProperty("GeographicalDescription").GetValue(stormcloakCampObject, null);
+            locationAsStormcloakCamp.Description = (string)stormcloakCampObject.GetType().GetProperty("Description").GetValue(stormcloakCampObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(stormcloakCamp.Id, locationAsStormcloakCamp.Id);
+            Assert.Equal(stormcloakCamp.Name, locationAsStormcloakCamp.Name);
+            Assert.Equal(stormcloakCamp.Description, locationAsStormcloakCamp.Description);
+            Assert.Equal(stormcloakCamp.TypeOfLocation, locationAsStormcloakCamp.TypeOfLocation);
+            Assert.Equal(stormcloakCamp.GeographicalDescription, locationAsStormcloakCamp.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasEmptySpacesForDescriptionAStormcloakCamp_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test StormcloakCamp",
+                Description = "    ",
+                TypeOfLocation = LocationType.StormcloakCamp,
+                GeographicalDescription = "Test Description"
+            };
+
+            var stormcloakCamp = new StormcloakCamp
+            {
+                Id = 0,
+                Name = "Test StormcloakCamp",
+                Description = "",
+                TypeOfLocation = LocationType.StormcloakCamp,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(stormcloakCamp);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var stormcloakCampObject = new object();
+            var locationAsStormcloakCamp = new StormcloakCamp();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            stormcloakCampObject = responseAsCreateAsActionResult.Value;
+
+            locationAsStormcloakCamp.Id = (int)stormcloakCampObject.GetType().GetProperty("Id").GetValue(stormcloakCampObject, null);
+            locationAsStormcloakCamp.Name = (string)stormcloakCampObject.GetType().GetProperty("Name").GetValue(stormcloakCampObject, null);
+            locationAsStormcloakCamp.TypeOfLocation = (LocationType)stormcloakCampObject.GetType().GetProperty("TypeOfLocation").GetValue(stormcloakCampObject, null);
+            locationAsStormcloakCamp.GeographicalDescription = (string)stormcloakCampObject.GetType().GetProperty("GeographicalDescription").GetValue(stormcloakCampObject, null);
+            locationAsStormcloakCamp.Description = (string)stormcloakCampObject.GetType().GetProperty("Description").GetValue(stormcloakCampObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(stormcloakCamp.Name, locationAsStormcloakCamp.Name);
+            Assert.Equal(stormcloakCamp.Id, locationAsStormcloakCamp.Id);
+            Assert.Equal(stormcloakCamp.Description, locationAsStormcloakCamp.Description);
+            Assert.Equal(stormcloakCamp.TypeOfLocation, locationAsStormcloakCamp.TypeOfLocation);
+            Assert.Equal(stormcloakCamp.GeographicalDescription, locationAsStormcloakCamp.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullForDescriptionAsAStormcloakCamp_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test StormcloakCamp",
+                Description = null,
+                TypeOfLocation = LocationType.StormcloakCamp,
+                GeographicalDescription = "Test Description"
+            };
+
+            var stormcloakCamp = new StormcloakCamp
+            {
+                Id = 0,
+                Name = "Test StormcloakCamp",
+                Description = null,
+                TypeOfLocation = LocationType.StormcloakCamp,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(stormcloakCamp);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var stormcloakCampObject = new object();
+            var locationAsStormcloakCamp = new StormcloakCamp();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            stormcloakCampObject = responseAsCreateAsActionResult.Value;
+
+            locationAsStormcloakCamp.Id = (int)stormcloakCampObject.GetType().GetProperty("Id").GetValue(stormcloakCampObject, null);
+            locationAsStormcloakCamp.Name = (string)stormcloakCampObject.GetType().GetProperty("Name").GetValue(stormcloakCampObject, null);
+            locationAsStormcloakCamp.TypeOfLocation = (LocationType)stormcloakCampObject.GetType().GetProperty("TypeOfLocation").GetValue(stormcloakCampObject, null);
+            locationAsStormcloakCamp.GeographicalDescription = (string)stormcloakCampObject.GetType().GetProperty("GeographicalDescription").GetValue(stormcloakCampObject, null);
+            locationAsStormcloakCamp.Description = (string)stormcloakCampObject.GetType().GetProperty("Description").GetValue(stormcloakCampObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(stormcloakCamp.Id, locationAsStormcloakCamp.Id);
+            Assert.Equal(stormcloakCamp.Name, locationAsStormcloakCamp.Name);
+            Assert.Equal(stormcloakCamp.Description, locationAsStormcloakCamp.Description);
+            Assert.Equal(stormcloakCamp.TypeOfLocation, locationAsStormcloakCamp.TypeOfLocation);
+            Assert.Equal(stormcloakCamp.GeographicalDescription, locationAsStormcloakCamp.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsAStormcloakCamp_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "      ",
+                Description = "Test",
+                TypeOfLocation = LocationType.StormcloakCamp,
+                GeographicalDescription = "Test Description"
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsAStormcloakCamp_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.StormcloakCamp,
+                GeographicalDescription = "        "
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+    }
 }

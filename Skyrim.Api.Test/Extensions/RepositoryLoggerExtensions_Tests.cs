@@ -376,6 +376,18 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.Stable
                 }
             };
+            yield return new object[]
+            {
+                "Fatal Error for StormcloakCamp location",
+                new Exception(),
+                new StormcloakCamp
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.StormcloakCamp
+                }
+            };
         }
 
         [Theory]
@@ -757,6 +769,19 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.Stable
                 },
                 LocationType.Stable
+            };
+            yield return new object[]
+            {
+                "Fatal Error for StormcloakCamp location",
+                new Exception(),
+                new StormcloakCamp
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.StormcloakCamp
+                },
+                LocationType.StormcloakCamp
             };
         }
     }

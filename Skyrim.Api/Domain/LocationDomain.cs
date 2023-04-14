@@ -101,6 +101,8 @@ namespace Skyrim.Api.Domain
                         return _mapper.Map<Shipwreck>(createLocationDto);
                     case LocationType.Stable:
                         return _mapper.Map<Stable>(createLocationDto);
+                    case LocationType.StormcloakCamp:
+                        return _mapper.Map<StormcloakCamp>(createLocationDto);
                     default:
                         return null;
                 }
