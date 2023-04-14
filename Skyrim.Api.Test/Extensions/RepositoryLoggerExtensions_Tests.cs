@@ -436,6 +436,18 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.LumberMill
                 }
             };
+            yield return new object[]
+            {
+                "Fatal Error for BodyOfWater location",
+                new Exception(),
+                new BodyOfWater
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.BodyOfWater
+                }
+            };
         }
 
         [Theory]
@@ -882,6 +894,19 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.LumberMill
                 },
                 LocationType.LumberMill
+            };
+            yield return new object[]
+            {
+                "Fatal Error for BodyOfWater location",
+                new Exception(),
+                new BodyOfWater
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.BodyOfWater
+                },
+                LocationType.BodyOfWater
             };
         }
     }

@@ -55,6 +55,7 @@ namespace Skyrim.Api.Data
         public DbSet<Watchtower> Watchtowers { get; set; }
         public DbSet<WheatMill> WheatMills { get; set; }
         public DbSet<LumberMill> LumberMills { get; set; }
+        public DbSet<BodyOfWater> BodiesOfWater { get; set; }
 
         public DbSet<Guard> Guards { get; set; }
         public DbSet<PhyscialFightingShop> PhyscialFightingShops { get; set; }

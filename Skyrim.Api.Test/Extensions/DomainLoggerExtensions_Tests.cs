@@ -435,6 +435,18 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.LumberMill
                 }
         };
+        yield return new object[]
+        {
+                "Fatal Error for BodyOfWater location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.BodyOfWater
+                }
+        };
     }
 
     [Theory]
@@ -880,6 +892,19 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.LumberMill
                 },
                 LocationType.LumberMill
+        };
+        yield return new object[]
+        {
+                "Fatal Error for BodyOfWater location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.BodyOfWater
+                },
+                LocationType.BodyOfWater
         };
     }
 }

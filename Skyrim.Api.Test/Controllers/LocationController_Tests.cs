@@ -7137,4 +7137,218 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
         }
     }
+
+    public class CreateLocation_AsBodyOfWater : LocationController_Tests
+    {
+        [Fact]
+        public async void WhenCreateLocationDtoHasRequiredValidPropertiesAsABodyOfWater_ReturnsCreateAtActionWithBodyOfWaterDetails()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test BodyOfWater",
+                TypeOfLocation = LocationType.BodyOfWater,
+                GeographicalDescription = "Test BodyOfWater"
+            };
+
+            var bodyOfWater = new BodyOfWater
+            {
+                Id = 0,
+                Name = "Test BodyOfWater",
+                TypeOfLocation = LocationType.BodyOfWater,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(bodyOfWater);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var bodyOfWaterObject = new object();
+            var locationAsBodyOfWater = new BodyOfWater();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            bodyOfWaterObject = responseAsCreateAsActionResult.Value;
+
+            locationAsBodyOfWater.Id = (int)bodyOfWaterObject.GetType().GetProperty("Id").GetValue(bodyOfWaterObject, null);
+            locationAsBodyOfWater.Name = (string)bodyOfWaterObject.GetType().GetProperty("Name").GetValue(bodyOfWaterObject, null);
+            locationAsBodyOfWater.TypeOfLocation = (LocationType)bodyOfWaterObject.GetType().GetProperty("TypeOfLocation").GetValue(bodyOfWaterObject, null);
+            locationAsBodyOfWater.GeographicalDescription = (string)bodyOfWaterObject.GetType().GetProperty("GeographicalDescription").GetValue(bodyOfWaterObject, null);
+            locationAsBodyOfWater.Description = (string)bodyOfWaterObject.GetType().GetProperty("Description").GetValue(bodyOfWaterObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(bodyOfWater.Id, locationAsBodyOfWater.Id);
+            Assert.Equal(bodyOfWater.Name, locationAsBodyOfWater.Name);
+            Assert.Equal(bodyOfWater.Description, locationAsBodyOfWater.Description);
+            Assert.Equal(bodyOfWater.TypeOfLocation, locationAsBodyOfWater.TypeOfLocation);
+            Assert.Equal(bodyOfWater.GeographicalDescription, locationAsBodyOfWater.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasEmptySpacesForDescriptionABodyOfWater_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test BodyOfWater",
+                Description = "    ",
+                TypeOfLocation = LocationType.BodyOfWater,
+                GeographicalDescription = "Test Description"
+            };
+
+            var bodyOfWater = new BodyOfWater
+            {
+                Id = 0,
+                Name = "Test BodyOfWater",
+                Description = "",
+                TypeOfLocation = LocationType.BodyOfWater,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(bodyOfWater);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var bodyOfWaterObject = new object();
+            var locationAsBodyOfWater = new BodyOfWater();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            bodyOfWaterObject = responseAsCreateAsActionResult.Value;
+
+            locationAsBodyOfWater.Id = (int)bodyOfWaterObject.GetType().GetProperty("Id").GetValue(bodyOfWaterObject, null);
+            locationAsBodyOfWater.Name = (string)bodyOfWaterObject.GetType().GetProperty("Name").GetValue(bodyOfWaterObject, null);
+            locationAsBodyOfWater.TypeOfLocation = (LocationType)bodyOfWaterObject.GetType().GetProperty("TypeOfLocation").GetValue(bodyOfWaterObject, null);
+            locationAsBodyOfWater.GeographicalDescription = (string)bodyOfWaterObject.GetType().GetProperty("GeographicalDescription").GetValue(bodyOfWaterObject, null);
+            locationAsBodyOfWater.Description = (string)bodyOfWaterObject.GetType().GetProperty("Description").GetValue(bodyOfWaterObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(bodyOfWater.Name, locationAsBodyOfWater.Name);
+            Assert.Equal(bodyOfWater.Id, locationAsBodyOfWater.Id);
+            Assert.Equal(bodyOfWater.Description, locationAsBodyOfWater.Description);
+            Assert.Equal(bodyOfWater.TypeOfLocation, locationAsBodyOfWater.TypeOfLocation);
+            Assert.Equal(bodyOfWater.GeographicalDescription, locationAsBodyOfWater.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullForDescriptionAsABodyOfWater_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test BodyOfWater",
+                Description = null,
+                TypeOfLocation = LocationType.BodyOfWater,
+                GeographicalDescription = "Test Description"
+            };
+
+            var bodyOfWater = new BodyOfWater
+            {
+                Id = 0,
+                Name = "Test BodyOfWater",
+                Description = null,
+                TypeOfLocation = LocationType.BodyOfWater,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(bodyOfWater);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var bodyOfWaterObject = new object();
+            var locationAsBodyOfWater = new BodyOfWater();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            bodyOfWaterObject = responseAsCreateAsActionResult.Value;
+
+            locationAsBodyOfWater.Id = (int)bodyOfWaterObject.GetType().GetProperty("Id").GetValue(bodyOfWaterObject, null);
+            locationAsBodyOfWater.Name = (string)bodyOfWaterObject.GetType().GetProperty("Name").GetValue(bodyOfWaterObject, null);
+            locationAsBodyOfWater.TypeOfLocation = (LocationType)bodyOfWaterObject.GetType().GetProperty("TypeOfLocation").GetValue(bodyOfWaterObject, null);
+            locationAsBodyOfWater.GeographicalDescription = (string)bodyOfWaterObject.GetType().GetProperty("GeographicalDescription").GetValue(bodyOfWaterObject, null);
+            locationAsBodyOfWater.Description = (string)bodyOfWaterObject.GetType().GetProperty("Description").GetValue(bodyOfWaterObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(bodyOfWater.Id, locationAsBodyOfWater.Id);
+            Assert.Equal(bodyOfWater.Name, locationAsBodyOfWater.Name);
+            Assert.Equal(bodyOfWater.Description, locationAsBodyOfWater.Description);
+            Assert.Equal(bodyOfWater.TypeOfLocation, locationAsBodyOfWater.TypeOfLocation);
+            Assert.Equal(bodyOfWater.GeographicalDescription, locationAsBodyOfWater.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsABodyOfWater_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "      ",
+                Description = "Test",
+                TypeOfLocation = LocationType.BodyOfWater,
+                GeographicalDescription = "Test Description"
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsABodyOfWater_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.BodyOfWater,
+                GeographicalDescription = "        "
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+    }
 }
