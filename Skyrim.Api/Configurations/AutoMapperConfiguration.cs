@@ -40,6 +40,7 @@ namespace Skyrim.Api.Configurations
             CreateMap<Tomb, CreateLocationDto>().ReverseMap();
             CreateMap<Watchtower, CreateLocationDto>().ReverseMap();
             CreateMap<WheatMill, CreateLocationDto>().ReverseMap();
+            CreateMap<LumberMill, CreateLocationDto>().ReverseMap();
         }
     }
 }

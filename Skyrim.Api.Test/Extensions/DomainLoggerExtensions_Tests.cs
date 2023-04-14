@@ -423,6 +423,18 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.WheatMill
                 }
         };
+        yield return new object[]
+        {
+                "Fatal Error for LumberMill location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.LumberMill
+                }
+        };
     }
 
     [Theory]
@@ -855,6 +867,19 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.WheatMill
                 },
                 LocationType.WheatMill
+        };
+        yield return new object[]
+        {
+                "Fatal Error for LumberMill location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.LumberMill
+                },
+                LocationType.LumberMill
         };
     }
 }
