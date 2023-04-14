@@ -103,6 +103,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<Watchtower>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewWatchtower());
             else if (type.TypeOfLocation == LocationType.WheatMill)
                 _mockMapper.Setup(x => x.Map<WheatMill>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewWheatMill());
+            else if (type.TypeOfLocation == LocationType.LumberMill)
+                _mockMapper.Setup(x => x.Map<LumberMill>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewLumberMill());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
             var completedCreateTask = Task<Location>.FromResult(taskType);
@@ -793,6 +795,27 @@ namespace Skyrim.Api.Test.Domains
                     GeographicalDescription = "Test"
                 }
             };
+            yield return new object[]
+            {
+                "Valid properties for LumberMill Location",
+                TestMethodHelpers.CreateNewCreateLocationDtoAsLumberMill(),
+                new LumberMill
+                {
+                    Id = 0,
+                    Name = "Test",
+                    Description = "Test",
+                    TypeOfLocation = LocationType.LumberMill,
+                    GeographicalDescription = "Test"
+                },
+                new LumberMill
+                {
+                    Id = 0,
+                    Name = "Test",
+                    Description = "Test",
+                    TypeOfLocation = LocationType.LumberMill,
+                    GeographicalDescription = "Test"
+                }
+            };
         }
 
         [Theory]
@@ -865,6 +888,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<Watchtower>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewWatchtower());
             else if (location.TypeOfLocation == LocationType.WheatMill)
                 _mockMapper.Setup(x => x.Map<WheatMill>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewWheatMill());
+            else if (location.TypeOfLocation == LocationType.LumberMill)
+                _mockMapper.Setup(x => x.Map<LumberMill>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewLumberMill());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
             var completedCreateTask = Task<Location>.FromResult(taskType);
@@ -939,6 +964,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Verify(x => x.Map<Watchtower>(createLocationDto), Times.Once());
             else if (location.TypeOfLocation == LocationType.WheatMill)
                 _mockMapper.Verify(x => x.Map<WheatMill>(createLocationDto), Times.Once());
+            else if (location.TypeOfLocation == LocationType.LumberMill)
+                _mockMapper.Verify(x => x.Map<LumberMill>(createLocationDto), Times.Once());
             else
                 Assert.True(false);
         }
@@ -1118,6 +1145,11 @@ namespace Skyrim.Api.Test.Domains
                 "Invalid properties for WheatMill",
                 new CreateLocationDto { TypeOfLocation = LocationType.WheatMill }
             };
+            yield return new object[]
+            {
+                "Invalid properties for LumberMill",
+                new CreateLocationDto { TypeOfLocation = LocationType.LumberMill }
+            };
         }
 
         [Theory]
@@ -1189,6 +1221,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<Watchtower>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
             else if (location.TypeOfLocation == LocationType.WheatMill)
                 _mockMapper.Setup(x => x.Map<WheatMill>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
+            else if (location.TypeOfLocation == LocationType.LumberMill)
+                _mockMapper.Setup(x => x.Map<LumberMill>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
 
@@ -1393,6 +1427,12 @@ namespace Skyrim.Api.Test.Domains
                 TestMethodHelpers.CreateNewWheatMill(),
                 TestMethodHelpers.CreateNewCreateLocationDtoAsWheatMill()
            };
+            yield return new object[]
+           {
+                "Invalid properties for LumberMill",
+                TestMethodHelpers.CreateNewLumberMill(),
+                TestMethodHelpers.CreateNewCreateLocationDtoAsLumberMill()
+           };
         }
 
         [Theory]
@@ -1466,6 +1506,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<Watchtower>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewWatchtower());
             else if (type.TypeOfLocation == LocationType.WheatMill)
                 _mockMapper.Setup(x => x.Map<WheatMill>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewWheatMill());
+            else if (type.TypeOfLocation == LocationType.LumberMill)
+                _mockMapper.Setup(x => x.Map<LumberMill>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewLumberMill());
 
             var completedCreateTask = Task<Location>.FromResult(taskType);
             _mockLocationRepository.Setup(x => x.SaveLocation(It.IsAny<Location>()))
@@ -2824,6 +2866,48 @@ namespace Skyrim.Api.Test.Domains
                     TestMethodHelpers.CreateNewCreateLocationDtoAsWheatMill(),
                     TestMethodHelpers.CreateNewWheatMill(),
                     TestMethodHelpers.CreateNewWheatMill()
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null description so it returns a LumberMill with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = null,
+                        TypeOfLocation = LocationType.LumberMill,
+                        GeographicalDescription = "Test"
+                    },
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsLumberMill(),
+                    TestMethodHelpers.CreateNewLumberMill(),
+                    TestMethodHelpers.CreateNewLumberMill()
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has white spaces for description so it returns a LumberMill with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = "     ",
+                        TypeOfLocation = LocationType.LumberMill,
+                        GeographicalDescription = "Test"
+                    },
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsLumberMill(),
+                    TestMethodHelpers.CreateNewLumberMill(),
+                    TestMethodHelpers.CreateNewLumberMill()
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has empty description so it returns a LumberMill with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = "",
+                        TypeOfLocation = LocationType.LumberMill,
+                        GeographicalDescription = "Test"
+                    },
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsLumberMill(),
+                    TestMethodHelpers.CreateNewLumberMill(),
+                    TestMethodHelpers.CreateNewLumberMill()
             };
         }
 
@@ -5144,6 +5228,78 @@ namespace Skyrim.Api.Test.Domains
                         GeographicalDescription = " ",
                         Name = "Test",
                         TypeOfLocation = LocationType.WheatMill
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = null,
+                        TypeOfLocation = LocationType.LumberMill
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has an empty name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = "",
+                        TypeOfLocation = LocationType.LumberMill
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a white space name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = "   ",
+                        TypeOfLocation = LocationType.LumberMill
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = null,
+                        Name = "Test",
+                        TypeOfLocation = LocationType.LumberMill
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has an empty Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "",
+                        Name = "Test",
+                        TypeOfLocation = LocationType.LumberMill
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a white space Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = " ",
+                        Name = "Test",
+                        TypeOfLocation = LocationType.LumberMill
                     },
                     (CreateLocationDto)null
             };

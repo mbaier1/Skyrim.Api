@@ -109,6 +109,8 @@ namespace Skyrim.Api.Domain
                         return _mapper.Map<Watchtower>(createLocationDto);
                     case LocationType.WheatMill:
                         return _mapper.Map<WheatMill>(createLocationDto);
+                    case LocationType.LumberMill:
+                        return _mapper.Map<LumberMill>(createLocationDto);
                     default:
                         return null;
                 }
