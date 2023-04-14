@@ -130,6 +130,9 @@ namespace Skyrim.Api.Test.Repositories
                 case LocationType.Shipwreck:
                     Assert.Equal(_context.Shipwrecks.FirstOrDefault().Name, result.Name);
                     break;
+                case LocationType.Stable:
+                    Assert.Equal(_context.Stables.FirstOrDefault().Name, result.Name);
+                    break;
                 default:
                     Assert.True(false);
                     break;
@@ -271,6 +274,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Valid properties for a Shipwreck",
                 TestMethodHelpers.CreateNewShipwreck()
+            };
+            yield return new object[]
+            {
+                "Valid properties for a Stable",
+                TestMethodHelpers.CreateNewStable()
             };
         }
 
@@ -439,6 +447,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Invalid properties for Shipwreck",
                 new Shipwreck()
+            };
+            yield return new object[]
+            {
+                "Invalid properties for Stable",
+                new Stable()
             };
         }
 
