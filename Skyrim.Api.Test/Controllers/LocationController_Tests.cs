@@ -6281,4 +6281,218 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
         }
     }
+
+    public class CreateLocation_AsTomb : LocationController_Tests
+    {
+        [Fact]
+        public async void WhenCreateLocationDtoHasRequiredValidPropertiesAsATomb_ReturnsCreateAtActionWithTombDetails()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Tomb",
+                TypeOfLocation = LocationType.Tomb,
+                GeographicalDescription = "Test Description"
+            };
+
+            var tomb = new Tomb
+            {
+                Id = 0,
+                Name = "Test Tomb",
+                TypeOfLocation = LocationType.Tomb,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(tomb);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var tombObject = new object();
+            var locationATomb = new Tomb();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            tombObject = responseAsCreateAsActionResult.Value;
+
+            locationATomb.Id = (int)tombObject.GetType().GetProperty("Id").GetValue(tombObject, null);
+            locationATomb.Name = (string)tombObject.GetType().GetProperty("Name").GetValue(tombObject, null);
+            locationATomb.TypeOfLocation = (LocationType)tombObject.GetType().GetProperty("TypeOfLocation").GetValue(tombObject, null);
+            locationATomb.GeographicalDescription = (string)tombObject.GetType().GetProperty("GeographicalDescription").GetValue(tombObject, null);
+            locationATomb.Description = (string)tombObject.GetType().GetProperty("Description").GetValue(tombObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(tomb.Id, locationATomb.Id);
+            Assert.Equal(tomb.Name, locationATomb.Name);
+            Assert.Equal(tomb.Description, locationATomb.Description);
+            Assert.Equal(tomb.TypeOfLocation, locationATomb.TypeOfLocation);
+            Assert.Equal(tomb.GeographicalDescription, locationATomb.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasEmptySpacesForDescriptionATomb_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Tomb",
+                Description = "    ",
+                TypeOfLocation = LocationType.Tomb,
+                GeographicalDescription = "Test Description"
+            };
+
+            var tomb = new Tomb
+            {
+                Id = 0,
+                Name = "Test Tomb",
+                Description = "",
+                TypeOfLocation = LocationType.Tomb,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(tomb);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var tombObject = new object();
+            var locationAsTomb = new Tomb();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            tombObject = responseAsCreateAsActionResult.Value;
+
+            locationAsTomb.Id = (int)tombObject.GetType().GetProperty("Id").GetValue(tombObject, null);
+            locationAsTomb.Name = (string)tombObject.GetType().GetProperty("Name").GetValue(tombObject, null);
+            locationAsTomb.TypeOfLocation = (LocationType)tombObject.GetType().GetProperty("TypeOfLocation").GetValue(tombObject, null);
+            locationAsTomb.GeographicalDescription = (string)tombObject.GetType().GetProperty("GeographicalDescription").GetValue(tombObject, null);
+            locationAsTomb.Description = (string)tombObject.GetType().GetProperty("Description").GetValue(tombObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(tomb.Name, locationAsTomb.Name);
+            Assert.Equal(tomb.Id, locationAsTomb.Id);
+            Assert.Equal(tomb.Description, locationAsTomb.Description);
+            Assert.Equal(tomb.TypeOfLocation, locationAsTomb.TypeOfLocation);
+            Assert.Equal(tomb.GeographicalDescription, locationAsTomb.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullForDescriptionAsATomb_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Tomb",
+                Description = null,
+                TypeOfLocation = LocationType.Tomb,
+                GeographicalDescription = "Test Description"
+            };
+
+            var tomb = new Tomb
+            {
+                Id = 0,
+                Name = "Test Tomb",
+                Description = null,
+                TypeOfLocation = LocationType.Tomb,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(tomb);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var tombObject = new object();
+            var locationAsTomb = new Tomb();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            tombObject = responseAsCreateAsActionResult.Value;
+
+            locationAsTomb.Id = (int)tombObject.GetType().GetProperty("Id").GetValue(tombObject, null);
+            locationAsTomb.Name = (string)tombObject.GetType().GetProperty("Name").GetValue(tombObject, null);
+            locationAsTomb.TypeOfLocation = (LocationType)tombObject.GetType().GetProperty("TypeOfLocation").GetValue(tombObject, null);
+            locationAsTomb.GeographicalDescription = (string)tombObject.GetType().GetProperty("GeographicalDescription").GetValue(tombObject, null);
+            locationAsTomb.Description = (string)tombObject.GetType().GetProperty("Description").GetValue(tombObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(tomb.Id, locationAsTomb.Id);
+            Assert.Equal(tomb.Name, locationAsTomb.Name);
+            Assert.Equal(tomb.Description, locationAsTomb.Description);
+            Assert.Equal(tomb.TypeOfLocation, locationAsTomb.TypeOfLocation);
+            Assert.Equal(tomb.GeographicalDescription, locationAsTomb.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsATomb_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "      ",
+                Description = "Test",
+                TypeOfLocation = LocationType.Tomb,
+                GeographicalDescription = "Test Description"
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsATomb_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.Tomb,
+                GeographicalDescription = "        "
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+    }
 }

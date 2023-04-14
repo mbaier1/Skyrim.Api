@@ -97,6 +97,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<Stable>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewStable());
             else if (type.TypeOfLocation == LocationType.StormcloakCamp)
                 _mockMapper.Setup(x => x.Map<StormcloakCamp>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewStormcloakCamp());
+            else if (type.TypeOfLocation == LocationType.Tomb)
+                _mockMapper.Setup(x => x.Map<Tomb>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewTomb());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
             var completedCreateTask = Task<Location>.FromResult(taskType);
@@ -724,6 +726,27 @@ namespace Skyrim.Api.Test.Domains
                     GeographicalDescription = "Test"
                 }
             };
+            yield return new object[]
+            {
+                "Valid properties for Tomb Location",
+                TestMethodHelpers.CreateNewCreateLocationDtoAsTomb(),
+                new Tomb
+                {
+                    Id = 0,
+                    Name = "Test",
+                    Description = "Test",
+                    TypeOfLocation = LocationType.Tomb,
+                    GeographicalDescription = "Test"
+                },
+                new Tomb
+                {
+                    Id = 0,
+                    Name = "Test",
+                    Description = "Test",
+                    TypeOfLocation = LocationType.Tomb,
+                    GeographicalDescription = "Test"
+                }
+            };
         }
 
         [Theory]
@@ -790,6 +813,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<Stable>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewStable());
             else if (location.TypeOfLocation == LocationType.StormcloakCamp)
                 _mockMapper.Setup(x => x.Map<StormcloakCamp>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewStormcloakCamp());
+            else if (location.TypeOfLocation == LocationType.Tomb)
+                _mockMapper.Setup(x => x.Map<Tomb>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewTomb());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
             var completedCreateTask = Task<Location>.FromResult(taskType);
@@ -858,6 +883,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Verify(x => x.Map<Stable>(createLocationDto), Times.Once());
             else if (location.TypeOfLocation == LocationType.StormcloakCamp)
                 _mockMapper.Verify(x => x.Map<StormcloakCamp>(createLocationDto), Times.Once());
+            else if (location.TypeOfLocation == LocationType.Tomb)
+                _mockMapper.Verify(x => x.Map<Tomb>(createLocationDto), Times.Once());
             else
                 Assert.True(false);
         }
@@ -1022,6 +1049,11 @@ namespace Skyrim.Api.Test.Domains
                 "Invalid properties for StormcloakCamp",
                 new CreateLocationDto { TypeOfLocation = LocationType.StormcloakCamp }
             };
+            yield return new object[]
+            {
+                "Invalid properties for Tomb",
+                new CreateLocationDto { TypeOfLocation = LocationType.Tomb }
+            };
         }
 
         [Theory]
@@ -1087,6 +1119,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<Stable>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
             else if (location.TypeOfLocation == LocationType.StormcloakCamp)
                 _mockMapper.Setup(x => x.Map<StormcloakCamp>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
+            else if (location.TypeOfLocation == LocationType.Tomb)
+                _mockMapper.Setup(x => x.Map<Tomb>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
 
@@ -1273,6 +1307,12 @@ namespace Skyrim.Api.Test.Domains
                 TestMethodHelpers.CreateNewStormcloakCamp(),
                 TestMethodHelpers.CreateNewCreateLocationDtoAsStormcloakCamp()
            };
+            yield return new object[]
+           {
+                "Invalid properties for Tomb",
+                TestMethodHelpers.CreateNewTomb(),
+                TestMethodHelpers.CreateNewCreateLocationDtoAsTomb()
+           };
         }
 
         [Theory]
@@ -1340,6 +1380,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<Stable>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewStable());
             else if (type.TypeOfLocation == LocationType.StormcloakCamp)
                 _mockMapper.Setup(x => x.Map<StormcloakCamp>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewStormcloakCamp());
+            else if (type.TypeOfLocation == LocationType.Tomb)
+                _mockMapper.Setup(x => x.Map<Tomb>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewTomb());
 
             var completedCreateTask = Task<Location>.FromResult(taskType);
             _mockLocationRepository.Setup(x => x.SaveLocation(It.IsAny<Location>()))
@@ -2572,6 +2614,48 @@ namespace Skyrim.Api.Test.Domains
                     TestMethodHelpers.CreateNewCreateLocationDtoAsStormcloakCamp(),
                     TestMethodHelpers.CreateNewStormcloakCamp(),
                     TestMethodHelpers.CreateNewStormcloakCamp()
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null description so it returns a Tomb with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = null,
+                        TypeOfLocation = LocationType.Tomb,
+                        GeographicalDescription = "Test"
+                    },
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsTomb(),
+                    TestMethodHelpers.CreateNewTomb(),
+                    TestMethodHelpers.CreateNewTomb()
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has white spaces for description so it returns a Tomb with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = "     ",
+                        TypeOfLocation = LocationType.Tomb,
+                        GeographicalDescription = "Test"
+                    },
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsTomb(),
+                    TestMethodHelpers.CreateNewTomb(),
+                    TestMethodHelpers.CreateNewTomb()
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has empty description so it returns a Tomb with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = "",
+                        TypeOfLocation = LocationType.Tomb,
+                        GeographicalDescription = "Test"
+                    },
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsTomb(),
+                    TestMethodHelpers.CreateNewTomb(),
+                    TestMethodHelpers.CreateNewTomb()
             };
         }
 
@@ -4676,6 +4760,78 @@ namespace Skyrim.Api.Test.Domains
                         GeographicalDescription = " ",
                         Name = "Test",
                         TypeOfLocation = LocationType.StormcloakCamp
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = null,
+                        TypeOfLocation = LocationType.Tomb
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has an empty name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = "",
+                        TypeOfLocation = LocationType.Tomb
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a white space name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = "   ",
+                        TypeOfLocation = LocationType.Tomb
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = null,
+                        Name = "Test",
+                        TypeOfLocation = LocationType.Tomb
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has an empty Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "",
+                        Name = "Test",
+                        TypeOfLocation = LocationType.Tomb
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a white space Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = " ",
+                        Name = "Test",
+                        TypeOfLocation = LocationType.Tomb
                     },
                     (CreateLocationDto)null
             };

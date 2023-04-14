@@ -387,6 +387,18 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.StormcloakCamp
                 }
         };
+        yield return new object[]
+        {
+                "Fatal Error for Tomb location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Tomb
+                }
+        };
     }
 
     [Theory]
@@ -780,6 +792,19 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.StormcloakCamp
                 },
                 LocationType.StormcloakCamp
+        };
+        yield return new object[]
+        {
+                "Fatal Error for Tomb location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Tomb
+                },
+                LocationType.Tomb
         };
     }
 }

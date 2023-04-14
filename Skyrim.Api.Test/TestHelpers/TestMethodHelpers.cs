@@ -354,6 +354,18 @@ namespace Skyrim.Api.Test.TestHelpers
             };
         }
 
+        public static Tomb CreateNewTomb()
+        {
+            return new Tomb
+            {
+                Id = 0,
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.Tomb,
+                GeographicalDescription = "Test"
+            };
+        }
+
         public static CreateLocationDto CreateNewCreateLocationDtoAsCity()
         {
             return new CreateLocationDto
@@ -670,6 +682,17 @@ namespace Skyrim.Api.Test.TestHelpers
                 Description = "",
                 GeographicalDescription = "Test",
                 TypeOfLocation = LocationType.StormcloakCamp
+            };
+        }
+
+        public static CreateLocationDto CreateNewCreateLocationDtoAsTomb()
+        {
+            return new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "",
+                GeographicalDescription = "Test",
+                TypeOfLocation = LocationType.Tomb
             };
         }
     }
