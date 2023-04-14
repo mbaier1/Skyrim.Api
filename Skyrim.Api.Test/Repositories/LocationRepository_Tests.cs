@@ -136,6 +136,9 @@ namespace Skyrim.Api.Test.Repositories
                 case LocationType.StormcloakCamp:
                     Assert.Equal(_context.StormcloakCamps.FirstOrDefault().Name, result.Name);
                     break;
+                case LocationType.Tomb:
+                    Assert.Equal(_context.Tombs.FirstOrDefault().Name, result.Name);
+                    break;
                 default:
                     Assert.True(false);
                     break;
@@ -287,6 +290,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Valid properties for a StormcloakCamp",
                 TestMethodHelpers.CreateNewStormcloakCamp()
+            };
+            yield return new object[]
+            {
+                "Valid properties for a Tomb",
+                TestMethodHelpers.CreateNewTomb()
             };
         }
 
@@ -465,6 +473,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Invalid properties for StormcloakCamp",
                 new StormcloakCamp()
+            };
+            yield return new object[]
+            {
+                "Invalid properties for Tomb",
+                new Tomb()
             };
         }
 

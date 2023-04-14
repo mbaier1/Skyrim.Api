@@ -103,6 +103,8 @@ namespace Skyrim.Api.Domain
                         return _mapper.Map<Stable>(createLocationDto);
                     case LocationType.StormcloakCamp:
                         return _mapper.Map<StormcloakCamp>(createLocationDto);
+                    case LocationType.Tomb:
+                        return _mapper.Map<Tomb>(createLocationDto);
                     default:
                         return null;
                 }

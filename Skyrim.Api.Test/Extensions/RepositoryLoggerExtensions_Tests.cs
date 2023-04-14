@@ -388,6 +388,18 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.StormcloakCamp
                 }
             };
+            yield return new object[]
+            {
+                "Fatal Error for Tomb location",
+                new Exception(),
+                new Tomb
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Tomb
+                }
+            };
         }
 
         [Theory]
@@ -782,6 +794,19 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.StormcloakCamp
                 },
                 LocationType.StormcloakCamp
+            };
+            yield return new object[]
+            {
+                "Fatal Error for Tomb location",
+                new Exception(),
+                new Tomb
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Tomb
+                },
+                LocationType.Tomb
             };
         }
     }
