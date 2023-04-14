@@ -115,6 +115,8 @@ namespace Skyrim.Api.Domain
                         return _mapper.Map<BodyOfWater>(createLocationDto);
                     case LocationType.InnOrTavern:
                         return _mapper.Map<InnOrTavern>(createLocationDto);
+                    case LocationType.Temple:
+                        return _mapper.Map<Temple>(createLocationDto);
                     default:
                         return null;
                 }

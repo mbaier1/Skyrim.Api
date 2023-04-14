@@ -7565,4 +7565,218 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
         }
     }
+
+    public class CreateLocation_AsTemple : LocationController_Tests
+    {
+        [Fact]
+        public async void WhenCreateLocationDtoHasRequiredValidPropertiesAsATemple_ReturnsCreateAtActionWithTempleDetails()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Temple",
+                TypeOfLocation = LocationType.Temple,
+                GeographicalDescription = "Test Temple"
+            };
+
+            var temple = new Temple
+            {
+                Id = 0,
+                Name = "Test Temple",
+                TypeOfLocation = LocationType.Temple,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(temple);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var templeObject = new object();
+            var locationAsTemple = new Temple();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            templeObject = responseAsCreateAsActionResult.Value;
+
+            locationAsTemple.Id = (int)templeObject.GetType().GetProperty("Id").GetValue(templeObject, null);
+            locationAsTemple.Name = (string)templeObject.GetType().GetProperty("Name").GetValue(templeObject, null);
+            locationAsTemple.TypeOfLocation = (LocationType)templeObject.GetType().GetProperty("TypeOfLocation").GetValue(templeObject, null);
+            locationAsTemple.GeographicalDescription = (string)templeObject.GetType().GetProperty("GeographicalDescription").GetValue(templeObject, null);
+            locationAsTemple.Description = (string)templeObject.GetType().GetProperty("Description").GetValue(templeObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(temple.Id, locationAsTemple.Id);
+            Assert.Equal(temple.Name, locationAsTemple.Name);
+            Assert.Equal(temple.Description, locationAsTemple.Description);
+            Assert.Equal(temple.TypeOfLocation, locationAsTemple.TypeOfLocation);
+            Assert.Equal(temple.GeographicalDescription, locationAsTemple.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasEmptySpacesForDescriptionATemple_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Temple",
+                Description = "    ",
+                TypeOfLocation = LocationType.Temple,
+                GeographicalDescription = "Test Description"
+            };
+
+            var temple = new Temple
+            {
+                Id = 0,
+                Name = "Test Temple",
+                Description = "",
+                TypeOfLocation = LocationType.Temple,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(temple);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var templeObject = new object();
+            var locationAsTemple = new Temple();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            templeObject = responseAsCreateAsActionResult.Value;
+
+            locationAsTemple.Id = (int)templeObject.GetType().GetProperty("Id").GetValue(templeObject, null);
+            locationAsTemple.Name = (string)templeObject.GetType().GetProperty("Name").GetValue(templeObject, null);
+            locationAsTemple.TypeOfLocation = (LocationType)templeObject.GetType().GetProperty("TypeOfLocation").GetValue(templeObject, null);
+            locationAsTemple.GeographicalDescription = (string)templeObject.GetType().GetProperty("GeographicalDescription").GetValue(templeObject, null);
+            locationAsTemple.Description = (string)templeObject.GetType().GetProperty("Description").GetValue(templeObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(temple.Name, locationAsTemple.Name);
+            Assert.Equal(temple.Id, locationAsTemple.Id);
+            Assert.Equal(temple.Description, locationAsTemple.Description);
+            Assert.Equal(temple.TypeOfLocation, locationAsTemple.TypeOfLocation);
+            Assert.Equal(temple.GeographicalDescription, locationAsTemple.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullForDescriptionAsAnTemple_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Temple",
+                Description = null,
+                TypeOfLocation = LocationType.Temple,
+                GeographicalDescription = "Test Description"
+            };
+
+            var temple = new Temple
+            {
+                Id = 0,
+                Name = "Test Temple",
+                Description = null,
+                TypeOfLocation = LocationType.Temple,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(temple);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var templeObject = new object();
+            var locationAsTemple = new Temple();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            templeObject = responseAsCreateAsActionResult.Value;
+
+            locationAsTemple.Id = (int)templeObject.GetType().GetProperty("Id").GetValue(templeObject, null);
+            locationAsTemple.Name = (string)templeObject.GetType().GetProperty("Name").GetValue(templeObject, null);
+            locationAsTemple.TypeOfLocation = (LocationType)templeObject.GetType().GetProperty("TypeOfLocation").GetValue(templeObject, null);
+            locationAsTemple.GeographicalDescription = (string)templeObject.GetType().GetProperty("GeographicalDescription").GetValue(templeObject, null);
+            locationAsTemple.Description = (string)templeObject.GetType().GetProperty("Description").GetValue(templeObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(temple.Id, locationAsTemple.Id);
+            Assert.Equal(temple.Name, locationAsTemple.Name);
+            Assert.Equal(temple.Description, locationAsTemple.Description);
+            Assert.Equal(temple.TypeOfLocation, locationAsTemple.TypeOfLocation);
+            Assert.Equal(temple.GeographicalDescription, locationAsTemple.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsATemple_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "      ",
+                Description = "Test",
+                TypeOfLocation = LocationType.Temple,
+                GeographicalDescription = "Test Description"
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsATemple_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.Temple,
+                GeographicalDescription = "        "
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+    }
 }
