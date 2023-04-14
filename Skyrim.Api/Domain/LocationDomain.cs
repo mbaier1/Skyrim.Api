@@ -119,6 +119,8 @@ namespace Skyrim.Api.Domain
                         return _mapper.Map<Temple>(createLocationDto);
                     case LocationType.WordWall:
                         return _mapper.Map<WordWall>(createLocationDto);
+                    case LocationType.Castle:
+                        return _mapper.Map<Castle>(createLocationDto);
                     default:
                         return null;
                 }

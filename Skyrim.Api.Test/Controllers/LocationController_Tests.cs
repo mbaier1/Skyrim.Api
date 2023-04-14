@@ -7993,4 +7993,218 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
         }
     }
+
+    public class CreateLocation_AsCastle : LocationController_Tests
+    {
+        [Fact]
+        public async void WhenCreateLocationDtoHasRequiredValidPropertiesAsACastle_ReturnsCreateAtActionWithCastleDetails()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Castle",
+                TypeOfLocation = LocationType.Castle,
+                GeographicalDescription = "Test Castle"
+            };
+
+            var castle = new Data.Models.Castle
+            {
+                Id = 0,
+                Name = "Test Castle",
+                TypeOfLocation = LocationType.Castle,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(castle);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var castleObject = new object();
+            var locationAsCastle = new Data.Models.Castle();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            castleObject = responseAsCreateAsActionResult.Value;
+
+            locationAsCastle.Id = (int)castleObject.GetType().GetProperty("Id").GetValue(castleObject, null);
+            locationAsCastle.Name = (string)castleObject.GetType().GetProperty("Name").GetValue(castleObject, null);
+            locationAsCastle.TypeOfLocation = (LocationType)castleObject.GetType().GetProperty("TypeOfLocation").GetValue(castleObject, null);
+            locationAsCastle.GeographicalDescription = (string)castleObject.GetType().GetProperty("GeographicalDescription").GetValue(castleObject, null);
+            locationAsCastle.Description = (string)castleObject.GetType().GetProperty("Description").GetValue(castleObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(castle.Id, locationAsCastle.Id);
+            Assert.Equal(castle.Name, locationAsCastle.Name);
+            Assert.Equal(castle.Description, locationAsCastle.Description);
+            Assert.Equal(castle.TypeOfLocation, locationAsCastle.TypeOfLocation);
+            Assert.Equal(castle.GeographicalDescription, locationAsCastle.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasEmptySpacesForDescriptionACastle_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Castle",
+                Description = "    ",
+                TypeOfLocation = LocationType.Castle,
+                GeographicalDescription = "Test Description"
+            };
+
+            var castle = new Data.Models.Castle
+            {
+                Id = 0,
+                Name = "Test Castle",
+                Description = "",
+                TypeOfLocation = LocationType.Castle,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(castle);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var castleObject = new object();
+            var locationAsCastle = new Data.Models.Castle();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            castleObject = responseAsCreateAsActionResult.Value;
+
+            locationAsCastle.Id = (int)castleObject.GetType().GetProperty("Id").GetValue(castleObject, null);
+            locationAsCastle.Name = (string)castleObject.GetType().GetProperty("Name").GetValue(castleObject, null);
+            locationAsCastle.TypeOfLocation = (LocationType)castleObject.GetType().GetProperty("TypeOfLocation").GetValue(castleObject, null);
+            locationAsCastle.GeographicalDescription = (string)castleObject.GetType().GetProperty("GeographicalDescription").GetValue(castleObject, null);
+            locationAsCastle.Description = (string)castleObject.GetType().GetProperty("Description").GetValue(castleObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(castle.Name, locationAsCastle.Name);
+            Assert.Equal(castle.Id, locationAsCastle.Id);
+            Assert.Equal(castle.Description, locationAsCastle.Description);
+            Assert.Equal(castle.TypeOfLocation, locationAsCastle.TypeOfLocation);
+            Assert.Equal(castle.GeographicalDescription, locationAsCastle.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullForDescriptionAsACastle_ReturnsCreatedAtActionWithLocationDetailsWithEmptyDescription()
+        {
+            // Arrange
+
+            var createLocationDto = new CreateLocationDto
+            {
+                Name = "Test Castle",
+                Description = null,
+                TypeOfLocation = LocationType.Castle,
+                GeographicalDescription = "Test Description"
+            };
+
+            var castle = new Data.Models.Castle
+            {
+                Id = 0,
+                Name = "Test Castle",
+                Description = null,
+                TypeOfLocation = LocationType.Castle,
+                GeographicalDescription = "Test Description"
+            };
+
+            var completedCreateTask = Task<Location>.FromResult(castle);
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
+            var castleObject = new object();
+            var locationAsCastle = new Data.Models.Castle();
+
+            // Act
+
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)response.Result;
+            castleObject = responseAsCreateAsActionResult.Value;
+
+            locationAsCastle.Id = (int)castleObject.GetType().GetProperty("Id").GetValue(castleObject, null);
+            locationAsCastle.Name = (string)castleObject.GetType().GetProperty("Name").GetValue(castleObject, null);
+            locationAsCastle.TypeOfLocation = (LocationType)castleObject.GetType().GetProperty("TypeOfLocation").GetValue(castleObject, null);
+            locationAsCastle.GeographicalDescription = (string)castleObject.GetType().GetProperty("GeographicalDescription").GetValue(castleObject, null);
+            locationAsCastle.Description = (string)castleObject.GetType().GetProperty("Description").GetValue(castleObject, null);
+
+            // Assert
+
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
+            Assert.Equal(castle.Id, locationAsCastle.Id);
+            Assert.Equal(castle.Name, locationAsCastle.Name);
+            Assert.Equal(castle.Description, locationAsCastle.Description);
+            Assert.Equal(castle.TypeOfLocation, locationAsCastle.TypeOfLocation);
+            Assert.Equal(castle.GeographicalDescription, locationAsCastle.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsACastle_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "      ",
+                Description = "Test",
+                TypeOfLocation = LocationType.Castle,
+                GeographicalDescription = "Test Description"
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+
+        [Fact]
+        public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsACastle_ReturnsBadRequest()
+        {
+            // Arrange
+            CreateLocationDto createLocationDto = new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.Castle,
+                GeographicalDescription = "        "
+            };
+
+            Location location = null;
+            var completedCreateTask = Task<Location>.FromResult(location);
+            var badRequest = (int)HttpStatusCode.BadRequest;
+
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+                .ReturnsAsync((Location)completedCreateTask.Result);
+
+            // Act
+            var response = await _locationsController.CreateLocation(createLocationDto);
+            var responseAsBadRequest = response.Result as BadRequestResult;
+
+            // Assert
+            Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+    }
 }

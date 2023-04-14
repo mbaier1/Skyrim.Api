@@ -113,6 +113,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<Temple>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewTemple());
             else if (type.TypeOfLocation == LocationType.WordWall)
                 _mockMapper.Setup(x => x.Map<WordWall>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewWordWall());
+            else if (type.TypeOfLocation == LocationType.Castle)
+                _mockMapper.Setup(x => x.Map<Data.Models.Castle>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewCastle());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
             var completedCreateTask = Task<Location>.FromResult(taskType);
@@ -908,6 +910,27 @@ namespace Skyrim.Api.Test.Domains
                     GeographicalDescription = "Test"
                 }
             };
+            yield return new object[]
+            {
+                "Valid properties for Castle Location",
+                TestMethodHelpers.CreateNewCreateLocationDtoAsCastle(),
+                new Data.Models.Castle
+                {
+                    Id = 0,
+                    Name = "Test",
+                    Description = "Test",
+                    TypeOfLocation = LocationType.Castle,
+                    GeographicalDescription = "Test"
+                },
+                new Data.Models.Castle
+                {
+                    Id = 0,
+                    Name = "Test",
+                    Description = "Test",
+                    TypeOfLocation = LocationType.Castle,
+                    GeographicalDescription = "Test"
+                }
+            };
         }
 
         [Theory]
@@ -990,6 +1013,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<Temple>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewTemple());
             else if (location.TypeOfLocation == LocationType.WordWall)
                 _mockMapper.Setup(x => x.Map<WordWall>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewWordWall());
+            else if (location.TypeOfLocation == LocationType.Castle)
+                _mockMapper.Setup(x => x.Map<Data.Models.Castle>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewCastle());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
             var completedCreateTask = Task<Location>.FromResult(taskType);
@@ -1074,6 +1099,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Verify(x => x.Map<Temple>(createLocationDto), Times.Once());
             else if (location.TypeOfLocation == LocationType.WordWall)
                 _mockMapper.Verify(x => x.Map<WordWall>(createLocationDto), Times.Once());
+            else if (location.TypeOfLocation == LocationType.Castle)
+                _mockMapper.Verify(x => x.Map<Data.Models.Castle>(createLocationDto), Times.Once());
             else
                 Assert.True(false);
         }
@@ -1278,6 +1305,11 @@ namespace Skyrim.Api.Test.Domains
                 "Invalid properties for WordWall",
                 new CreateLocationDto { TypeOfLocation = LocationType.WordWall }
             };
+            yield return new object[]
+            {
+                "Invalid properties for Castle",
+                new CreateLocationDto { TypeOfLocation = LocationType.Castle }
+            };
         }
 
         [Theory]
@@ -1359,6 +1391,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<Temple>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
             else if (location.TypeOfLocation == LocationType.WordWall)
                 _mockMapper.Setup(x => x.Map<WordWall>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
+            else if (location.TypeOfLocation == LocationType.Castle)
+                _mockMapper.Setup(x => x.Map<Data.Models.Castle>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
 
@@ -1593,6 +1627,12 @@ namespace Skyrim.Api.Test.Domains
                 TestMethodHelpers.CreateNewWordWall(),
                 TestMethodHelpers.CreateNewCreateLocationDtoAsWordWall()
            };
+            yield return new object[]
+           {
+                "Invalid properties for Castle",
+                TestMethodHelpers.CreateNewCastle(),
+                TestMethodHelpers.CreateNewCreateLocationDtoAsCastle()
+           };
         }
 
         [Theory]
@@ -1676,6 +1716,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<Temple>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewTemple());
             else if (type.TypeOfLocation == LocationType.WordWall)
                 _mockMapper.Setup(x => x.Map<WordWall>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewWordWall());
+            else if (type.TypeOfLocation == LocationType.Castle)
+                _mockMapper.Setup(x => x.Map<Data.Models.Castle>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewCastle());
 
             var completedCreateTask = Task<Location>.FromResult(taskType);
             _mockLocationRepository.Setup(x => x.SaveLocation(It.IsAny<Location>()))
@@ -3244,6 +3286,48 @@ namespace Skyrim.Api.Test.Domains
                     TestMethodHelpers.CreateNewCreateLocationDtoAsWordWall(),
                     TestMethodHelpers.CreateNewWordWall(),
                     TestMethodHelpers.CreateNewWordWall()
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null description so it returns a Castle with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = null,
+                        TypeOfLocation = LocationType.Castle,
+                        GeographicalDescription = "Test"
+                    },
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsCastle(),
+                    TestMethodHelpers.CreateNewCastle(),
+                    TestMethodHelpers.CreateNewCastle()
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has white spaces for description so it returns a Castle with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = "     ",
+                        TypeOfLocation = LocationType.Castle,
+                        GeographicalDescription = "Test"
+                    },
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsCastle(),
+                    TestMethodHelpers.CreateNewCastle(),
+                    TestMethodHelpers.CreateNewCastle()
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has empty description so it returns a Castle with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = "",
+                        TypeOfLocation = LocationType.Castle,
+                        GeographicalDescription = "Test"
+                    },
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsCastle(),
+                    TestMethodHelpers.CreateNewCastle(),
+                    TestMethodHelpers.CreateNewCastle()
             };
         }
 
@@ -5924,6 +6008,78 @@ namespace Skyrim.Api.Test.Domains
                         GeographicalDescription = " ",
                         Name = "Test",
                         TypeOfLocation = LocationType.WordWall
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = null,
+                        TypeOfLocation = LocationType.Castle
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has an empty name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = "",
+                        TypeOfLocation = LocationType.Castle
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a white space name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = "   ",
+                        TypeOfLocation = LocationType.Castle
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = null,
+                        Name = "Test",
+                        TypeOfLocation = LocationType.Castle
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has an empty Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "",
+                        Name = "Test",
+                        TypeOfLocation = LocationType.Castle
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a white space Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = " ",
+                        Name = "Test",
+                        TypeOfLocation = LocationType.Castle
                     },
                     (CreateLocationDto)null
             };

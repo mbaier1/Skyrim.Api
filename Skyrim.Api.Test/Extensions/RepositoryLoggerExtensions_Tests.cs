@@ -484,6 +484,18 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.WordWall
                 }
             };
+            yield return new object[]
+            {
+                "Fatal Error for Castle location",
+                new Exception(),
+                new Data.Models.Castle
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Castle
+                }
+            };
         }
 
         [Theory]
@@ -982,6 +994,19 @@ namespace Skyrim.Api.Test.Extensions
                     TypeOfLocation = LocationType.WordWall
                 },
                 LocationType.WordWall
+            };
+            yield return new object[]
+            {
+                "Fatal Error for Castle location",
+                new Exception(),
+                new Data.Models.Castle
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Castle
+                },
+                LocationType.Castle
             };
         }
     }

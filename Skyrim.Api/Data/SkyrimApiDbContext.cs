@@ -59,6 +59,7 @@ namespace Skyrim.Api.Data
         public DbSet<InnOrTavern> InnsOrTaverns { get; set; }
         public DbSet<Temple> Temples { get; set; }
         public DbSet<WordWall> WordWalls { get; set; }
+        public DbSet<Castle> Castles { get; set; }
 
         public DbSet<Guard> Guards { get; set; }
         public DbSet<PhyscialFightingShop> PhyscialFightingShops { get; set; }
