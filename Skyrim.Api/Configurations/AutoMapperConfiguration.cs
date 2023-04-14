@@ -38,6 +38,7 @@ namespace Skyrim.Api.Configurations
             CreateMap<Stable, CreateLocationDto>().ReverseMap();
             CreateMap<StormcloakCamp, CreateLocationDto>().ReverseMap();
             CreateMap<Tomb, CreateLocationDto>().ReverseMap();
+            CreateMap<Watchtower, CreateLocationDto>().ReverseMap();
         }
     }
 }

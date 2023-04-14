@@ -366,6 +366,18 @@ namespace Skyrim.Api.Test.TestHelpers
             };
         }
 
+        public static Watchtower CreateNewWatchtower()
+        {
+            return new Watchtower
+            {
+                Id = 0,
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.Watchtower,
+                GeographicalDescription = "Test"
+            };
+        }
+
         public static CreateLocationDto CreateNewCreateLocationDtoAsCity()
         {
             return new CreateLocationDto
@@ -693,6 +705,17 @@ namespace Skyrim.Api.Test.TestHelpers
                 Description = "",
                 GeographicalDescription = "Test",
                 TypeOfLocation = LocationType.Tomb
+            };
+        }
+
+        public static CreateLocationDto CreateNewCreateLocationDtoAsWatchtower()
+        {
+            return new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "",
+                GeographicalDescription = "Test",
+                TypeOfLocation = LocationType.Watchtower
             };
         }
     }

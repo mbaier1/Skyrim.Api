@@ -139,6 +139,9 @@ namespace Skyrim.Api.Test.Repositories
                 case LocationType.Tomb:
                     Assert.Equal(_context.Tombs.FirstOrDefault().Name, result.Name);
                     break;
+                case LocationType.Watchtower:
+                    Assert.Equal(_context.Watchtowers.FirstOrDefault().Name, result.Name);
+                    break;
                 default:
                     Assert.True(false);
                     break;
@@ -295,6 +298,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Valid properties for a Tomb",
                 TestMethodHelpers.CreateNewTomb()
+            };
+            yield return new object[]
+            {
+                "Valid properties for a Watchtower",
+                TestMethodHelpers.CreateNewWatchtower()
             };
         }
 
@@ -478,6 +486,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Invalid properties for Tomb",
                 new Tomb()
+            };
+            yield return new object[]
+            {
+                "Invalid properties for Watchtower",
+                new Watchtower()
             };
         }
 
