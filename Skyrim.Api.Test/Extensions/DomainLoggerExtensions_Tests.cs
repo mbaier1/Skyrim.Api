@@ -483,6 +483,18 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.WordWall
                 }
         };
+        yield return new object[]
+        {
+                "Fatal Error for Castle location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Castle
+                }
+        };
     }
 
     [Theory]
@@ -980,6 +992,19 @@ public class LogError : DomainLoggerExtensions_Tests
                     TypeOfLocation = LocationType.WordWall
                 },
                 LocationType.WordWall
+        };
+        yield return new object[]
+        {
+                "Fatal Error for Castle location",
+                new Exception(),
+                new CreateLocationDto
+                {
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Castle
+                },
+                LocationType.Castle
         };
     }
 }

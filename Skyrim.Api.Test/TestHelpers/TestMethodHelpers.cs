@@ -450,6 +450,18 @@ namespace Skyrim.Api.Test.TestHelpers
             };
         }
 
+        public static Data.Models.Castle CreateNewCastle()
+        {
+            return new Data.Models.Castle
+            {
+                Id = 0,
+                Name = "Test",
+                Description = "Test",
+                TypeOfLocation = LocationType.Castle,
+                GeographicalDescription = "Test"
+            };
+        }
+
         public static CreateLocationDto CreateNewCreateLocationDtoAsCity()
         {
             return new CreateLocationDto
@@ -854,6 +866,17 @@ namespace Skyrim.Api.Test.TestHelpers
                 Description = "",
                 GeographicalDescription = "Test",
                 TypeOfLocation = LocationType.WordWall
+            };
+        }
+
+        public static CreateLocationDto CreateNewCreateLocationDtoAsCastle()
+        {
+            return new CreateLocationDto
+            {
+                Name = "Test",
+                Description = "",
+                GeographicalDescription = "Test",
+                TypeOfLocation = LocationType.Castle
             };
         }
     }
