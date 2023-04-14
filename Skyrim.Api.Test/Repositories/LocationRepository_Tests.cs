@@ -166,6 +166,9 @@ namespace Skyrim.Api.Test.Repositories
                 case LocationType.GuildHeadquarter:
                     Assert.Equal(_context.GuildHeadquarters.FirstOrDefault().Name, result.Name);
                     break;
+                case LocationType.UnmarkedLocation:
+                    Assert.Equal(_context.UnmarkedLocations.FirstOrDefault().Name, result.Name);
+                    break;
                 default:
                     Assert.True(false);
                     break;
@@ -367,6 +370,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Valid properties for a GuildHeadquarter",
                 TestMethodHelpers.CreateNewGuildHeadquarter()
+            };
+            yield return new object[]
+            {
+                "Valid properties for a UnmarkedLocation",
+                TestMethodHelpers.CreateNewUnmarkedLocation()
             };
         }
 
@@ -595,6 +603,11 @@ namespace Skyrim.Api.Test.Repositories
             {
                 "Invalid properties for GuildHeadquarter",
                 new GuildHeadquarter()
+            };
+            yield return new object[]
+            {
+                "Invalid properties for UnmarkedLocation",
+                new UnmarkedLocation()
             };
         }
 

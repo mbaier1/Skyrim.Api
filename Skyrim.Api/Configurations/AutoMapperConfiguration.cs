@@ -47,6 +47,7 @@ namespace Skyrim.Api.Configurations
             CreateMap<WordWall, CreateLocationDto>().ReverseMap();
             CreateMap<Castle, CreateLocationDto>().ReverseMap();
             CreateMap<GuildHeadquarter, CreateLocationDto>().ReverseMap();
+            CreateMap<UnmarkedLocation, CreateLocationDto>().ReverseMap();
         }
     }
 }

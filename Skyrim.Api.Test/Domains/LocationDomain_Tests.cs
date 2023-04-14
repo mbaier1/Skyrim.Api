@@ -117,6 +117,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<Data.Models.Castle>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewCastle());
             else if (type.TypeOfLocation == LocationType.GuildHeadquarter)
                 _mockMapper.Setup(x => x.Map<GuildHeadquarter>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewGuildHeadquarter());
+            else if (type.TypeOfLocation == LocationType.UnmarkedLocation)
+                _mockMapper.Setup(x => x.Map<UnmarkedLocation>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewUnmarkedLocation());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
             var completedCreateTask = Task<Location>.FromResult(taskType);
@@ -954,6 +956,27 @@ namespace Skyrim.Api.Test.Domains
                     GeographicalDescription = "Test"
                 }
             };
+            yield return new object[]
+            {
+                "Valid properties for UnmarkedLocation Location",
+                TestMethodHelpers.CreateNewCreateLocationDtoAsUnmarkedLocation(),
+                new UnmarkedLocation
+                {
+                    Id = 0,
+                    Name = "Test",
+                    Description = "Test",
+                    TypeOfLocation = LocationType.UnmarkedLocation,
+                    GeographicalDescription = "Test"
+                },
+                new UnmarkedLocation
+                {
+                    Id = 0,
+                    Name = "Test",
+                    Description = "Test",
+                    TypeOfLocation = LocationType.UnmarkedLocation,
+                    GeographicalDescription = "Test"
+                }
+            };
         }
 
         [Theory]
@@ -1040,6 +1063,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<Data.Models.Castle>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewCastle());
             else if (location.TypeOfLocation == LocationType.GuildHeadquarter)
                 _mockMapper.Setup(x => x.Map<GuildHeadquarter>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewGuildHeadquarter());
+            else if (location.TypeOfLocation == LocationType.UnmarkedLocation)
+                _mockMapper.Setup(x => x.Map<UnmarkedLocation>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewUnmarkedLocation());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
             var completedCreateTask = Task<Location>.FromResult(taskType);
@@ -1128,6 +1153,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Verify(x => x.Map<Data.Models.Castle>(createLocationDto), Times.Once());
             else if (location.TypeOfLocation == LocationType.GuildHeadquarter)
                 _mockMapper.Verify(x => x.Map<GuildHeadquarter>(createLocationDto), Times.Once());
+            else if (location.TypeOfLocation == LocationType.UnmarkedLocation)
+                _mockMapper.Verify(x => x.Map<UnmarkedLocation>(createLocationDto), Times.Once());
             else
                 Assert.True(false);
         }
@@ -1342,6 +1369,11 @@ namespace Skyrim.Api.Test.Domains
                 "Invalid properties for GuildHeadquarter",
                 new CreateLocationDto { TypeOfLocation = LocationType.GuildHeadquarter }
            };
+            yield return new object[]
+           {
+                "Invalid properties for UnmarkedLocation",
+                new CreateLocationDto { TypeOfLocation = LocationType.UnmarkedLocation }
+           };
         }
 
         [Theory]
@@ -1427,6 +1459,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<Data.Models.Castle>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
             else if (location.TypeOfLocation == LocationType.GuildHeadquarter)
                 _mockMapper.Setup(x => x.Map<GuildHeadquarter>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
+            else if (location.TypeOfLocation == LocationType.UnmarkedLocation)
+                _mockMapper.Setup(x => x.Map<UnmarkedLocation>(It.IsAny<CreateLocationDto>())).Throws(new Exception());
 
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
 
@@ -1667,6 +1701,12 @@ namespace Skyrim.Api.Test.Domains
                 TestMethodHelpers.CreateNewCastle(),
                 TestMethodHelpers.CreateNewCreateLocationDtoAsCastle()
            };
+            yield return new object[]
+           {
+                "Invalid properties for UnmarkedLocation",
+                TestMethodHelpers.CreateNewUnmarkedLocation(),
+                TestMethodHelpers.CreateNewCreateLocationDtoAsUnmarkedLocation()
+           };
         }
 
         [Theory]
@@ -1754,6 +1794,8 @@ namespace Skyrim.Api.Test.Domains
                 _mockMapper.Setup(x => x.Map<Data.Models.Castle>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewCastle());
             else if (type.TypeOfLocation == LocationType.GuildHeadquarter)
                 _mockMapper.Setup(x => x.Map<GuildHeadquarter>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewGuildHeadquarter());
+            else if (type.TypeOfLocation == LocationType.UnmarkedLocation)
+                _mockMapper.Setup(x => x.Map<UnmarkedLocation>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewUnmarkedLocation());
 
             var completedCreateTask = Task<Location>.FromResult(taskType);
             _mockLocationRepository.Setup(x => x.SaveLocation(It.IsAny<Location>()))
@@ -3406,6 +3448,48 @@ namespace Skyrim.Api.Test.Domains
                     TestMethodHelpers.CreateNewCreateLocationDtoAsGuildHeadquarter(),
                     TestMethodHelpers.CreateNewGuildHeadquarter(),
                     TestMethodHelpers.CreateNewGuildHeadquarter()
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null description so it returns a UnmarkedLocation with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = null,
+                        TypeOfLocation = LocationType.UnmarkedLocation,
+                        GeographicalDescription = "Test"
+                    },
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsUnmarkedLocation(),
+                    TestMethodHelpers.CreateNewUnmarkedLocation(),
+                    TestMethodHelpers.CreateNewUnmarkedLocation()
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has white spaces for description so it returns a UnmarkedLocation with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = "     ",
+                        TypeOfLocation = LocationType.UnmarkedLocation,
+                        GeographicalDescription = "Test"
+                    },
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsUnmarkedLocation(),
+                    TestMethodHelpers.CreateNewUnmarkedLocation(),
+                    TestMethodHelpers.CreateNewUnmarkedLocation()
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has empty description so it returns a UnmarkedLocation with empty description",
+                    new CreateLocationDto
+                    {
+                        Name = "Test",
+                        Description = "",
+                        TypeOfLocation = LocationType.UnmarkedLocation,
+                        GeographicalDescription = "Test"
+                    },
+                    TestMethodHelpers.CreateNewCreateLocationDtoAsUnmarkedLocation(),
+                    TestMethodHelpers.CreateNewUnmarkedLocation(),
+                    TestMethodHelpers.CreateNewUnmarkedLocation()
             };
         }
 
@@ -6230,6 +6314,78 @@ namespace Skyrim.Api.Test.Domains
                         GeographicalDescription = " ",
                         Name = "Test",
                         TypeOfLocation = LocationType.GuildHeadquarter
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = null,
+                        TypeOfLocation = LocationType.UnmarkedLocation
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has an empty name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = "",
+                        TypeOfLocation = LocationType.UnmarkedLocation
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a white space name",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "Test",
+                        Name = "   ",
+                        TypeOfLocation = LocationType.UnmarkedLocation
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a null Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = null,
+                        Name = "Test",
+                        TypeOfLocation = LocationType.UnmarkedLocation
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has an empty Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = "",
+                        Name = "Test",
+                        TypeOfLocation = LocationType.UnmarkedLocation
+                    },
+                    (CreateLocationDto)null
+            };
+            yield return new object[]
+            {
+                    "CreateLocationDto has a white space Geographic Description",
+                    new CreateLocationDto
+                    {
+                        Description = "Test",
+                        GeographicalDescription = " ",
+                        Name = "Test",
+                        TypeOfLocation = LocationType.UnmarkedLocation
                     },
                     (CreateLocationDto)null
             };
