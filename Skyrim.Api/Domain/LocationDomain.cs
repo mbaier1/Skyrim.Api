@@ -25,6 +25,11 @@ namespace Skyrim.Api.Domain
             _loggerExtension = loggerExtension;
             _mapper = mapper;
         }
+        public async Task<IEnumerable<Location>> GetLocation()
+        {
+            return await _locationRepository.GetLocation();
+        }
+
         public async Task<Location> GetLocation(int id)
         {
             return await _locationRepository.GetLocation(id);
