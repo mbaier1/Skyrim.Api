@@ -112,7 +112,6 @@ namespace Skyrim.Api.Test.Controllers
                 .ReturnsAsync((List<Location>)completedTask.Result);
             var okActionStatusCode = (int)HttpStatusCode.OK;
 
-
             // Act
             var result = await _locationsController.GetLocation();
             var responseAsOkActionResult = (OkObjectResult)result.Result;
