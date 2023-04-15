@@ -31,6 +31,40 @@ namespace Skyrim.Api.Test.Domains
         }
     }
 
+    public class GetLocation : LocationDomain_Tests
+    {
+        [Fact]
+        public async void WhenIdIsValid_ReturnsExpectedLocation()
+        {
+            // Arrange
+            int id = 0;
+            var city = TestMethodHelpers.CreateNewCity();
+            _mockLocationRepository.Setup(x => x.GetLocation(It.IsAny<int>())).ReturnsAsync(city);
+
+            // Act
+
+            var result = await _locationDomain.GetLocation(id);
+
+            // Assert
+            Assert.Equal(id, city.Id);
+        }
+
+        [Fact]
+        public async void WhenIdIsInvalid_ReturnsExpectedNull()
+        {
+            // Arrange
+            int id = 1;
+
+            _mockLocationRepository.Setup(x => x.GetLocation(It.IsAny<int>())).ReturnsAsync((City)null);
+
+            // Act
+            var result = await _locationDomain.GetLocation(id);
+
+            // Assert
+            Assert.Null(result);
+        }
+    }
+
     public class CreateLocation : LocationDomain_Tests
     {
         [Theory]
