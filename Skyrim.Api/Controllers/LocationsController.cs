@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Skyrim.Api.Data.AbstractModels;
+using Skyrim.Api.Data.Enums;
 using Skyrim.Api.Domain.DTOs;
 using Skyrim.Api.Domain.Interfaces;
 
@@ -16,7 +17,7 @@ namespace Skyrim.Api.Controllers
             _locationDomain = locationDomain;
         }
 
-        // GET: api/Locations
+        // GET: api/Location
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Location>>> GetLocation()
         {
@@ -24,19 +25,15 @@ namespace Skyrim.Api.Controllers
             return Ok();
         }
 
-        // GET: api/Locations/5
+        // GET: api/Location/id
         [HttpGet("{id}")]
         public async Task<ActionResult<Location>> GetLocation(int id)
         {
-            //var location = await _context.Location.FindAsync(id);
+            var result = await _locationDomain.GetLocation(id);
+            if (result == null)
+                return NotFound();
 
-            //if (location == null)
-            //{
-            //    return NotFound();
-            //}
-
-            //return location;
-            return Ok();
+            return Ok(result);
         }
 
         // PUT: api/Locations/5
@@ -82,7 +79,7 @@ namespace Skyrim.Api.Controllers
             if (location == null)
                 return BadRequest();
 
-            return CreatedAtAction("GetLocation", new
+            return CreatedAtAction(nameof(GetLocation), new { id = location.Id}, new
             {
                 location.Id,
                 location.Name,

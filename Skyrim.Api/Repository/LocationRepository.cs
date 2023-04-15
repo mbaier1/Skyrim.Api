@@ -1,4 +1,5 @@
-﻿using Skyrim.Api.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Skyrim.Api.Data;
 using Skyrim.Api.Data.AbstractModels;
 using Skyrim.Api.Extensions.Interfaces;
 using Skyrim.Api.Repository.Interface;
@@ -14,6 +15,19 @@ namespace Skyrim.Api.Repository
         {
             _context = context;
             _loggerExtension = loggerExtension;
+        }
+
+        public async Task<Location> GetLocation(int id)
+        {
+            try
+            {
+                return await _context.Location.FirstOrDefaultAsync(x => x.Id == id);
+            }
+            catch (Exception e)
+            {
+                _loggerExtension.LogError(e);
+            }
+            return null;
         }
 
         public async Task<Location> SaveLocation(Location location)

@@ -13,7 +13,7 @@ namespace Skyrim.Api.Extensions
             _LocationRepositoryLogger = locationRepositoryLogger;
         }
 
-        public void LogError(Exception e, Location location)
+        public void LogError(Exception e, Location location=null)
         {
             _LocationRepositoryLogger.Log(LogLevel.Error, e.Message, location);
         }
