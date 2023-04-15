@@ -5,7 +5,8 @@ namespace Skyrim.Api.Domain.Interfaces
 {
     public interface ILocationDomain
     {
-        Task<Location> CreateLocation(CreateLocationDto createLocationDto);
+        Task<IEnumerable<Location>> GetLocation();
         Task<Location> GetLocation(int id);
+        Task<Location> CreateLocation(CreateLocationDto createLocationDto);
     }
 }

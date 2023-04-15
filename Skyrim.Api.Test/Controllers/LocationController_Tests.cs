@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentAssertions;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Skyrim.Api.Controllers;
 using Skyrim.Api.Data.AbstractModels;
@@ -6,6 +7,7 @@ using Skyrim.Api.Data.Enums;
 using Skyrim.Api.Data.Models;
 using Skyrim.Api.Domain.DTOs;
 using Skyrim.Api.Domain.Interfaces;
+using System.Media;
 using System.Net;
 
 namespace Skyrim.Api.Test.Controllers
@@ -68,6 +70,81 @@ namespace Skyrim.Api.Test.Controllers
             // Assert
 
             Assert.Equal(badRequest, responseAsBadRequest.StatusCode);
+        }
+    }
+
+    public class GetLocations : LocationController_Tests
+    {
+        [Fact]
+        public async void WithDataInDatabase_ReturnsOkStatusAndLocationsArray()
+        {
+            // Arrange
+            List<Location> locations = new List<Location>
+            {
+                new City
+                {
+                    Id = 1,
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.City
+                },
+                new Town
+                {
+                    Id = 2,
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Town
+                },
+                new Settlement
+                {
+                    Id = 3,
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Settlement
+                }
+            };
+
+            var completedTask = Task<Location>.FromResult(locations);
+            _mockDomain.Setup(x => x.GetLocation())
+                .ReturnsAsync((List<Location>)completedTask.Result);
+            var okActionStatusCode = (int)HttpStatusCode.OK;
+
+            // Act
+            var result = await _locationsController.GetLocation();
+            var responseAsOkActionResult = (OkObjectResult)result.Result;
+            var resultValue = responseAsOkActionResult.Value;
+            List<object> resultLocations = new List<object>()
+            {
+                resultValue
+            };
+
+            // Assert
+            Assert.Equal(okActionStatusCode, responseAsOkActionResult.StatusCode);
+            resultLocations[0].Should().Be(locations);
+        }
+
+        [Fact]
+        public async void WithNoDataInDatabaseOrIfErrorHappens_ReturnsNotFoundAndNull()
+        {
+            // Arrange
+            List<Location> locations = (List<Location>)null;
+
+            var completedTask = Task<Location>.FromResult(locations);
+
+            _mockDomain.Setup(x => x.GetLocation())
+                .ReturnsAsync((IEnumerable<Location>)completedTask.Result);
+
+            // Act
+            var result = await _locationsController.GetLocation();
+
+            var responseAsNotFoundActionResult = (NotFoundResult)result.Value;
+
+            // Assert
+            Assert.Equal("Microsoft.AspNetCore.Mvc.NotFoundResult", result.Result.ToString());
+            Assert.Null(responseAsNotFoundActionResult);
         }
     }
 

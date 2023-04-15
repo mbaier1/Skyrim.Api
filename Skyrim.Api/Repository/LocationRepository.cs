@@ -17,6 +17,19 @@ namespace Skyrim.Api.Repository
             _loggerExtension = loggerExtension;
         }
 
+        public async Task<IEnumerable<Location>> GetLocation()
+        {
+            try
+            {
+                return await _context.Location.Where(x => x.Id >= 1).ToArrayAsync();
+            }
+            catch (Exception e)
+            {
+                _loggerExtension.LogError(e);
+            }
+            return null;
+        }
+
         public async Task<Location> GetLocation(int id)
         {
             try

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.CodeAnalysis;
 using Moq;
 using Skyrim.Api.Data.AbstractModels;
 using Skyrim.Api.Data.Enums;
@@ -9,6 +10,7 @@ using Skyrim.Api.Domain.Interfaces;
 using Skyrim.Api.Extensions.Interfaces;
 using Skyrim.Api.Repository.Interface;
 using Skyrim.Api.Test.TestHelpers;
+using Location = Skyrim.Api.Data.AbstractModels.Location;
 
 namespace Skyrim.Api.Test.Domains
 {
@@ -28,6 +30,105 @@ namespace Skyrim.Api.Test.Domains
             _mockMapper = new Mock<IMapper>();
             _locationDomain = new LocationDomain(_mockLocationRepository.Object, _mockCreateLocationDtoFormatHelper.Object,
                 _mockLoggerExtension.Object, _mockMapper.Object);
+        }
+    }
+
+    public class GetLocations : LocationDomain_Tests
+    {
+        [Fact]
+        public async void WithDataInDatabase_ReturnsExpectedLocations()
+        {
+            // Arrange
+            var locations = new List<Location>
+            {
+                new City
+                {
+                    Id = 1,
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.City
+                },
+                new Town
+                {
+                    Id = 2,
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Town
+                },
+                new Settlement
+                {
+                    Id = 3,
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Settlement
+                }
+            };
+            _mockLocationRepository.Setup(x => x.GetLocation()).ReturnsAsync(locations);
+
+            // Act
+            var result = await _locationDomain.GetLocation();
+
+            // Assert
+            Assert.Equal(locations[0].Id, result.ToList()[0].Id);
+            Assert.Equal(locations[1].Id, result.ToList()[1].Id);
+            Assert.Equal(locations[2].Id, result.ToList()[2].Id);
+        }
+
+        [Fact]
+        public async void WithDataInDatabase_HasCorrectCountOfLocations()
+        {
+            // Arrange
+            List<Location> locations = new List<Location>
+            {
+                new City
+                {
+                    Id = 1,
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.City
+                },
+                new Town
+                {
+                    Id = 2,
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Town
+                },
+                new Settlement
+                {
+                    Id = 3,
+                    Name = "Test",
+                    Description = "Test",
+                    GeographicalDescription = "Test",
+                    TypeOfLocation = LocationType.Settlement
+                }
+            };
+            _mockLocationRepository.Setup(x => x.GetLocation()).ReturnsAsync(locations);
+
+            // Act
+            var result = await _locationDomain.GetLocation();
+
+            // Assert
+            Assert.Equal(locations.Count(), result.ToList().Count());
+        }
+
+        [Fact]
+        public async void WithNoDataInDatabaseOrErrorOccurs_ReturnsNull()
+        {
+            // Arrange
+            var locations = (List<Location>)null;
+            _mockLocationRepository.Setup(x => x.GetLocation()).ReturnsAsync(locations);
+
+            // Act
+            var result = await _locationDomain.GetLocation();
+
+            // Assert
+            Assert.Null(result);
         }
     }
 
