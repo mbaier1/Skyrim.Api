@@ -21,8 +21,11 @@ namespace Skyrim.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Location>>> GetLocation()
         {
-            //return await _context.Location.ToListAsync();
-            return Ok();
+            var result = await _locationDomain.GetLocation();
+            if (result == null)
+                return NotFound();
+
+            return Ok(result);
         }
 
         // GET: api/Location/id

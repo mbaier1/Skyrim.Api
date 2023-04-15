@@ -5,7 +5,8 @@ namespace Skyrim.Api.Repository.Interface
 {
     public interface ILocationRepository
     {
-        Task<Location> SaveLocation(Location location);
+        Task<IEnumerable<Location>> GetLocation();
         Task<Location> GetLocation(int id);
+        Task<Location> SaveLocation(Location location);
     }
 }

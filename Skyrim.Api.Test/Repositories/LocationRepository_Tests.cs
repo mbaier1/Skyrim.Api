@@ -38,6 +38,80 @@ namespace Skyrim.Api.Test.Repositories
         }
     }
 
+    public class GetLocations : LocationRepository_Tests
+    {
+        [Fact]
+        public async void WithDataInDatabase_ReturnsExpectedLocations()
+        {
+            // Arrange
+            var city = new City
+            {
+                Id = 1,
+                Name = "Test",
+                GeographicalDescription = "Test",
+                TypeOfLocation = LocationType.City,
+                Description = "Test"
+            };
+            var town = new Town
+            {
+                Id = 2,
+                Name = "Test",
+                GeographicalDescription = "Test",
+                TypeOfLocation = LocationType.Town,
+                Description = "Test"
+            };
+            var settlement = new Settlement
+            {
+                Id = 3,
+                Name = "Test",
+                GeographicalDescription = "Test",
+                TypeOfLocation = LocationType.Settlement,
+                Description = "Test"
+            };
+
+            await _context.AddAsync(city);
+            await _context.AddAsync(town);
+            await _context.AddAsync(settlement);
+            await _context.SaveChangesAsync();
+
+            // Act
+            var result = await _locationRepository.GetLocation();
+
+            // Assert
+            Assert.Equal(city.Id, result.ToList()[0].Id);
+            Assert.Equal(town.Id, result.ToList()[2].Id);
+            Assert.Equal(settlement.Id, result.ToList()[1].Id);
+            _context.Database.EnsureDeleted();
+        }
+
+        [Fact]
+        public async void WithNoDataInDatabase_ReturnsExpectedEmptyCollection()
+        {
+            // Arrange
+
+            // Act
+            var result = await _locationRepository.GetLocation();
+
+            // Assert
+            Assert.True(result.Count() == 0);
+            _context.Database.EnsureDeleted();
+        }
+
+        //Note: The reality of this test is to log the error, but I am not able to due to the nature of the code.
+        [Fact]
+        public async void WhenErrorOccurs_ErrorIsThrown_ButItShouldCatchItAndLogError()
+        {
+            // Arrange
+            _partialMockLocationRepository.Setup(x => x.GetLocation()).ThrowsAsync(new Exception());
+
+            // Act
+
+            // Assert
+            await Assert.ThrowsAsync<Exception>(() => _partialMockLocationRepository.Object.GetLocation());
+            _context.Database.EnsureDeleted();
+        }
+    }
+
     public class GetLocation : LocationRepository_Tests
     {
         [Fact]
@@ -113,7 +187,6 @@ namespace Skyrim.Api.Test.Repositories
             _partialMockLocationRepository.Setup(x => x.GetLocation(It.IsAny<int>())).ThrowsAsync(new Exception());
 
             // Act
-            var result = await _locationRepository.GetLocation(id);
 
             // Assert
             await Assert.ThrowsAsync<Exception>(() => _partialMockLocationRepository.Object.GetLocation(id));
