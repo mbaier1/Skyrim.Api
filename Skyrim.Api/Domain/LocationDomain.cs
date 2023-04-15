@@ -27,7 +27,11 @@ namespace Skyrim.Api.Domain
         }
         public async Task<IEnumerable<Location>> GetLocation()
         {
-            return await _locationRepository.GetLocation();
+            var locations = await _locationRepository.GetLocation();
+            if (locations.Count() == 0)
+                return null;
+
+            return locations;
         }
 
         public async Task<Location> GetLocation(int id)

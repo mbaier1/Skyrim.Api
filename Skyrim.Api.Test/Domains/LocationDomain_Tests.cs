@@ -121,7 +121,7 @@ namespace Skyrim.Api.Test.Domains
         public async void WithNoDataInDatabaseOrErrorOccurs_ReturnsNull()
         {
             // Arrange
-            var locations = (List<Location>)null;
+            var locations = new List<Location>();
             _mockLocationRepository.Setup(x => x.GetLocation()).ReturnsAsync(locations);
 
             // Act
