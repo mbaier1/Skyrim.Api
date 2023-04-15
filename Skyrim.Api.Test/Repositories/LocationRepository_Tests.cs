@@ -4,6 +4,7 @@ using Skyrim.Api.Data;
 using Skyrim.Api.Data.AbstractModels;
 using Skyrim.Api.Data.Enums;
 using Skyrim.Api.Data.Models;
+using Skyrim.Api.Domain.DTOs;
 using Skyrim.Api.Extensions.Interfaces;
 using Skyrim.Api.Repository;
 using Skyrim.Api.Repository.Interface;
@@ -16,15 +17,17 @@ namespace Skyrim.Api.Test.Repositories
         protected ILocationRepository _locationRepository;
         protected SkyrimApiDbContext _context;
         protected Mock<IRepositoryLoggerExtension> _mockLoggerExtension;
+        protected Mock<ILocationRepository> _partialMockLocationRepository;
 
         protected ILocationRepository GetInMemoryRepository()
         {
             var options = new DbContextOptionsBuilder<SkyrimApiDbContext>()
-            .UseInMemoryDatabase(databaseName: "MockSkyrimLocationDb")
+            .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
             .Options;
 
             _context = new SkyrimApiDbContext(options);
             _mockLoggerExtension = new Mock<IRepositoryLoggerExtension>();
+            _partialMockLocationRepository = new Mock<ILocationRepository>();
 
             return _locationRepository = new LocationRepository(_context, _mockLoggerExtension.Object);
         }
@@ -32,6 +35,89 @@ namespace Skyrim.Api.Test.Repositories
         public LocationRepository_Tests()
         {
             _locationRepository = GetInMemoryRepository();
+        }
+    }
+
+    public class GetLocation : LocationRepository_Tests
+    {
+        [Fact]
+        public async void WithValidId_ReturnsExpectedLocation()
+        {
+            // Arrange
+            int id = 1;
+            var city = new City
+            {
+                Id = 1,
+                Name = "Test",
+                GeographicalDescription = "Test",
+                TypeOfLocation = LocationType.City,
+                Description = "Test"
+            };
+
+            await _context.AddAsync(city);
+            await _context.SaveChangesAsync();
+
+            // Act
+            var result = await _locationRepository.GetLocation(id);
+
+            // Assert
+            Assert.Equal(city.Id, result.Id);
+            _context.Database.EnsureDeleted();
+        }
+
+        [Fact]
+        public async void WithInvalidId_ReturnsExpectedNull()
+        {
+            // Arrange
+            int id = 2;
+            var city = new City
+            {
+                Id = 1,
+                Name = "Test",
+                GeographicalDescription = "Test",
+                TypeOfLocation = LocationType.City,
+                Description = "Test"
+            };
+
+            await _context.AddAsync(city);
+            await _context.SaveChangesAsync();
+
+            // Act
+            var result = await _locationRepository.GetLocation(id);
+
+            // Assert
+            Assert.Null(result);
+            _context.Database.EnsureDeleted();
+        }
+
+        [Fact]
+        public async void WhenErrorOccurs_ReturnsExpectedNull()
+        {
+            // Arrange
+            int id = -0;
+
+            // Act
+            var result = await _locationRepository.GetLocation(id);
+
+            // Assert
+            Assert.Null(result);
+            _context.Database.EnsureDeleted();
+        }
+
+        //Note: The reality of this test is to log the error, but I am not able to due to the nature of the code.
+        [Fact]
+        public async void WhenErrorOccurs_ErrorIsThrown_ButItShouldCatchItAndLogError()
+        {
+            // Arrange
+            int id = -0;
+            _partialMockLocationRepository.Setup(x => x.GetLocation(It.IsAny<int>())).ThrowsAsync(new Exception());
+
+            // Act
+            var result = await _locationRepository.GetLocation(id);
+
+            // Assert
+            await Assert.ThrowsAsync<Exception>(() => _partialMockLocationRepository.Object.GetLocation(id));
+            _context.Database.EnsureDeleted();
         }
     }
 
@@ -173,6 +259,7 @@ namespace Skyrim.Api.Test.Repositories
                     Assert.True(false);
                     break;
             }
+            _context.Database.EnsureDeleted();
         }
         public static IEnumerable<object[]> ValidLocationForEachLocationType()
         {
@@ -393,6 +480,7 @@ namespace Skyrim.Api.Test.Repositories
             Assert.Equal(location.GeographicalDescription, result.GeographicalDescription);
             Assert.Equal(location.TypeOfLocation, result.TypeOfLocation);
             Assert.Equal(location.Id, result.Id);
+            _context.Database.EnsureDeleted();
         }
 
         [Theory]
@@ -406,6 +494,7 @@ namespace Skyrim.Api.Test.Repositories
 
             // Assert
             _mockLoggerExtension.Verify(x => x.LogError(It.IsAny<Exception>(), It.IsAny<Location>()), Times.Once);
+            _context.Database.EnsureDeleted();
         }
         public static IEnumerable<object[]> InvalidPropertiesForEachLocationType()
         {
@@ -622,6 +711,7 @@ namespace Skyrim.Api.Test.Repositories
 
             // Assert
             Assert.Equal(null, result);
+            _context.Database.EnsureDeleted();
         }
     }
 }

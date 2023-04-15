@@ -71,6 +71,74 @@ namespace Skyrim.Api.Test.Controllers
         }
     }
 
+    public class GetLocation : LocationController_Tests
+    {
+        [Fact]
+        public async void WithValidId_ReturnsOkStatusCodeAndExpectedLocation()
+        {
+            // Arrange
+
+            int id = 1;
+
+            var city = new City
+            {
+                Id = 1,
+                Name = "Test",
+                TypeOfLocation = LocationType.City,
+                GeographicalDescription = "Test"
+            };
+
+            var completedTask = Task<Location>.FromResult(city);
+
+            _mockDomain.Setup(x => x.GetLocation(It.IsAny<int>()))
+                .ReturnsAsync((Location)completedTask.Result);
+
+            var okActionStatusCode = (int)HttpStatusCode.OK;
+            var cityObject = new Object();
+            var locationAsCity = new City();
+
+            // Act
+
+            var result = await _locationsController.GetLocation(id);
+            var responseAsOkActionResult = (OkObjectResult)result.Result;
+            cityObject = responseAsOkActionResult.Value;
+
+            locationAsCity.Id = (int)cityObject.GetType().GetProperty("Id").GetValue(cityObject, null);
+            locationAsCity.Name = (string)cityObject.GetType().GetProperty("Name").GetValue(cityObject, null);
+            locationAsCity.TypeOfLocation = (LocationType)cityObject.GetType().GetProperty("TypeOfLocation").GetValue(cityObject, null);
+            locationAsCity.GeographicalDescription = (string)cityObject.GetType().GetProperty("GeographicalDescription").GetValue(cityObject, null);
+
+            // Assert
+
+            Assert.Equal(okActionStatusCode, responseAsOkActionResult.StatusCode);
+            Assert.Equal(city.Id, locationAsCity.Id);
+            Assert.Equal(city.Name, locationAsCity.Name);
+            Assert.Equal(city.TypeOfLocation, locationAsCity.TypeOfLocation);
+            Assert.Equal(city.GeographicalDescription, locationAsCity.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WithInvalidId_ReturnsExpectedNotFoundActionResultAndNull()
+        {
+            // Arrange
+            int id = 1;
+
+            City city = null;
+
+            var completedTask = Task<Location>.FromResult(city);
+
+            _mockDomain.Setup(x => x.GetLocation(It.IsAny<int>()))
+                .ReturnsAsync((Location)completedTask.Result);
+
+            // Act
+            var result = await _locationsController.GetLocation(id);
+
+            // Assert
+            Assert.Equal("Microsoft.AspNetCore.Mvc.NotFoundResult", result.Result.ToString());
+            Assert.Null(result.Value);
+        }
+    }
+
     public class CreateLocation_AsCity : LocationController_Tests
     {
         [Fact]

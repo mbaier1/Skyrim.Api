@@ -25,6 +25,10 @@ namespace Skyrim.Api.Domain
             _loggerExtension = loggerExtension;
             _mapper = mapper;
         }
+        public async Task<Location> GetLocation(int id)
+        {
+            return await _locationRepository.GetLocation(id);
+        }
 
         public async Task<Location> CreateLocation(CreateLocationDto createLocationDto)
         {
@@ -38,6 +42,7 @@ namespace Skyrim.Api.Domain
 
             return await _locationRepository.SaveLocation(location);
         }
+
 
         private Location MapLocationAsCorrectType(CreateLocationDto createLocationDto)
         {
