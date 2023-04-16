@@ -27,7 +27,11 @@ namespace Skyrim.Api.Domain
         }
         public async Task<IEnumerable<Location>> GetLocation()
         {
-            return await _locationRepository.GetLocation();
+            var locations = await _locationRepository.GetLocation();
+            if (locations.Count() == 0)
+                return null;
+
+            return locations;
         }
 
         public async Task<Location> GetLocation(int id)
@@ -48,6 +52,14 @@ namespace Skyrim.Api.Domain
             return await _locationRepository.SaveLocation(location);
         }
 
+        public async Task<bool> DeleteLocation(int id)
+        {
+            var location = await _locationRepository.GetLocation(id);
+            if (location == null)
+                return false;
+
+            return await _locationRepository.DeleteLocation(location);
+        }
 
         private Location MapLocationAsCorrectType(CreateLocationDto createLocationDto)
         {

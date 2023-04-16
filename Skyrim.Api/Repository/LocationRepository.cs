@@ -1,8 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.CodeAnalysis;
+using Microsoft.EntityFrameworkCore;
 using Skyrim.Api.Data;
 using Skyrim.Api.Data.AbstractModels;
 using Skyrim.Api.Extensions.Interfaces;
 using Skyrim.Api.Repository.Interface;
+using Location = Skyrim.Api.Data.AbstractModels.Location;
 
 namespace Skyrim.Api.Repository
 {
@@ -58,6 +60,22 @@ namespace Skyrim.Api.Repository
 
                 return null;
             }
+        }
+
+        public async Task<bool> DeleteLocation(Location location)
+        {
+            try
+            {
+                _context.Location.Remove(location);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception e)
+            {
+                _loggerExtension.LogError(e);
+            }
+
+            return false;
         }
     }
 }
