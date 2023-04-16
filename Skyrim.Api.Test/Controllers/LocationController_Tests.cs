@@ -216,6 +216,59 @@ namespace Skyrim.Api.Test.Controllers
         }
     }
 
+    public class DeleteLocation : LocationController_Tests
+    {
+        [Fact]
+        public async void WhenLocationExists_DeletesLocationAndReturnsOk()
+        {
+            // Arrange
+            var id = 1;
+            var isSuccessful = true;
+
+            var completedTask = Task<bool>.FromResult(isSuccessful);
+
+            _mockDomain.Setup(x => x.DeleteLocation(It.IsAny<int>()))
+                .ReturnsAsync((bool)completedTask.Result);
+
+            var okActionStatusCode = (int)HttpStatusCode.OK;
+
+            // Act
+
+            var result = await _locationsController.DeleteLocation(id);
+            var resultAsOkResult = (OkResult)result.Result;
+
+
+            // Assert
+
+            Assert.Equal(okActionStatusCode, resultAsOkResult.StatusCode);
+        }
+
+        [Fact]
+        public async void WhenLocationDoesNotExistOrErrorOccurs_ReturnsBadRequest()
+        {
+            // Arrange
+            bool isSuccessful = false;
+            int id = 1;
+
+            var completedTask = Task<bool>.FromResult(isSuccessful);
+
+            _mockDomain.Setup(x => x.DeleteLocation(It.IsAny<int>()))
+                .ReturnsAsync((bool)completedTask.Result);
+
+            var badRequestActionStatusCode = (int)HttpStatusCode.BadRequest;
+
+            // Act
+
+            var result = await _locationsController.DeleteLocation(id);
+            var resultAsBadRequestResult = (BadRequestResult)result.Result;
+
+
+            // Assert
+
+            Assert.Equal(badRequestActionStatusCode, resultAsBadRequestResult.StatusCode);
+        }
+    }
+
     public class CreateLocation_AsCity : LocationController_Tests
     {
         [Fact]

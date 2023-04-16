@@ -52,6 +52,14 @@ namespace Skyrim.Api.Domain
             return await _locationRepository.SaveLocation(location);
         }
 
+        public async Task<bool> DeleteLocation(int id)
+        {
+            var location = await _locationRepository.GetLocation(id);
+            if (location == null)
+                return false;
+
+            return await _locationRepository.DeleteLocation(location);
+        }
 
         private Location MapLocationAsCorrectType(CreateLocationDto createLocationDto)
         {

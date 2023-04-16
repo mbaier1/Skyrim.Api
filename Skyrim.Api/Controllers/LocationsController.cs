@@ -94,18 +94,13 @@ namespace Skyrim.Api.Controllers
 
         // DELETE: api/Locations/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteLocation(int id)
+        public async Task<ActionResult<bool>> DeleteLocation(int id)
         {
-            //var location = await _context.Location.FindAsync(id);
-            //if (location == null)
-            //{
-            //    return NotFound();
-            //}
+            var wasLocationDeleted = await _locationDomain.DeleteLocation(id);
+            if (!wasLocationDeleted)
+                return BadRequest();
 
-            //_context.Location.Remove(location);
-            //await _context.SaveChangesAsync();
-
-            return NoContent();
+            return Ok();
         }
     }
 }

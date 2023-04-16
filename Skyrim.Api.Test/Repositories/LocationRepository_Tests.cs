@@ -787,4 +787,66 @@ namespace Skyrim.Api.Test.Repositories
             _context.Database.EnsureDeleted();
         }
     }
+
+    public class DeleteLocation : LocationRepository_Tests
+    {
+        [Fact]
+        public async void WhenLocationIsDeleted_ReturnsTrue()
+        {
+            // Arrange
+            var city = new City
+            {
+                Id = 1,
+                Name = "Test",
+                GeographicalDescription = "Test",
+                TypeOfLocation = LocationType.City,
+                Description = "Test"
+            };
+
+            await _context.AddAsync(city);
+            await _context.SaveChangesAsync();
+
+            // Act
+            var result = await _locationRepository.DeleteLocation(city);
+
+            // Assert
+            Assert.Equal(true, result);
+            _context.Database.EnsureDeleted();
+        }
+
+        [Fact]
+        public async void WhenLocationFailsToDelete_ReturnsFalse()
+        {
+            // Arrange
+            var city = new City
+            {
+                Id = 1,
+                Name = "Test",
+                GeographicalDescription = "Test",
+                TypeOfLocation = LocationType.City,
+                Description = "Test"
+            };
+
+            // Act
+            var result = await _locationRepository.DeleteLocation(city);
+
+            // Assert
+            Assert.Equal(false, result);
+            _context.Database.EnsureDeleted();
+        }
+
+        [Fact]
+        public async void WhenErrorOccurs_LogsError()
+        {
+            // Arrange
+            var city = new City();
+
+            // Act
+            var result = await _locationRepository.DeleteLocation(city);
+
+            // Assert
+            _mockLoggerExtension.Verify(x => x.LogError(It.IsAny<Exception>(), It.IsAny<Location>()), Times.Once);
+            _context.Database.EnsureDeleted();
+        }
+    }
 }
