@@ -8,5 +8,6 @@ namespace Skyrim.Api.Domain.Interfaces
         Task<IEnumerable<Location>> GetLocation();
         Task<Location> GetLocation(int id);
         Task<Location> CreateLocation(CreateLocationDto createLocationDto);
+        Task<bool> DeleteLocation(int id);
     }
 }

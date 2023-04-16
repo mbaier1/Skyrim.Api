@@ -6546,4 +6546,102 @@ namespace Skyrim.Api.Test.Domains
             Assert.Equal(null, result);
         }
     }
+
+    public class DeleteLocation : LocationDomain_Tests
+    {
+        [Fact]
+        public async void WhenLocationIsFoundAndDeletedSuccessfully_ReturnsTrue()
+        {
+            // Arrange
+            var id = 1;
+            var location = new City()
+            {
+                Id = 1,
+                Name = "Test",
+                Description = "Test",
+                GeographicalDescription = "Test",
+                TypeOfLocation = LocationType.City
+            };
+
+            _mockLocationRepository.Setup(x => x.GetLocation(It.IsAny<int>())).ReturnsAsync(location);
+            _mockLocationRepository.Setup(x => x.DeleteLocation(It.IsAny<Location>())).ReturnsAsync(true);
+
+            // Act
+            var result = await _locationDomain.DeleteLocation(id);
+
+            // Assert
+            Assert.Equal(true, result);
+        }
+
+        [Fact]
+        public async void WhenLocationIsNotFound_ReturnsFalse()
+        {
+            // Arrange
+            var id = 1;
+            _mockLocationRepository.Setup(x => x.GetLocation(It.IsAny<int>())).ReturnsAsync((Location)null);
+            _mockLocationRepository.Setup(x => x.DeleteLocation(It.IsAny<Location>())).ReturnsAsync(false);
+
+            // Act
+            var result = await _locationDomain.DeleteLocation(id);
+
+            // Assert
+            Assert.Equal(false, result);
+        }
+
+        [Fact]
+        public async void WhenLocationIsNotFound_DueToError_ReturnsFalse()
+        {
+            // Arrange
+            var id = 1;
+            var result = true;
+            _mockLocationRepository.Setup(x => x.GetLocation(It.IsAny<int>())).ThrowsAsync(new Exception());
+
+            // Act
+            try
+            {
+                result = await _locationDomain.DeleteLocation(id);
+            }
+            catch (Exception)
+            {
+                result = false;
+            }
+
+            // Assert
+            await Assert.ThrowsAsync<Exception>(() => _locationDomain.GetLocation(id));
+            Assert.Equal(false, result);
+        }
+
+        [Fact]
+        public async void WhenLocationIsFound_ButErrorHappensWhenDeleted_ReturnsFalse()
+        {
+            // Arrange
+            var id = 1;
+            var result = true;
+            var location = new City()
+            {
+                Id = 1,
+                Name = "Test",
+                Description = "Test",
+                GeographicalDescription = "Test",
+                TypeOfLocation = LocationType.City
+            };
+
+            _mockLocationRepository.Setup(x => x.GetLocation(It.IsAny<int>())).ReturnsAsync(location);
+            _mockLocationRepository.Setup(x => x.DeleteLocation(It.IsAny<Location>())).ThrowsAsync(new Exception());
+
+            // Act
+            try
+            {
+                result = await _locationDomain.DeleteLocation(id);
+            }
+            catch (Exception)
+            {
+                result = false;
+            }
+
+            // Assert
+            await Assert.ThrowsAsync<Exception>(() => _locationDomain.DeleteLocation(id));
+            Assert.Equal(false, result);
+        }
+    }
 }
