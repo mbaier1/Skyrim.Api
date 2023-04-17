@@ -31,7 +31,7 @@ namespace Skyrim.Api.Domain
             if (locations.Count() == 0)
                 return null;
 
-            return locations;
+            return locations.OrderBy(x => x.Name);
         }
 
         public async Task<Location> GetLocation(int id)
