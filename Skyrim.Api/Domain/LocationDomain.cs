@@ -6,7 +6,6 @@ using Skyrim.Api.Domain.DTOs;
 using Skyrim.Api.Domain.Interfaces;
 using Skyrim.Api.Extensions.Interfaces;
 using Skyrim.Api.Repository.Interface;
-using System.ComponentModel;
 
 namespace Skyrim.Api.Domain
 {
