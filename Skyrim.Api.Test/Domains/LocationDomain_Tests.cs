@@ -6545,6 +6545,43 @@ namespace Skyrim.Api.Test.Domains
             // Assert
             Assert.Equal(null, result);
         }
+
+        [Fact]
+        public async void WhenLocationWithSameNameAndLocationType_AlreadyExists_ReturnsNull()
+        {
+            // Arrange
+            var createLocationDto = TestMethodHelpers.CreateNewCreateLocationDtoAsCity();
+
+            _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
+            _mockLocationRepository.Setup(x => x.GetLocation()).ReturnsAsync(new List<Location> { TestMethodHelpers.CreateNewCity() });
+            _mockMapper.Setup(x => x.Map<City>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewCity());
+
+            // Act
+            var result = await _locationDomain.CreateLocation(createLocationDto);
+
+            // Assert
+            Assert.Null(result);
+        }
+
+        [Fact]
+        public async void WhenLocationWithSameNameAndLocationType_DoesNotExist_ReturnsLocation()
+        {
+            // Arrange
+            var createLocationDto = TestMethodHelpers.CreateNewCreateLocationDtoAsCity();
+
+            _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<CreateLocationDto>())).Returns(createLocationDto);
+            _mockLocationRepository.Setup(x => x.GetLocation()).ReturnsAsync(new List<Location> { TestMethodHelpers.CreateNewTown() });
+            _mockMapper.Setup(x => x.Map<City>(It.IsAny<CreateLocationDto>())).Returns(TestMethodHelpers.CreateNewCity());
+            _mockLocationRepository.Setup(x => x.SaveLocation(It.IsAny<Location>())).ReturnsAsync(TestMethodHelpers.CreateNewCity());
+
+            // Act
+            var result = await _locationDomain.CreateLocation(createLocationDto);
+
+            // Assert
+            Assert.Equal(createLocationDto.Name, result.Name);
+            Assert.Equal(createLocationDto.GeographicalDescription, result.GeographicalDescription);
+            Assert.Equal(createLocationDto.TypeOfLocation, result.TypeOfLocation);
+        }
     }
 
     public class DeleteLocation : LocationDomain_Tests
