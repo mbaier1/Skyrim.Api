@@ -49,6 +49,9 @@ namespace Skyrim.Api.Domain
             if (location == null)
                 return null;
 
+            if (await DoesLocationAlreadyExist(location))
+                return null;
+
             return await _locationRepository.SaveLocation(location);
         }
 
@@ -157,6 +160,18 @@ namespace Skyrim.Api.Domain
 
                 return null;
             }
+        }
+
+        private async Task<bool> DoesLocationAlreadyExist(Location location)
+        {
+            var existingLocations = await _locationRepository.GetLocation();
+            var existingLocation = existingLocations.FirstOrDefault(x =>
+            x.TypeOfLocation == location.TypeOfLocation &&
+            x.Name == location.Name);
+            if (existingLocation == null)
+                return false;
+
+            return true;
         }
     }
 }
