@@ -18,7 +18,7 @@ namespace Skyrim.Api.Test.Domains.DomainHelpers
     {
         [Theory]
         [MemberData(nameof(ValidPropertiesForEachLocationType))]
-        public void WhenCreateLocationDtoHasValidProperties_ReturnsDtoUnaltered(string description, CreateLocationDto createLocationDto)
+        public void WhenCreateLocationDtoHasValidProperties_ReturnsDtoUnaltered(string description, LocationDto createLocationDto)
         {
             // Arrange
 
@@ -29,247 +29,247 @@ namespace Skyrim.Api.Test.Domains.DomainHelpers
             Assert.Equal(createLocationDto.Name, result.Name);
             Assert.Equal(createLocationDto.Description, result.Description);
             Assert.Equal(createLocationDto.GeographicalDescription, result.GeographicalDescription);
-            Assert.Equal(createLocationDto.TypeOfLocation, result.TypeOfLocation);
+            Assert.Equal(createLocationDto.LocationId, result.LocationId);
         }
         public static IEnumerable<object[]> ValidPropertiesForEachLocationType()
         {
             yield return new object[]
             {
                 "Valid properties for a City Location",
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.City
+                    LocationId = LocationType.City
                 }
             };
             yield return new object[]
             {
                 "Valid properties for a Town Location",
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Town
+                    LocationId = LocationType.Town
                 }
             };
             yield return new object[]
             {
                 "Valid properties for a Homestead Location",
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Homestead
+                    LocationId = LocationType.Homestead
                 }
             };
             yield return new object[]
             {
                 "Valid properties for a Settlement Location",
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Settlement
+                    LocationId = LocationType.Settlement
                 }
             };
             yield return new object[]
             {
                 "Valid properties for a DaedricShrine Location",
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.DaedricShrine
+                    LocationId = LocationType.DaedricShrine
                 }
             };
             yield return new object[]
             {
                 "Valid properties for a StandingStone Location",
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.StandingStone
+                    LocationId = LocationType.StandingStone
                 }
             };
             yield return new object[]
             {
                 "Valid properties for a Landmark Location",
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Landmark
+                    LocationId = LocationType.Landmark
                 }
             };
             yield return new object[]
             {
                 "Valid properties for a Camp Location",
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Camp
+                    LocationId = LocationType.Camp
                 }
             };
             yield return new object[]
             {
                 "Valid properties for a Cave Location",
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Cave
+                    LocationId = LocationType.Cave
                 }
             };
             yield return new object[]
             {
                 "Valid properties for a Clearing Location",
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Clearing
+                    LocationId = LocationType.Clearing
                 }
             };
             yield return new object[]
             {
                 "Valid properties for a Dock Location",
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Dock
+                    LocationId = LocationType.Dock
                 }
             };
             yield return new object[]
             {
                 "Valid properties for a DragonLair Location",
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.DragonLair
+                    LocationId = LocationType.DragonLair
                 }
             };
             yield return new object[]
             {
                 "Valid properties for a DwarvenRuin Location",
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.DwarvenRuin
+                    LocationId = LocationType.DwarvenRuin
                 }
             };
             yield return new object[]
             {
                 "Valid properties for a Farm Location",
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Farm
+                    LocationId = LocationType.Farm
                 }
             };
             yield return new object[]
             {
                 "Valid properties for a Fort Location",
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Fort
+                    LocationId = LocationType.Fort
                 }
             };
             yield return new object[]
             {
                 "Valid properties for a GiantCamp Location",
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.GiantCamp
+                    LocationId = LocationType.GiantCamp
                 }
             };
             yield return new object[]
             {
                 "Valid properties for a Grove Location",
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Grove
+                    LocationId = LocationType.Grove
                 }
             };
             yield return new object[]
             {
                 "Valid properties for a ImperialCamp Location",
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.ImperialCamp
+                    LocationId = LocationType.ImperialCamp
                 }
             };
             yield return new object[]
             {
                 "Valid properties for a LightHouse Location",
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.LightHouse
+                    LocationId = LocationType.LightHouse
                 }
             };
             yield return new object[]
             {
                 "Valid properties for a Mine Location",
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Mine
+                    LocationId = LocationType.Mine
                 }
             };
             yield return new object[]
             {
                 "Valid properties for a NordicTower Location",
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.NordicTower
+                    LocationId = LocationType.NordicTower
                 }
             };
         }
 
         [Theory]
         [MemberData(nameof(Allowed_Null_WhiteSpace_OrEmptyProperties_ForeachLocationType))]
-        public void CreateLocationDtoContainsEmpty_WhiteSpace_OrNullDescription(string description, CreateLocationDto createLocationDto,
-            CreateLocationDto formattedCreateLocationDto)
+        public void CreateLocationDtoContainsEmpty_WhiteSpace_OrNullDescription(string description, LocationDto createLocationDto,
+            LocationDto formattedCreateLocationDto)
         {
             // Arrange
 
@@ -280,2275 +280,2275 @@ namespace Skyrim.Api.Test.Domains.DomainHelpers
             Assert.Equal(formattedCreateLocationDto.Name, result.Name);
             Assert.Equal(formattedCreateLocationDto.Description, result.Description);
             Assert.Equal(formattedCreateLocationDto.GeographicalDescription, result.GeographicalDescription);
-            Assert.Equal(formattedCreateLocationDto.TypeOfLocation, result.TypeOfLocation);
+            Assert.Equal(formattedCreateLocationDto.LocationId, result.LocationId);
         }
         public static IEnumerable<object[]> Allowed_Null_WhiteSpace_OrEmptyProperties_ForeachLocationType()
         {
             yield return new object[]
             {
                 "CreateLocationDto has a null description for city so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = null,
-                     TypeOfLocation = LocationType.City,
+                     LocationId = LocationType.City,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.City,
+                     LocationId = LocationType.City,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white spaces for description for city so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "     ",
-                     TypeOfLocation = LocationType.City,
+                     LocationId = LocationType.City,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.City,
+                     LocationId = LocationType.City,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has empty description for city so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.City,
+                     LocationId = LocationType.City,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.City,
+                     LocationId = LocationType.City,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the name for city so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "  Test   ",
                      Description = "Test",
-                     TypeOfLocation = LocationType.City,
+                     LocationId = LocationType.City,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.City,
+                     LocationId = LocationType.City,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the description for city so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "  Test",
-                     TypeOfLocation = LocationType.City,
+                     LocationId = LocationType.City,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.City,
+                     LocationId = LocationType.City,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the geographical description for city so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.City,
+                     LocationId = LocationType.City,
                      GeographicalDescription = "Test    "
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.City,
+                     LocationId = LocationType.City,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null description for town so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = null,
-                     TypeOfLocation = LocationType.Town,
+                     LocationId = LocationType.Town,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.Town,
+                     LocationId = LocationType.Town,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white spaces for description for Town so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "     ",
-                     TypeOfLocation = LocationType.Town,
+                     LocationId = LocationType.Town,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.Town,
+                     LocationId = LocationType.Town,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has empty description for Town so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.Town,
+                     LocationId = LocationType.Town,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.Town,
+                     LocationId = LocationType.Town,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the name for Town so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "  Test   ",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Town,
+                     LocationId = LocationType.Town,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Town,
+                     LocationId = LocationType.Town,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the description for Town so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "  Test",
-                     TypeOfLocation = LocationType.Town,
+                     LocationId = LocationType.Town,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Town,
+                     LocationId = LocationType.Town,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the geographical description for Town so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Town,
+                     LocationId = LocationType.Town,
                      GeographicalDescription = "Test    "
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Town,
+                     LocationId = LocationType.Town,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null description for Homestead so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = null,
-                     TypeOfLocation = LocationType.Homestead,
+                     LocationId = LocationType.Homestead,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.Homestead,
+                     LocationId = LocationType.Homestead,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white spaces for description for Homestead so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "     ",
-                     TypeOfLocation = LocationType.Homestead,
+                     LocationId = LocationType.Homestead,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.Homestead,
+                     LocationId = LocationType.Homestead,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has empty description for Homestead so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.Homestead,
+                     LocationId = LocationType.Homestead,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.Homestead,
+                     LocationId = LocationType.Homestead,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the name for Homestead so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "  Test   ",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Homestead,
+                     LocationId = LocationType.Homestead,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Homestead,
+                     LocationId = LocationType.Homestead,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the description for Homestead so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "  Test",
-                     TypeOfLocation = LocationType.Homestead,
+                     LocationId = LocationType.Homestead,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Homestead,
+                     LocationId = LocationType.Homestead,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the geographical description for Homestead so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Homestead,
+                     LocationId = LocationType.Homestead,
                      GeographicalDescription = "Test    "
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Homestead,
+                     LocationId = LocationType.Homestead,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null description for Settlement so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = null,
-                     TypeOfLocation = LocationType.Settlement,
+                     LocationId = LocationType.Settlement,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.Settlement,
+                     LocationId = LocationType.Settlement,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white spaces for description for Settlement so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "     ",
-                     TypeOfLocation = LocationType.Settlement,
+                     LocationId = LocationType.Settlement,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.Settlement,
+                     LocationId = LocationType.Settlement,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has empty description for Settlement so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.Settlement,
+                     LocationId = LocationType.Settlement,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.Settlement,
+                     LocationId = LocationType.Settlement,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the name for Settlement so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "  Test   ",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Settlement,
+                     LocationId = LocationType.Settlement,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Settlement,
+                     LocationId = LocationType.Settlement,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the description for Settlement so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "  Test",
-                     TypeOfLocation = LocationType.Settlement,
+                     LocationId = LocationType.Settlement,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Settlement,
+                     LocationId = LocationType.Settlement,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the geographical description for Settlement so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Settlement,
+                     LocationId = LocationType.Settlement,
                      GeographicalDescription = "Test    "
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Settlement,
+                     LocationId = LocationType.Settlement,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null description for DaedricShrine so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = null,
-                     TypeOfLocation = LocationType.DaedricShrine,
+                     LocationId = LocationType.DaedricShrine,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.DaedricShrine,
+                     LocationId = LocationType.DaedricShrine,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white spaces for description for DaedricShrine so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "     ",
-                     TypeOfLocation = LocationType.DaedricShrine,
+                     LocationId = LocationType.DaedricShrine,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.DaedricShrine,
+                     LocationId = LocationType.DaedricShrine,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has empty description for DaedricShrine so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.DaedricShrine,
+                     LocationId = LocationType.DaedricShrine,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.DaedricShrine,
+                     LocationId = LocationType.DaedricShrine,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the name for DaedricShrine so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "  Test   ",
                      Description = "Test",
-                     TypeOfLocation = LocationType.DaedricShrine,
+                     LocationId = LocationType.DaedricShrine,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.DaedricShrine,
+                     LocationId = LocationType.DaedricShrine,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the description for DaedricShrine so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "  Test",
-                     TypeOfLocation = LocationType.DaedricShrine,
+                     LocationId = LocationType.DaedricShrine,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.DaedricShrine,
+                     LocationId = LocationType.DaedricShrine,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the geographical description for DaedricShrine so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.DaedricShrine,
+                     LocationId = LocationType.DaedricShrine,
                      GeographicalDescription = "Test    "
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.DaedricShrine,
+                     LocationId = LocationType.DaedricShrine,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null description for StandingStone so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = null,
-                     TypeOfLocation = LocationType.StandingStone,
+                     LocationId = LocationType.StandingStone,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.StandingStone,
+                     LocationId = LocationType.StandingStone,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white spaces for description for StandingStone so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "     ",
-                     TypeOfLocation = LocationType.StandingStone,
+                     LocationId = LocationType.StandingStone,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.StandingStone,
+                     LocationId = LocationType.StandingStone,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has empty description for StandingStone so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.StandingStone,
+                     LocationId = LocationType.StandingStone,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.StandingStone,
+                     LocationId = LocationType.StandingStone,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the name for StandingStone so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "  Test   ",
                      Description = "Test",
-                     TypeOfLocation = LocationType.StandingStone,
+                     LocationId = LocationType.StandingStone,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.StandingStone,
+                     LocationId = LocationType.StandingStone,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the description for StandingStone so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "  Test",
-                     TypeOfLocation = LocationType.StandingStone,
+                     LocationId = LocationType.StandingStone,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.StandingStone,
+                     LocationId = LocationType.StandingStone,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the geographical description for StandingStone so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.StandingStone,
+                     LocationId = LocationType.StandingStone,
                      GeographicalDescription = "Test    "
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.StandingStone,
+                     LocationId = LocationType.StandingStone,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null description for Landmark so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = null,
-                     TypeOfLocation = LocationType.Landmark,
+                     LocationId = LocationType.Landmark,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.Landmark,
+                     LocationId = LocationType.Landmark,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white spaces for description for Landmark so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "     ",
-                     TypeOfLocation = LocationType.Landmark,
+                     LocationId = LocationType.Landmark,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.Landmark,
+                     LocationId = LocationType.Landmark,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has empty description for Landmark so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.Landmark,
+                     LocationId = LocationType.Landmark,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.Landmark,
+                     LocationId = LocationType.Landmark,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the name for Landmark so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "  Test   ",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Landmark,
+                     LocationId = LocationType.Landmark,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Landmark,
+                     LocationId = LocationType.Landmark,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the description for Landmark so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "  Test",
-                     TypeOfLocation = LocationType.Landmark,
+                     LocationId = LocationType.Landmark,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Landmark,
+                     LocationId = LocationType.Landmark,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the geographical description for Landmark so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Landmark,
+                     LocationId = LocationType.Landmark,
                      GeographicalDescription = "Test    "
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Landmark,
+                     LocationId = LocationType.Landmark,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null description for Camp so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = null,
-                     TypeOfLocation = LocationType.Camp,
+                     LocationId = LocationType.Camp,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.Camp,
+                     LocationId = LocationType.Camp,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white spaces for description for Camp so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "     ",
-                     TypeOfLocation = LocationType.Camp,
+                     LocationId = LocationType.Camp,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.Camp,
+                     LocationId = LocationType.Camp,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has empty description for Camp so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.Camp,
+                     LocationId = LocationType.Camp,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.Camp,
+                     LocationId = LocationType.Camp,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the name for Camp so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "  Test   ",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Camp,
+                     LocationId = LocationType.Camp,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Camp,
+                     LocationId = LocationType.Camp,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the description for Camp so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "  Test",
-                     TypeOfLocation = LocationType.Camp,
+                     LocationId = LocationType.Camp,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Camp,
+                     LocationId = LocationType.Camp,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the geographical description for Camp so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Camp,
+                     LocationId = LocationType.Camp,
                      GeographicalDescription = "Test    "
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Camp,
+                     LocationId = LocationType.Camp,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null description for Cave so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = null,
-                     TypeOfLocation = LocationType.Cave,
+                     LocationId = LocationType.Cave,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.Cave,
+                     LocationId = LocationType.Cave,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white spaces for description for Cave so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "     ",
-                     TypeOfLocation = LocationType.Cave,
+                     LocationId = LocationType.Cave,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.Cave,
+                     LocationId = LocationType.Cave,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has empty description for Cave so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.Cave,
+                     LocationId = LocationType.Cave,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.Cave,
+                     LocationId = LocationType.Cave,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the name for Cave so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "  Test   ",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Cave,
+                     LocationId = LocationType.Cave,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Cave,
+                     LocationId = LocationType.Cave,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the description for Cave so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "  Test",
-                     TypeOfLocation = LocationType.Cave,
+                     LocationId = LocationType.Cave,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Cave,
+                     LocationId = LocationType.Cave,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the geographical description for Cave so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Cave,
+                     LocationId = LocationType.Cave,
                      GeographicalDescription = "Test    "
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Cave,
+                     LocationId = LocationType.Cave,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null description for Clearing so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = null,
-                     TypeOfLocation = LocationType.Clearing,
+                     LocationId = LocationType.Clearing,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.Clearing,
+                     LocationId = LocationType.Clearing,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white spaces for description for Clearing so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "     ",
-                     TypeOfLocation = LocationType.Clearing,
+                     LocationId = LocationType.Clearing,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.Clearing,
+                     LocationId = LocationType.Clearing,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has empty description for Clearing so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.Clearing,
+                     LocationId = LocationType.Clearing,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.Clearing,
+                     LocationId = LocationType.Clearing,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the name for Clearing so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "  Test   ",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Clearing,
+                     LocationId = LocationType.Clearing,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Clearing,
+                     LocationId = LocationType.Clearing,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the description for Clearing so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "  Test",
-                     TypeOfLocation = LocationType.Clearing,
+                     LocationId = LocationType.Clearing,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Clearing,
+                     LocationId = LocationType.Clearing,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the geographical description for Clearing so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Clearing,
+                     LocationId = LocationType.Clearing,
                      GeographicalDescription = "Test    "
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Clearing,
+                     LocationId = LocationType.Clearing,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null description for Dock so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = null,
-                     TypeOfLocation = LocationType.Dock,
+                     LocationId = LocationType.Dock,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.Dock,
+                     LocationId = LocationType.Dock,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white spaces for description for Dock so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "     ",
-                     TypeOfLocation = LocationType.Dock,
+                     LocationId = LocationType.Dock,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.Dock,
+                     LocationId = LocationType.Dock,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has empty description for Dock so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.Dock,
+                     LocationId = LocationType.Dock,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.Dock,
+                     LocationId = LocationType.Dock,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the name for Dock so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "  Test   ",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Dock,
+                     LocationId = LocationType.Dock,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Dock,
+                     LocationId = LocationType.Dock,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the description for Dock so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "  Test",
-                     TypeOfLocation = LocationType.Dock,
+                     LocationId = LocationType.Dock,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Dock,
+                     LocationId = LocationType.Dock,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the geographical description for Dock so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Dock,
+                     LocationId = LocationType.Dock,
                      GeographicalDescription = "Test    "
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Dock,
+                     LocationId = LocationType.Dock,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null description for DragonLair so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = null,
-                     TypeOfLocation = LocationType.DragonLair,
+                     LocationId = LocationType.DragonLair,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.DragonLair,
+                     LocationId = LocationType.DragonLair,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white spaces for description for DragonLair so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "     ",
-                     TypeOfLocation = LocationType.DragonLair,
+                     LocationId = LocationType.DragonLair,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.DragonLair,
+                     LocationId = LocationType.DragonLair,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has empty description for DragonLair so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.DragonLair,
+                     LocationId = LocationType.DragonLair,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.DragonLair,
+                     LocationId = LocationType.DragonLair,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the name for DragonLair so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "  Test   ",
                      Description = "Test",
-                     TypeOfLocation = LocationType.DragonLair,
+                     LocationId = LocationType.DragonLair,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.DragonLair,
+                     LocationId = LocationType.DragonLair,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the description for DragonLair so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "  Test",
-                     TypeOfLocation = LocationType.DragonLair,
+                     LocationId = LocationType.DragonLair,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.DragonLair,
+                     LocationId = LocationType.DragonLair,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the geographical description for DragonLair so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.DragonLair,
+                     LocationId = LocationType.DragonLair,
                      GeographicalDescription = "Test    "
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.DragonLair,
+                     LocationId = LocationType.DragonLair,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null description for DwarvenRuin so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = null,
-                     TypeOfLocation = LocationType.DwarvenRuin,
+                     LocationId = LocationType.DwarvenRuin,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.DwarvenRuin,
+                     LocationId = LocationType.DwarvenRuin,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white spaces for description for DwarvenRuin so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "     ",
-                     TypeOfLocation = LocationType.DwarvenRuin,
+                     LocationId = LocationType.DwarvenRuin,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.DwarvenRuin,
+                     LocationId = LocationType.DwarvenRuin,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has empty description for DwarvenRuin so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.DwarvenRuin,
+                     LocationId = LocationType.DwarvenRuin,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.DwarvenRuin,
+                     LocationId = LocationType.DwarvenRuin,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the name for DwarvenRuin so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "  Test   ",
                      Description = "Test",
-                     TypeOfLocation = LocationType.DwarvenRuin,
+                     LocationId = LocationType.DwarvenRuin,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.DwarvenRuin,
+                     LocationId = LocationType.DwarvenRuin,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the description for DwarvenRuin so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "  Test",
-                     TypeOfLocation = LocationType.DwarvenRuin,
+                     LocationId = LocationType.DwarvenRuin,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.DwarvenRuin,
+                     LocationId = LocationType.DwarvenRuin,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the geographical description for DwarvenRuin so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.DwarvenRuin,
+                     LocationId = LocationType.DwarvenRuin,
                      GeographicalDescription = "Test    "
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.DwarvenRuin,
+                     LocationId = LocationType.DwarvenRuin,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null description for Farm so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = null,
-                     TypeOfLocation = LocationType.Farm,
+                     LocationId = LocationType.Farm,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.Farm,
+                     LocationId = LocationType.Farm,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white spaces for description for Farm so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "     ",
-                     TypeOfLocation = LocationType.Farm,
+                     LocationId = LocationType.Farm,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.Farm,
+                     LocationId = LocationType.Farm,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has empty description for Farm so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.Farm,
+                     LocationId = LocationType.Farm,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.Farm,
+                     LocationId = LocationType.Farm,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the name for Farm so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "  Test   ",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Farm,
+                     LocationId = LocationType.Farm,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Farm,
+                     LocationId = LocationType.Farm,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the description for Farm so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "  Test",
-                     TypeOfLocation = LocationType.Farm,
+                     LocationId = LocationType.Farm,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Farm,
+                     LocationId = LocationType.Farm,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the geographical description for Farm so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Farm,
+                     LocationId = LocationType.Farm,
                      GeographicalDescription = "Test    "
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Farm,
+                     LocationId = LocationType.Farm,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null description for Fort so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = null,
-                     TypeOfLocation = LocationType.Fort,
+                     LocationId = LocationType.Fort,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.Fort,
+                     LocationId = LocationType.Fort,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white spaces for description for Fort so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "     ",
-                     TypeOfLocation = LocationType.Fort,
+                     LocationId = LocationType.Fort,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.Fort,
+                     LocationId = LocationType.Fort,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has empty description for Fort so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.Fort,
+                     LocationId = LocationType.Fort,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.Fort,
+                     LocationId = LocationType.Fort,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the name for Fort so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "  Test   ",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Fort,
+                     LocationId = LocationType.Fort,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Fort,
+                     LocationId = LocationType.Fort,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the description for Fort so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "  Test",
-                     TypeOfLocation = LocationType.Fort,
+                     LocationId = LocationType.Fort,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Fort,
+                     LocationId = LocationType.Fort,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the geographical description for Fort so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Fort,
+                     LocationId = LocationType.Fort,
                      GeographicalDescription = "Test    "
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Fort,
+                     LocationId = LocationType.Fort,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null description for GiantCamp so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = null,
-                     TypeOfLocation = LocationType.GiantCamp,
+                     LocationId = LocationType.GiantCamp,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.GiantCamp,
+                     LocationId = LocationType.GiantCamp,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white spaces for description for GiantCamp so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "     ",
-                     TypeOfLocation = LocationType.GiantCamp,
+                     LocationId = LocationType.GiantCamp,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.GiantCamp,
+                     LocationId = LocationType.GiantCamp,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has empty description for GiantCamp so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.GiantCamp,
+                     LocationId = LocationType.GiantCamp,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.GiantCamp,
+                     LocationId = LocationType.GiantCamp,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the name for GiantCamp so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "  Test   ",
                      Description = "Test",
-                     TypeOfLocation = LocationType.GiantCamp,
+                     LocationId = LocationType.GiantCamp,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.GiantCamp,
+                     LocationId = LocationType.GiantCamp,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the description for GiantCamp so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "  Test",
-                     TypeOfLocation = LocationType.GiantCamp,
+                     LocationId = LocationType.GiantCamp,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.GiantCamp,
+                     LocationId = LocationType.GiantCamp,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the geographical description for GiantCamp so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.GiantCamp,
+                     LocationId = LocationType.GiantCamp,
                      GeographicalDescription = "Test    "
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.GiantCamp,
+                     LocationId = LocationType.GiantCamp,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null description for Grove so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = null,
-                     TypeOfLocation = LocationType.Grove,
+                     LocationId = LocationType.Grove,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.Grove,
+                     LocationId = LocationType.Grove,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white spaces for description for Grove so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "     ",
-                     TypeOfLocation = LocationType.Grove,
+                     LocationId = LocationType.Grove,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.Grove,
+                     LocationId = LocationType.Grove,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has empty description for Grove so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.Grove,
+                     LocationId = LocationType.Grove,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.Grove,
+                     LocationId = LocationType.Grove,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the name for Grove so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "  Test   ",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Grove,
+                     LocationId = LocationType.Grove,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Grove,
+                     LocationId = LocationType.Grove,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the description for Grove so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "  Test",
-                     TypeOfLocation = LocationType.Grove,
+                     LocationId = LocationType.Grove,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Grove,
+                     LocationId = LocationType.Grove,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the geographical description for Grove so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Grove,
+                     LocationId = LocationType.Grove,
                      GeographicalDescription = "Test    "
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Grove,
+                     LocationId = LocationType.Grove,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null description for ImperialCamp so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = null,
-                     TypeOfLocation = LocationType.ImperialCamp,
+                     LocationId = LocationType.ImperialCamp,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.ImperialCamp,
+                     LocationId = LocationType.ImperialCamp,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white spaces for description for ImperialCamp so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "     ",
-                     TypeOfLocation = LocationType.ImperialCamp,
+                     LocationId = LocationType.ImperialCamp,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.ImperialCamp,
+                     LocationId = LocationType.ImperialCamp,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has empty description for ImperialCamp so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.ImperialCamp,
+                     LocationId = LocationType.ImperialCamp,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.ImperialCamp,
+                     LocationId = LocationType.ImperialCamp,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the name for ImperialCamp so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "  Test   ",
                      Description = "Test",
-                     TypeOfLocation = LocationType.ImperialCamp,
+                     LocationId = LocationType.ImperialCamp,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.ImperialCamp,
+                     LocationId = LocationType.ImperialCamp,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the description for ImperialCamp so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "  Test",
-                     TypeOfLocation = LocationType.ImperialCamp,
+                     LocationId = LocationType.ImperialCamp,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.ImperialCamp,
+                     LocationId = LocationType.ImperialCamp,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the geographical description for ImperialCamp so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.ImperialCamp,
+                     LocationId = LocationType.ImperialCamp,
                      GeographicalDescription = "Test    "
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.ImperialCamp,
+                     LocationId = LocationType.ImperialCamp,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null description for LightHouse so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = null,
-                     TypeOfLocation = LocationType.LightHouse,
+                     LocationId = LocationType.LightHouse,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.LightHouse,
+                     LocationId = LocationType.LightHouse,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white spaces for description for LightHouse so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "     ",
-                     TypeOfLocation = LocationType.LightHouse,
+                     LocationId = LocationType.LightHouse,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.LightHouse,
+                     LocationId = LocationType.LightHouse,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has empty description for LightHouse so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.LightHouse,
+                     LocationId = LocationType.LightHouse,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.LightHouse,
+                     LocationId = LocationType.LightHouse,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the name for LightHouse so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "  Test   ",
                      Description = "Test",
-                     TypeOfLocation = LocationType.LightHouse,
+                     LocationId = LocationType.LightHouse,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.LightHouse,
+                     LocationId = LocationType.LightHouse,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the description for LightHouse so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "  Test",
-                     TypeOfLocation = LocationType.LightHouse,
+                     LocationId = LocationType.LightHouse,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.LightHouse,
+                     LocationId = LocationType.LightHouse,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the geographical description for LightHouse so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.LightHouse,
+                     LocationId = LocationType.LightHouse,
                      GeographicalDescription = "Test    "
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.LightHouse,
+                     LocationId = LocationType.LightHouse,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null description for Mine so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = null,
-                     TypeOfLocation = LocationType.Mine,
+                     LocationId = LocationType.Mine,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.Mine,
+                     LocationId = LocationType.Mine,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white spaces for description for Mine so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "     ",
-                     TypeOfLocation = LocationType.Mine,
+                     LocationId = LocationType.Mine,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.Mine,
+                     LocationId = LocationType.Mine,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has empty description for Mine so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.Mine,
+                     LocationId = LocationType.Mine,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.Mine,
+                     LocationId = LocationType.Mine,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the name for Mine so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "  Test   ",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Mine,
+                     LocationId = LocationType.Mine,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Mine,
+                     LocationId = LocationType.Mine,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the description for Mine so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "  Test",
-                     TypeOfLocation = LocationType.Mine,
+                     LocationId = LocationType.Mine,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Mine,
+                     LocationId = LocationType.Mine,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the geographical description for Mine so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Mine,
+                     LocationId = LocationType.Mine,
                      GeographicalDescription = "Test    "
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.Mine,
+                     LocationId = LocationType.Mine,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null description for NordicTower so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = null,
-                     TypeOfLocation = LocationType.NordicTower,
+                     LocationId = LocationType.NordicTower,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.NordicTower,
+                     LocationId = LocationType.NordicTower,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white spaces for description for NordicTower so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "     ",
-                     TypeOfLocation = LocationType.NordicTower,
+                     LocationId = LocationType.NordicTower,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.NordicTower,
+                     LocationId = LocationType.NordicTower,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has empty description for NordicTower so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.NordicTower,
+                     LocationId = LocationType.NordicTower,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "",
-                     TypeOfLocation = LocationType.NordicTower,
+                     LocationId = LocationType.NordicTower,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the name for NordicTower so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "  Test   ",
                      Description = "Test",
-                     TypeOfLocation = LocationType.NordicTower,
+                     LocationId = LocationType.NordicTower,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.NordicTower,
+                     LocationId = LocationType.NordicTower,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the description for NordicTower so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "  Test",
-                     TypeOfLocation = LocationType.NordicTower,
+                     LocationId = LocationType.NordicTower,
                      GeographicalDescription = "Test"
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.NordicTower,
+                     LocationId = LocationType.NordicTower,
                      GeographicalDescription = "Test"
                  }
             };
             yield return new object[]
             {
                 "CreateLocationDto has white space in the geographical description for NordicTower so it returns with an empty description",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.NordicTower,
+                     LocationId = LocationType.NordicTower,
                      GeographicalDescription = "Test    "
                  },
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
-                     TypeOfLocation = LocationType.NordicTower,
+                     LocationId = LocationType.NordicTower,
                      GeographicalDescription = "Test"
                  }
             };
@@ -2556,8 +2556,8 @@ namespace Skyrim.Api.Test.Domains.DomainHelpers
 
         [Theory]
         [MemberData(nameof(UnallowedNull_Invalid_orWhiteSpaceProperties))]
-        public void CreateLocationDtoContainsInvalid_Empty_Whitespace_OrNullProperties(string description, CreateLocationDto createLocationDto,
-            CreateLocationDto formattedCreateLocationDto)
+        public void CreateLocationDtoContainsInvalid_Empty_Whitespace_OrNullProperties(string description, LocationDto createLocationDto,
+            LocationDto formattedCreateLocationDto)
         {
             // Arrange
 
@@ -2572,1521 +2572,1521 @@ namespace Skyrim.Api.Test.Domains.DomainHelpers
             yield return new object[]
             {
                 "CreateLocationDto has a null name for City",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = null,
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.City
+                     LocationId = LocationType.City
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has has an empty name for City",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "",
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.City
+                     LocationId = LocationType.City
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has has a white space name for City",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = " ",
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.City
+                     LocationId = LocationType.City
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null Geographic Description for City",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = null,
-                     TypeOfLocation = LocationType.City
+                     LocationId = LocationType.City
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has an empty Geographic Description for City",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = "",
-                     TypeOfLocation = LocationType.City
+                     LocationId = LocationType.City
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a white space Geographic Description name for City",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = " ",
-                     TypeOfLocation = LocationType.City
+                     LocationId = LocationType.City
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null name for Town",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = null,
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.Town
+                     LocationId = LocationType.Town
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has has an empty name for Town",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "",
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.Town
+                     LocationId = LocationType.Town
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has has a white space name for Town",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = " ",
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.Town
+                     LocationId = LocationType.Town
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null Geographic Description for Town",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = null,
-                     TypeOfLocation = LocationType.Town
+                     LocationId = LocationType.Town
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has an empty Geographic Description for Town",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = "",
-                     TypeOfLocation = LocationType.Town
+                     LocationId = LocationType.Town
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a white space Geographic Description name for Town",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = " ",
-                     TypeOfLocation = LocationType.Town
+                     LocationId = LocationType.Town
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null name for Homestead",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = null,
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.Homestead
+                     LocationId = LocationType.Homestead
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has has an empty name for Homestead",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "",
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.Homestead
+                     LocationId = LocationType.Homestead
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has has a white space name for Homestead",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = " ",
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.Homestead
+                     LocationId = LocationType.Homestead
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null Geographic Description for Homestead",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = null,
-                     TypeOfLocation = LocationType.Homestead
+                     LocationId = LocationType.Homestead
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has an empty Geographic Description for Homestead",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = "",
-                     TypeOfLocation = LocationType.Homestead
+                     LocationId = LocationType.Homestead
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a white space Geographic Description name for Homestead",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = " ",
-                     TypeOfLocation = LocationType.Homestead
+                     LocationId = LocationType.Homestead
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null name for Settlement",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = null,
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.Settlement
+                     LocationId = LocationType.Settlement
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has has an empty name for Settlement",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "",
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.Settlement
+                     LocationId = LocationType.Settlement
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has has a white space name for Settlement",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = " ",
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.Settlement
+                     LocationId = LocationType.Settlement
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null Geographic Description for Settlement",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = null,
-                     TypeOfLocation = LocationType.Settlement
+                     LocationId = LocationType.Settlement
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has an empty Geographic Description for Settlement",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = "",
-                     TypeOfLocation = LocationType.Settlement
+                     LocationId = LocationType.Settlement
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a white space Geographic Description name for Settlement",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = " ",
-                     TypeOfLocation = LocationType.Settlement
+                     LocationId = LocationType.Settlement
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null name for DaedricShrine",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = null,
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.DaedricShrine
+                     LocationId = LocationType.DaedricShrine
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has has an empty name for DaedricShrine",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "",
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.DaedricShrine
+                     LocationId = LocationType.DaedricShrine
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has has a white space name for DaedricShrine",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = " ",
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.DaedricShrine
+                     LocationId = LocationType.DaedricShrine
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null Geographic Description for DaedricShrine",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = null,
-                     TypeOfLocation = LocationType.DaedricShrine
+                     LocationId = LocationType.DaedricShrine
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has an empty Geographic Description for DaedricShrine",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = "",
-                     TypeOfLocation = LocationType.DaedricShrine
+                     LocationId = LocationType.DaedricShrine
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a white space Geographic Description name for DaedricShrine",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = " ",
-                     TypeOfLocation = LocationType.DaedricShrine
+                     LocationId = LocationType.DaedricShrine
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null name for StandingStone",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = null,
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.StandingStone
+                     LocationId = LocationType.StandingStone
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has has an empty name for StandingStone",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "",
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.StandingStone
+                     LocationId = LocationType.StandingStone
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has has a white space name for StandingStone",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = " ",
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.StandingStone
+                     LocationId = LocationType.StandingStone
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null Geographic Description for StandingStone",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = null,
-                     TypeOfLocation = LocationType.StandingStone
+                     LocationId = LocationType.StandingStone
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has an empty Geographic Description for StandingStone",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = "",
-                     TypeOfLocation = LocationType.StandingStone
+                     LocationId = LocationType.StandingStone
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a white space Geographic Description name for StandingStone",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = " ",
-                     TypeOfLocation = LocationType.StandingStone
+                     LocationId = LocationType.StandingStone
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null name for Landmark",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = null,
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.Landmark
+                     LocationId = LocationType.Landmark
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has has an empty name for Landmark",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "",
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.Landmark
+                     LocationId = LocationType.Landmark
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has has a white space name for Landmark",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = " ",
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.Landmark
+                     LocationId = LocationType.Landmark
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null Geographic Description for Landmark",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = null,
-                     TypeOfLocation = LocationType.Landmark
+                     LocationId = LocationType.Landmark
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has an empty Geographic Description for Landmark",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = "",
-                     TypeOfLocation = LocationType.Landmark
+                     LocationId = LocationType.Landmark
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a white space Geographic Description name for Landmark",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = " ",
-                     TypeOfLocation = LocationType.Landmark
+                     LocationId = LocationType.Landmark
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null name for Camp",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = null,
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.Camp
+                     LocationId = LocationType.Camp
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has has an empty name for Camp",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "",
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.Camp
+                     LocationId = LocationType.Camp
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has has a white space name for Camp",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = " ",
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.Camp
+                     LocationId = LocationType.Camp
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null Geographic Description for Camp",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = null,
-                     TypeOfLocation = LocationType.Camp
+                     LocationId = LocationType.Camp
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has an empty Geographic Description for Camp",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = "",
-                     TypeOfLocation = LocationType.Camp
+                     LocationId = LocationType.Camp
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a white space Geographic Description name for Camp",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = " ",
-                     TypeOfLocation = LocationType.Camp
+                     LocationId = LocationType.Camp
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null name for Cave",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = null,
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.Cave
+                     LocationId = LocationType.Cave
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has has an empty name for Cave",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "",
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.Cave
+                     LocationId = LocationType.Cave
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has has a white space name for Cave",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = " ",
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.Cave
+                     LocationId = LocationType.Cave
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null Geographic Description for Cave",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = null,
-                     TypeOfLocation = LocationType.Cave
+                     LocationId = LocationType.Cave
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has an empty Geographic Description for Cave",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = "",
-                     TypeOfLocation = LocationType.Cave
+                     LocationId = LocationType.Cave
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a white space Geographic Description name for Cave",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = " ",
-                     TypeOfLocation = LocationType.Cave
+                     LocationId = LocationType.Cave
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null name for Clearing",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = null,
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.Clearing
+                     LocationId = LocationType.Clearing
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has has an empty name for Clearing",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "",
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.Clearing
+                     LocationId = LocationType.Clearing
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has has a white space name for Clearing",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = " ",
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.Clearing
+                     LocationId = LocationType.Clearing
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null Geographic Description for Clearing",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = null,
-                     TypeOfLocation = LocationType.Clearing
+                     LocationId = LocationType.Clearing
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has an empty Geographic Description for Clearing",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = "",
-                     TypeOfLocation = LocationType.Clearing
+                     LocationId = LocationType.Clearing
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a white space Geographic Description name for Clearing",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = " ",
-                     TypeOfLocation = LocationType.Clearing
+                     LocationId = LocationType.Clearing
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null name for Dock",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = null,
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.Dock
+                     LocationId = LocationType.Dock
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has has an empty name for Dock",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "",
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.Dock
+                     LocationId = LocationType.Dock
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has has a white space name for Dock",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = " ",
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.Dock
+                     LocationId = LocationType.Dock
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null Geographic Description for Dock",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = null,
-                     TypeOfLocation = LocationType.Dock
+                     LocationId = LocationType.Dock
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has an empty Geographic Description for Dock",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = "",
-                     TypeOfLocation = LocationType.Dock
+                     LocationId = LocationType.Dock
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a white space Geographic Description name for Dock",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = " ",
-                     TypeOfLocation = LocationType.Dock
+                     LocationId = LocationType.Dock
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null name for DragonLair",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = null,
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.DragonLair
+                     LocationId = LocationType.DragonLair
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has has an empty name for DragonLair",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "",
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.DragonLair
+                     LocationId = LocationType.DragonLair
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has has a white space name for DragonLair",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = " ",
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.DragonLair
+                     LocationId = LocationType.DragonLair
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null Geographic Description for DragonLair",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = null,
-                     TypeOfLocation = LocationType.DragonLair
+                     LocationId = LocationType.DragonLair
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has an empty Geographic Description for DragonLair",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = "",
-                     TypeOfLocation = LocationType.DragonLair
+                     LocationId = LocationType.DragonLair
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a white space Geographic Description name for DragonLair",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = " ",
-                     TypeOfLocation = LocationType.DragonLair
+                     LocationId = LocationType.DragonLair
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null name for DwarvenRuin",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = null,
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.DwarvenRuin
+                     LocationId = LocationType.DwarvenRuin
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has has an empty name for DwarvenRuin",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "",
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.DwarvenRuin
+                     LocationId = LocationType.DwarvenRuin
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has has a white space name for DwarvenRuin",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = " ",
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.DwarvenRuin
+                     LocationId = LocationType.DwarvenRuin
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null Geographic Description for DwarvenRuin",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = null,
-                     TypeOfLocation = LocationType.DwarvenRuin
+                     LocationId = LocationType.DwarvenRuin
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has an empty Geographic Description for DwarvenRuin",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = "",
-                     TypeOfLocation = LocationType.DwarvenRuin
+                     LocationId = LocationType.DwarvenRuin
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a white space Geographic Description name for DwarvenRuin",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = " ",
-                     TypeOfLocation = LocationType.DwarvenRuin
+                     LocationId = LocationType.DwarvenRuin
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null name for Farm",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = null,
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.Farm
+                     LocationId = LocationType.Farm
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has has an empty name for Farm",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "",
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.Farm
+                     LocationId = LocationType.Farm
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has has a white space name for Farm",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = " ",
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.Farm
+                     LocationId = LocationType.Farm
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null Geographic Description for Farm",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = null,
-                     TypeOfLocation = LocationType.Farm
+                     LocationId = LocationType.Farm
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has an empty Geographic Description for Farm",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = "",
-                     TypeOfLocation = LocationType.Farm
+                     LocationId = LocationType.Farm
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a white space Geographic Description name for Farm",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = " ",
-                     TypeOfLocation = LocationType.Farm
+                     LocationId = LocationType.Farm
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null name for Fort",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = null,
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.Fort
+                     LocationId = LocationType.Fort
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has has an empty name for Fort",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "",
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.Fort
+                     LocationId = LocationType.Fort
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has has a white space name for Fort",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = " ",
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.Fort
+                     LocationId = LocationType.Fort
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null Geographic Description for Fort",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = null,
-                     TypeOfLocation = LocationType.Fort
+                     LocationId = LocationType.Fort
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has an empty Geographic Description for Fort",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = "",
-                     TypeOfLocation = LocationType.Fort
+                     LocationId = LocationType.Fort
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a white space Geographic Description name for Fort",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = " ",
-                     TypeOfLocation = LocationType.Fort
+                     LocationId = LocationType.Fort
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null name for GiantCamp",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = null,
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.GiantCamp
+                     LocationId = LocationType.GiantCamp
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has has an empty name for GiantCamp",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "",
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.GiantCamp
+                     LocationId = LocationType.GiantCamp
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has has a white space name for GiantCamp",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = " ",
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.GiantCamp
+                     LocationId = LocationType.GiantCamp
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null Geographic Description for GiantCamp",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = null,
-                     TypeOfLocation = LocationType.GiantCamp
+                     LocationId = LocationType.GiantCamp
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has an empty Geographic Description for GiantCamp",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = "",
-                     TypeOfLocation = LocationType.GiantCamp
+                     LocationId = LocationType.GiantCamp
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a white space Geographic Description name for GiantCamp",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = " ",
-                     TypeOfLocation = LocationType.GiantCamp
+                     LocationId = LocationType.GiantCamp
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null name for Grove",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = null,
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.Grove
+                     LocationId = LocationType.Grove
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has has an empty name for Grove",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "",
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.Grove
+                     LocationId = LocationType.Grove
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has has a white space name for Grove",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = " ",
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.Grove
+                     LocationId = LocationType.Grove
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null Geographic Description for Grove",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = null,
-                     TypeOfLocation = LocationType.Grove
+                     LocationId = LocationType.Grove
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has an empty Geographic Description for Grove",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = "",
-                     TypeOfLocation = LocationType.Grove
+                     LocationId = LocationType.Grove
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a white space Geographic Description name for Grove",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = " ",
-                     TypeOfLocation = LocationType.Grove
+                     LocationId = LocationType.Grove
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null name for ImperialCamp",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = null,
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.ImperialCamp
+                     LocationId = LocationType.ImperialCamp
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has has an empty name for ImperialCamp",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "",
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.ImperialCamp
+                     LocationId = LocationType.ImperialCamp
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has has a white space name for ImperialCamp",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = " ",
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.ImperialCamp
+                     LocationId = LocationType.ImperialCamp
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null Geographic Description for ImperialCamp",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = null,
-                     TypeOfLocation = LocationType.ImperialCamp
+                     LocationId = LocationType.ImperialCamp
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has an empty Geographic Description for ImperialCamp",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = "",
-                     TypeOfLocation = LocationType.ImperialCamp
+                     LocationId = LocationType.ImperialCamp
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a white space Geographic Description name for ImperialCamp",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = " ",
-                     TypeOfLocation = LocationType.ImperialCamp
+                     LocationId = LocationType.ImperialCamp
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null name for LightHouse",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = null,
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.LightHouse
+                     LocationId = LocationType.LightHouse
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has has an empty name for LightHouse",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "",
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.LightHouse
+                     LocationId = LocationType.LightHouse
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has has a white space name for LightHouse",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = " ",
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.LightHouse
+                     LocationId = LocationType.LightHouse
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null Geographic Description for LightHouse",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = null,
-                     TypeOfLocation = LocationType.LightHouse
+                     LocationId = LocationType.LightHouse
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has an empty Geographic Description for LightHouse",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = "",
-                     TypeOfLocation = LocationType.LightHouse
+                     LocationId = LocationType.LightHouse
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a white space Geographic Description name for LightHouse",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = " ",
-                     TypeOfLocation = LocationType.LightHouse
+                     LocationId = LocationType.LightHouse
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null name for Mine",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = null,
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.Mine
+                     LocationId = LocationType.Mine
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has has an empty name for Mine",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "",
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.Mine
+                     LocationId = LocationType.Mine
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has has a white space name for Mine",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = " ",
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.Mine
+                     LocationId = LocationType.Mine
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null Geographic Description for Mine",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = null,
-                     TypeOfLocation = LocationType.Mine
+                     LocationId = LocationType.Mine
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has an empty Geographic Description for Mine",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = "",
-                     TypeOfLocation = LocationType.Mine
+                     LocationId = LocationType.Mine
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a white space Geographic Description name for Mine",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = " ",
-                     TypeOfLocation = LocationType.Mine
+                     LocationId = LocationType.Mine
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null name for NordicTower",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = null,
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.NordicTower
+                     LocationId = LocationType.NordicTower
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has has an empty name for NordicTower",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "",
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.NordicTower
+                     LocationId = LocationType.NordicTower
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has has a white space name for NordicTower",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = " ",
                      Description = "Test",
                      GeographicalDescription = "Test",
-                     TypeOfLocation = LocationType.NordicTower
+                     LocationId = LocationType.NordicTower
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a null Geographic Description for NordicTower",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = null,
-                     TypeOfLocation = LocationType.NordicTower
+                     LocationId = LocationType.NordicTower
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has an empty Geographic Description for NordicTower",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = "",
-                     TypeOfLocation = LocationType.NordicTower
+                     LocationId = LocationType.NordicTower
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
             yield return new object[]
             {
                 "CreateLocationDto has a white space Geographic Description name for NordicTower",
-                 new CreateLocationDto
+                 new LocationDto
                  {
                      Name = "Test",
                      Description = "Test",
                      GeographicalDescription = " ",
-                     TypeOfLocation = LocationType.NordicTower
+                     LocationId = LocationType.NordicTower
                  },
-                 (CreateLocationDto)null
+                 (LocationDto)null
             };
         }
 
         [Theory]
         [MemberData(nameof(DifferentNameFormats))]
-        public void WithDifferentFormattedNames_ReturnsExpectedLocationFormattedCorrectly(string description, CreateLocationDto createLocationDto,
-            CreateLocationDto formattedCreateLocationDto)
+        public void WithDifferentFormattedNames_ReturnsExpectedLocationFormattedCorrectly(string description, LocationDto createLocationDto,
+            LocationDto formattedCreateLocationDto)
         {
             // Arrange
 
@@ -4101,108 +4101,108 @@ namespace Skyrim.Api.Test.Domains.DomainHelpers
             yield return new object[]
             {
                 "All lowercase name",
-                    new CreateLocationDto
+                    new LocationDto
                     {
                         Name = "test",
                         Description = null,
-                        TypeOfLocation = LocationType.City,
+                        LocationId = LocationType.City,
                         GeographicalDescription = "Test"
                     },
-                    new CreateLocationDto
+                    new LocationDto
                     {
                         Name = "Test",
                         Description = null,
-                        TypeOfLocation = LocationType.City,
+                        LocationId = LocationType.City,
                         GeographicalDescription = "Test"
                     }
             };
             yield return new object[]
             {
                 "All uppercase name",
-                    new CreateLocationDto
+                    new LocationDto
                     {
                         Name = "TEST",
                         Description = null,
-                        TypeOfLocation = LocationType.City,
+                        LocationId = LocationType.City,
                         GeographicalDescription = "Test"
                     },
-                    new CreateLocationDto
+                    new LocationDto
                     {
                         Name = "Test",
                         Description = null,
-                        TypeOfLocation = LocationType.City,
+                        LocationId = LocationType.City,
                         GeographicalDescription = "Test"
                     }
             };
             yield return new object[]
             {
                 "Upper and lowercase name",
-                    new CreateLocationDto
+                    new LocationDto
                     {
                         Name = "tEsT",
                         Description = null,
-                        TypeOfLocation = LocationType.City,
+                        LocationId = LocationType.City,
                         GeographicalDescription = "Test"
                     },
-                    new CreateLocationDto
+                    new LocationDto
                     {
                         Name = "Test",
                         Description = null,
-                        TypeOfLocation = LocationType.City,
+                        LocationId = LocationType.City,
                         GeographicalDescription = "Test"
                     }
             };
             yield return new object[]
             {
                 "multiple lowercase words in name",
-                    new CreateLocationDto
+                    new LocationDto
                     {
                         Name = "test test test t",
                         Description = null,
-                        TypeOfLocation = LocationType.City,
+                        LocationId = LocationType.City,
                         GeographicalDescription = "Test"
                     },
-                    new CreateLocationDto
+                    new LocationDto
                     {
                         Name = "Test Test Test T",
                         Description = null,
-                        TypeOfLocation = LocationType.City,
+                        LocationId = LocationType.City,
                         GeographicalDescription = "Test"
                     }
             };
             yield return new object[]
             {
                 "multiple uppercase words in name",
-                    new CreateLocationDto
+                    new LocationDto
                     {
                         Name = "TEST TEST TEST T",
                         Description = null,
-                        TypeOfLocation = LocationType.City,
+                        LocationId = LocationType.City,
                         GeographicalDescription = "Test"
                     },
-                    new CreateLocationDto
+                    new LocationDto
                     {
                         Name = "Test Test Test T",
                         Description = null,
-                        TypeOfLocation = LocationType.City,
+                        LocationId = LocationType.City,
                         GeographicalDescription = "Test"
                     }
             };
             yield return new object[]
             {
                 "Mixed upper and lowercase words in name",
-                    new CreateLocationDto
+                    new LocationDto
                     {
                         Name = "tEsT TesT TESt t",
                         Description = null,
-                        TypeOfLocation = LocationType.City,
+                        LocationId = LocationType.City,
                         GeographicalDescription = "Test"
                     },
-                    new CreateLocationDto
+                    new LocationDto
                     {
                         Name = "Test Test Test T",
                         Description = null,
-                        TypeOfLocation = LocationType.City,
+                        LocationId = LocationType.City,
                         GeographicalDescription = "Test"
                     }
             };
@@ -4212,10 +4212,10 @@ namespace Skyrim.Api.Test.Domains.DomainHelpers
         public void WithCorrectlyFormattedName_ReturnsExpectedName()
         {
             // Arrange
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Test T D",
-                TypeOfLocation = LocationType.City,
+                LocationId = LocationType.City,
                 GeographicalDescription = "Test"
             };
 

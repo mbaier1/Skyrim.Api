@@ -1,4 +1,5 @@
-﻿using Skyrim.Api.Data.AbstractModels;
+﻿using Microsoft.OpenApi.Extensions;
+using Skyrim.Api.Data.AbstractModels;
 using Skyrim.Api.Data.Enums;
 
 namespace Skyrim.Api.Data.Models
@@ -7,7 +8,8 @@ namespace Skyrim.Api.Data.Models
     {
         public Mine()
         {
-            this.TypeOfLocation = LocationType.Mine;
+            this.LocationId = LocationType.Mine;
+            this.TypeOfLocation = LocationType.Mine.GetDisplayName();
         }
     }
 }

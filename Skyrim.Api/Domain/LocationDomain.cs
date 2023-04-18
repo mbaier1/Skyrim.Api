@@ -12,12 +12,12 @@ namespace Skyrim.Api.Domain
     public class LocationDomain : ILocationDomain
     {
         private readonly ILocationRepository _locationRepository;
-        private readonly ICreateLocationDtoFormatHelper _CreateLocationDtoFormatHelper;
+        private readonly ILocationDtoFormatHelper _CreateLocationDtoFormatHelper;
         private readonly IDomainLoggerExtension _loggerExtension;
         private readonly IMapper _mapper;
 
 
-        public LocationDomain(ILocationRepository locationRepository, ICreateLocationDtoFormatHelper createLocationDtoFormatHelper,
+        public LocationDomain(ILocationRepository locationRepository, ILocationDtoFormatHelper createLocationDtoFormatHelper,
             IDomainLoggerExtension loggerExtension, IMapper mapper)
         {
             _locationRepository = locationRepository;
@@ -39,13 +39,13 @@ namespace Skyrim.Api.Domain
             return await _locationRepository.GetLocation(id);
         }
 
-        public async Task<Location> CreateLocation(CreateLocationDto createLocationDto)
+        public async Task<Location> CreateLocation(LocationDto locationDto)
         {
-            createLocationDto = _CreateLocationDtoFormatHelper.FormatEntity(createLocationDto);
-            if (createLocationDto == null)
+            locationDto = _CreateLocationDtoFormatHelper.FormatEntity(locationDto);
+            if (locationDto == null)
                 return null;
 
-            var location = MapLocationAsCorrectType(createLocationDto);
+            var location = MapLocationAsCorrectType(locationDto);
             if (location == null)
                 return null;
 
@@ -64,99 +64,99 @@ namespace Skyrim.Api.Domain
             return await _locationRepository.DeleteLocation(location);
         }
 
-        private Location MapLocationAsCorrectType(CreateLocationDto createLocationDto)
+        private Location MapLocationAsCorrectType(LocationDto locationDto)
         {
             try
             {
-                switch (createLocationDto.TypeOfLocation)
+                switch (locationDto.LocationId)
                 {
                     case LocationType.City:
-                        return _mapper.Map<City>(createLocationDto);
+                        return _mapper.Map<City>(locationDto);
                     case LocationType.Town:
-                        return _mapper.Map<Town>(createLocationDto);
+                        return _mapper.Map<Town>(locationDto);
                     case LocationType.Homestead:
-                        return _mapper.Map<Homestead>(createLocationDto);
+                        return _mapper.Map<Homestead>(locationDto);
                     case LocationType.Settlement:
-                        return _mapper.Map<Settlement>(createLocationDto);
+                        return _mapper.Map<Settlement>(locationDto);
                     case LocationType.DaedricShrine:
-                        return _mapper.Map<DaedricShrine>(createLocationDto);
+                        return _mapper.Map<DaedricShrine>(locationDto);
                     case LocationType.StandingStone:
-                        return _mapper.Map<StandingStone>(createLocationDto);
+                        return _mapper.Map<StandingStone>(locationDto);
                     case LocationType.Landmark:
-                        return _mapper.Map<Landmark>(createLocationDto);
+                        return _mapper.Map<Landmark>(locationDto);
                     case LocationType.Camp:
-                        return _mapper.Map<Camp>(createLocationDto);
+                        return _mapper.Map<Camp>(locationDto);
                     case LocationType.Cave:
-                        return _mapper.Map<Cave>(createLocationDto);
+                        return _mapper.Map<Cave>(locationDto);
                     case LocationType.Clearing:
-                        return _mapper.Map<Clearing>(createLocationDto);
+                        return _mapper.Map<Clearing>(locationDto);
                     case LocationType.Dock:
-                        return _mapper.Map<Dock>(createLocationDto);
+                        return _mapper.Map<Dock>(locationDto);
                     case LocationType.DragonLair:
-                        return _mapper.Map<DragonLair>(createLocationDto);
+                        return _mapper.Map<DragonLair>(locationDto);
                     case LocationType.DwarvenRuin:
-                        return _mapper.Map<DwarvenRuin>(createLocationDto);
+                        return _mapper.Map<DwarvenRuin>(locationDto);
                     case LocationType.Farm:
-                        return _mapper.Map<Farm>(createLocationDto);
+                        return _mapper.Map<Farm>(locationDto);
                     case LocationType.Fort:
-                        return _mapper.Map<Fort>(createLocationDto);
+                        return _mapper.Map<Fort>(locationDto);
                     case LocationType.GiantCamp:
-                        return _mapper.Map<GiantCamp>(createLocationDto);
+                        return _mapper.Map<GiantCamp>(locationDto);
                     case LocationType.Grove:
-                        return _mapper.Map<Grove>(createLocationDto);
+                        return _mapper.Map<Grove>(locationDto);
                     case LocationType.ImperialCamp:
-                        return _mapper.Map<ImperialCamp>(createLocationDto);
+                        return _mapper.Map<ImperialCamp>(locationDto);
                     case LocationType.LightHouse:
-                        return _mapper.Map<LightHouse>(createLocationDto);
+                        return _mapper.Map<LightHouse>(locationDto);
                     case LocationType.Mine:
-                        return _mapper.Map<Mine>(createLocationDto);
+                        return _mapper.Map<Mine>(locationDto);
                     case LocationType.NordicTower:
-                        return _mapper.Map<NordicTower>(createLocationDto);
+                        return _mapper.Map<NordicTower>(locationDto);
                     case LocationType.OrcStronghold:
-                        return _mapper.Map<OrcStronghold>(createLocationDto);
+                        return _mapper.Map<OrcStronghold>(locationDto);
                     case LocationType.Pass:
-                        return _mapper.Map<Pass>(createLocationDto);
+                        return _mapper.Map<Pass>(locationDto);
                     case LocationType.Ruin:
-                        return _mapper.Map<Ruin>(createLocationDto);
+                        return _mapper.Map<Ruin>(locationDto);
                     case LocationType.Shack:
-                        return _mapper.Map<Shack>(createLocationDto);
+                        return _mapper.Map<Shack>(locationDto);
                     case LocationType.Ship:
-                        return _mapper.Map<Ship>(createLocationDto);
+                        return _mapper.Map<Ship>(locationDto);
                     case LocationType.Shipwreck:
-                        return _mapper.Map<Shipwreck>(createLocationDto);
+                        return _mapper.Map<Shipwreck>(locationDto);
                     case LocationType.Stable:
-                        return _mapper.Map<Stable>(createLocationDto);
+                        return _mapper.Map<Stable>(locationDto);
                     case LocationType.StormcloakCamp:
-                        return _mapper.Map<StormcloakCamp>(createLocationDto);
+                        return _mapper.Map<StormcloakCamp>(locationDto);
                     case LocationType.Tomb:
-                        return _mapper.Map<Tomb>(createLocationDto);
+                        return _mapper.Map<Tomb>(locationDto);
                     case LocationType.Watchtower:
-                        return _mapper.Map<Watchtower>(createLocationDto);
+                        return _mapper.Map<Watchtower>(locationDto);
                     case LocationType.WheatMill:
-                        return _mapper.Map<WheatMill>(createLocationDto);
+                        return _mapper.Map<WheatMill>(locationDto);
                     case LocationType.LumberMill:
-                        return _mapper.Map<LumberMill>(createLocationDto);
+                        return _mapper.Map<LumberMill>(locationDto);
                     case LocationType.BodyOfWater:
-                        return _mapper.Map<BodyOfWater>(createLocationDto);
+                        return _mapper.Map<BodyOfWater>(locationDto);
                     case LocationType.InnOrTavern:
-                        return _mapper.Map<InnOrTavern>(createLocationDto);
+                        return _mapper.Map<InnOrTavern>(locationDto);
                     case LocationType.Temple:
-                        return _mapper.Map<Temple>(createLocationDto);
+                        return _mapper.Map<Temple>(locationDto);
                     case LocationType.WordWall:
-                        return _mapper.Map<WordWall>(createLocationDto);
+                        return _mapper.Map<WordWall>(locationDto);
                     case LocationType.Castle:
-                        return _mapper.Map<Castle>(createLocationDto);
+                        return _mapper.Map<Castle>(locationDto);
                     case LocationType.GuildHeadquarter:
-                        return _mapper.Map<GuildHeadquarter>(createLocationDto);
+                        return _mapper.Map<GuildHeadquarter>(locationDto);
                     case LocationType.UnmarkedLocation:
-                        return _mapper.Map<UnmarkedLocation>(createLocationDto);
+                        return _mapper.Map<UnmarkedLocation>(locationDto);
                     default:
                         return null;
                 }
             }
             catch (Exception e)
             {
-                _loggerExtension.LogError(e, createLocationDto);
+                _loggerExtension.LogError(e, locationDto);
 
                 return null;
             }
@@ -166,7 +166,7 @@ namespace Skyrim.Api.Domain
         {
             var existingLocations = await _locationRepository.GetLocation();
             var existingLocation = existingLocations.FirstOrDefault(x =>
-            x.TypeOfLocation == location.TypeOfLocation &&
+            x.LocationId == location.LocationId &&
             x.Name == location.Name);
             if (existingLocation == null)
                 return false;

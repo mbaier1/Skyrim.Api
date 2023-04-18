@@ -49,7 +49,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.City
+                    LocationId = LocationType.City
                 }
             };
             yield return new object[]
@@ -61,7 +61,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Town
+                    LocationId = LocationType.Town
                 }
             };
             yield return new object[]
@@ -73,7 +73,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Homestead
+                    LocationId = LocationType.Homestead
                 }
             };
             yield return new object[]
@@ -85,7 +85,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Settlement
+                    LocationId = LocationType.Settlement
                 }
             };
             yield return new object[]
@@ -97,7 +97,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.DaedricShrine
+                    LocationId = LocationType.DaedricShrine
                 }
             };
             yield return new object[]
@@ -109,7 +109,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.StandingStone
+                    LocationId = LocationType.StandingStone
                 }
             };
             yield return new object[]
@@ -121,7 +121,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Landmark
+                    LocationId = LocationType.Landmark
                 }
             };
             yield return new object[]
@@ -133,7 +133,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Camp
+                    LocationId = LocationType.Camp
                 }
             };
             yield return new object[]
@@ -145,7 +145,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Cave
+                    LocationId = LocationType.Cave
                 }
             };
             yield return new object[]
@@ -157,7 +157,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Clearing
+                    LocationId = LocationType.Clearing
                 }
             };
             yield return new object[]
@@ -169,7 +169,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Dock
+                    LocationId = LocationType.Dock
                 }
             };
             yield return new object[]
@@ -181,7 +181,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.DragonLair
+                    LocationId = LocationType.DragonLair
                 }
             };
             yield return new object[]
@@ -193,7 +193,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.DwarvenRuin
+                    LocationId = LocationType.DwarvenRuin
                 }
             };
             yield return new object[]
@@ -205,7 +205,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Farm
+                    LocationId = LocationType.Farm
                 }
             };
             yield return new object[]
@@ -217,7 +217,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Fort
+                    LocationId = LocationType.Fort
                 }
             };
             yield return new object[]
@@ -229,7 +229,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.GiantCamp
+                    LocationId = LocationType.GiantCamp
                 }
             };
             yield return new object[]
@@ -241,7 +241,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Grove
+                    LocationId = LocationType.Grove
                 }
             };
             yield return new object[]
@@ -253,7 +253,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.ImperialCamp
+                    LocationId = LocationType.ImperialCamp
                 }
             };
             yield return new object[]
@@ -265,7 +265,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.LightHouse
+                    LocationId = LocationType.LightHouse
                 }
             };
             yield return new object[]
@@ -277,7 +277,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Mine
+                    LocationId = LocationType.Mine
                 }
             };
             yield return new object[]
@@ -289,7 +289,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.NordicTower
+                    LocationId = LocationType.NordicTower
                 }
             };
             yield return new object[]
@@ -301,7 +301,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.OrcStronghold
+                    LocationId = LocationType.OrcStronghold
                 }
             };
             yield return new object[]
@@ -313,7 +313,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Pass
+                    LocationId = LocationType.Pass
                 }
             };
             yield return new object[]
@@ -325,7 +325,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Ruin
+                    LocationId = LocationType.Ruin
                 }
             };
             yield return new object[]
@@ -337,7 +337,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Shack
+                    LocationId = LocationType.Shack
                 }
             };
             yield return new object[]
@@ -349,7 +349,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Ship
+                    LocationId = LocationType.Ship
                 }
             };
             yield return new object[]
@@ -361,7 +361,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Shipwreck
+                    LocationId = LocationType.Shipwreck
                 }
             };
             yield return new object[]
@@ -373,7 +373,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Stable
+                    LocationId = LocationType.Stable
                 }
             };
             yield return new object[]
@@ -385,7 +385,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.StormcloakCamp
+                    LocationId = LocationType.StormcloakCamp
                 }
             };
             yield return new object[]
@@ -397,7 +397,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Tomb
+                    LocationId = LocationType.Tomb
                 }
             };
             yield return new object[]
@@ -409,7 +409,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Watchtower
+                    LocationId = LocationType.Watchtower
                 }
             };
             yield return new object[]
@@ -421,7 +421,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.WheatMill
+                    LocationId = LocationType.WheatMill
                 }
             };
             yield return new object[]
@@ -433,7 +433,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.LumberMill
+                    LocationId = LocationType.LumberMill
                 }
             };
             yield return new object[]
@@ -445,7 +445,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.BodyOfWater
+                    LocationId = LocationType.BodyOfWater
                 }
             };
             yield return new object[]
@@ -457,7 +457,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.InnOrTavern
+                    LocationId = LocationType.InnOrTavern
                 }
             };
             yield return new object[]
@@ -469,7 +469,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Temple
+                    LocationId = LocationType.Temple
                 }
             };
             yield return new object[]
@@ -481,7 +481,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.WordWall
+                    LocationId = LocationType.WordWall
                 }
             };
             yield return new object[]
@@ -493,7 +493,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Castle
+                    LocationId = LocationType.Castle
                 }
             };
             yield return new object[]
@@ -505,7 +505,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.GuildHeadquarter
+                    LocationId = LocationType.GuildHeadquarter
                 }
             };
             yield return new object[]
@@ -517,7 +517,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.UnmarkedLocation
+                    LocationId = LocationType.UnmarkedLocation
                 }
             };
         }
@@ -533,7 +533,7 @@ namespace Skyrim.Api.Test.Extensions
             _mockLoggerExtension.Object.LogError(exception, location);
 
             // Assert
-            Assert.Equal(locationType, location.TypeOfLocation);
+            Assert.Equal(locationType, location.LocationId);
         }
         public static IEnumerable<object[]> ErrorsAndLocationsForEachLocationType()
         {
@@ -546,7 +546,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.City
+                    LocationId = LocationType.City
                 },
                 LocationType.City
             };
@@ -559,7 +559,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Town
+                    LocationId = LocationType.Town
                 },
                 LocationType.Town
             };
@@ -572,7 +572,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Homestead
+                    LocationId = LocationType.Homestead
                 },
                 LocationType.Homestead
             };
@@ -585,7 +585,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Settlement
+                    LocationId = LocationType.Settlement
                 },
                 LocationType.Settlement
             };
@@ -598,7 +598,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.DaedricShrine
+                    LocationId = LocationType.DaedricShrine
                 }
                 ,
                 LocationType.DaedricShrine
@@ -612,7 +612,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.StandingStone
+                    LocationId = LocationType.StandingStone
                 },
                 LocationType.StandingStone
             };
@@ -625,7 +625,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Landmark
+                    LocationId = LocationType.Landmark
                 },
                 LocationType.Landmark
             };
@@ -638,7 +638,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Camp
+                    LocationId = LocationType.Camp
                 },
                 LocationType.Camp
             };
@@ -651,7 +651,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Cave
+                    LocationId = LocationType.Cave
                 },
                 LocationType.Cave
             };
@@ -664,7 +664,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Clearing
+                    LocationId = LocationType.Clearing
                 },
                 LocationType.Clearing
             };
@@ -677,7 +677,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Dock
+                    LocationId = LocationType.Dock
                 },
                 LocationType.Dock
             };
@@ -690,7 +690,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.DragonLair
+                    LocationId = LocationType.DragonLair
                 },
                 LocationType.DragonLair
             };
@@ -703,7 +703,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.DwarvenRuin
+                    LocationId = LocationType.DwarvenRuin
                 },
                 LocationType.DwarvenRuin
             };
@@ -716,7 +716,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Farm
+                    LocationId = LocationType.Farm
                 },
                 LocationType.Farm
             };
@@ -729,7 +729,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Fort
+                    LocationId = LocationType.Fort
                 },
                 LocationType.Fort
             };
@@ -742,7 +742,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.GiantCamp
+                    LocationId = LocationType.GiantCamp
                 },
                 LocationType.GiantCamp
             };
@@ -755,7 +755,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Grove
+                    LocationId = LocationType.Grove
                 },
                 LocationType.Grove
             };
@@ -768,7 +768,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.ImperialCamp
+                    LocationId = LocationType.ImperialCamp
                 },
                 LocationType.ImperialCamp
             };
@@ -781,7 +781,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.LightHouse
+                    LocationId = LocationType.LightHouse
                 },
                 LocationType.LightHouse
             };
@@ -794,7 +794,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Mine
+                    LocationId = LocationType.Mine
                 },
                 LocationType.Mine
             };
@@ -807,7 +807,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.NordicTower
+                    LocationId = LocationType.NordicTower
                 },
                 LocationType.NordicTower
             };
@@ -820,7 +820,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.OrcStronghold
+                    LocationId = LocationType.OrcStronghold
                 },
                 LocationType.OrcStronghold
             };
@@ -833,7 +833,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Pass
+                    LocationId = LocationType.Pass
                 },
                 LocationType.Pass
             };
@@ -846,7 +846,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Ruin
+                    LocationId = LocationType.Ruin
                 },
                 LocationType.Ruin
             };
@@ -859,7 +859,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Shack
+                    LocationId = LocationType.Shack
                 },
                 LocationType.Shack
             };
@@ -872,7 +872,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Ship
+                    LocationId = LocationType.Ship
                 },
                 LocationType.Ship
             };
@@ -885,7 +885,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Shipwreck
+                    LocationId = LocationType.Shipwreck
                 },
                 LocationType.Shipwreck
             };
@@ -898,7 +898,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Stable
+                    LocationId = LocationType.Stable
                 },
                 LocationType.Stable
             };
@@ -911,7 +911,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.StormcloakCamp
+                    LocationId = LocationType.StormcloakCamp
                 },
                 LocationType.StormcloakCamp
             };
@@ -924,7 +924,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Tomb
+                    LocationId = LocationType.Tomb
                 },
                 LocationType.Tomb
             };
@@ -937,7 +937,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Watchtower
+                    LocationId = LocationType.Watchtower
                 },
                 LocationType.Watchtower
             };
@@ -950,7 +950,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.WheatMill
+                    LocationId = LocationType.WheatMill
                 },
                 LocationType.WheatMill
             };
@@ -963,7 +963,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.LumberMill
+                    LocationId = LocationType.LumberMill
                 },
                 LocationType.LumberMill
             };
@@ -976,7 +976,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.BodyOfWater
+                    LocationId = LocationType.BodyOfWater
                 },
                 LocationType.BodyOfWater
             };
@@ -989,7 +989,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.InnOrTavern
+                    LocationId = LocationType.InnOrTavern
                 },
                 LocationType.InnOrTavern
             };
@@ -1002,7 +1002,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Temple
+                    LocationId = LocationType.Temple
                 },
                 LocationType.Temple
             };
@@ -1015,7 +1015,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.WordWall
+                    LocationId = LocationType.WordWall
                 },
                 LocationType.WordWall
             };
@@ -1028,7 +1028,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Castle
+                    LocationId = LocationType.Castle
                 },
                 LocationType.Castle
             };
@@ -1041,7 +1041,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.GuildHeadquarter
+                    LocationId = LocationType.GuildHeadquarter
                 },
                 LocationType.GuildHeadquarter
             };
@@ -1054,7 +1054,7 @@ namespace Skyrim.Api.Test.Extensions
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.UnmarkedLocation
+                    LocationId = LocationType.UnmarkedLocation
                 },
                 LocationType.UnmarkedLocation
             };

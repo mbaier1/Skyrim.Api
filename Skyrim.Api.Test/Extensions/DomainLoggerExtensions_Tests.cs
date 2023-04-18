@@ -27,7 +27,7 @@ public class LogError : DomainLoggerExtensions_Tests
 {
     [Theory]
     [MemberData(nameof(FatalErrorsForEachLocationType))]
-    public void WhenLoggerIsCalled_ErrorIsLoggedOnce(string description, Exception exception, CreateLocationDto createLocationDto)
+    public void WhenLoggerIsCalled_ErrorIsLoggedOnce(string description, Exception exception, LocationDto createLocationDto)
     {
         // Arrange
 
@@ -35,7 +35,7 @@ public class LogError : DomainLoggerExtensions_Tests
         _mockLoggerExtension.Object.LogError(exception, createLocationDto);
 
         // Assert
-        _mockLoggerExtension.Verify(x => x.LogError(It.IsAny<Exception>(), It.IsAny<CreateLocationDto>()), Times.Once());
+        _mockLoggerExtension.Verify(x => x.LogError(It.IsAny<Exception>(), It.IsAny<LocationDto>()), Times.Once());
     }
     public static IEnumerable<object[]> FatalErrorsForEachLocationType()
     {
@@ -43,487 +43,487 @@ public class LogError : DomainLoggerExtensions_Tests
         {
                 "Fatal Error for City location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.City
+                    LocationId = LocationType.City
                 }
         };
         yield return new object[]
         {
                 "Fatal Error for Town location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Town
+                    LocationId = LocationType.Town
                 }
         };
         yield return new object[]
         {
                 "Fatal Error for Homestead location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Homestead
+                    LocationId = LocationType.Homestead
                 }
         };
         yield return new object[]
         {
                 "Fatal Error for Settlement location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Settlement
+                    LocationId = LocationType.Settlement
                 }
         };
         yield return new object[]
         {
                 "Fatal Error for DaedricShrine location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.DaedricShrine
+                    LocationId = LocationType.DaedricShrine
                 }
         };
         yield return new object[]
         {
                 "Fatal Error for StandingStone location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.StandingStone
+                    LocationId = LocationType.StandingStone
                 }
         };
         yield return new object[]
         {
                 "Fatal Error for Landmark location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Landmark
+                    LocationId = LocationType.Landmark
                 }
         };
         yield return new object[]
         {
                 "Fatal Error for Camp location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Camp
+                    LocationId = LocationType.Camp
                 }
         };
         yield return new object[]
         {
                 "Fatal Error for Cave location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Cave
+                    LocationId = LocationType.Cave
                 }
         };
         yield return new object[]
         {
                 "Fatal Error for Clearing location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Clearing
+                    LocationId = LocationType.Clearing
                 }
         };
         yield return new object[]
         {
                 "Fatal Error for Dock location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Dock
+                    LocationId = LocationType.Dock
                 }
         };
         yield return new object[]
         {
                 "Fatal Error for DragonLair location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.DragonLair
+                    LocationId = LocationType.DragonLair
                 }
         };
         yield return new object[]
         {
                 "Fatal Error for DwarvenRuin location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.DwarvenRuin
+                    LocationId = LocationType.DwarvenRuin
                 }
         };
         yield return new object[]
         {
                 "Fatal Error for Farm location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Farm
+                    LocationId = LocationType.Farm
                 }
         };
         yield return new object[]
         {
                 "Fatal Error for Fort location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Fort
+                    LocationId = LocationType.Fort
                 }
         };
         yield return new object[]
         {
                 "Fatal Error for GiantCamp location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.GiantCamp
+                    LocationId = LocationType.GiantCamp
                 }
         };
         yield return new object[]
         {
                 "Fatal Error for Grove location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Grove
+                    LocationId = LocationType.Grove
                 }
         };
         yield return new object[]
         {
                 "Fatal Error for ImperialCamp location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.ImperialCamp
+                    LocationId = LocationType.ImperialCamp
                 }
         };
         yield return new object[]
         {
                 "Fatal Error for LightHouse location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.LightHouse
+                    LocationId = LocationType.LightHouse
                 }
         };
         yield return new object[]
         {
                 "Fatal Error for Mine location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Mine
+                    LocationId = LocationType.Mine
                 }
         };
         yield return new object[]
         {
                 "Fatal Error for NordicTower location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.NordicTower
+                    LocationId = LocationType.NordicTower
                 }
         };
         yield return new object[]
         {
                 "Fatal Error for OrcStronghold location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.OrcStronghold
+                    LocationId = LocationType.OrcStronghold
                 }
         };
         yield return new object[]
         {
                 "Fatal Error for Pass location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Pass
+                    LocationId = LocationType.Pass
                 }
         };
         yield return new object[]
         {
                 "Fatal Error for Ruin location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Ruin
+                    LocationId = LocationType.Ruin
                 }
         };
         yield return new object[]
         {
                 "Fatal Error for Shack location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Shack
+                    LocationId = LocationType.Shack
                 }
         };
         yield return new object[]
         {
                 "Fatal Error for Ship location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Ship
+                    LocationId = LocationType.Ship
                 }
         };
         yield return new object[]
         {
                 "Fatal Error for Shipwreck location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Shipwreck
+                    LocationId = LocationType.Shipwreck
                 }
         };
         yield return new object[]
         {
                 "Fatal Error for Stable location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Stable
+                    LocationId = LocationType.Stable
                 }
         };
         yield return new object[]
         {
                 "Fatal Error for StormcloakCamp location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.StormcloakCamp
+                    LocationId = LocationType.StormcloakCamp
                 }
         };
         yield return new object[]
         {
                 "Fatal Error for Tomb location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Tomb
+                    LocationId = LocationType.Tomb
                 }
         };
         yield return new object[]
         {
                 "Fatal Error for Watchtower location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Watchtower
+                    LocationId = LocationType.Watchtower
                 }
         };
         yield return new object[]
         {
                 "Fatal Error for WheatMill location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.WheatMill
+                    LocationId = LocationType.WheatMill
                 }
         };
         yield return new object[]
         {
                 "Fatal Error for LumberMill location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.LumberMill
+                    LocationId = LocationType.LumberMill
                 }
         };
         yield return new object[]
         {
                 "Fatal Error for BodyOfWater location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.BodyOfWater
+                    LocationId = LocationType.BodyOfWater
                 }
         };
         yield return new object[]
         {
                 "Fatal Error for InnOrTavern location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.InnOrTavern
+                    LocationId = LocationType.InnOrTavern
                 }
         };
         yield return new object[]
         {
                 "Fatal Error for Temple location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Temple
+                    LocationId = LocationType.Temple
                 }
         };
         yield return new object[]
         {
                 "Fatal Error for WordWall location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.WordWall
+                    LocationId = LocationType.WordWall
                 }
         };
         yield return new object[]
         {
                 "Fatal Error for Castle location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Castle
+                    LocationId = LocationType.Castle
                 }
         };
         yield return new object[]
         {
                 "Fatal Error for GuildHeadquarter location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.GuildHeadquarter
+                    LocationId = LocationType.GuildHeadquarter
                 }
         };
         yield return new object[]
         {
                 "Fatal Error for UnmarkedLocation location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.UnmarkedLocation
+                    LocationId = LocationType.UnmarkedLocation
                 }
         };
     }
 
     [Theory]
     [MemberData(nameof(ErrorsAndLocationsForEachLocationType))]
-    public void WhenLoggerIsCalled_LogsErrorForCorrectLocationType(string description, Exception exception, CreateLocationDto createLocationDto,
+    public void WhenLoggerIsCalled_LogsErrorForCorrectLocationType(string description, Exception exception, LocationDto createLocationDto,
         LocationType locationType)
     {
         // Arrange
@@ -532,7 +532,7 @@ public class LogError : DomainLoggerExtensions_Tests
         _mockLoggerExtension.Object.LogError(exception, createLocationDto);
 
         // Assert
-        Assert.Equal(locationType, createLocationDto.TypeOfLocation);
+        Assert.Equal(locationType, createLocationDto.LocationId);
     }
     public static IEnumerable<object[]> ErrorsAndLocationsForEachLocationType()
     {
@@ -540,12 +540,12 @@ public class LogError : DomainLoggerExtensions_Tests
         {
                 "Fatal Error for City location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.City
+                    LocationId = LocationType.City
                 },
                 LocationType.City
         };
@@ -553,12 +553,12 @@ public class LogError : DomainLoggerExtensions_Tests
         {
                 "Fatal Error for Town location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Town
+                    LocationId = LocationType.Town
                 },
                 LocationType.Town
         };
@@ -566,12 +566,12 @@ public class LogError : DomainLoggerExtensions_Tests
         {
                 "Fatal Error for Homestead location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Homestead
+                    LocationId = LocationType.Homestead
                 },
                 LocationType.Homestead
         };
@@ -579,12 +579,12 @@ public class LogError : DomainLoggerExtensions_Tests
         {
                 "Fatal Error for Settlement location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Settlement
+                    LocationId = LocationType.Settlement
                 },
                 LocationType.Settlement
         };
@@ -592,12 +592,12 @@ public class LogError : DomainLoggerExtensions_Tests
         {
                 "Fatal Error for DaedricShrine location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.DaedricShrine
+                    LocationId = LocationType.DaedricShrine
                 },
                 LocationType.DaedricShrine
         };
@@ -605,12 +605,12 @@ public class LogError : DomainLoggerExtensions_Tests
         {
                 "Fatal Error for StandingStone location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.StandingStone
+                    LocationId = LocationType.StandingStone
                 },
                 LocationType.StandingStone
         };
@@ -618,12 +618,12 @@ public class LogError : DomainLoggerExtensions_Tests
         {
                 "Fatal Error for Landmark location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Landmark
+                    LocationId = LocationType.Landmark
                 },
                 LocationType.Landmark
         };
@@ -631,12 +631,12 @@ public class LogError : DomainLoggerExtensions_Tests
         {
                 "Fatal Error for Camp location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Camp
+                    LocationId = LocationType.Camp
                 },
                 LocationType.Camp
         };
@@ -644,12 +644,12 @@ public class LogError : DomainLoggerExtensions_Tests
         {
                 "Fatal Error for Cave location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Cave
+                    LocationId = LocationType.Cave
                 },
                 LocationType.Cave
         };
@@ -657,12 +657,12 @@ public class LogError : DomainLoggerExtensions_Tests
         {
                 "Fatal Error for Clearing location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Clearing
+                    LocationId = LocationType.Clearing
                 },
                 LocationType.Clearing
         };
@@ -670,12 +670,12 @@ public class LogError : DomainLoggerExtensions_Tests
         {
                 "Fatal Error for Dock location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Dock
+                    LocationId = LocationType.Dock
                 },
                 LocationType.Dock
         };
@@ -683,12 +683,12 @@ public class LogError : DomainLoggerExtensions_Tests
         {
                 "Fatal Error for DragonLair location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.DragonLair
+                    LocationId = LocationType.DragonLair
                 },
                 LocationType.DragonLair
         };
@@ -696,12 +696,12 @@ public class LogError : DomainLoggerExtensions_Tests
         {
                 "Fatal Error for DwarvenRuin location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.DwarvenRuin
+                    LocationId = LocationType.DwarvenRuin
                 },
                 LocationType.DwarvenRuin
         };
@@ -709,12 +709,12 @@ public class LogError : DomainLoggerExtensions_Tests
         {
                 "Fatal Error for Farm location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Farm
+                    LocationId = LocationType.Farm
                 },
                 LocationType.Farm
         };
@@ -722,12 +722,12 @@ public class LogError : DomainLoggerExtensions_Tests
         {
                 "Fatal Error for Fort location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Fort
+                    LocationId = LocationType.Fort
                 },
                 LocationType.Fort
         };
@@ -735,12 +735,12 @@ public class LogError : DomainLoggerExtensions_Tests
         {
                 "Fatal Error for GiantCamp location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.GiantCamp
+                    LocationId = LocationType.GiantCamp
                 },
                 LocationType.GiantCamp
         };
@@ -748,12 +748,12 @@ public class LogError : DomainLoggerExtensions_Tests
         {
                 "Fatal Error for Grove location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Grove
+                    LocationId = LocationType.Grove
                 },
                 LocationType.Grove
         };
@@ -761,12 +761,12 @@ public class LogError : DomainLoggerExtensions_Tests
         {
                 "Fatal Error for ImperialCamp location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.ImperialCamp
+                    LocationId = LocationType.ImperialCamp
                 },
                 LocationType.ImperialCamp
         };
@@ -774,12 +774,12 @@ public class LogError : DomainLoggerExtensions_Tests
         {
                 "Fatal Error for LightHouse location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.LightHouse
+                    LocationId = LocationType.LightHouse
                 },
                 LocationType.LightHouse
         };
@@ -787,12 +787,12 @@ public class LogError : DomainLoggerExtensions_Tests
         {
                 "Fatal Error for Mine location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Mine
+                    LocationId = LocationType.Mine
                 },
                 LocationType.Mine
         };
@@ -800,12 +800,12 @@ public class LogError : DomainLoggerExtensions_Tests
         {
                 "Fatal Error for NordicTower location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.NordicTower
+                    LocationId = LocationType.NordicTower
                 },
                 LocationType.NordicTower
         };
@@ -813,12 +813,12 @@ public class LogError : DomainLoggerExtensions_Tests
         {
                 "Fatal Error for OrcStronghold location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.OrcStronghold
+                    LocationId = LocationType.OrcStronghold
                 },
                 LocationType.OrcStronghold
         };
@@ -826,12 +826,12 @@ public class LogError : DomainLoggerExtensions_Tests
         {
                 "Fatal Error for Pass location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Pass
+                    LocationId = LocationType.Pass
                 },
                 LocationType.Pass
         };
@@ -839,12 +839,12 @@ public class LogError : DomainLoggerExtensions_Tests
         {
                 "Fatal Error for Ruin location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Ruin
+                    LocationId = LocationType.Ruin
                 },
                 LocationType.Ruin
         };
@@ -852,12 +852,12 @@ public class LogError : DomainLoggerExtensions_Tests
         {
                 "Fatal Error for Shack location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Shack
+                    LocationId = LocationType.Shack
                 },
                 LocationType.Shack
         };
@@ -865,12 +865,12 @@ public class LogError : DomainLoggerExtensions_Tests
         {
                 "Fatal Error for Ship location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Ship
+                    LocationId = LocationType.Ship
                 },
                 LocationType.Ship
         };
@@ -878,12 +878,12 @@ public class LogError : DomainLoggerExtensions_Tests
         {
                 "Fatal Error for Shipwreck location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Shipwreck
+                    LocationId = LocationType.Shipwreck
                 },
                 LocationType.Shipwreck
         };
@@ -891,12 +891,12 @@ public class LogError : DomainLoggerExtensions_Tests
         {
                 "Fatal Error for Stable location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Stable
+                    LocationId = LocationType.Stable
                 },
                 LocationType.Stable
         };
@@ -904,12 +904,12 @@ public class LogError : DomainLoggerExtensions_Tests
         {
                 "Fatal Error for StormcloakCamp location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.StormcloakCamp
+                    LocationId = LocationType.StormcloakCamp
                 },
                 LocationType.StormcloakCamp
         };
@@ -917,12 +917,12 @@ public class LogError : DomainLoggerExtensions_Tests
         {
                 "Fatal Error for Tomb location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Tomb
+                    LocationId = LocationType.Tomb
                 },
                 LocationType.Tomb
         };
@@ -930,12 +930,12 @@ public class LogError : DomainLoggerExtensions_Tests
         {
                 "Fatal Error for Watchtower location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Watchtower
+                    LocationId = LocationType.Watchtower
                 },
                 LocationType.Watchtower
         };
@@ -943,12 +943,12 @@ public class LogError : DomainLoggerExtensions_Tests
         {
                 "Fatal Error for WheatMill location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.WheatMill
+                    LocationId = LocationType.WheatMill
                 },
                 LocationType.WheatMill
         };
@@ -956,12 +956,12 @@ public class LogError : DomainLoggerExtensions_Tests
         {
                 "Fatal Error for LumberMill location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.LumberMill
+                    LocationId = LocationType.LumberMill
                 },
                 LocationType.LumberMill
         };
@@ -969,12 +969,12 @@ public class LogError : DomainLoggerExtensions_Tests
         {
                 "Fatal Error for BodyOfWater location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.BodyOfWater
+                    LocationId = LocationType.BodyOfWater
                 },
                 LocationType.BodyOfWater
         };
@@ -982,12 +982,12 @@ public class LogError : DomainLoggerExtensions_Tests
         {
                 "Fatal Error for InnOrTavern location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.InnOrTavern
+                    LocationId = LocationType.InnOrTavern
                 },
                 LocationType.InnOrTavern
         };
@@ -995,12 +995,12 @@ public class LogError : DomainLoggerExtensions_Tests
         {
                 "Fatal Error for Temple location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Temple
+                    LocationId = LocationType.Temple
                 },
                 LocationType.Temple
         };
@@ -1008,12 +1008,12 @@ public class LogError : DomainLoggerExtensions_Tests
         {
                 "Fatal Error for WordWall location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.WordWall
+                    LocationId = LocationType.WordWall
                 },
                 LocationType.WordWall
         };
@@ -1021,12 +1021,12 @@ public class LogError : DomainLoggerExtensions_Tests
         {
                 "Fatal Error for Castle location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Castle
+                    LocationId = LocationType.Castle
                 },
                 LocationType.Castle
         };
@@ -1034,12 +1034,12 @@ public class LogError : DomainLoggerExtensions_Tests
         {
                 "Fatal Error for GuildHeadquarter location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.GuildHeadquarter
+                    LocationId = LocationType.GuildHeadquarter
                 },
                 LocationType.GuildHeadquarter
         };
@@ -1047,12 +1047,12 @@ public class LogError : DomainLoggerExtensions_Tests
         {
                 "Fatal Error for UnmarkedLocation location",
                 new Exception(),
-                new CreateLocationDto
+                new LocationDto
                 {
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.UnmarkedLocation
+                    LocationId = LocationType.UnmarkedLocation
                 },
                 LocationType.UnmarkedLocation
         };

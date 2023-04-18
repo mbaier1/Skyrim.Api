@@ -12,8 +12,8 @@ using Skyrim.Api.Data;
 namespace Skyrim.Api.Migrations
 {
     [DbContext(typeof(SkyrimApiDbContext))]
-    [Migration("20230414022921_AddedLumberMillAsLocationType")]
-    partial class AddedLumberMillAsLocationType
+    [Migration("20230418023013_UpdatedLocationToHaveLocationIdAndNameOfLocationWithConcreteClassUpdates")]
+    partial class UpdatedLocationToHaveLocationIdAndNameOfLocationWithConcreteClassUpdates
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,6 +32,21 @@ namespace Skyrim.Api.Migrations
             modelBuilder.HasSequence("LocationSequence");
 
             modelBuilder.HasSequence("PersonSequence");
+
+            modelBuilder.Entity("LocationPatroller", b =>
+                {
+                    b.Property<int>("PatrolledLocationsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PatrollersId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PatrolledLocationsId", "PatrollersId");
+
+                    b.HasIndex("PatrollersId");
+
+                    b.ToTable("LocationPatroller");
+                });
 
             modelBuilder.Entity("Skyrim.Api.Data.AbstractModels.Building", b =>
                 {
@@ -124,19 +139,18 @@ namespace Skyrim.Api.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("LocationId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PatrollerId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TypeOfLocation")
-                        .HasColumnType("int");
+                    b.Property<string>("TypeOfLocation")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PatrollerId");
 
                     b.ToTable((string)null);
 
@@ -195,11 +209,25 @@ namespace Skyrim.Api.Migrations
                     b.ToTable("Chickens");
                 });
 
+            modelBuilder.Entity("Skyrim.Api.Data.Models.BodyOfWater", b =>
+                {
+                    b.HasBaseType("Skyrim.Api.Data.AbstractModels.Location");
+
+                    b.ToTable("BodiesOfWater");
+                });
+
             modelBuilder.Entity("Skyrim.Api.Data.Models.Camp", b =>
                 {
                     b.HasBaseType("Skyrim.Api.Data.AbstractModels.Location");
 
                     b.ToTable("Camps");
+                });
+
+            modelBuilder.Entity("Skyrim.Api.Data.Models.Castle", b =>
+                {
+                    b.HasBaseType("Skyrim.Api.Data.AbstractModels.Location");
+
+                    b.ToTable("Castles");
                 });
 
             modelBuilder.Entity("Skyrim.Api.Data.Models.Cave", b =>
@@ -279,6 +307,13 @@ namespace Skyrim.Api.Migrations
                     b.ToTable("Groves");
                 });
 
+            modelBuilder.Entity("Skyrim.Api.Data.Models.GuildHeadquarter", b =>
+                {
+                    b.HasBaseType("Skyrim.Api.Data.AbstractModels.Location");
+
+                    b.ToTable("GuildHeadquarters");
+                });
+
             modelBuilder.Entity("Skyrim.Api.Data.Models.Homestead", b =>
                 {
                     b.HasBaseType("Skyrim.Api.Data.AbstractModels.Location");
@@ -291,6 +326,13 @@ namespace Skyrim.Api.Migrations
                     b.HasBaseType("Skyrim.Api.Data.AbstractModels.Location");
 
                     b.ToTable("ImperialCamps");
+                });
+
+            modelBuilder.Entity("Skyrim.Api.Data.Models.InnOrTavern", b =>
+                {
+                    b.HasBaseType("Skyrim.Api.Data.AbstractModels.Location");
+
+                    b.ToTable("InnsOrTaverns");
                 });
 
             modelBuilder.Entity("Skyrim.Api.Data.Models.Landmark", b =>
@@ -398,6 +440,13 @@ namespace Skyrim.Api.Migrations
                     b.ToTable("StormcloakCamps");
                 });
 
+            modelBuilder.Entity("Skyrim.Api.Data.Models.Temple", b =>
+                {
+                    b.HasBaseType("Skyrim.Api.Data.AbstractModels.Location");
+
+                    b.ToTable("Temples");
+                });
+
             modelBuilder.Entity("Skyrim.Api.Data.Models.Tomb", b =>
                 {
                     b.HasBaseType("Skyrim.Api.Data.AbstractModels.Location");
@@ -412,6 +461,13 @@ namespace Skyrim.Api.Migrations
                     b.ToTable("Towns");
                 });
 
+            modelBuilder.Entity("Skyrim.Api.Data.Models.UnmarkedLocation", b =>
+                {
+                    b.HasBaseType("Skyrim.Api.Data.AbstractModels.Location");
+
+                    b.ToTable("UnmarkedLocations");
+                });
+
             modelBuilder.Entity("Skyrim.Api.Data.Models.Watchtower", b =>
                 {
                     b.HasBaseType("Skyrim.Api.Data.AbstractModels.Location");
@@ -424,6 +480,13 @@ namespace Skyrim.Api.Migrations
                     b.HasBaseType("Skyrim.Api.Data.AbstractModels.Location");
 
                     b.ToTable("WheatMills");
+                });
+
+            modelBuilder.Entity("Skyrim.Api.Data.Models.WordWall", b =>
+                {
+                    b.HasBaseType("Skyrim.Api.Data.AbstractModels.Location");
+
+                    b.ToTable("WordWalls");
                 });
 
             modelBuilder.Entity("Skyrim.Api.Data.AbstractModels.Patroller", b =>
@@ -446,6 +509,21 @@ namespace Skyrim.Api.Migrations
                     b.HasBaseType("Skyrim.Api.Data.AbstractModels.Patroller");
 
                     b.ToTable("Guards");
+                });
+
+            modelBuilder.Entity("LocationPatroller", b =>
+                {
+                    b.HasOne("Skyrim.Api.Data.AbstractModels.Location", null)
+                        .WithMany()
+                        .HasForeignKey("PatrolledLocationsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Skyrim.Api.Data.AbstractModels.Patroller", null)
+                        .WithMany()
+                        .HasForeignKey("PatrollersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Skyrim.Api.Data.AbstractModels.Building", b =>
@@ -472,13 +550,6 @@ namespace Skyrim.Api.Migrations
                         .HasForeignKey("locationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Skyrim.Api.Data.AbstractModels.Location", b =>
-                {
-                    b.HasOne("Skyrim.Api.Data.AbstractModels.Patroller", null)
-                        .WithMany("PatrolledLocations")
-                        .HasForeignKey("PatrollerId");
                 });
 
             modelBuilder.Entity("Skyrim.Api.Data.AbstractModels.Person", b =>
@@ -508,8 +579,6 @@ namespace Skyrim.Api.Migrations
                     b.Navigation("PatrolledBuildings");
 
                     b.Navigation("PatrolledCreatures");
-
-                    b.Navigation("PatrolledLocations");
 
                     b.Navigation("PatrolledPeople");
                 });

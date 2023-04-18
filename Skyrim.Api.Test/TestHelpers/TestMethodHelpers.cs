@@ -13,7 +13,7 @@ namespace Skyrim.Api.Test.TestHelpers
                 Id = 0,
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.City,
+                LocationId = LocationType.City,
                 GeographicalDescription = "Test"
             };
         }
@@ -25,7 +25,7 @@ namespace Skyrim.Api.Test.TestHelpers
                 Id = 0,
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.Town,
+                LocationId = LocationType.Town,
                 GeographicalDescription = "Test"
             };
         }
@@ -37,7 +37,7 @@ namespace Skyrim.Api.Test.TestHelpers
                 Id = 0,
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.Homestead,
+                LocationId = LocationType.Homestead,
                 GeographicalDescription = "Test"
             };
         }
@@ -49,7 +49,7 @@ namespace Skyrim.Api.Test.TestHelpers
                 Id = 0,
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.Settlement,
+                LocationId = LocationType.Settlement,
                 GeographicalDescription = "Test"
             };
         }
@@ -61,7 +61,7 @@ namespace Skyrim.Api.Test.TestHelpers
                 Id = 0,
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.DaedricShrine,
+                LocationId = LocationType.DaedricShrine,
                 GeographicalDescription = "Test"
             };
         }
@@ -73,7 +73,7 @@ namespace Skyrim.Api.Test.TestHelpers
                 Id = 0,
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.StandingStone,
+                LocationId = LocationType.StandingStone,
                 GeographicalDescription = "Test"
             };
         }
@@ -85,7 +85,7 @@ namespace Skyrim.Api.Test.TestHelpers
                 Id = 0,
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.Landmark,
+                LocationId = LocationType.Landmark,
                 GeographicalDescription = "Test"
             };
         }
@@ -97,7 +97,7 @@ namespace Skyrim.Api.Test.TestHelpers
                 Id = 0,
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.Camp,
+                LocationId = LocationType.Camp,
                 GeographicalDescription = "Test"
             };
         }
@@ -109,7 +109,7 @@ namespace Skyrim.Api.Test.TestHelpers
                 Id = 0,
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.Cave,
+                LocationId = LocationType.Cave,
                 GeographicalDescription = "Test"
             };
         }
@@ -121,7 +121,7 @@ namespace Skyrim.Api.Test.TestHelpers
                 Id = 0,
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.Clearing,
+                LocationId = LocationType.Clearing,
                 GeographicalDescription = "Test"
             };
         }
@@ -133,7 +133,7 @@ namespace Skyrim.Api.Test.TestHelpers
                 Id = 0,
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.Dock,
+                LocationId = LocationType.Dock,
                 GeographicalDescription = "Test"
             };
         }
@@ -145,7 +145,7 @@ namespace Skyrim.Api.Test.TestHelpers
                 Id = 0,
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.DragonLair,
+                LocationId = LocationType.DragonLair,
                 GeographicalDescription = "Test"
             };
         }
@@ -157,7 +157,7 @@ namespace Skyrim.Api.Test.TestHelpers
                 Id = 0,
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.DwarvenRuin,
+                LocationId = LocationType.DwarvenRuin,
                 GeographicalDescription = "Test"
             };
         }
@@ -169,7 +169,7 @@ namespace Skyrim.Api.Test.TestHelpers
                 Id = 0,
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.Farm,
+                LocationId = LocationType.Farm,
                 GeographicalDescription = "Test"
             };
         }
@@ -181,7 +181,7 @@ namespace Skyrim.Api.Test.TestHelpers
                 Id = 0,
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.Fort,
+                LocationId = LocationType.Fort,
                 GeographicalDescription = "Test"
             };
         }
@@ -193,7 +193,7 @@ namespace Skyrim.Api.Test.TestHelpers
                 Id = 0,
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.GiantCamp,
+                LocationId = LocationType.GiantCamp,
                 GeographicalDescription = "Test"
             };
         }
@@ -205,7 +205,7 @@ namespace Skyrim.Api.Test.TestHelpers
                 Id = 0,
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.Grove,
+                LocationId = LocationType.Grove,
                 GeographicalDescription = "Test"
             };
         }
@@ -217,7 +217,7 @@ namespace Skyrim.Api.Test.TestHelpers
                 Id = 0,
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.ImperialCamp,
+                LocationId = LocationType.ImperialCamp,
                 GeographicalDescription = "Test"
             };
         }
@@ -229,7 +229,7 @@ namespace Skyrim.Api.Test.TestHelpers
                 Id = 0,
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.LightHouse,
+                LocationId = LocationType.LightHouse,
                 GeographicalDescription = "Test"
             };
         }
@@ -241,7 +241,7 @@ namespace Skyrim.Api.Test.TestHelpers
                 Id = 0,
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.Mine,
+                LocationId = LocationType.Mine,
                 GeographicalDescription = "Test"
             };
         }
@@ -253,7 +253,7 @@ namespace Skyrim.Api.Test.TestHelpers
                 Id = 0,
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.NordicTower,
+                LocationId = LocationType.NordicTower,
                 GeographicalDescription = "Test"
             };
         }
@@ -265,7 +265,7 @@ namespace Skyrim.Api.Test.TestHelpers
                 Id = 0,
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.OrcStronghold,
+                LocationId = LocationType.OrcStronghold,
                 GeographicalDescription = "Test"
             };
         }
@@ -277,7 +277,7 @@ namespace Skyrim.Api.Test.TestHelpers
                 Id = 0,
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.Pass,
+                LocationId = LocationType.Pass,
                 GeographicalDescription = "Test"
             };
         }
@@ -289,7 +289,7 @@ namespace Skyrim.Api.Test.TestHelpers
                 Id = 0,
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.Ruin,
+                LocationId = LocationType.Ruin,
                 GeographicalDescription = "Test"
             };
         }
@@ -301,7 +301,7 @@ namespace Skyrim.Api.Test.TestHelpers
                 Id = 0,
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.Shack,
+                LocationId = LocationType.Shack,
                 GeographicalDescription = "Test"
             };
         }
@@ -313,7 +313,7 @@ namespace Skyrim.Api.Test.TestHelpers
                 Id = 0,
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.Ship,
+                LocationId = LocationType.Ship,
                 GeographicalDescription = "Test"
             };
         }
@@ -325,7 +325,7 @@ namespace Skyrim.Api.Test.TestHelpers
                 Id = 0,
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.Shipwreck,
+                LocationId = LocationType.Shipwreck,
                 GeographicalDescription = "Test"
             };
         }
@@ -337,7 +337,7 @@ namespace Skyrim.Api.Test.TestHelpers
                 Id = 0,
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.Stable,
+                LocationId = LocationType.Stable,
                 GeographicalDescription = "Test"
             };
         }
@@ -349,7 +349,7 @@ namespace Skyrim.Api.Test.TestHelpers
                 Id = 0,
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.StormcloakCamp,
+                LocationId = LocationType.StormcloakCamp,
                 GeographicalDescription = "Test"
             };
         }
@@ -361,7 +361,7 @@ namespace Skyrim.Api.Test.TestHelpers
                 Id = 0,
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.Tomb,
+                LocationId = LocationType.Tomb,
                 GeographicalDescription = "Test"
             };
         }
@@ -373,7 +373,7 @@ namespace Skyrim.Api.Test.TestHelpers
                 Id = 0,
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.Watchtower,
+                LocationId = LocationType.Watchtower,
                 GeographicalDescription = "Test"
             };
         }
@@ -385,7 +385,7 @@ namespace Skyrim.Api.Test.TestHelpers
                 Id = 0,
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.WheatMill,
+                LocationId = LocationType.WheatMill,
                 GeographicalDescription = "Test"
             };
         }
@@ -397,7 +397,7 @@ namespace Skyrim.Api.Test.TestHelpers
                 Id = 0,
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.LumberMill,
+                LocationId = LocationType.LumberMill,
                 GeographicalDescription = "Test"
             };
         }
@@ -409,7 +409,7 @@ namespace Skyrim.Api.Test.TestHelpers
                 Id = 0,
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.BodyOfWater,
+                LocationId = LocationType.BodyOfWater,
                 GeographicalDescription = "Test"
             };
         }
@@ -421,7 +421,7 @@ namespace Skyrim.Api.Test.TestHelpers
                 Id = 0,
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.InnOrTavern,
+                LocationId = LocationType.InnOrTavern,
                 GeographicalDescription = "Test"
             };
         }
@@ -433,7 +433,7 @@ namespace Skyrim.Api.Test.TestHelpers
                 Id = 0,
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.Temple,
+                LocationId = LocationType.Temple,
                 GeographicalDescription = "Test"
             };
         }
@@ -445,7 +445,7 @@ namespace Skyrim.Api.Test.TestHelpers
                 Id = 0,
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.WordWall,
+                LocationId = LocationType.WordWall,
                 GeographicalDescription = "Test"
             };
         }
@@ -457,7 +457,7 @@ namespace Skyrim.Api.Test.TestHelpers
                 Id = 0,
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.Castle,
+                LocationId = LocationType.Castle,
                 GeographicalDescription = "Test"
             };
         }
@@ -469,7 +469,7 @@ namespace Skyrim.Api.Test.TestHelpers
                 Id = 0,
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.GuildHeadquarter,
+                LocationId = LocationType.GuildHeadquarter,
                 GeographicalDescription = "Test"
             };
         }
@@ -481,448 +481,448 @@ namespace Skyrim.Api.Test.TestHelpers
                 Id = 0,
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.UnmarkedLocation,
+                LocationId = LocationType.UnmarkedLocation,
                 GeographicalDescription = "Test"
             };
         }
 
-        public static CreateLocationDto CreateNewCreateLocationDtoAsCity()
+        public static LocationDto CreateNewLocationDtoAsCity()
         {
-            return new CreateLocationDto
+            return new LocationDto
             {
                 Name = "Test",
                 Description = "",
                 GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.City
+                LocationId = LocationType.City
             };
         }
 
-        public static CreateLocationDto CreateNewCreateLocationDtoAsTown()
+        public static LocationDto CreateNewLocationDtoAsTown()
         {
-            return new CreateLocationDto
+            return new LocationDto
             {
                 Name = "Test",
                 Description = "",
                 GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.Town
+                LocationId = LocationType.Town
             };
         }
 
-        public static CreateLocationDto CreateNewCreateLocationDtoAsHomestead()
+        public static LocationDto CreateNewLocationDtoAsHomestead()
         {
-            return new CreateLocationDto
+            return new LocationDto
             {
                 Name = "Test",
                 Description = "",
                 GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.Homestead
+                LocationId = LocationType.Homestead
             };
         }
 
-        public static CreateLocationDto CreateNewCreateLocationDtoAsSettlement()
+        public static LocationDto CreateNewLocationDtoAsSettlement()
         {
-            return new CreateLocationDto
+            return new LocationDto
             {
                 Name = "Test",
                 Description = "",
                 GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.Settlement
+                LocationId = LocationType.Settlement
             };
         }
 
-        public static CreateLocationDto CreateNewCreateLocationDtoAsDaedricShrine()
+        public static LocationDto CreateNewLocationDtoAsDaedricShrine()
         {
-            return new CreateLocationDto
+            return new LocationDto
             {
                 Name = "Test",
                 Description = "",
                 GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.DaedricShrine
+                LocationId = LocationType.DaedricShrine
             };
         }
 
-        public static CreateLocationDto CreateNewCreateLocationDtoAsStandingStone()
+        public static LocationDto CreateNewLocationDtoAsStandingStone()
         {
-            return new CreateLocationDto
+            return new LocationDto
             {
                 Name = "Test",
                 Description = "",
                 GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.StandingStone
+                LocationId = LocationType.StandingStone
             };
         }
 
-        public static CreateLocationDto CreateNewCreateLocationDtoAsLandmark()
+        public static LocationDto CreateNewLocationDtoAsLandmark()
         {
-            return new CreateLocationDto
+            return new LocationDto
             {
                 Name = "Test",
                 Description = "",
                 GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.Landmark
+                LocationId = LocationType.Landmark
             };
         }
 
-        public static CreateLocationDto CreateNewCreateLocationDtoAsCamp()
+        public static LocationDto CreateNewLocationDtoAsCamp()
         {
-            return new CreateLocationDto
+            return new LocationDto
             {
                 Name = "Test",
                 Description = "",
                 GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.Camp
+                LocationId = LocationType.Camp
             };
         }
 
-        public static CreateLocationDto CreateNewCreateLocationDtoAsCave()
+        public static LocationDto CreateNewLocationDtoAsCave()
         {
-            return new CreateLocationDto
+            return new LocationDto
             {
                 Name = "Test",
                 Description = "",
                 GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.Cave
+                LocationId = LocationType.Cave
             };
         }
 
-        public static CreateLocationDto CreateNewCreateLocationDtoAsClearing()
+        public static LocationDto CreateNewLocationDtoAsClearing()
         {
-            return new CreateLocationDto
+            return new LocationDto
             {
                 Name = "Test",
                 Description = "",
                 GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.Clearing
+                LocationId = LocationType.Clearing
             };
         }
 
-        public static CreateLocationDto CreateNewCreateLocationDtoAsDock()
+        public static LocationDto CreateNewLocationDtoAsDock()
         {
-            return new CreateLocationDto
+            return new LocationDto
             {
                 Name = "Test",
                 Description = "",
                 GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.Dock
+                LocationId = LocationType.Dock
             };
         }
 
-        public static CreateLocationDto CreateNewCreateLocationDtoAsDragonLair()
+        public static LocationDto CreateNewLocationDtoAsDragonLair()
         {
-            return new CreateLocationDto
+            return new LocationDto
             {
                 Name = "Test",
                 Description = "",
                 GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.DragonLair
+                LocationId = LocationType.DragonLair
             };
         }
 
-        public static CreateLocationDto CreateNewCreateLocationDtoAsDwarvenRuin()
+        public static LocationDto CreateNewLocationDtoAsDwarvenRuin()
         {
-            return new CreateLocationDto
+            return new LocationDto
             {
                 Name = "Test",
                 Description = "",
                 GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.DwarvenRuin
+                LocationId = LocationType.DwarvenRuin
             };
         }
 
-        public static CreateLocationDto CreateNewCreateLocationDtoAsFarm()
+        public static LocationDto CreateNewLocationDtoAsFarm()
         {
-            return new CreateLocationDto
+            return new LocationDto
             {
                 Name = "Test",
                 Description = "",
                 GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.Farm
+                LocationId = LocationType.Farm
             };
         }
 
-        public static CreateLocationDto CreateNewCreateLocationDtoAsFort()
+        public static LocationDto CreateNewLocationDtoAsFort()
         {
-            return new CreateLocationDto
+            return new LocationDto
             {
                 Name = "Test",
                 Description = "",
                 GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.Fort
+                LocationId = LocationType.Fort
             };
         }
 
-        public static CreateLocationDto CreateNewCreateLocationDtoAsGiantCamp()
+        public static LocationDto CreateNewLocationDtoAsGiantCamp()
         {
-            return new CreateLocationDto
+            return new LocationDto
             {
                 Name = "Test",
                 Description = "",
                 GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.GiantCamp
+                LocationId = LocationType.GiantCamp
             };
         }
 
-        public static CreateLocationDto CreateNewCreateLocationDtoAsGrove()
+        public static LocationDto CreateNewLocationDtoAsGrove()
         {
-            return new CreateLocationDto
+            return new LocationDto
             {
                 Name = "Test",
                 Description = "",
                 GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.Grove
+                LocationId = LocationType.Grove
             };
         }
 
-        public static CreateLocationDto CreateNewCreateLocationDtoAsImperialCamp()
+        public static LocationDto CreateNewLocationDtoAsImperialCamp()
         {
-            return new CreateLocationDto
+            return new LocationDto
             {
                 Name = "Test",
                 Description = "",
                 GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.ImperialCamp
+                LocationId = LocationType.ImperialCamp
             };
         }
 
-        public static CreateLocationDto CreateNewCreateLocationDtoAsLightHouse()
+        public static LocationDto CreateNewLocationDtoAsLightHouse()
         {
-            return new CreateLocationDto
+            return new LocationDto
             {
                 Name = "Test",
                 Description = "",
                 GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.LightHouse
+                LocationId = LocationType.LightHouse
             };
         }
 
-        public static CreateLocationDto CreateNewCreateLocationDtoAsMine()
+        public static LocationDto CreateNewLocationDtoAsMine()
         {
-            return new CreateLocationDto
+            return new LocationDto
             {
                 Name = "Test",
                 Description = "",
                 GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.Mine
+                LocationId = LocationType.Mine
             };
         }
 
-        public static CreateLocationDto CreateNewCreateLocationDtoAsNordicTower()
+        public static LocationDto CreateNewLocationDtoAsNordicTower()
         {
-            return new CreateLocationDto
+            return new LocationDto
             {
                 Name = "Test",
                 Description = "",
                 GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.NordicTower
+                LocationId = LocationType.NordicTower
             };
         }
 
-        public static CreateLocationDto CreateNewCreateLocationDtoAsOrcStronghold()
+        public static LocationDto CreateNewLocationDtoAsOrcStronghold()
         {
-            return new CreateLocationDto
+            return new LocationDto
             {
                 Name = "Test",
                 Description = "",
                 GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.OrcStronghold
+                LocationId = LocationType.OrcStronghold
             };
         }
 
-        public static CreateLocationDto CreateNewCreateLocationDtoAsPass()
+        public static LocationDto CreateNewLocationDtoAsPass()
         {
-            return new CreateLocationDto
+            return new LocationDto
             {
                 Name = "Test",
                 Description = "",
                 GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.Pass
+                LocationId = LocationType.Pass
             };
         }
 
-        public static CreateLocationDto CreateNewCreateLocationDtoAsRuin()
+        public static LocationDto CreateNewLocationDtoAsRuin()
         {
-            return new CreateLocationDto
+            return new LocationDto
             {
                 Name = "Test",
                 Description = "",
                 GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.Ruin
+                LocationId = LocationType.Ruin
             };
         }
 
-        public static CreateLocationDto CreateNewCreateLocationDtoAsShack()
+        public static LocationDto CreateNewLocationDtoAsShack()
         {
-            return new CreateLocationDto
+            return new LocationDto
             {
                 Name = "Test",
                 Description = "",
                 GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.Shack
+                LocationId = LocationType.Shack
             };
         }
 
-        public static CreateLocationDto CreateNewCreateLocationDtoAsShip()
+        public static LocationDto CreateNewLocationDtoAsShip()
         {
-            return new CreateLocationDto
+            return new LocationDto
             {
                 Name = "Test",
                 Description = "",
                 GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.Ship
+                LocationId = LocationType.Ship
             };
         }
 
-        public static CreateLocationDto CreateNewCreateLocationDtoAsShipwreck()
+        public static LocationDto CreateNewLocationDtoAsShipwreck()
         {
-            return new CreateLocationDto
+            return new LocationDto
             {
                 Name = "Test",
                 Description = "",
                 GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.Shipwreck
+                LocationId = LocationType.Shipwreck
             };
         }
 
-        public static CreateLocationDto CreateNewCreateLocationDtoAsStable()
+        public static LocationDto CreateNewLocationDtoAsStable()
         {
-            return new CreateLocationDto
+            return new LocationDto
             {
                 Name = "Test",
                 Description = "",
                 GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.Stable
+                LocationId = LocationType.Stable
             };
         }
 
-        public static CreateLocationDto CreateNewCreateLocationDtoAsStormcloakCamp()
+        public static LocationDto CreateNewLocationDtoAsStormcloakCamp()
         {
-            return new CreateLocationDto
+            return new LocationDto
             {
                 Name = "Test",
                 Description = "",
                 GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.StormcloakCamp
+                LocationId = LocationType.StormcloakCamp
             };
         }
 
-        public static CreateLocationDto CreateNewCreateLocationDtoAsTomb()
+        public static LocationDto CreateNewLocationDtoAsTomb()
         {
-            return new CreateLocationDto
+            return new LocationDto
             {
                 Name = "Test",
                 Description = "",
                 GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.Tomb
+                LocationId = LocationType.Tomb
             };
         }
 
-        public static CreateLocationDto CreateNewCreateLocationDtoAsWatchtower()
+        public static LocationDto CreateNewLocationDtoAsWatchtower()
         {
-            return new CreateLocationDto
+            return new LocationDto
             {
                 Name = "Test",
                 Description = "",
                 GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.Watchtower
+                LocationId = LocationType.Watchtower
             };
         }
 
-        public static CreateLocationDto CreateNewCreateLocationDtoAsWheatMill()
+        public static LocationDto CreateNewLocationDtoAsWheatMill()
         {
-            return new CreateLocationDto
+            return new LocationDto
             {
                 Name = "Test",
                 Description = "",
                 GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.WheatMill
+                LocationId = LocationType.WheatMill
             };
         }
 
-        public static CreateLocationDto CreateNewCreateLocationDtoAsLumberMill()
+        public static LocationDto CreateNewLocationDtoAsLumberMill()
         {
-            return new CreateLocationDto
+            return new LocationDto
             {
                 Name = "Test",
                 Description = "",
                 GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.LumberMill
+                LocationId = LocationType.LumberMill
             };
         }
 
-        public static CreateLocationDto CreateNewCreateLocationDtoAsBodyOfWater()
+        public static LocationDto CreateNewLocationDtoAsBodyOfWater()
         {
-            return new CreateLocationDto
+            return new LocationDto
             {
                 Name = "Test",
                 Description = "",
                 GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.BodyOfWater
+                LocationId = LocationType.BodyOfWater
             };
         }
 
-        public static CreateLocationDto CreateNewCreateLocationDtoAsInnOrTavern()
+        public static LocationDto CreateNewLocationDtoAsInnOrTavern()
         {
-            return new CreateLocationDto
+            return new LocationDto
             {
                 Name = "Test",
                 Description = "",
                 GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.InnOrTavern
+                LocationId = LocationType.InnOrTavern
             };
         }
 
-        public static CreateLocationDto CreateNewCreateLocationDtoAsTemple()
+        public static LocationDto CreateNewLocationDtoAsTemple()
         {
-            return new CreateLocationDto
+            return new LocationDto
             {
                 Name = "Test",
                 Description = "",
                 GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.Temple
+                LocationId = LocationType.Temple
             };
         }
 
-        public static CreateLocationDto CreateNewCreateLocationDtoAsWordWall()
+        public static LocationDto CreateNewLocationDtoAsWordWall()
         {
-            return new CreateLocationDto
+            return new LocationDto
             {
                 Name = "Test",
                 Description = "",
                 GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.WordWall
+                LocationId = LocationType.WordWall
             };
         }
 
-        public static CreateLocationDto CreateNewCreateLocationDtoAsCastle()
+        public static LocationDto CreateNewLocationDtoAsCastle()
         {
-            return new CreateLocationDto
+            return new LocationDto
             {
                 Name = "Test",
                 Description = "",
                 GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.Castle
+                LocationId = LocationType.Castle
             };
         }
 
-        public static CreateLocationDto CreateNewCreateLocationDtoAsGuildHeadquarter()
+        public static LocationDto CreateNewLocationDtoAsGuildHeadquarter()
         {
-            return new CreateLocationDto
+            return new LocationDto
             {
                 Name = "Test",
                 Description = "",
                 GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.GuildHeadquarter
+                LocationId = LocationType.GuildHeadquarter
             };
         }
 
-        public static CreateLocationDto CreateNewCreateLocationDtoAsUnmarkedLocation()
+        public static LocationDto CreateNewLocationDtoAsUnmarkedLocation()
         {
-            return new CreateLocationDto
+            return new LocationDto
             {
                 Name = "Test",
                 Description = "",
                 GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.UnmarkedLocation
+                LocationId = LocationType.UnmarkedLocation
             };
         }
     }
