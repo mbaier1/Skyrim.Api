@@ -166,11 +166,157 @@ namespace Skyrim.Api.Test.Domains
         }
     }
 
+    public class UpdateLocation : LocationDomain_Tests
+    {
+        [Fact]
+        public async void WithValidIdAndValidDataAndLocationExists_ReturnsExpectedUpdatedLocation()
+        {
+            // Arrange
+            var id = 0;
+            var locationDto = TestMethodHelpers.CreateNewLocationDtoAsCity();
+            var city = TestMethodHelpers.CreateNewCity();
+            _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<LocationDto>())).Returns(locationDto);
+            _mockLocationRepository.Setup(x => x.GetLocation(It.IsAny<int>())).ReturnsAsync(city);
+            _mockLocationRepository.Setup(x => x.UpdateLocation(It.IsAny<Location>(), It.IsAny<LocationDto>())).ReturnsAsync(city);
+
+            // Act
+            var result = await _locationDomain.UpdateLocation(id, locationDto);
+
+            // Assert
+            Assert.Equal(id, result.Id);
+            Assert.Equal(locationDto.Name, result.Name);
+            Assert.Equal(locationDto.Description, result.Description);
+            Assert.Equal(locationDto.GeographicalDescription, result.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WithInvalidIdAndValidData_ReturnsExpectedNull()
+        {
+            // Arrange
+            var id = 1;
+            var locationDto = TestMethodHelpers.CreateNewLocationDtoAsCity();
+            var city = (City)null;
+            _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<LocationDto>())).Returns(locationDto);
+            _mockLocationRepository.Setup(x => x.GetLocation(It.IsAny<int>())).ReturnsAsync((Location)null);
+            _mockLocationRepository.Setup(x => x.UpdateLocation(It.IsAny<Location>(), It.IsAny<LocationDto>())).ReturnsAsync((City)null);
+
+            // Act
+            var result = await _locationDomain.UpdateLocation(id, locationDto);
+
+            // Assert
+            Assert.Null(result);
+        }
+
+        [Fact]
+        public async void WithValidIdAndInvalidData_ReturnsExpectedNull()
+        {
+            var id = 1;
+            var locationDto = new LocationDto
+            {
+                Name = "Test",
+                Description = "Test",
+                GeographicalDescription = "Test",
+                LocationId = LocationType.City
+            };
+
+            var city = (City)null;
+            _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<LocationDto>())).Returns(locationDto);
+            _mockLocationRepository.Setup(x => x.GetLocation(It.IsAny<int>())).ReturnsAsync(TestMethodHelpers.CreateNewCity());
+            _mockLocationRepository.Setup(x => x.UpdateLocation(It.IsAny<Location>(), It.IsAny<LocationDto>())).ReturnsAsync((City)null);
+
+            // Act
+            var result = await _locationDomain.UpdateLocation(id, locationDto);
+
+            // Assert
+            Assert.Null(result);
+        }
+
+        [Fact]
+        public async void WithValidIdAndWrongLocationData_ReturnsExpectedWrongUpdatedLocation()
+        {
+            // Arrange
+            var id = 0;
+            var locationDto = TestMethodHelpers.CreateNewLocationDtoAsCity();
+            var city = TestMethodHelpers.CreateNewCity();
+            _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<LocationDto>())).Returns(locationDto);
+            _mockLocationRepository.Setup(x => x.GetLocation(It.IsAny<int>())).ReturnsAsync(city);
+            _mockLocationRepository.Setup(x => x.UpdateLocation(It.IsAny<Location>(), It.IsAny<LocationDto>())).ReturnsAsync(city);
+
+            // Act
+            var result = await _locationDomain.UpdateLocation(id, locationDto);
+
+            // Assert
+            Assert.Equal(id, result.Id);
+            Assert.Equal(locationDto.Name, result.Name);
+            Assert.Equal(locationDto.Description, result.Description);
+            Assert.Equal(locationDto.GeographicalDescription, result.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenLocationDtoContainsEmpty_WhiteSpace_OrNullDescription_ReturnsExpectedLocation()
+        {
+            // Arrange
+            var id = 0;
+            var locationDto = new LocationDto
+            {
+                Name = "Test",
+                Description = "Test    ",
+                GeographicalDescription = "Test",
+                LocationId = LocationType.City
+            };
+
+            var updatedLocationDto = new LocationDto
+            {
+                Name = "Test",
+                Description = "Test",
+                GeographicalDescription = "Test",
+                LocationId = LocationType.City
+            };
+
+            var city = TestMethodHelpers.CreateNewCity();
+            _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<LocationDto>())).Returns(updatedLocationDto);
+            _mockLocationRepository.Setup(x => x.GetLocation(It.IsAny<int>())).ReturnsAsync(city);
+            _mockLocationRepository.Setup(x => x.UpdateLocation(It.IsAny<Location>(), It.IsAny<LocationDto>())).ReturnsAsync(city);
+
+            // Act
+            var result = await _locationDomain.UpdateLocation(id, locationDto);
+
+            // Assert
+            Assert.Equal(id, result.Id);
+            Assert.Equal(locationDto.Name, result.Name);
+            Assert.Equal(updatedLocationDto.Description, result.Description);
+            Assert.Equal(locationDto.GeographicalDescription, result.GeographicalDescription);
+        }
+
+        [Fact]
+        public async void WhenLocationDtoContainsInvalidEmpty_WhiteSpace_OrNullProperties_ReturnsExpectedNull()
+        {
+            // Arrange
+            var id = 1;
+            var locationDto = new LocationDto
+            {
+                Name = "",
+                Description = "  ",
+                GeographicalDescription = "Test",
+                LocationId = LocationType.City
+            };
+
+            var city = TestMethodHelpers.CreateNewCity();
+            _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<LocationDto>())).Returns((LocationDto)null);
+
+            // Act
+            var result = await _locationDomain.UpdateLocation(id, locationDto);
+
+            // Assert
+            Assert.Null(result);
+        }
+    }
+
     public class CreateLocation : LocationDomain_Tests
     {
         [Theory]
         [MemberData(nameof(ValidPropertiesForEachLocationType))]
-        public async void WhenCreateLocationDtoHasValidProperties_ReturnsExpectedLocation(string description, LocationDto createLocationDto,
+        public async void WhenCreateLocationDtoHasValidProperties_ReturnsExpectedLocation(string description, LocationDto locationDto,
            Location taskType, Location type)
         {
             // Arrange
@@ -255,13 +401,13 @@ namespace Skyrim.Api.Test.Domains
             else if (type.LocationId == LocationType.UnmarkedLocation)
                 _mockMapper.Setup(x => x.Map<UnmarkedLocation>(It.IsAny<LocationDto>())).Returns(TestMethodHelpers.CreateNewUnmarkedLocation());
 
-            _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<LocationDto>())).Returns(createLocationDto);
+            _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<LocationDto>())).Returns(locationDto);
             var completedCreateTask = Task<Location>.FromResult(taskType);
             _mockLocationRepository.Setup(x => x.SaveLocation(It.IsAny<Location>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
-            var result = await _locationDomain.CreateLocation(createLocationDto);
+            var result = await _locationDomain.CreateLocation(locationDto);
 
             // Assert
             Assert.Equal(type.Id, result.Id);
@@ -1846,7 +1992,7 @@ namespace Skyrim.Api.Test.Domains
 
         [Theory]
         [MemberData(nameof(WhiteSpaceProperties))]
-        public async void CreateLocationDtoContainsEmpty_WhiteSpace_OrNullDescription_ReturnsExpectedLocation(string description,
+        public async void LocationDtoContainsEmpty_WhiteSpace_OrNullDescription_ReturnsExpectedLocation(string description,
             LocationDto createLocationDto, LocationDto formatedCreateLocationDto, 
             Location taskType, Location type)
         {
@@ -3630,7 +3776,7 @@ namespace Skyrim.Api.Test.Domains
 
         [Theory]
         [MemberData(nameof(UnallowedNull_Invalid_OrWhiteSpaceProperties))]
-        public async void CreateLocationDtoContainsInvalidEmpty_WhiteSpace_OrNullProperties_ReturnsExpectedNull(string description,
+        public async void LocationDtoContainsInvalidEmpty_WhiteSpace_OrNullProperties_ReturnsExpectedNull(string description,
             LocationDto createLocationDto, LocationDto badFormatedCreateLocationDto)
         {
             // Arrange
@@ -6527,7 +6673,7 @@ namespace Skyrim.Api.Test.Domains
         }
 
         [Fact]
-        public async void CreateLocationDtoDoesNotContainValidLocationType_ReturnsNull()
+        public async void LocationDtoDoesNotContainValidLocationType_ReturnsNull()
         {
             // Arrange
             var createLocationDto = new LocationDto

@@ -6,16 +6,16 @@ namespace Skyrim.Api.Extensions
 {
     public class DomainLoggerExtensions : IDomainLoggerExtension
     {
-        private readonly ILogger<LocationDomain> _creatLocationDtoDomainLogger;
+        private readonly ILogger<LocationDomain> _locationDtoDomainLogger;
 
-        public DomainLoggerExtensions(ILogger<LocationDomain> creatLocationDtoDomainLogger)
+        public DomainLoggerExtensions(ILogger<LocationDomain> locationDtoDomainLogger)
         {
-            _creatLocationDtoDomainLogger = creatLocationDtoDomainLogger;
+            _locationDtoDomainLogger = locationDtoDomainLogger;
         }
 
-        public void LogError(Exception e, LocationDto createLocationDto)
+        public void LogError(Exception e, LocationDto locationDto)
         {
-            _creatLocationDtoDomainLogger.Log(LogLevel.Error, e.Message, createLocationDto);
+            _locationDtoDomainLogger.Log(LogLevel.Error, e.Message, locationDto);
         }
     }
 }

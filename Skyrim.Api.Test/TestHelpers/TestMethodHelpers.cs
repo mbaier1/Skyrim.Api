@@ -491,7 +491,7 @@ namespace Skyrim.Api.Test.TestHelpers
             return new LocationDto
             {
                 Name = "Test",
-                Description = "",
+                Description = "Test",
                 GeographicalDescription = "Test",
                 LocationId = LocationType.City
             };

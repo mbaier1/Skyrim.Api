@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.CodeAnalysis;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Extensions;
 using Moq;
 using Skyrim.Api.Data;
 using Skyrim.Api.Data.AbstractModels;
@@ -9,6 +11,7 @@ using Skyrim.Api.Extensions.Interfaces;
 using Skyrim.Api.Repository;
 using Skyrim.Api.Repository.Interface;
 using Skyrim.Api.Test.TestHelpers;
+using Location = Skyrim.Api.Data.AbstractModels.Location;
 
 namespace Skyrim.Api.Test.Repositories
 {
@@ -190,6 +193,145 @@ namespace Skyrim.Api.Test.Repositories
 
             // Assert
             await Assert.ThrowsAsync<Exception>(() => _partialMockLocationRepository.Object.GetLocation(id));
+            _context.Database.EnsureDeleted();
+        }
+    }
+
+    public class UpdateLocation : LocationRepository_Tests
+    {
+        [Fact]
+        public async void WithValidLocation_UpdatesLocation()
+        {
+            // Arrange
+            var oldLocation = new City
+            {
+                Id = 1,
+                Name = "Test",
+                Description = "Test",
+                GeographicalDescription = "Test",
+                LocationId = LocationType.City,
+                TypeOfLocation = LocationType.City.GetDisplayName()
+            };
+
+            var updatedLocationData = new LocationDto
+            {
+                Name = "Changed",
+                Description = "Changed",
+                GeographicalDescription = "Changed",
+                LocationId = LocationType.Tomb
+            };
+
+            await _context.AddAsync(oldLocation);
+            await _context.SaveChangesAsync();
+
+            // Act
+            var result = await _locationRepository.UpdateLocation(oldLocation, updatedLocationData);
+
+            // Assert
+            Assert.Equal(_context.Cities.FirstOrDefault().Name, result.Name);
+            Assert.Equal(_context.Cities.FirstOrDefault().Description, result.Description);
+            Assert.Equal(_context.Cities.FirstOrDefault().GeographicalDescription, result.GeographicalDescription);
+            Assert.Equal(_context.Cities.FirstOrDefault().LocationId, result.LocationId);
+            Assert.Equal(_context.Cities.FirstOrDefault().TypeOfLocation, result.TypeOfLocation);
+            _context.Database.EnsureDeleted();
+        }
+
+        [Fact]
+        public async void WithValidLocation_ReturnsUpdatedLocation()
+        {
+            // Arrange
+            var oldLocation = new City
+            {
+                Id = 1,
+                Name = "Test",
+                Description = "Test",
+                GeographicalDescription = "Test",
+                LocationId = LocationType.City,
+                TypeOfLocation = LocationType.City.GetDisplayName()
+            };
+
+            var updatedLocationData = new LocationDto
+            {
+                Name = "Changed",
+                Description = "Changed",
+                GeographicalDescription = "Changed",
+                LocationId = LocationType.Tomb
+            };
+
+            var newLocation = new City
+            {
+                Id = 1,
+                Name = "Changed",
+                Description = "Changed",
+                GeographicalDescription = "Changed",
+                LocationId = LocationType.Tomb,
+                TypeOfLocation = LocationType.Tomb.GetDisplayName()
+            };
+
+            await _context.AddAsync(oldLocation);
+            await _context.SaveChangesAsync();
+
+            // Act
+            var result = await _locationRepository.UpdateLocation(oldLocation, updatedLocationData);
+
+            // Assert
+            Assert.Equal(newLocation.Name, result.Name);
+            Assert.Equal(newLocation.Description, result.Description);
+            Assert.Equal(newLocation.GeographicalDescription, result.GeographicalDescription);
+            Assert.Equal(newLocation.LocationId, result.LocationId);
+            Assert.Equal(newLocation.TypeOfLocation, result.TypeOfLocation);
+            _context.Database.EnsureDeleted();
+        }
+
+        [Fact]
+        public async void WithInvalidLocation_LogsExpectedError()
+        {
+            //Arrange
+            var oldLocation = new City
+            {
+                Id = 1,
+                Name = "Test",
+                Description = "Test",
+                GeographicalDescription = "Test",
+                LocationId = LocationType.City,
+                TypeOfLocation = LocationType.City.GetDisplayName()
+            };
+
+            var updatedLocationData = new LocationDto();
+            await _context.AddAsync(oldLocation);
+            await _context.SaveChangesAsync();
+
+            // Act
+            await _locationRepository.UpdateLocation(oldLocation, updatedLocationData);
+
+            // Assert
+            _mockLoggerExtension.Verify(x => x.LogError(It.IsAny<Exception>(), It.IsAny<Location>()), Times.Once);
+            _context.Database.EnsureDeleted();
+        }
+
+        [Fact]
+        public async void WithInvalidLocation_ReturnsExpectedNull()
+        {
+            //Arrange
+            var oldLocation = new City
+            {
+                Id = 1,
+                Name = "Test",
+                Description = "Test",
+                GeographicalDescription = "Test",
+                LocationId = LocationType.City,
+                TypeOfLocation = LocationType.City.GetDisplayName()
+            };
+
+            var updatedLocationData = new LocationDto();
+            await _context.AddAsync(oldLocation);
+            await _context.SaveChangesAsync();
+
+            // Act
+            var result = await _locationRepository.UpdateLocation(oldLocation, updatedLocationData);
+
+            // Assert
+            Assert.Null(result);
             _context.Database.EnsureDeleted();
         }
     }
