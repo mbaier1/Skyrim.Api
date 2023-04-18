@@ -72,12 +72,12 @@ namespace Skyrim.Api.Controllers
 
         // POST: api/Locations
         [HttpPost]
-        public async Task<ActionResult<Location>> CreateLocation(LocationDto creatLocationDto)
+        public async Task<ActionResult<Location>> CreateLocation(LocationDto locationDto)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            var location = await _locationDomain.CreateLocation(creatLocationDto);
+            var location = await _locationDomain.CreateLocation(locationDto);
 
             if (location == null)
                 return BadRequest();
