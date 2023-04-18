@@ -12,12 +12,12 @@ namespace Skyrim.Api.Domain
     public class LocationDomain : ILocationDomain
     {
         private readonly ILocationRepository _locationRepository;
-        private readonly ICreateLocationDtoFormatHelper _CreateLocationDtoFormatHelper;
+        private readonly ILocationDtoFormatHelper _CreateLocationDtoFormatHelper;
         private readonly IDomainLoggerExtension _loggerExtension;
         private readonly IMapper _mapper;
 
 
-        public LocationDomain(ILocationRepository locationRepository, ICreateLocationDtoFormatHelper createLocationDtoFormatHelper,
+        public LocationDomain(ILocationRepository locationRepository, ILocationDtoFormatHelper createLocationDtoFormatHelper,
             IDomainLoggerExtension loggerExtension, IMapper mapper)
         {
             _locationRepository = locationRepository;
@@ -39,7 +39,7 @@ namespace Skyrim.Api.Domain
             return await _locationRepository.GetLocation(id);
         }
 
-        public async Task<Location> CreateLocation(CreateLocationDto createLocationDto)
+        public async Task<Location> CreateLocation(LocationDto createLocationDto)
         {
             createLocationDto = _CreateLocationDtoFormatHelper.FormatEntity(createLocationDto);
             if (createLocationDto == null)
@@ -64,11 +64,11 @@ namespace Skyrim.Api.Domain
             return await _locationRepository.DeleteLocation(location);
         }
 
-        private Location MapLocationAsCorrectType(CreateLocationDto createLocationDto)
+        private Location MapLocationAsCorrectType(LocationDto createLocationDto)
         {
             try
             {
-                switch (createLocationDto.TypeOfLocation)
+                switch (createLocationDto.LocationId)
                 {
                     case LocationType.City:
                         return _mapper.Map<City>(createLocationDto);
@@ -166,7 +166,7 @@ namespace Skyrim.Api.Domain
         {
             var existingLocations = await _locationRepository.GetLocation();
             var existingLocation = existingLocations.FirstOrDefault(x =>
-            x.TypeOfLocation == location.TypeOfLocation &&
+            x.LocationId == location.LocationId &&
             x.Name == location.Name);
             if (existingLocation == null)
                 return false;

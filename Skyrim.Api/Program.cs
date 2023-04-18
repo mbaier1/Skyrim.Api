@@ -39,7 +39,7 @@ builder.Services.AddScoped<ILocationRepository, LocationRepository>();
 builder.Services.AddScoped<ILocationDomain, LocationDomain>();
 builder.Services.AddScoped<IRepositoryLoggerExtension, Skyrim.Api.Extensions.RepositoryLoggerExtensions>();
 builder.Services.AddScoped<IDomainLoggerExtension, Skyrim.Api.Extensions.DomainLoggerExtensions>();
-builder.Services.AddScoped<ICreateLocationDtoFormatHelper, CreateLocationDtoFormatHelper>();
+builder.Services.AddScoped<ILocationDtoFormatHelper, CreateLocationDtoFormatHelper>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

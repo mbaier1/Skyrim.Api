@@ -21,22 +21,22 @@ namespace Skyrim.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Location>>> GetLocation()
         {
-            var result = await _locationDomain.GetLocation();
-            if (result == null)
+            var location = await _locationDomain.GetLocation();
+            if (location == null)
                 return NotFound();
 
-            return Ok(result);
+            return Ok(location);
         }
 
         // GET: api/Location/id
         [HttpGet("{id}")]
         public async Task<ActionResult<Location>> GetLocation(int id)
         {
-            var result = await _locationDomain.GetLocation(id);
-            if (result == null)
+            var location = await _locationDomain.GetLocation(id);
+            if (location == null)
                 return NotFound();
 
-            return Ok(result);
+            return Ok(location);
         }
 
         // PUT: api/Locations/5
@@ -72,7 +72,7 @@ namespace Skyrim.Api.Controllers
 
         // POST: api/Locations
         [HttpPost]
-        public async Task<ActionResult<Location>> CreateLocation(CreateLocationDto creatLocationDto)
+        public async Task<ActionResult<Location>> CreateLocation(LocationDto creatLocationDto)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
@@ -88,6 +88,7 @@ namespace Skyrim.Api.Controllers
                 location.Name,
                 location.Description,
                 location.GeographicalDescription,
+                location.LocationId,
                 location.TypeOfLocation
             });
         }

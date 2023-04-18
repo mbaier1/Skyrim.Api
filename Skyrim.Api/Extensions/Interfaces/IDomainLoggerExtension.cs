@@ -2,8 +2,8 @@
 
 namespace Skyrim.Api.Extensions.Interfaces
 {
-    public interface IDomainLoggerExtension : IGenericLoggerExtension<CreateLocationDto>
+    public interface IDomainLoggerExtension : IGenericLoggerExtension<LocationDto>
     {
-        void LogError(Exception e, CreateLocationDto createLocationDto);
+        void LogError(Exception e, LocationDto createLocationDto);
     }
 }

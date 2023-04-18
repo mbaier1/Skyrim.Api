@@ -1,4 +1,6 @@
-﻿using Skyrim.Api.Data.AbstractModels;
+﻿using Microsoft.OpenApi.Extensions;
+using Skyrim.Api.Data.AbstractModels;
+using Skyrim.Api.Data.Enums;
 
 namespace Skyrim.Api.Data.Models
 {
@@ -6,7 +8,8 @@ namespace Skyrim.Api.Data.Models
     {
         public GuildHeadquarter()
         {
-            this.TypeOfLocation = Enums.LocationType.GuildHeadquarter;
+            this.LocationId = LocationType.GuildHeadquarter;
+            this.TypeOfLocation = LocationType.GuildHeadquarter.GetDisplayName();
         }
     }
 }
