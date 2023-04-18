@@ -40,34 +40,17 @@ namespace Skyrim.Api.Controllers
         }
 
         // PUT: api/Locations/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutLocation(int id, Location location)
+        public async Task<ActionResult<Location>> UpdateLocation(int id, LocationDto locationDto)
         {
-            //if (id != location.Id)
-            //{
-            //    return BadRequest();
-            //}
+            if (!ModelState.IsValid)
+                return BadRequest();
 
-            //_context.Entry(location).State = EntityState.Modified;
+            var updatedLocation = await _locationDomain.UpdateLocation(id, locationDto);
+            if(updatedLocation == null)
+                return BadRequest();
 
-            //try
-            //{
-            //    await _context.SaveChangesAsync();
-            //}
-            //catch (DbUpdateConcurrencyException)
-            //{
-            //    //if (!LocationExists(id))
-            //    //{
-            //    //    return NotFound();
-            //    //}
-            //    //else
-            //    //{
-            //    //    throw;
-            //    //}
-            //}
-
-            return NoContent();
+            return Ok(updatedLocation);
         }
 
         // POST: api/Locations

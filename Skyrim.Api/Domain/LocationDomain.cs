@@ -1,18 +1,19 @@
 ﻿using AutoMapper;
-using Skyrim.Api.Data.AbstractModels;
+using Microsoft.CodeAnalysis;
 using Skyrim.Api.Data.Enums;
 using Skyrim.Api.Data.Models;
 using Skyrim.Api.Domain.DTOs;
 using Skyrim.Api.Domain.Interfaces;
 using Skyrim.Api.Extensions.Interfaces;
 using Skyrim.Api.Repository.Interface;
+using Location = Skyrim.Api.Data.AbstractModels.Location;
 
 namespace Skyrim.Api.Domain
 {
     public class LocationDomain : ILocationDomain
     {
         private readonly ILocationRepository _locationRepository;
-        private readonly ILocationDtoFormatHelper _CreateLocationDtoFormatHelper;
+        private readonly ILocationDtoFormatHelper _locationDtoFormatHelper;
         private readonly IDomainLoggerExtension _loggerExtension;
         private readonly IMapper _mapper;
 
@@ -21,10 +22,11 @@ namespace Skyrim.Api.Domain
             IDomainLoggerExtension loggerExtension, IMapper mapper)
         {
             _locationRepository = locationRepository;
-            _CreateLocationDtoFormatHelper = createLocationDtoFormatHelper;
+            _locationDtoFormatHelper = createLocationDtoFormatHelper;
             _loggerExtension = loggerExtension;
             _mapper = mapper;
         }
+
         public async Task<IEnumerable<Location>> GetLocation()
         {
             var locations = await _locationRepository.GetLocation();
@@ -41,7 +43,7 @@ namespace Skyrim.Api.Domain
 
         public async Task<Location> CreateLocation(LocationDto locationDto)
         {
-            locationDto = _CreateLocationDtoFormatHelper.FormatEntity(locationDto);
+            locationDto = _locationDtoFormatHelper.FormatEntity(locationDto);
             if (locationDto == null)
                 return null;
 
@@ -53,6 +55,20 @@ namespace Skyrim.Api.Domain
                 return null;
 
             return await _locationRepository.SaveLocation(location);
+        }
+
+        public async Task<Location> UpdateLocation(int id, LocationDto locationDto)
+        {
+            var formatedLocationDto = _locationDtoFormatHelper.FormatEntity(locationDto);
+            if (formatedLocationDto == null)
+                return null;
+
+            var existingLocation = await _locationRepository.GetLocation(id);
+
+            if (existingLocation == null)
+                return null;
+
+            return await _locationRepository.UpdateLocation(existingLocation);
         }
 
         public async Task<bool> DeleteLocation(int id)
