@@ -7,7 +7,7 @@ namespace Skyrim.Api.Repository.Interface
     {
         Task<IEnumerable<Location>> GetLocation();
         Task<Location> GetLocation(int id);
-        Task<Location> UpdateLocation(Location location);
+        Task<Location> UpdateLocation(Location location, LocationDto locationDto);
         Task<Location> SaveLocation(Location location);
         Task<bool> DeleteLocation(Location location);
     }

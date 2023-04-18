@@ -177,7 +177,7 @@ namespace Skyrim.Api.Test.Domains
             var city = TestMethodHelpers.CreateNewCity();
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<LocationDto>())).Returns(locationDto);
             _mockLocationRepository.Setup(x => x.GetLocation(It.IsAny<int>())).ReturnsAsync(city);
-            _mockLocationRepository.Setup(x => x.UpdateLocation(It.IsAny<Location>())).ReturnsAsync(city);
+            _mockLocationRepository.Setup(x => x.UpdateLocation(It.IsAny<Location>(), It.IsAny<LocationDto>())).ReturnsAsync(city);
 
             // Act
             var result = await _locationDomain.UpdateLocation(id, locationDto);
@@ -198,7 +198,7 @@ namespace Skyrim.Api.Test.Domains
             var city = (City)null;
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<LocationDto>())).Returns(locationDto);
             _mockLocationRepository.Setup(x => x.GetLocation(It.IsAny<int>())).ReturnsAsync((Location)null);
-            _mockLocationRepository.Setup(x => x.UpdateLocation(It.IsAny<Location>())).ReturnsAsync((City)null);
+            _mockLocationRepository.Setup(x => x.UpdateLocation(It.IsAny<Location>(), It.IsAny<LocationDto>())).ReturnsAsync((City)null);
 
             // Act
             var result = await _locationDomain.UpdateLocation(id, locationDto);
@@ -222,7 +222,7 @@ namespace Skyrim.Api.Test.Domains
             var city = (City)null;
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<LocationDto>())).Returns(locationDto);
             _mockLocationRepository.Setup(x => x.GetLocation(It.IsAny<int>())).ReturnsAsync(TestMethodHelpers.CreateNewCity());
-            _mockLocationRepository.Setup(x => x.UpdateLocation(It.IsAny<Location>())).ReturnsAsync((City)null);
+            _mockLocationRepository.Setup(x => x.UpdateLocation(It.IsAny<Location>(), It.IsAny<LocationDto>())).ReturnsAsync((City)null);
 
             // Act
             var result = await _locationDomain.UpdateLocation(id, locationDto);
@@ -240,7 +240,7 @@ namespace Skyrim.Api.Test.Domains
             var city = TestMethodHelpers.CreateNewCity();
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<LocationDto>())).Returns(locationDto);
             _mockLocationRepository.Setup(x => x.GetLocation(It.IsAny<int>())).ReturnsAsync(city);
-            _mockLocationRepository.Setup(x => x.UpdateLocation(It.IsAny<Location>())).ReturnsAsync(city);
+            _mockLocationRepository.Setup(x => x.UpdateLocation(It.IsAny<Location>(), It.IsAny<LocationDto>())).ReturnsAsync(city);
 
             // Act
             var result = await _locationDomain.UpdateLocation(id, locationDto);
@@ -276,7 +276,7 @@ namespace Skyrim.Api.Test.Domains
             var city = TestMethodHelpers.CreateNewCity();
             _mockCreateLocationDtoFormatHelper.Setup(x => x.FormatEntity(It.IsAny<LocationDto>())).Returns(updatedLocationDto);
             _mockLocationRepository.Setup(x => x.GetLocation(It.IsAny<int>())).ReturnsAsync(city);
-            _mockLocationRepository.Setup(x => x.UpdateLocation(It.IsAny<Location>())).ReturnsAsync(city);
+            _mockLocationRepository.Setup(x => x.UpdateLocation(It.IsAny<Location>(), It.IsAny<LocationDto>())).ReturnsAsync(city);
 
             // Act
             var result = await _locationDomain.UpdateLocation(id, locationDto);

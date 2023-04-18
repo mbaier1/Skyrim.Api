@@ -68,7 +68,7 @@ namespace Skyrim.Api.Domain
             if (existingLocation == null)
                 return null;
 
-            return await _locationRepository.UpdateLocation(existingLocation);
+            return await _locationRepository.UpdateLocation(existingLocation, formatedLocationDto);
         }
 
         public async Task<bool> DeleteLocation(int id)

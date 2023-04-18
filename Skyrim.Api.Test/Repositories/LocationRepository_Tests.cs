@@ -212,22 +212,20 @@ namespace Skyrim.Api.Test.Repositories
                 LocationId = LocationType.City,
                 TypeOfLocation = LocationType.City.GetDisplayName()
             };
-         
-            var newLocation = new City
+
+            var updatedLocationData = new LocationDto
             {
-                Id = 1,
                 Name = "Changed",
                 Description = "Changed",
                 GeographicalDescription = "Changed",
-                LocationId = LocationType.Tomb,
-                TypeOfLocation = LocationType.Tomb.GetDisplayName()
+                LocationId = LocationType.Tomb
             };
 
             await _context.AddAsync(oldLocation);
             await _context.SaveChangesAsync();
 
             // Act
-            var result = await _locationRepository.UpdateLocation(newLocation);
+            var result = await _locationRepository.UpdateLocation(oldLocation, updatedLocationData);
 
             // Assert
             Assert.Equal(_context.Cities.FirstOrDefault().Name, result.Name);
@@ -252,6 +250,14 @@ namespace Skyrim.Api.Test.Repositories
                 TypeOfLocation = LocationType.City.GetDisplayName()
             };
 
+            var updatedLocationData = new LocationDto
+            {
+                Name = "Changed",
+                Description = "Changed",
+                GeographicalDescription = "Changed",
+                LocationId = LocationType.Tomb
+            };
+
             var newLocation = new City
             {
                 Id = 1,
@@ -266,7 +272,7 @@ namespace Skyrim.Api.Test.Repositories
             await _context.SaveChangesAsync();
 
             // Act
-            var result = await _locationRepository.UpdateLocation(newLocation);
+            var result = await _locationRepository.UpdateLocation(oldLocation, updatedLocationData);
 
             // Assert
             Assert.Equal(newLocation.Name, result.Name);
@@ -291,12 +297,12 @@ namespace Skyrim.Api.Test.Repositories
                 TypeOfLocation = LocationType.City.GetDisplayName()
             };
 
-            var newLocation = new City();
+            var updatedLocationData = new LocationDto();
             await _context.AddAsync(oldLocation);
             await _context.SaveChangesAsync();
 
             // Act
-            await _locationRepository.UpdateLocation(newLocation);
+            await _locationRepository.UpdateLocation(oldLocation, updatedLocationData);
 
             // Assert
             _mockLoggerExtension.Verify(x => x.LogError(It.IsAny<Exception>(), It.IsAny<Location>()), Times.Once);
@@ -317,12 +323,12 @@ namespace Skyrim.Api.Test.Repositories
                 TypeOfLocation = LocationType.City.GetDisplayName()
             };
 
-            var newLocation = new City();
+            var updatedLocationData = new LocationDto();
             await _context.AddAsync(oldLocation);
             await _context.SaveChangesAsync();
 
             // Act
-            var result = await _locationRepository.UpdateLocation(newLocation);
+            var result = await _locationRepository.UpdateLocation(oldLocation, updatedLocationData);
 
             // Assert
             Assert.Null(result);

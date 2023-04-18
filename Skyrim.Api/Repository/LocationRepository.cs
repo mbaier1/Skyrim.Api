@@ -50,11 +50,11 @@ namespace Skyrim.Api.Repository
             return null;
         }
 
-        public async Task<Location> UpdateLocation(Location updatedLocation)
+        public async Task<Location> UpdateLocation(Location locationToUpdate, LocationDto updatedLocation)
         {
             try
             {
-                var existingLocation = await _context.Location.FirstAsync(x => x.Id == updatedLocation.Id);
+                var existingLocation = await _context.Location.FirstAsync(x => x.Id == locationToUpdate.Id);
                 existingLocation.LocationId = updatedLocation.LocationId;
                 existingLocation.TypeOfLocation = updatedLocation.LocationId.GetDisplayName();
                 existingLocation.Name = updatedLocation.Name;
@@ -63,11 +63,11 @@ namespace Skyrim.Api.Repository
                 _context.Location.Update(existingLocation);
                 await _context.SaveChangesAsync();
 
-                return updatedLocation;
+                return existingLocation;
             }
             catch (Exception e)
             {
-                _loggerExtension.LogError(e, updatedLocation);
+                _loggerExtension.LogError(e, locationToUpdate);
             }
 
             return null;
