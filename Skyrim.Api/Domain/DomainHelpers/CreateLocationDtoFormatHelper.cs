@@ -4,9 +4,9 @@ using System.Text.RegularExpressions;
 
 namespace Skyrim.Api.Domain.DomainHelpers
 {
-    public class CreateLocationDtoFormatHelper : GenericFormatHelper<CreateLocationDto>, ICreateLocationDtoFormatHelper
+    public class CreateLocationDtoFormatHelper : GenericFormatHelper<LocationDto>, ILocationDtoFormatHelper
     {
-        public CreateLocationDto FormatEntity(CreateLocationDto createLocationDto)
+        public LocationDto FormatEntity(LocationDto createLocationDto)
         {
             createLocationDto = CheckForNullOrWhiteSpaceProperties(createLocationDto);
             if (createLocationDto == null)
@@ -18,7 +18,7 @@ namespace Skyrim.Api.Domain.DomainHelpers
             return createLocationDto;
         }
 
-        private CreateLocationDto CheckForNullOrWhiteSpaceProperties(CreateLocationDto createLocationDto)
+        private LocationDto CheckForNullOrWhiteSpaceProperties(LocationDto createLocationDto)
         {
             if (string.IsNullOrWhiteSpace(createLocationDto.Description))
                 createLocationDto.Description = "";
@@ -30,7 +30,7 @@ namespace Skyrim.Api.Domain.DomainHelpers
             return createLocationDto;
         }
 
-        private CreateLocationDto TrimWhiteSpaceProperties(CreateLocationDto createLocationDto)
+        private LocationDto TrimWhiteSpaceProperties(LocationDto createLocationDto)
         {
             createLocationDto.Name = createLocationDto.Name.Trim();
             createLocationDto.Description = createLocationDto.Description.Trim();

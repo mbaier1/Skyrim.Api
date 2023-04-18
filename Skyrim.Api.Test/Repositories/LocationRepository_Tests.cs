@@ -49,7 +49,7 @@ namespace Skyrim.Api.Test.Repositories
                 Id = 1,
                 Name = "Test",
                 GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.City,
+                LocationId = LocationType.City,
                 Description = "Test"
             };
             var town = new Town
@@ -57,7 +57,7 @@ namespace Skyrim.Api.Test.Repositories
                 Id = 2,
                 Name = "Test",
                 GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.Town,
+                LocationId = LocationType.Town,
                 Description = "Test"
             };
             var settlement = new Settlement
@@ -65,7 +65,7 @@ namespace Skyrim.Api.Test.Repositories
                 Id = 3,
                 Name = "Test",
                 GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.Settlement,
+                LocationId = LocationType.Settlement,
                 Description = "Test"
             };
 
@@ -124,7 +124,7 @@ namespace Skyrim.Api.Test.Repositories
                 Id = 1,
                 Name = "Test",
                 GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.City,
+                LocationId = LocationType.City,
                 Description = "Test"
             };
 
@@ -149,7 +149,7 @@ namespace Skyrim.Api.Test.Repositories
                 Id = 1,
                 Name = "Test",
                 GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.City,
+                LocationId = LocationType.City,
                 Description = "Test"
             };
 
@@ -206,7 +206,7 @@ namespace Skyrim.Api.Test.Repositories
             var result = await _locationRepository.SaveLocation(location);
 
             // Assert
-            switch (location.TypeOfLocation)
+            switch (location.LocationId)
             {
                 case LocationType.City:
                     Assert.Equal(_context.Cities.FirstOrDefault().Name, result.Name);
@@ -551,7 +551,7 @@ namespace Skyrim.Api.Test.Repositories
             Assert.Equal(location.Name, result.Name);
             Assert.Equal(location.Description, result.Description);
             Assert.Equal(location.GeographicalDescription, result.GeographicalDescription);
-            Assert.Equal(location.TypeOfLocation, result.TypeOfLocation);
+            Assert.Equal(location.LocationId, result.LocationId);
             Assert.Equal(location.Id, result.Id);
             _context.Database.EnsureDeleted();
         }
@@ -799,7 +799,7 @@ namespace Skyrim.Api.Test.Repositories
                 Id = 1,
                 Name = "Test",
                 GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.City,
+                LocationId = LocationType.City,
                 Description = "Test"
             };
 
@@ -823,7 +823,7 @@ namespace Skyrim.Api.Test.Repositories
                 Id = 1,
                 Name = "Test",
                 GeographicalDescription = "Test",
-                TypeOfLocation = LocationType.City,
+                LocationId = LocationType.City,
                 Description = "Test"
             };
 

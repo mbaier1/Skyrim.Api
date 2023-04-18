@@ -30,6 +30,21 @@ namespace Skyrim.Api.Migrations
 
             modelBuilder.HasSequence("PersonSequence");
 
+            modelBuilder.Entity("LocationPatroller", b =>
+                {
+                    b.Property<int>("PatrolledLocationsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PatrollersId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PatrolledLocationsId", "PatrollersId");
+
+                    b.HasIndex("PatrollersId");
+
+                    b.ToTable("LocationPatroller");
+                });
+
             modelBuilder.Entity("Skyrim.Api.Data.AbstractModels.Building", b =>
                 {
                     b.Property<int>("Id")
@@ -121,19 +136,18 @@ namespace Skyrim.Api.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("LocationId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PatrollerId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TypeOfLocation")
-                        .HasColumnType("int");
+                    b.Property<string>("TypeOfLocation")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PatrollerId");
 
                     b.ToTable((string)null);
 
@@ -494,6 +508,21 @@ namespace Skyrim.Api.Migrations
                     b.ToTable("Guards");
                 });
 
+            modelBuilder.Entity("LocationPatroller", b =>
+                {
+                    b.HasOne("Skyrim.Api.Data.AbstractModels.Location", null)
+                        .WithMany()
+                        .HasForeignKey("PatrolledLocationsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Skyrim.Api.Data.AbstractModels.Patroller", null)
+                        .WithMany()
+                        .HasForeignKey("PatrollersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Skyrim.Api.Data.AbstractModels.Building", b =>
                 {
                     b.HasOne("Skyrim.Api.Data.AbstractModels.Location", null)
@@ -518,13 +547,6 @@ namespace Skyrim.Api.Migrations
                         .HasForeignKey("locationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Skyrim.Api.Data.AbstractModels.Location", b =>
-                {
-                    b.HasOne("Skyrim.Api.Data.AbstractModels.Patroller", null)
-                        .WithMany("PatrolledLocations")
-                        .HasForeignKey("PatrollerId");
                 });
 
             modelBuilder.Entity("Skyrim.Api.Data.AbstractModels.Person", b =>
@@ -554,8 +576,6 @@ namespace Skyrim.Api.Migrations
                     b.Navigation("PatrolledBuildings");
 
                     b.Navigation("PatrolledCreatures");
-
-                    b.Navigation("PatrolledLocations");
 
                     b.Navigation("PatrolledPeople");
                 });

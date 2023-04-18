@@ -28,7 +28,7 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            CreateLocationDto createLocationDto = new CreateLocationDto();
+            LocationDto createLocationDto = new LocationDto();
             _locationsController.ModelState.AddModelError("fakeError", "fakeError");
             var badRequest = (int)HttpStatusCode.BadRequest;
 
@@ -49,7 +49,7 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "Test City",
                 GeographicalDescription = "Test Description"
@@ -59,7 +59,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>())).ReturnsAsync((Location)completedCreateTask.Result);
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>())).ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
 
@@ -87,7 +87,7 @@ namespace Skyrim.Api.Test.Controllers
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.City
+                    LocationId = LocationType.City
                 },
                 new Town
                 {
@@ -95,7 +95,7 @@ namespace Skyrim.Api.Test.Controllers
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Town
+                    LocationId = LocationType.Town
                 },
                 new Settlement
                 {
@@ -103,7 +103,7 @@ namespace Skyrim.Api.Test.Controllers
                     Name = "Test",
                     Description = "Test",
                     GeographicalDescription = "Test",
-                    TypeOfLocation = LocationType.Settlement
+                    LocationId = LocationType.Settlement
                 }
             };
 
@@ -161,7 +161,7 @@ namespace Skyrim.Api.Test.Controllers
             {
                 Id = 1,
                 Name = "Test",
-                TypeOfLocation = LocationType.City,
+                LocationId = LocationType.City,
                 GeographicalDescription = "Test"
             };
 
@@ -182,7 +182,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsCity.Id = (int)cityObject.GetType().GetProperty("Id").GetValue(cityObject, null);
             locationAsCity.Name = (string)cityObject.GetType().GetProperty("Name").GetValue(cityObject, null);
-            locationAsCity.TypeOfLocation = (LocationType)cityObject.GetType().GetProperty("TypeOfLocation").GetValue(cityObject, null);
+            locationAsCity.LocationId = (LocationType)cityObject.GetType().GetProperty("LocationId").GetValue(cityObject, null);
             locationAsCity.GeographicalDescription = (string)cityObject.GetType().GetProperty("GeographicalDescription").GetValue(cityObject, null);
 
             // Assert
@@ -190,7 +190,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(okActionStatusCode, responseAsOkActionResult.StatusCode);
             Assert.Equal(city.Id, locationAsCity.Id);
             Assert.Equal(city.Name, locationAsCity.Name);
-            Assert.Equal(city.TypeOfLocation, locationAsCity.TypeOfLocation);
+            Assert.Equal(city.LocationId, locationAsCity.LocationId);
             Assert.Equal(city.GeographicalDescription, locationAsCity.GeographicalDescription);
         }
 
@@ -276,10 +276,10 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test City",
-                TypeOfLocation = LocationType.City,
+                LocationId = LocationType.City,
                 GeographicalDescription = "Test Description"
             };
 
@@ -287,13 +287,13 @@ namespace Skyrim.Api.Test.Controllers
             {
                 Id = 0,
                 Name = "Test City",
-                TypeOfLocation = LocationType.City,
+                LocationId = LocationType.City,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(city);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -308,7 +308,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsCity.Id = (int)cityObject.GetType().GetProperty("Id").GetValue(cityObject, null);
             locationAsCity.Name = (string)cityObject.GetType().GetProperty("Name").GetValue(cityObject, null);
-            locationAsCity.TypeOfLocation = (LocationType)cityObject.GetType().GetProperty("TypeOfLocation").GetValue(cityObject, null);
+            locationAsCity.LocationId = (LocationType)cityObject.GetType().GetProperty("LocationId").GetValue(cityObject, null);
             locationAsCity.GeographicalDescription = (string)cityObject.GetType().GetProperty("GeographicalDescription").GetValue(cityObject, null);
             locationAsCity.Description = (string)cityObject.GetType().GetProperty("Description").GetValue(cityObject, null);
 
@@ -318,7 +318,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(city.Id, locationAsCity.Id);
             Assert.Equal(city.Name, locationAsCity.Name);
             Assert.Equal(city.Description, locationAsCity.Description);
-            Assert.Equal(city.TypeOfLocation, locationAsCity.TypeOfLocation);
+            Assert.Equal(city.LocationId, locationAsCity.LocationId);
             Assert.Equal(city.GeographicalDescription, locationAsCity.GeographicalDescription);
         }
 
@@ -327,11 +327,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test City",
                 Description = "    ",
-                TypeOfLocation = LocationType.City,
+                LocationId = LocationType.City,
                 GeographicalDescription = "Test Description"
             };
 
@@ -340,13 +340,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test City",
                 Description = "",
-                TypeOfLocation = LocationType.City,
+                LocationId = LocationType.City,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(city);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -361,7 +361,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsCity.Id = (int)cityObject.GetType().GetProperty("Id").GetValue(cityObject, null);
             locationAsCity.Name = (string)cityObject.GetType().GetProperty("Name").GetValue(cityObject, null);
-            locationAsCity.TypeOfLocation = (LocationType)cityObject.GetType().GetProperty("TypeOfLocation").GetValue(cityObject, null);
+            locationAsCity.LocationId = (LocationType)cityObject.GetType().GetProperty("LocationId").GetValue(cityObject, null);
             locationAsCity.GeographicalDescription = (string)cityObject.GetType().GetProperty("GeographicalDescription").GetValue(cityObject, null);
             locationAsCity.Description = (string)cityObject.GetType().GetProperty("Description").GetValue(cityObject, null);
 
@@ -371,7 +371,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(city.Name, locationAsCity.Name);
             Assert.Equal(city.Id, locationAsCity.Id);
             Assert.Equal(city.Description, locationAsCity.Description);
-            Assert.Equal(city.TypeOfLocation, locationAsCity.TypeOfLocation);
+            Assert.Equal(city.LocationId, locationAsCity.LocationId);
             Assert.Equal(city.GeographicalDescription, locationAsCity.GeographicalDescription);
         }
 
@@ -380,11 +380,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test City",
                 Description = null,
-                TypeOfLocation = LocationType.City,
+                LocationId = LocationType.City,
                 GeographicalDescription = "Test Description"
             };
 
@@ -393,13 +393,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test City",
                 Description = null,
-                TypeOfLocation = LocationType.City,
+                LocationId = LocationType.City,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(city);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -414,7 +414,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsCity.Id = (int)cityObject.GetType().GetProperty("Id").GetValue(cityObject, null);
             locationAsCity.Name = (string)cityObject.GetType().GetProperty("Name").GetValue(cityObject, null);
-            locationAsCity.TypeOfLocation = (LocationType)cityObject.GetType().GetProperty("TypeOfLocation").GetValue(cityObject, null);
+            locationAsCity.LocationId = (LocationType)cityObject.GetType().GetProperty("LocationId").GetValue(cityObject, null);
             locationAsCity.GeographicalDescription = (string)cityObject.GetType().GetProperty("GeographicalDescription").GetValue(cityObject, null);
             locationAsCity.Description = (string)cityObject.GetType().GetProperty("Description").GetValue(cityObject, null);
 
@@ -424,7 +424,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(city.Id, locationAsCity.Id);
             Assert.Equal(city.Name, locationAsCity.Name);
             Assert.Equal(city.Description, locationAsCity.Description);
-            Assert.Equal(city.TypeOfLocation, locationAsCity.TypeOfLocation);
+            Assert.Equal(city.LocationId, locationAsCity.LocationId);
             Assert.Equal(city.GeographicalDescription, locationAsCity.GeographicalDescription);
         }
 
@@ -433,11 +433,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "      ",
                 Description = "Test",
-                TypeOfLocation = LocationType.City,
+                LocationId = LocationType.City,
                 GeographicalDescription = "Test Description"
             };
 
@@ -445,7 +445,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -463,11 +463,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.City,
+                LocationId = LocationType.City,
                 GeographicalDescription = "        "
             };
 
@@ -475,7 +475,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -495,10 +495,10 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Town",
-                TypeOfLocation = LocationType.Town,
+                LocationId = LocationType.Town,
                 GeographicalDescription = "Test Description"
             };
 
@@ -506,13 +506,13 @@ namespace Skyrim.Api.Test.Controllers
             {
                 Id = 0,
                 Name = "Test Town",
-                TypeOfLocation = LocationType.Town,
+                LocationId = LocationType.Town,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(town);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -527,7 +527,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsTown.Id = (int)townObject.GetType().GetProperty("Id").GetValue(townObject, null);
             locationAsTown.Name = (string)townObject.GetType().GetProperty("Name").GetValue(townObject, null);
-            locationAsTown.TypeOfLocation = (LocationType)townObject.GetType().GetProperty("TypeOfLocation").GetValue(townObject, null);
+            locationAsTown.LocationId = (LocationType)townObject.GetType().GetProperty("LocationId").GetValue(townObject, null);
             locationAsTown.GeographicalDescription = (string)townObject.GetType().GetProperty("GeographicalDescription").GetValue(townObject, null);
             locationAsTown.Description = (string)townObject.GetType().GetProperty("Description").GetValue(townObject, null);
 
@@ -537,7 +537,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(town.Id, locationAsTown.Id);
             Assert.Equal(town.Name, locationAsTown.Name);
             Assert.Equal(town.Description, locationAsTown.Description);
-            Assert.Equal(town.TypeOfLocation, locationAsTown.TypeOfLocation);
+            Assert.Equal(town.LocationId, locationAsTown.LocationId);
             Assert.Equal(town.GeographicalDescription, locationAsTown.GeographicalDescription);
         }
 
@@ -546,11 +546,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Town",
                 Description = "    ",
-                TypeOfLocation = LocationType.Town,
+                LocationId = LocationType.Town,
                 GeographicalDescription = "Test Description"
             };
 
@@ -559,13 +559,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test Town",
                 Description = "",
-                TypeOfLocation = LocationType.Town,
+                LocationId = LocationType.Town,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(town);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -580,7 +580,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsTown.Id = (int)townObject.GetType().GetProperty("Id").GetValue(townObject, null);
             locationAsTown.Name = (string)townObject.GetType().GetProperty("Name").GetValue(townObject, null);
-            locationAsTown.TypeOfLocation = (LocationType)townObject.GetType().GetProperty("TypeOfLocation").GetValue(townObject, null);
+            locationAsTown.LocationId = (LocationType)townObject.GetType().GetProperty("LocationId").GetValue(townObject, null);
             locationAsTown.GeographicalDescription = (string)townObject.GetType().GetProperty("GeographicalDescription").GetValue(townObject, null);
             locationAsTown.Description = (string)townObject.GetType().GetProperty("Description").GetValue(townObject, null);
 
@@ -590,7 +590,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(town.Name, locationAsTown.Name);
             Assert.Equal(town.Id, locationAsTown.Id);
             Assert.Equal(town.Description, locationAsTown.Description);
-            Assert.Equal(town.TypeOfLocation, locationAsTown.TypeOfLocation);
+            Assert.Equal(town.LocationId, locationAsTown.LocationId);
             Assert.Equal(town.GeographicalDescription, locationAsTown.GeographicalDescription);
         }
 
@@ -599,11 +599,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Town",
                 Description = null,
-                TypeOfLocation = LocationType.Town,
+                LocationId = LocationType.Town,
                 GeographicalDescription = "Test Description"
             };
 
@@ -612,13 +612,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test Town",
                 Description = null,
-                TypeOfLocation = LocationType.Town,
+                LocationId = LocationType.Town,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(town);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -633,7 +633,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsTown.Id = (int)townObject.GetType().GetProperty("Id").GetValue(townObject, null);
             locationAsTown.Name = (string)townObject.GetType().GetProperty("Name").GetValue(townObject, null);
-            locationAsTown.TypeOfLocation = (LocationType)townObject.GetType().GetProperty("TypeOfLocation").GetValue(townObject, null);
+            locationAsTown.LocationId = (LocationType)townObject.GetType().GetProperty("LocationId").GetValue(townObject, null);
             locationAsTown.GeographicalDescription = (string)townObject.GetType().GetProperty("GeographicalDescription").GetValue(townObject, null);
             locationAsTown.Description = (string)townObject.GetType().GetProperty("Description").GetValue(townObject, null);
 
@@ -643,7 +643,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(town.Id, locationAsTown.Id);
             Assert.Equal(town.Name, locationAsTown.Name);
             Assert.Equal(town.Description, locationAsTown.Description);
-            Assert.Equal(town.TypeOfLocation, locationAsTown.TypeOfLocation);
+            Assert.Equal(town.LocationId, locationAsTown.LocationId);
             Assert.Equal(town.GeographicalDescription, locationAsTown.GeographicalDescription);
         }
 
@@ -651,11 +651,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsATown_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "      ",
                 Description = "Test",
-                TypeOfLocation = LocationType.Town,
+                LocationId = LocationType.Town,
                 GeographicalDescription = "Test Description"
             };
 
@@ -663,7 +663,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -678,11 +678,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsATown_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.Town,
+                LocationId = LocationType.Town,
                 GeographicalDescription = "        "
             };
 
@@ -690,7 +690,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -709,10 +709,10 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Homestead",
-                TypeOfLocation = LocationType.Homestead,
+                LocationId = LocationType.Homestead,
                 GeographicalDescription = "Test Description"
             };
 
@@ -720,13 +720,13 @@ namespace Skyrim.Api.Test.Controllers
             {
                 Id = 0,
                 Name = "Test Homestead",
-                TypeOfLocation = LocationType.Homestead,
+                LocationId = LocationType.Homestead,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(homestead);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -741,7 +741,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsHomestead.Id = (int)townObject.GetType().GetProperty("Id").GetValue(townObject, null);
             locationAsHomestead.Name = (string)townObject.GetType().GetProperty("Name").GetValue(townObject, null);
-            locationAsHomestead.TypeOfLocation = (LocationType)townObject.GetType().GetProperty("TypeOfLocation").GetValue(townObject, null);
+            locationAsHomestead.LocationId = (LocationType)townObject.GetType().GetProperty("LocationId").GetValue(townObject, null);
             locationAsHomestead.GeographicalDescription = (string)townObject.GetType().GetProperty("GeographicalDescription").GetValue(townObject, null);
             locationAsHomestead.Description = (string)townObject.GetType().GetProperty("Description").GetValue(townObject, null);
 
@@ -751,7 +751,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(homestead.Id, locationAsHomestead.Id);
             Assert.Equal(homestead.Name, locationAsHomestead.Name);
             Assert.Equal(homestead.Description, locationAsHomestead.Description);
-            Assert.Equal(homestead.TypeOfLocation, locationAsHomestead.TypeOfLocation);
+            Assert.Equal(homestead.LocationId, locationAsHomestead.LocationId);
             Assert.Equal(homestead.GeographicalDescription, locationAsHomestead.GeographicalDescription);
         }
 
@@ -760,11 +760,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Homestead",
                 Description = "    ",
-                TypeOfLocation = LocationType.Homestead,
+                LocationId = LocationType.Homestead,
                 GeographicalDescription = "Test Description"
             };
 
@@ -773,13 +773,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test Homestead",
                 Description = "",
-                TypeOfLocation = LocationType.Homestead,
+                LocationId = LocationType.Homestead,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(homestead);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -794,7 +794,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsHomestead.Id = (int)homesteadObject.GetType().GetProperty("Id").GetValue(homesteadObject, null);
             locationAsHomestead.Name = (string)homesteadObject.GetType().GetProperty("Name").GetValue(homesteadObject, null);
-            locationAsHomestead.TypeOfLocation = (LocationType)homesteadObject.GetType().GetProperty("TypeOfLocation").GetValue(homesteadObject, null);
+            locationAsHomestead.LocationId = (LocationType)homesteadObject.GetType().GetProperty("LocationId").GetValue(homesteadObject, null);
             locationAsHomestead.GeographicalDescription = (string)homesteadObject.GetType().GetProperty("GeographicalDescription").GetValue(homesteadObject, null);
             locationAsHomestead.Description = (string)homesteadObject.GetType().GetProperty("Description").GetValue(homesteadObject, null);
 
@@ -804,7 +804,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(homestead.Name, locationAsHomestead.Name);
             Assert.Equal(homestead.Id, locationAsHomestead.Id);
             Assert.Equal(homestead.Description, locationAsHomestead.Description);
-            Assert.Equal(homestead.TypeOfLocation, locationAsHomestead.TypeOfLocation);
+            Assert.Equal(homestead.LocationId, locationAsHomestead.LocationId);
             Assert.Equal(homestead.GeographicalDescription, locationAsHomestead.GeographicalDescription);
         }
 
@@ -813,11 +813,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Homestead",
                 Description = null,
-                TypeOfLocation = LocationType.Homestead,
+                LocationId = LocationType.Homestead,
                 GeographicalDescription = "Test Description"
             };
 
@@ -826,13 +826,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test Homestead",
                 Description = null,
-                TypeOfLocation = LocationType.Homestead,
+                LocationId = LocationType.Homestead,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(homestead);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -847,7 +847,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsHomestead.Id = (int)homesteadObject.GetType().GetProperty("Id").GetValue(homesteadObject, null);
             locationAsHomestead.Name = (string)homesteadObject.GetType().GetProperty("Name").GetValue(homesteadObject, null);
-            locationAsHomestead.TypeOfLocation = (LocationType)homesteadObject.GetType().GetProperty("TypeOfLocation").GetValue(homesteadObject, null);
+            locationAsHomestead.LocationId = (LocationType)homesteadObject.GetType().GetProperty("LocationId").GetValue(homesteadObject, null);
             locationAsHomestead.GeographicalDescription = (string)homesteadObject.GetType().GetProperty("GeographicalDescription").GetValue(homesteadObject, null);
             locationAsHomestead.Description = (string)homesteadObject.GetType().GetProperty("Description").GetValue(homesteadObject, null);
 
@@ -857,7 +857,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(homestead.Id, locationAsHomestead.Id);
             Assert.Equal(homestead.Name, locationAsHomestead.Name);
             Assert.Equal(homestead.Description, locationAsHomestead.Description);
-            Assert.Equal(homestead.TypeOfLocation, locationAsHomestead.TypeOfLocation);
+            Assert.Equal(homestead.LocationId, locationAsHomestead.LocationId);
             Assert.Equal(homestead.GeographicalDescription, locationAsHomestead.GeographicalDescription);
         }
 
@@ -865,11 +865,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsAHomestead_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "      ",
                 Description = "Test",
-                TypeOfLocation = LocationType.Homestead,
+                LocationId = LocationType.Homestead,
                 GeographicalDescription = "Test Description"
             };
 
@@ -877,7 +877,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -892,11 +892,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsATown_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.Homestead,
+                LocationId = LocationType.Homestead,
                 GeographicalDescription = "        "
             };
 
@@ -904,7 +904,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -923,10 +923,10 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Settlement",
-                TypeOfLocation = LocationType.Settlement,
+                LocationId = LocationType.Settlement,
                 GeographicalDescription = "Test Description"
             };
 
@@ -934,13 +934,13 @@ namespace Skyrim.Api.Test.Controllers
             {
                 Id = 0,
                 Name = "Test Settlement",
-                TypeOfLocation = LocationType.Settlement,
+                LocationId = LocationType.Settlement,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(settlement);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -955,7 +955,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsSettlement.Id = (int)settlementObject.GetType().GetProperty("Id").GetValue(settlementObject, null);
             locationAsSettlement.Name = (string)settlementObject.GetType().GetProperty("Name").GetValue(settlementObject, null);
-            locationAsSettlement.TypeOfLocation = (LocationType)settlementObject.GetType().GetProperty("TypeOfLocation").GetValue(settlementObject, null);
+            locationAsSettlement.LocationId = (LocationType)settlementObject.GetType().GetProperty("LocationId").GetValue(settlementObject, null);
             locationAsSettlement.GeographicalDescription = (string)settlementObject.GetType().GetProperty("GeographicalDescription").GetValue(settlementObject, null);
             locationAsSettlement.Description = (string)settlementObject.GetType().GetProperty("Description").GetValue(settlementObject, null);
 
@@ -965,7 +965,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(settlement.Id, locationAsSettlement.Id);
             Assert.Equal(settlement.Name, locationAsSettlement.Name);
             Assert.Equal(settlement.Description, locationAsSettlement.Description);
-            Assert.Equal(settlement.TypeOfLocation, locationAsSettlement.TypeOfLocation);
+            Assert.Equal(settlement.LocationId, locationAsSettlement.LocationId);
             Assert.Equal(settlement.GeographicalDescription, locationAsSettlement.GeographicalDescription);
         }
 
@@ -974,11 +974,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Settlement",
                 Description = "    ",
-                TypeOfLocation = LocationType.Settlement,
+                LocationId = LocationType.Settlement,
                 GeographicalDescription = "Test Description"
             };
 
@@ -987,13 +987,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test Settlement",
                 Description = "",
-                TypeOfLocation = LocationType.Settlement,
+                LocationId = LocationType.Settlement,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(settlement);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -1008,7 +1008,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsSettlement.Id = (int)settlementObject.GetType().GetProperty("Id").GetValue(settlementObject, null);
             locationAsSettlement.Name = (string)settlementObject.GetType().GetProperty("Name").GetValue(settlementObject, null);
-            locationAsSettlement.TypeOfLocation = (LocationType)settlementObject.GetType().GetProperty("TypeOfLocation").GetValue(settlementObject, null);
+            locationAsSettlement.LocationId = (LocationType)settlementObject.GetType().GetProperty("LocationId").GetValue(settlementObject, null);
             locationAsSettlement.GeographicalDescription = (string)settlementObject.GetType().GetProperty("GeographicalDescription").GetValue(settlementObject, null);
             locationAsSettlement.Description = (string)settlementObject.GetType().GetProperty("Description").GetValue(settlementObject, null);
 
@@ -1018,7 +1018,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(settlement.Name, locationAsSettlement.Name);
             Assert.Equal(settlement.Id, locationAsSettlement.Id);
             Assert.Equal(settlement.Description, locationAsSettlement.Description);
-            Assert.Equal(settlement.TypeOfLocation, locationAsSettlement.TypeOfLocation);
+            Assert.Equal(settlement.LocationId, locationAsSettlement.LocationId);
             Assert.Equal(settlement.GeographicalDescription, locationAsSettlement.GeographicalDescription);
         }
 
@@ -1027,11 +1027,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Settlement",
                 Description = null,
-                TypeOfLocation = LocationType.Settlement,
+                LocationId = LocationType.Settlement,
                 GeographicalDescription = "Test Description"
             };
 
@@ -1040,13 +1040,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test Settlement",
                 Description = null,
-                TypeOfLocation = LocationType.Settlement,
+                LocationId = LocationType.Settlement,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(settlement);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -1061,7 +1061,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsSettlement.Id = (int)settlementObject.GetType().GetProperty("Id").GetValue(settlementObject, null);
             locationAsSettlement.Name = (string)settlementObject.GetType().GetProperty("Name").GetValue(settlementObject, null);
-            locationAsSettlement.TypeOfLocation = (LocationType)settlementObject.GetType().GetProperty("TypeOfLocation").GetValue(settlementObject, null);
+            locationAsSettlement.LocationId = (LocationType)settlementObject.GetType().GetProperty("LocationId").GetValue(settlementObject, null);
             locationAsSettlement.GeographicalDescription = (string)settlementObject.GetType().GetProperty("GeographicalDescription").GetValue(settlementObject, null);
             locationAsSettlement.Description = (string)settlementObject.GetType().GetProperty("Description").GetValue(settlementObject, null);
 
@@ -1071,7 +1071,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(settlement.Id, locationAsSettlement.Id);
             Assert.Equal(settlement.Name, locationAsSettlement.Name);
             Assert.Equal(settlement.Description, locationAsSettlement.Description);
-            Assert.Equal(settlement.TypeOfLocation, locationAsSettlement.TypeOfLocation);
+            Assert.Equal(settlement.LocationId, locationAsSettlement.LocationId);
             Assert.Equal(settlement.GeographicalDescription, locationAsSettlement.GeographicalDescription);
         }
 
@@ -1079,11 +1079,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsASettlement_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "      ",
                 Description = "Test",
-                TypeOfLocation = LocationType.Settlement,
+                LocationId = LocationType.Settlement,
                 GeographicalDescription = "Test Description"
             };
 
@@ -1091,7 +1091,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -1106,11 +1106,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsASettlement_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.Settlement,
+                LocationId = LocationType.Settlement,
                 GeographicalDescription = "        "
             };
 
@@ -1118,7 +1118,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -1137,10 +1137,10 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test DaedricShrine",
-                TypeOfLocation = LocationType.DaedricShrine,
+                LocationId = LocationType.DaedricShrine,
                 GeographicalDescription = "Test Description"
             };
 
@@ -1148,13 +1148,13 @@ namespace Skyrim.Api.Test.Controllers
             {
                 Id = 0,
                 Name = "Test DaedricShrine",
-                TypeOfLocation = LocationType.DaedricShrine,
+                LocationId = LocationType.DaedricShrine,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(daedricShrine);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -1169,7 +1169,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsDaedricShrine.Id = (int)daedricShrineObject.GetType().GetProperty("Id").GetValue(daedricShrineObject, null);
             locationAsDaedricShrine.Name = (string)daedricShrineObject.GetType().GetProperty("Name").GetValue(daedricShrineObject, null);
-            locationAsDaedricShrine.TypeOfLocation = (LocationType)daedricShrineObject.GetType().GetProperty("TypeOfLocation").GetValue(daedricShrineObject, null);
+            locationAsDaedricShrine.LocationId = (LocationType)daedricShrineObject.GetType().GetProperty("LocationId").GetValue(daedricShrineObject, null);
             locationAsDaedricShrine.GeographicalDescription = (string)daedricShrineObject.GetType().GetProperty("GeographicalDescription").GetValue(daedricShrineObject, null);
             locationAsDaedricShrine.Description = (string)daedricShrineObject.GetType().GetProperty("Description").GetValue(daedricShrineObject, null);
 
@@ -1179,7 +1179,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(daedricShrine.Id, locationAsDaedricShrine.Id);
             Assert.Equal(daedricShrine.Name, locationAsDaedricShrine.Name);
             Assert.Equal(daedricShrine.Description, locationAsDaedricShrine.Description);
-            Assert.Equal(daedricShrine.TypeOfLocation, locationAsDaedricShrine.TypeOfLocation);
+            Assert.Equal(daedricShrine.LocationId, locationAsDaedricShrine.LocationId);
             Assert.Equal(daedricShrine.GeographicalDescription, locationAsDaedricShrine.GeographicalDescription);
         }
 
@@ -1188,11 +1188,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test DaedricShrine",
                 Description = "    ",
-                TypeOfLocation = LocationType.DaedricShrine,
+                LocationId = LocationType.DaedricShrine,
                 GeographicalDescription = "Test Description"
             };
 
@@ -1201,13 +1201,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test DaedricShrine",
                 Description = "",
-                TypeOfLocation = LocationType.DaedricShrine,
+                LocationId = LocationType.DaedricShrine,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(daedricShrine);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -1222,7 +1222,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsDaedricShrine.Id = (int)daedricShrineObject.GetType().GetProperty("Id").GetValue(daedricShrineObject, null);
             locationAsDaedricShrine.Name = (string)daedricShrineObject.GetType().GetProperty("Name").GetValue(daedricShrineObject, null);
-            locationAsDaedricShrine.TypeOfLocation = (LocationType)daedricShrineObject.GetType().GetProperty("TypeOfLocation").GetValue(daedricShrineObject, null);
+            locationAsDaedricShrine.LocationId = (LocationType)daedricShrineObject.GetType().GetProperty("LocationId").GetValue(daedricShrineObject, null);
             locationAsDaedricShrine.GeographicalDescription = (string)daedricShrineObject.GetType().GetProperty("GeographicalDescription").GetValue(daedricShrineObject, null);
             locationAsDaedricShrine.Description = (string)daedricShrineObject.GetType().GetProperty("Description").GetValue(daedricShrineObject, null);
 
@@ -1232,7 +1232,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(daedricShrine.Name, locationAsDaedricShrine.Name);
             Assert.Equal(daedricShrine.Id, locationAsDaedricShrine.Id);
             Assert.Equal(daedricShrine.Description, locationAsDaedricShrine.Description);
-            Assert.Equal(daedricShrine.TypeOfLocation, locationAsDaedricShrine.TypeOfLocation);
+            Assert.Equal(daedricShrine.LocationId, locationAsDaedricShrine.LocationId);
             Assert.Equal(daedricShrine.GeographicalDescription, locationAsDaedricShrine.GeographicalDescription);
         }
 
@@ -1241,11 +1241,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test DaedricShrine",
                 Description = null,
-                TypeOfLocation = LocationType.DaedricShrine,
+                LocationId = LocationType.DaedricShrine,
                 GeographicalDescription = "Test Description"
             };
 
@@ -1254,13 +1254,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test DaedricShrine",
                 Description = null,
-                TypeOfLocation = LocationType.DaedricShrine,
+                LocationId = LocationType.DaedricShrine,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(daedricShrine);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -1275,7 +1275,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsDaedricShrine.Id = (int)daedricShrineObject.GetType().GetProperty("Id").GetValue(daedricShrineObject, null);
             locationAsDaedricShrine.Name = (string)daedricShrineObject.GetType().GetProperty("Name").GetValue(daedricShrineObject, null);
-            locationAsDaedricShrine.TypeOfLocation = (LocationType)daedricShrineObject.GetType().GetProperty("TypeOfLocation").GetValue(daedricShrineObject, null);
+            locationAsDaedricShrine.LocationId = (LocationType)daedricShrineObject.GetType().GetProperty("LocationId").GetValue(daedricShrineObject, null);
             locationAsDaedricShrine.GeographicalDescription = (string)daedricShrineObject.GetType().GetProperty("GeographicalDescription").GetValue(daedricShrineObject, null);
             locationAsDaedricShrine.Description = (string)daedricShrineObject.GetType().GetProperty("Description").GetValue(daedricShrineObject, null);
 
@@ -1285,7 +1285,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(daedricShrine.Id, locationAsDaedricShrine.Id);
             Assert.Equal(daedricShrine.Name, locationAsDaedricShrine.Name);
             Assert.Equal(daedricShrine.Description, locationAsDaedricShrine.Description);
-            Assert.Equal(daedricShrine.TypeOfLocation, locationAsDaedricShrine.TypeOfLocation);
+            Assert.Equal(daedricShrine.LocationId, locationAsDaedricShrine.LocationId);
             Assert.Equal(daedricShrine.GeographicalDescription, locationAsDaedricShrine.GeographicalDescription);
         }
 
@@ -1293,11 +1293,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsADaedricShrine_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "      ",
                 Description = "Test",
-                TypeOfLocation = LocationType.DaedricShrine,
+                LocationId = LocationType.DaedricShrine,
                 GeographicalDescription = "Test Description"
             };
 
@@ -1305,7 +1305,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -1320,11 +1320,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsADaedricShrine_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.DaedricShrine,
+                LocationId = LocationType.DaedricShrine,
                 GeographicalDescription = "        "
             };
 
@@ -1332,7 +1332,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -1351,10 +1351,10 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test StandingStone",
-                TypeOfLocation = LocationType.StandingStone,
+                LocationId = LocationType.StandingStone,
                 GeographicalDescription = "Test Description"
             };
 
@@ -1362,13 +1362,13 @@ namespace Skyrim.Api.Test.Controllers
             {
                 Id = 0,
                 Name = "Test StandingStone",
-                TypeOfLocation = LocationType.StandingStone,
+                LocationId = LocationType.StandingStone,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(standingStone);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -1383,7 +1383,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsStandingStone.Id = (int)standingStoneObject.GetType().GetProperty("Id").GetValue(standingStoneObject, null);
             locationAsStandingStone.Name = (string)standingStoneObject.GetType().GetProperty("Name").GetValue(standingStoneObject, null);
-            locationAsStandingStone.TypeOfLocation = (LocationType)standingStoneObject.GetType().GetProperty("TypeOfLocation").GetValue(standingStoneObject, null);
+            locationAsStandingStone.LocationId = (LocationType)standingStoneObject.GetType().GetProperty("LocationId").GetValue(standingStoneObject, null);
             locationAsStandingStone.GeographicalDescription = (string)standingStoneObject.GetType().GetProperty("GeographicalDescription").GetValue(standingStoneObject, null);
             locationAsStandingStone.Description = (string)standingStoneObject.GetType().GetProperty("Description").GetValue(standingStoneObject, null);
 
@@ -1393,7 +1393,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(standingStone.Id, locationAsStandingStone.Id);
             Assert.Equal(standingStone.Name, locationAsStandingStone.Name);
             Assert.Equal(standingStone.Description, locationAsStandingStone.Description);
-            Assert.Equal(standingStone.TypeOfLocation, locationAsStandingStone.TypeOfLocation);
+            Assert.Equal(standingStone.LocationId, locationAsStandingStone.LocationId);
             Assert.Equal(standingStone.GeographicalDescription, locationAsStandingStone.GeographicalDescription);
         }
 
@@ -1402,11 +1402,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test StandingStone",
                 Description = "    ",
-                TypeOfLocation = LocationType.StandingStone,
+                LocationId = LocationType.StandingStone,
                 GeographicalDescription = "Test Description"
             };
 
@@ -1415,13 +1415,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test StandingStone",
                 Description = "",
-                TypeOfLocation = LocationType.StandingStone,
+                LocationId = LocationType.StandingStone,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(standingStone);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -1436,7 +1436,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsStandingStone.Id = (int)standingStoneObject.GetType().GetProperty("Id").GetValue(standingStoneObject, null);
             locationAsStandingStone.Name = (string)standingStoneObject.GetType().GetProperty("Name").GetValue(standingStoneObject, null);
-            locationAsStandingStone.TypeOfLocation = (LocationType)standingStoneObject.GetType().GetProperty("TypeOfLocation").GetValue(standingStoneObject, null);
+            locationAsStandingStone.LocationId = (LocationType)standingStoneObject.GetType().GetProperty("LocationId").GetValue(standingStoneObject, null);
             locationAsStandingStone.GeographicalDescription = (string)standingStoneObject.GetType().GetProperty("GeographicalDescription").GetValue(standingStoneObject, null);
             locationAsStandingStone.Description = (string)standingStoneObject.GetType().GetProperty("Description").GetValue(standingStoneObject, null);
 
@@ -1446,7 +1446,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(standingStone.Name, locationAsStandingStone.Name);
             Assert.Equal(standingStone.Id, locationAsStandingStone.Id);
             Assert.Equal(standingStone.Description, locationAsStandingStone.Description);
-            Assert.Equal(standingStone.TypeOfLocation, locationAsStandingStone.TypeOfLocation);
+            Assert.Equal(standingStone.LocationId, locationAsStandingStone.LocationId);
             Assert.Equal(standingStone.GeographicalDescription, locationAsStandingStone.GeographicalDescription);
         }
 
@@ -1455,11 +1455,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test StandingStone",
                 Description = null,
-                TypeOfLocation = LocationType.StandingStone,
+                LocationId = LocationType.StandingStone,
                 GeographicalDescription = "Test Description"
             };
 
@@ -1468,13 +1468,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test StandingStone",
                 Description = null,
-                TypeOfLocation = LocationType.StandingStone,
+                LocationId = LocationType.StandingStone,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(standingStone);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -1489,7 +1489,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsStandingStone.Id = (int)standingStoneObject.GetType().GetProperty("Id").GetValue(standingStoneObject, null);
             locationAsStandingStone.Name = (string)standingStoneObject.GetType().GetProperty("Name").GetValue(standingStoneObject, null);
-            locationAsStandingStone.TypeOfLocation = (LocationType)standingStoneObject.GetType().GetProperty("TypeOfLocation").GetValue(standingStoneObject, null);
+            locationAsStandingStone.LocationId = (LocationType)standingStoneObject.GetType().GetProperty("LocationId").GetValue(standingStoneObject, null);
             locationAsStandingStone.GeographicalDescription = (string)standingStoneObject.GetType().GetProperty("GeographicalDescription").GetValue(standingStoneObject, null);
             locationAsStandingStone.Description = (string)standingStoneObject.GetType().GetProperty("Description").GetValue(standingStoneObject, null);
 
@@ -1499,7 +1499,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(standingStone.Id, locationAsStandingStone.Id);
             Assert.Equal(standingStone.Name, locationAsStandingStone.Name);
             Assert.Equal(standingStone.Description, locationAsStandingStone.Description);
-            Assert.Equal(standingStone.TypeOfLocation, locationAsStandingStone.TypeOfLocation);
+            Assert.Equal(standingStone.LocationId, locationAsStandingStone.LocationId);
             Assert.Equal(standingStone.GeographicalDescription, locationAsStandingStone.GeographicalDescription);
         }
 
@@ -1507,11 +1507,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsAStandingStone_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "      ",
                 Description = "Test",
-                TypeOfLocation = LocationType.StandingStone,
+                LocationId = LocationType.StandingStone,
                 GeographicalDescription = "Test Description"
             };
 
@@ -1519,7 +1519,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -1534,11 +1534,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsAStandingStone_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.StandingStone,
+                LocationId = LocationType.StandingStone,
                 GeographicalDescription = "        "
             };
 
@@ -1546,7 +1546,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -1565,10 +1565,10 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Landmark",
-                TypeOfLocation = LocationType.Landmark,
+                LocationId = LocationType.Landmark,
                 GeographicalDescription = "Test Description"
             };
 
@@ -1576,13 +1576,13 @@ namespace Skyrim.Api.Test.Controllers
             {
                 Id = 0,
                 Name = "Test Landmark",
-                TypeOfLocation = LocationType.Landmark,
+                LocationId = LocationType.Landmark,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(landmark);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -1597,7 +1597,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsLandmark.Id = (int)landmarkObject.GetType().GetProperty("Id").GetValue(landmarkObject, null);
             locationAsLandmark.Name = (string)landmarkObject.GetType().GetProperty("Name").GetValue(landmarkObject, null);
-            locationAsLandmark.TypeOfLocation = (LocationType)landmarkObject.GetType().GetProperty("TypeOfLocation").GetValue(landmarkObject, null);
+            locationAsLandmark.LocationId = (LocationType)landmarkObject.GetType().GetProperty("LocationId").GetValue(landmarkObject, null);
             locationAsLandmark.GeographicalDescription = (string)landmarkObject.GetType().GetProperty("GeographicalDescription").GetValue(landmarkObject, null);
             locationAsLandmark.Description = (string)landmarkObject.GetType().GetProperty("Description").GetValue(landmarkObject, null);
 
@@ -1607,7 +1607,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(landmark.Id, locationAsLandmark.Id);
             Assert.Equal(landmark.Name, locationAsLandmark.Name);
             Assert.Equal(landmark.Description, locationAsLandmark.Description);
-            Assert.Equal(landmark.TypeOfLocation, locationAsLandmark.TypeOfLocation);
+            Assert.Equal(landmark.LocationId, locationAsLandmark.LocationId);
             Assert.Equal(landmark.GeographicalDescription, locationAsLandmark.GeographicalDescription);
         }
 
@@ -1616,11 +1616,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Landmark",
                 Description = "    ",
-                TypeOfLocation = LocationType.Landmark,
+                LocationId = LocationType.Landmark,
                 GeographicalDescription = "Test Description"
             };
 
@@ -1629,13 +1629,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test Landmark",
                 Description = "",
-                TypeOfLocation = LocationType.Landmark,
+                LocationId = LocationType.Landmark,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(landmark);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -1650,7 +1650,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsLandmark.Id = (int)landmarkObject.GetType().GetProperty("Id").GetValue(landmarkObject, null);
             locationAsLandmark.Name = (string)landmarkObject.GetType().GetProperty("Name").GetValue(landmarkObject, null);
-            locationAsLandmark.TypeOfLocation = (LocationType)landmarkObject.GetType().GetProperty("TypeOfLocation").GetValue(landmarkObject, null);
+            locationAsLandmark.LocationId = (LocationType)landmarkObject.GetType().GetProperty("LocationId").GetValue(landmarkObject, null);
             locationAsLandmark.GeographicalDescription = (string)landmarkObject.GetType().GetProperty("GeographicalDescription").GetValue(landmarkObject, null);
             locationAsLandmark.Description = (string)landmarkObject.GetType().GetProperty("Description").GetValue(landmarkObject, null);
 
@@ -1660,7 +1660,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(landmark.Name, locationAsLandmark.Name);
             Assert.Equal(landmark.Id, locationAsLandmark.Id);
             Assert.Equal(landmark.Description, locationAsLandmark.Description);
-            Assert.Equal(landmark.TypeOfLocation, locationAsLandmark.TypeOfLocation);
+            Assert.Equal(landmark.LocationId, locationAsLandmark.LocationId);
             Assert.Equal(landmark.GeographicalDescription, locationAsLandmark.GeographicalDescription);
         }
 
@@ -1669,11 +1669,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Landmark",
                 Description = null,
-                TypeOfLocation = LocationType.Landmark,
+                LocationId = LocationType.Landmark,
                 GeographicalDescription = "Test Description"
             };
 
@@ -1682,13 +1682,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test Landmark",
                 Description = null,
-                TypeOfLocation = LocationType.Landmark,
+                LocationId = LocationType.Landmark,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(landmark);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -1703,7 +1703,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsLandmark.Id = (int)landmarkObject.GetType().GetProperty("Id").GetValue(landmarkObject, null);
             locationAsLandmark.Name = (string)landmarkObject.GetType().GetProperty("Name").GetValue(landmarkObject, null);
-            locationAsLandmark.TypeOfLocation = (LocationType)landmarkObject.GetType().GetProperty("TypeOfLocation").GetValue(landmarkObject, null);
+            locationAsLandmark.LocationId = (LocationType)landmarkObject.GetType().GetProperty("LocationId").GetValue(landmarkObject, null);
             locationAsLandmark.GeographicalDescription = (string)landmarkObject.GetType().GetProperty("GeographicalDescription").GetValue(landmarkObject, null);
             locationAsLandmark.Description = (string)landmarkObject.GetType().GetProperty("Description").GetValue(landmarkObject, null);
 
@@ -1713,7 +1713,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(landmark.Id, locationAsLandmark.Id);
             Assert.Equal(landmark.Name, locationAsLandmark.Name);
             Assert.Equal(landmark.Description, locationAsLandmark.Description);
-            Assert.Equal(landmark.TypeOfLocation, locationAsLandmark.TypeOfLocation);
+            Assert.Equal(landmark.LocationId, locationAsLandmark.LocationId);
             Assert.Equal(landmark.GeographicalDescription, locationAsLandmark.GeographicalDescription);
         }
 
@@ -1721,11 +1721,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsALandmark_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "      ",
                 Description = "Test",
-                TypeOfLocation = LocationType.Landmark,
+                LocationId = LocationType.Landmark,
                 GeographicalDescription = "Test Description"
             };
 
@@ -1733,7 +1733,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -1748,11 +1748,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsALandmark_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.Landmark,
+                LocationId = LocationType.Landmark,
                 GeographicalDescription = "        "
             };
 
@@ -1760,7 +1760,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -1779,10 +1779,10 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Camp",
-                TypeOfLocation = LocationType.Camp,
+                LocationId = LocationType.Camp,
                 GeographicalDescription = "Test Description"
             };
 
@@ -1790,13 +1790,13 @@ namespace Skyrim.Api.Test.Controllers
             {
                 Id = 0,
                 Name = "Test Camp",
-                TypeOfLocation = LocationType.Camp,
+                LocationId = LocationType.Camp,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(camp);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -1811,7 +1811,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsCamp.Id = (int)campObject.GetType().GetProperty("Id").GetValue(campObject, null);
             locationAsCamp.Name = (string)campObject.GetType().GetProperty("Name").GetValue(campObject, null);
-            locationAsCamp.TypeOfLocation = (LocationType)campObject.GetType().GetProperty("TypeOfLocation").GetValue(campObject, null);
+            locationAsCamp.LocationId = (LocationType)campObject.GetType().GetProperty("LocationId").GetValue(campObject, null);
             locationAsCamp.GeographicalDescription = (string)campObject.GetType().GetProperty("GeographicalDescription").GetValue(campObject, null);
             locationAsCamp.Description = (string)campObject.GetType().GetProperty("Description").GetValue(campObject, null);
 
@@ -1821,7 +1821,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(camp.Id, locationAsCamp.Id);
             Assert.Equal(camp.Name, locationAsCamp.Name);
             Assert.Equal(camp.Description, locationAsCamp.Description);
-            Assert.Equal(camp.TypeOfLocation, locationAsCamp.TypeOfLocation);
+            Assert.Equal(camp.LocationId, locationAsCamp.LocationId);
             Assert.Equal(camp.GeographicalDescription, locationAsCamp.GeographicalDescription);
         }
 
@@ -1830,11 +1830,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Camp",
                 Description = "    ",
-                TypeOfLocation = LocationType.Camp,
+                LocationId = LocationType.Camp,
                 GeographicalDescription = "Test Description"
             };
 
@@ -1843,13 +1843,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test Camp",
                 Description = "",
-                TypeOfLocation = LocationType.Camp,
+                LocationId = LocationType.Camp,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(camp);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -1864,7 +1864,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsCamp.Id = (int)campObject.GetType().GetProperty("Id").GetValue(campObject, null);
             locationAsCamp.Name = (string)campObject.GetType().GetProperty("Name").GetValue(campObject, null);
-            locationAsCamp.TypeOfLocation = (LocationType)campObject.GetType().GetProperty("TypeOfLocation").GetValue(campObject, null);
+            locationAsCamp.LocationId = (LocationType)campObject.GetType().GetProperty("LocationId").GetValue(campObject, null);
             locationAsCamp.GeographicalDescription = (string)campObject.GetType().GetProperty("GeographicalDescription").GetValue(campObject, null);
             locationAsCamp.Description = (string)campObject.GetType().GetProperty("Description").GetValue(campObject, null);
 
@@ -1874,7 +1874,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(camp.Name, locationAsCamp.Name);
             Assert.Equal(camp.Id, locationAsCamp.Id);
             Assert.Equal(camp.Description, locationAsCamp.Description);
-            Assert.Equal(camp.TypeOfLocation, locationAsCamp.TypeOfLocation);
+            Assert.Equal(camp.LocationId, locationAsCamp.LocationId);
             Assert.Equal(camp.GeographicalDescription, locationAsCamp.GeographicalDescription);
         }
 
@@ -1883,11 +1883,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Camp",
                 Description = null,
-                TypeOfLocation = LocationType.Camp,
+                LocationId = LocationType.Camp,
                 GeographicalDescription = "Test Description"
             };
 
@@ -1896,13 +1896,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test Camp",
                 Description = null,
-                TypeOfLocation = LocationType.Camp,
+                LocationId = LocationType.Camp,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(camp);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -1917,7 +1917,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsCamp.Id = (int)campObject.GetType().GetProperty("Id").GetValue(campObject, null);
             locationAsCamp.Name = (string)campObject.GetType().GetProperty("Name").GetValue(campObject, null);
-            locationAsCamp.TypeOfLocation = (LocationType)campObject.GetType().GetProperty("TypeOfLocation").GetValue(campObject, null);
+            locationAsCamp.LocationId = (LocationType)campObject.GetType().GetProperty("LocationId").GetValue(campObject, null);
             locationAsCamp.GeographicalDescription = (string)campObject.GetType().GetProperty("GeographicalDescription").GetValue(campObject, null);
             locationAsCamp.Description = (string)campObject.GetType().GetProperty("Description").GetValue(campObject, null);
 
@@ -1927,7 +1927,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(camp.Id, locationAsCamp.Id);
             Assert.Equal(camp.Name, locationAsCamp.Name);
             Assert.Equal(camp.Description, locationAsCamp.Description);
-            Assert.Equal(camp.TypeOfLocation, locationAsCamp.TypeOfLocation);
+            Assert.Equal(camp.LocationId, locationAsCamp.LocationId);
             Assert.Equal(camp.GeographicalDescription, locationAsCamp.GeographicalDescription);
         }
 
@@ -1935,11 +1935,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsACamp_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "      ",
                 Description = "Test",
-                TypeOfLocation = LocationType.Camp,
+                LocationId = LocationType.Camp,
                 GeographicalDescription = "Test Description"
             };
 
@@ -1947,7 +1947,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -1962,11 +1962,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsACamp_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.Camp,
+                LocationId = LocationType.Camp,
                 GeographicalDescription = "        "
             };
 
@@ -1974,7 +1974,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -1993,10 +1993,10 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Cave",
-                TypeOfLocation = LocationType.Cave,
+                LocationId = LocationType.Cave,
                 GeographicalDescription = "Test Description"
             };
 
@@ -2004,13 +2004,13 @@ namespace Skyrim.Api.Test.Controllers
             {
                 Id = 0,
                 Name = "Test Cave",
-                TypeOfLocation = LocationType.Cave,
+                LocationId = LocationType.Cave,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(cave);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -2025,7 +2025,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsCave.Id = (int)caveObject.GetType().GetProperty("Id").GetValue(caveObject, null);
             locationAsCave.Name = (string)caveObject.GetType().GetProperty("Name").GetValue(caveObject, null);
-            locationAsCave.TypeOfLocation = (LocationType)caveObject.GetType().GetProperty("TypeOfLocation").GetValue(caveObject, null);
+            locationAsCave.LocationId = (LocationType)caveObject.GetType().GetProperty("LocationId").GetValue(caveObject, null);
             locationAsCave.GeographicalDescription = (string)caveObject.GetType().GetProperty("GeographicalDescription").GetValue(caveObject, null);
             locationAsCave.Description = (string)caveObject.GetType().GetProperty("Description").GetValue(caveObject, null);
 
@@ -2035,7 +2035,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(cave.Id, locationAsCave.Id);
             Assert.Equal(cave.Name, locationAsCave.Name);
             Assert.Equal(cave.Description, locationAsCave.Description);
-            Assert.Equal(cave.TypeOfLocation, locationAsCave.TypeOfLocation);
+            Assert.Equal(cave.LocationId, locationAsCave.LocationId);
             Assert.Equal(cave.GeographicalDescription, locationAsCave.GeographicalDescription);
         }
 
@@ -2044,11 +2044,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Cave",
                 Description = "    ",
-                TypeOfLocation = LocationType.Cave,
+                LocationId = LocationType.Cave,
                 GeographicalDescription = "Test Description"
             };
 
@@ -2057,13 +2057,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test Cave",
                 Description = "",
-                TypeOfLocation = LocationType.Cave,
+                LocationId = LocationType.Cave,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(cave);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -2078,7 +2078,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsCave.Id = (int)caveObject.GetType().GetProperty("Id").GetValue(caveObject, null);
             locationAsCave.Name = (string)caveObject.GetType().GetProperty("Name").GetValue(caveObject, null);
-            locationAsCave.TypeOfLocation = (LocationType)caveObject.GetType().GetProperty("TypeOfLocation").GetValue(caveObject, null);
+            locationAsCave.LocationId = (LocationType)caveObject.GetType().GetProperty("LocationId").GetValue(caveObject, null);
             locationAsCave.GeographicalDescription = (string)caveObject.GetType().GetProperty("GeographicalDescription").GetValue(caveObject, null);
             locationAsCave.Description = (string)caveObject.GetType().GetProperty("Description").GetValue(caveObject, null);
 
@@ -2088,7 +2088,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(cave.Name, locationAsCave.Name);
             Assert.Equal(cave.Id, locationAsCave.Id);
             Assert.Equal(cave.Description, locationAsCave.Description);
-            Assert.Equal(cave.TypeOfLocation, locationAsCave.TypeOfLocation);
+            Assert.Equal(cave.LocationId, locationAsCave.LocationId);
             Assert.Equal(cave.GeographicalDescription, locationAsCave.GeographicalDescription);
         }
 
@@ -2097,11 +2097,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Cave",
                 Description = null,
-                TypeOfLocation = LocationType.Cave,
+                LocationId = LocationType.Cave,
                 GeographicalDescription = "Test Description"
             };
 
@@ -2110,13 +2110,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test Cave",
                 Description = null,
-                TypeOfLocation = LocationType.Cave,
+                LocationId = LocationType.Cave,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(cave);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -2131,7 +2131,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsCave.Id = (int)caveObject.GetType().GetProperty("Id").GetValue(caveObject, null);
             locationAsCave.Name = (string)caveObject.GetType().GetProperty("Name").GetValue(caveObject, null);
-            locationAsCave.TypeOfLocation = (LocationType)caveObject.GetType().GetProperty("TypeOfLocation").GetValue(caveObject, null);
+            locationAsCave.LocationId = (LocationType)caveObject.GetType().GetProperty("LocationId").GetValue(caveObject, null);
             locationAsCave.GeographicalDescription = (string)caveObject.GetType().GetProperty("GeographicalDescription").GetValue(caveObject, null);
             locationAsCave.Description = (string)caveObject.GetType().GetProperty("Description").GetValue(caveObject, null);
 
@@ -2141,7 +2141,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(cave.Id, locationAsCave.Id);
             Assert.Equal(cave.Name, locationAsCave.Name);
             Assert.Equal(cave.Description, locationAsCave.Description);
-            Assert.Equal(cave.TypeOfLocation, locationAsCave.TypeOfLocation);
+            Assert.Equal(cave.LocationId, locationAsCave.LocationId);
             Assert.Equal(cave.GeographicalDescription, locationAsCave.GeographicalDescription);
         }
 
@@ -2149,11 +2149,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsACave_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "      ",
                 Description = "Test",
-                TypeOfLocation = LocationType.Cave,
+                LocationId = LocationType.Cave,
                 GeographicalDescription = "Test Description"
             };
 
@@ -2161,7 +2161,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -2176,11 +2176,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsACave_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.Cave,
+                LocationId = LocationType.Cave,
                 GeographicalDescription = "        "
             };
 
@@ -2188,7 +2188,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -2207,10 +2207,10 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Clearing",
-                TypeOfLocation = LocationType.Clearing,
+                LocationId = LocationType.Clearing,
                 GeographicalDescription = "Test Description"
             };
 
@@ -2218,13 +2218,13 @@ namespace Skyrim.Api.Test.Controllers
             {
                 Id = 0,
                 Name = "Test Clearing",
-                TypeOfLocation = LocationType.Clearing,
+                LocationId = LocationType.Clearing,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(clearing);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -2239,7 +2239,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsClearing.Id = (int)clearingObject.GetType().GetProperty("Id").GetValue(clearingObject, null);
             locationAsClearing.Name = (string)clearingObject.GetType().GetProperty("Name").GetValue(clearingObject, null);
-            locationAsClearing.TypeOfLocation = (LocationType)clearingObject.GetType().GetProperty("TypeOfLocation").GetValue(clearingObject, null);
+            locationAsClearing.LocationId = (LocationType)clearingObject.GetType().GetProperty("LocationId").GetValue(clearingObject, null);
             locationAsClearing.GeographicalDescription = (string)clearingObject.GetType().GetProperty("GeographicalDescription").GetValue(clearingObject, null);
             locationAsClearing.Description = (string)clearingObject.GetType().GetProperty("Description").GetValue(clearingObject, null);
 
@@ -2249,7 +2249,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(clearing.Id, locationAsClearing.Id);
             Assert.Equal(clearing.Name, locationAsClearing.Name);
             Assert.Equal(clearing.Description, locationAsClearing.Description);
-            Assert.Equal(clearing.TypeOfLocation, locationAsClearing.TypeOfLocation);
+            Assert.Equal(clearing.LocationId, locationAsClearing.LocationId);
             Assert.Equal(clearing.GeographicalDescription, locationAsClearing.GeographicalDescription);
         }
 
@@ -2258,11 +2258,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Clearing",
                 Description = "    ",
-                TypeOfLocation = LocationType.Clearing,
+                LocationId = LocationType.Clearing,
                 GeographicalDescription = "Test Description"
             };
 
@@ -2271,13 +2271,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test Clearing",
                 Description = "",
-                TypeOfLocation = LocationType.Clearing,
+                LocationId = LocationType.Clearing,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(clearing);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -2292,7 +2292,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsClearing.Id = (int)clearingObject.GetType().GetProperty("Id").GetValue(clearingObject, null);
             locationAsClearing.Name = (string)clearingObject.GetType().GetProperty("Name").GetValue(clearingObject, null);
-            locationAsClearing.TypeOfLocation = (LocationType)clearingObject.GetType().GetProperty("TypeOfLocation").GetValue(clearingObject, null);
+            locationAsClearing.LocationId = (LocationType)clearingObject.GetType().GetProperty("LocationId").GetValue(clearingObject, null);
             locationAsClearing.GeographicalDescription = (string)clearingObject.GetType().GetProperty("GeographicalDescription").GetValue(clearingObject, null);
             locationAsClearing.Description = (string)clearingObject.GetType().GetProperty("Description").GetValue(clearingObject, null);
 
@@ -2302,7 +2302,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(clearing.Name, locationAsClearing.Name);
             Assert.Equal(clearing.Id, locationAsClearing.Id);
             Assert.Equal(clearing.Description, locationAsClearing.Description);
-            Assert.Equal(clearing.TypeOfLocation, locationAsClearing.TypeOfLocation);
+            Assert.Equal(clearing.LocationId, locationAsClearing.LocationId);
             Assert.Equal(clearing.GeographicalDescription, locationAsClearing.GeographicalDescription);
         }
 
@@ -2311,11 +2311,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Clearing",
                 Description = null,
-                TypeOfLocation = LocationType.Clearing,
+                LocationId = LocationType.Clearing,
                 GeographicalDescription = "Test Description"
             };
 
@@ -2324,13 +2324,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test Clearing",
                 Description = null,
-                TypeOfLocation = LocationType.Clearing,
+                LocationId = LocationType.Clearing,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(clearing);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -2345,7 +2345,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsClearing.Id = (int)clearingObject.GetType().GetProperty("Id").GetValue(clearingObject, null);
             locationAsClearing.Name = (string)clearingObject.GetType().GetProperty("Name").GetValue(clearingObject, null);
-            locationAsClearing.TypeOfLocation = (LocationType)clearingObject.GetType().GetProperty("TypeOfLocation").GetValue(clearingObject, null);
+            locationAsClearing.LocationId = (LocationType)clearingObject.GetType().GetProperty("LocationId").GetValue(clearingObject, null);
             locationAsClearing.GeographicalDescription = (string)clearingObject.GetType().GetProperty("GeographicalDescription").GetValue(clearingObject, null);
             locationAsClearing.Description = (string)clearingObject.GetType().GetProperty("Description").GetValue(clearingObject, null);
 
@@ -2355,7 +2355,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(clearing.Id, locationAsClearing.Id);
             Assert.Equal(clearing.Name, locationAsClearing.Name);
             Assert.Equal(clearing.Description, locationAsClearing.Description);
-            Assert.Equal(clearing.TypeOfLocation, locationAsClearing.TypeOfLocation);
+            Assert.Equal(clearing.LocationId, locationAsClearing.LocationId);
             Assert.Equal(clearing.GeographicalDescription, locationAsClearing.GeographicalDescription);
         }
 
@@ -2363,11 +2363,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsAClearing_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "      ",
                 Description = "Test",
-                TypeOfLocation = LocationType.Clearing,
+                LocationId = LocationType.Clearing,
                 GeographicalDescription = "Test Description"
             };
 
@@ -2375,7 +2375,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -2390,11 +2390,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsAClearing_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.Clearing,
+                LocationId = LocationType.Clearing,
                 GeographicalDescription = "        "
             };
 
@@ -2402,7 +2402,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -2421,10 +2421,10 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Dock",
-                TypeOfLocation = LocationType.Dock,
+                LocationId = LocationType.Dock,
                 GeographicalDescription = "Test Description"
             };
 
@@ -2432,13 +2432,13 @@ namespace Skyrim.Api.Test.Controllers
             {
                 Id = 0,
                 Name = "Test Dock",
-                TypeOfLocation = LocationType.Dock,
+                LocationId = LocationType.Dock,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(dock);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -2453,7 +2453,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsDock.Id = (int)dockObject.GetType().GetProperty("Id").GetValue(dockObject, null);
             locationAsDock.Name = (string)dockObject.GetType().GetProperty("Name").GetValue(dockObject, null);
-            locationAsDock.TypeOfLocation = (LocationType)dockObject.GetType().GetProperty("TypeOfLocation").GetValue(dockObject, null);
+            locationAsDock.LocationId = (LocationType)dockObject.GetType().GetProperty("LocationId").GetValue(dockObject, null);
             locationAsDock.GeographicalDescription = (string)dockObject.GetType().GetProperty("GeographicalDescription").GetValue(dockObject, null);
             locationAsDock.Description = (string)dockObject.GetType().GetProperty("Description").GetValue(dockObject, null);
 
@@ -2463,7 +2463,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(dock.Id, locationAsDock.Id);
             Assert.Equal(dock.Name, locationAsDock.Name);
             Assert.Equal(dock.Description, locationAsDock.Description);
-            Assert.Equal(dock.TypeOfLocation, locationAsDock.TypeOfLocation);
+            Assert.Equal(dock.LocationId, locationAsDock.LocationId);
             Assert.Equal(dock.GeographicalDescription, locationAsDock.GeographicalDescription);
         }
 
@@ -2472,11 +2472,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Dock",
                 Description = "    ",
-                TypeOfLocation = LocationType.Dock,
+                LocationId = LocationType.Dock,
                 GeographicalDescription = "Test Description"
             };
 
@@ -2485,13 +2485,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test Dock",
                 Description = "",
-                TypeOfLocation = LocationType.Dock,
+                LocationId = LocationType.Dock,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(dock);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -2506,7 +2506,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsDock.Id = (int)dockObject.GetType().GetProperty("Id").GetValue(dockObject, null);
             locationAsDock.Name = (string)dockObject.GetType().GetProperty("Name").GetValue(dockObject, null);
-            locationAsDock.TypeOfLocation = (LocationType)dockObject.GetType().GetProperty("TypeOfLocation").GetValue(dockObject, null);
+            locationAsDock.LocationId = (LocationType)dockObject.GetType().GetProperty("LocationId").GetValue(dockObject, null);
             locationAsDock.GeographicalDescription = (string)dockObject.GetType().GetProperty("GeographicalDescription").GetValue(dockObject, null);
             locationAsDock.Description = (string)dockObject.GetType().GetProperty("Description").GetValue(dockObject, null);
 
@@ -2516,7 +2516,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(dock.Name, locationAsDock.Name);
             Assert.Equal(dock.Id, locationAsDock.Id);
             Assert.Equal(dock.Description, locationAsDock.Description);
-            Assert.Equal(dock.TypeOfLocation, locationAsDock.TypeOfLocation);
+            Assert.Equal(dock.LocationId, locationAsDock.LocationId);
             Assert.Equal(dock.GeographicalDescription, locationAsDock.GeographicalDescription);
         }
 
@@ -2525,11 +2525,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Dock",
                 Description = null,
-                TypeOfLocation = LocationType.Dock,
+                LocationId = LocationType.Dock,
                 GeographicalDescription = "Test Description"
             };
 
@@ -2538,13 +2538,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test Dock",
                 Description = null,
-                TypeOfLocation = LocationType.Dock,
+                LocationId = LocationType.Dock,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(dock);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -2559,7 +2559,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsDock.Id = (int)dockObject.GetType().GetProperty("Id").GetValue(dockObject, null);
             locationAsDock.Name = (string)dockObject.GetType().GetProperty("Name").GetValue(dockObject, null);
-            locationAsDock.TypeOfLocation = (LocationType)dockObject.GetType().GetProperty("TypeOfLocation").GetValue(dockObject, null);
+            locationAsDock.LocationId = (LocationType)dockObject.GetType().GetProperty("LocationId").GetValue(dockObject, null);
             locationAsDock.GeographicalDescription = (string)dockObject.GetType().GetProperty("GeographicalDescription").GetValue(dockObject, null);
             locationAsDock.Description = (string)dockObject.GetType().GetProperty("Description").GetValue(dockObject, null);
 
@@ -2569,7 +2569,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(dock.Id, locationAsDock.Id);
             Assert.Equal(dock.Name, locationAsDock.Name);
             Assert.Equal(dock.Description, locationAsDock.Description);
-            Assert.Equal(dock.TypeOfLocation, locationAsDock.TypeOfLocation);
+            Assert.Equal(dock.LocationId, locationAsDock.LocationId);
             Assert.Equal(dock.GeographicalDescription, locationAsDock.GeographicalDescription);
         }
 
@@ -2577,11 +2577,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsADock_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "      ",
                 Description = "Test",
-                TypeOfLocation = LocationType.Dock,
+                LocationId = LocationType.Dock,
                 GeographicalDescription = "Test Description"
             };
 
@@ -2589,7 +2589,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -2604,11 +2604,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsADock_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.Dock,
+                LocationId = LocationType.Dock,
                 GeographicalDescription = "        "
             };
 
@@ -2616,7 +2616,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -2635,10 +2635,10 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test DragonLair",
-                TypeOfLocation = LocationType.DragonLair,
+                LocationId = LocationType.DragonLair,
                 GeographicalDescription = "Test Description"
             };
 
@@ -2646,13 +2646,13 @@ namespace Skyrim.Api.Test.Controllers
             {
                 Id = 0,
                 Name = "Test DragonLair",
-                TypeOfLocation = LocationType.DragonLair,
+                LocationId = LocationType.DragonLair,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(dragonLair);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -2667,7 +2667,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsDragonLair.Id = (int)dragonLairObject.GetType().GetProperty("Id").GetValue(dragonLairObject, null);
             locationAsDragonLair.Name = (string)dragonLairObject.GetType().GetProperty("Name").GetValue(dragonLairObject, null);
-            locationAsDragonLair.TypeOfLocation = (LocationType)dragonLairObject.GetType().GetProperty("TypeOfLocation").GetValue(dragonLairObject, null);
+            locationAsDragonLair.LocationId = (LocationType)dragonLairObject.GetType().GetProperty("LocationId").GetValue(dragonLairObject, null);
             locationAsDragonLair.GeographicalDescription = (string)dragonLairObject.GetType().GetProperty("GeographicalDescription").GetValue(dragonLairObject, null);
             locationAsDragonLair.Description = (string)dragonLairObject.GetType().GetProperty("Description").GetValue(dragonLairObject, null);
 
@@ -2677,7 +2677,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(dragonLair.Id, locationAsDragonLair.Id);
             Assert.Equal(dragonLair.Name, locationAsDragonLair.Name);
             Assert.Equal(dragonLair.Description, locationAsDragonLair.Description);
-            Assert.Equal(dragonLair.TypeOfLocation, locationAsDragonLair.TypeOfLocation);
+            Assert.Equal(dragonLair.LocationId, locationAsDragonLair.LocationId);
             Assert.Equal(dragonLair.GeographicalDescription, locationAsDragonLair.GeographicalDescription);
         }
 
@@ -2686,11 +2686,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test DragonLair",
                 Description = "    ",
-                TypeOfLocation = LocationType.DragonLair,
+                LocationId = LocationType.DragonLair,
                 GeographicalDescription = "Test Description"
             };
 
@@ -2699,13 +2699,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test DragonLair",
                 Description = "",
-                TypeOfLocation = LocationType.DragonLair,
+                LocationId = LocationType.DragonLair,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(dragonLair);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -2720,7 +2720,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsDragonLair.Id = (int)dragonLairObject.GetType().GetProperty("Id").GetValue(dragonLairObject, null);
             locationAsDragonLair.Name = (string)dragonLairObject.GetType().GetProperty("Name").GetValue(dragonLairObject, null);
-            locationAsDragonLair.TypeOfLocation = (LocationType)dragonLairObject.GetType().GetProperty("TypeOfLocation").GetValue(dragonLairObject, null);
+            locationAsDragonLair.LocationId = (LocationType)dragonLairObject.GetType().GetProperty("LocationId").GetValue(dragonLairObject, null);
             locationAsDragonLair.GeographicalDescription = (string)dragonLairObject.GetType().GetProperty("GeographicalDescription").GetValue(dragonLairObject, null);
             locationAsDragonLair.Description = (string)dragonLairObject.GetType().GetProperty("Description").GetValue(dragonLairObject, null);
 
@@ -2730,7 +2730,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(dragonLair.Name, locationAsDragonLair.Name);
             Assert.Equal(dragonLair.Id, locationAsDragonLair.Id);
             Assert.Equal(dragonLair.Description, locationAsDragonLair.Description);
-            Assert.Equal(dragonLair.TypeOfLocation, locationAsDragonLair.TypeOfLocation);
+            Assert.Equal(dragonLair.LocationId, locationAsDragonLair.LocationId);
             Assert.Equal(dragonLair.GeographicalDescription, locationAsDragonLair.GeographicalDescription);
         }
 
@@ -2739,11 +2739,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test DragonLair",
                 Description = null,
-                TypeOfLocation = LocationType.DragonLair,
+                LocationId = LocationType.DragonLair,
                 GeographicalDescription = "Test Description"
             };
 
@@ -2752,13 +2752,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test DragonLair",
                 Description = null,
-                TypeOfLocation = LocationType.DragonLair,
+                LocationId = LocationType.DragonLair,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(dragonLair);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -2773,7 +2773,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsDragonLair.Id = (int)dragonLairObject.GetType().GetProperty("Id").GetValue(dragonLairObject, null);
             locationAsDragonLair.Name = (string)dragonLairObject.GetType().GetProperty("Name").GetValue(dragonLairObject, null);
-            locationAsDragonLair.TypeOfLocation = (LocationType)dragonLairObject.GetType().GetProperty("TypeOfLocation").GetValue(dragonLairObject, null);
+            locationAsDragonLair.LocationId = (LocationType)dragonLairObject.GetType().GetProperty("LocationId").GetValue(dragonLairObject, null);
             locationAsDragonLair.GeographicalDescription = (string)dragonLairObject.GetType().GetProperty("GeographicalDescription").GetValue(dragonLairObject, null);
             locationAsDragonLair.Description = (string)dragonLairObject.GetType().GetProperty("Description").GetValue(dragonLairObject, null);
 
@@ -2783,7 +2783,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(dragonLair.Id, locationAsDragonLair.Id);
             Assert.Equal(dragonLair.Name, locationAsDragonLair.Name);
             Assert.Equal(dragonLair.Description, locationAsDragonLair.Description);
-            Assert.Equal(dragonLair.TypeOfLocation, locationAsDragonLair.TypeOfLocation);
+            Assert.Equal(dragonLair.LocationId, locationAsDragonLair.LocationId);
             Assert.Equal(dragonLair.GeographicalDescription, locationAsDragonLair.GeographicalDescription);
         }
 
@@ -2791,11 +2791,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsADragonLair_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "      ",
                 Description = "Test",
-                TypeOfLocation = LocationType.DragonLair,
+                LocationId = LocationType.DragonLair,
                 GeographicalDescription = "Test Description"
             };
 
@@ -2803,7 +2803,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -2818,11 +2818,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsADragonLair_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.DragonLair,
+                LocationId = LocationType.DragonLair,
                 GeographicalDescription = "        "
             };
 
@@ -2830,7 +2830,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -2849,10 +2849,10 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test DwarvenRuin",
-                TypeOfLocation = LocationType.DwarvenRuin,
+                LocationId = LocationType.DwarvenRuin,
                 GeographicalDescription = "Test Description"
             };
 
@@ -2860,13 +2860,13 @@ namespace Skyrim.Api.Test.Controllers
             {
                 Id = 0,
                 Name = "Test DwarvenRuin",
-                TypeOfLocation = LocationType.DwarvenRuin,
+                LocationId = LocationType.DwarvenRuin,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(dwarvenRuin);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -2881,7 +2881,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsDwarvenRuin.Id = (int)dwarvenRuinObject.GetType().GetProperty("Id").GetValue(dwarvenRuinObject, null);
             locationAsDwarvenRuin.Name = (string)dwarvenRuinObject.GetType().GetProperty("Name").GetValue(dwarvenRuinObject, null);
-            locationAsDwarvenRuin.TypeOfLocation = (LocationType)dwarvenRuinObject.GetType().GetProperty("TypeOfLocation").GetValue(dwarvenRuinObject, null);
+            locationAsDwarvenRuin.LocationId = (LocationType)dwarvenRuinObject.GetType().GetProperty("LocationId").GetValue(dwarvenRuinObject, null);
             locationAsDwarvenRuin.GeographicalDescription = (string)dwarvenRuinObject.GetType().GetProperty("GeographicalDescription").GetValue(dwarvenRuinObject, null);
             locationAsDwarvenRuin.Description = (string)dwarvenRuinObject.GetType().GetProperty("Description").GetValue(dwarvenRuinObject, null);
 
@@ -2891,7 +2891,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(dwarvenRuin.Id, locationAsDwarvenRuin.Id);
             Assert.Equal(dwarvenRuin.Name, locationAsDwarvenRuin.Name);
             Assert.Equal(dwarvenRuin.Description, locationAsDwarvenRuin.Description);
-            Assert.Equal(dwarvenRuin.TypeOfLocation, locationAsDwarvenRuin.TypeOfLocation);
+            Assert.Equal(dwarvenRuin.LocationId, locationAsDwarvenRuin.LocationId);
             Assert.Equal(dwarvenRuin.GeographicalDescription, locationAsDwarvenRuin.GeographicalDescription);
         }
 
@@ -2900,11 +2900,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test DwarvenRuin",
                 Description = "    ",
-                TypeOfLocation = LocationType.DwarvenRuin,
+                LocationId = LocationType.DwarvenRuin,
                 GeographicalDescription = "Test Description"
             };
 
@@ -2913,13 +2913,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test DwarvenRuin",
                 Description = "",
-                TypeOfLocation = LocationType.DwarvenRuin,
+                LocationId = LocationType.DwarvenRuin,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(dwarvenRuin);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -2934,7 +2934,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsDwarvenRuin.Id = (int)dwarvenRuinObject.GetType().GetProperty("Id").GetValue(dwarvenRuinObject, null);
             locationAsDwarvenRuin.Name = (string)dwarvenRuinObject.GetType().GetProperty("Name").GetValue(dwarvenRuinObject, null);
-            locationAsDwarvenRuin.TypeOfLocation = (LocationType)dwarvenRuinObject.GetType().GetProperty("TypeOfLocation").GetValue(dwarvenRuinObject, null);
+            locationAsDwarvenRuin.LocationId = (LocationType)dwarvenRuinObject.GetType().GetProperty("LocationId").GetValue(dwarvenRuinObject, null);
             locationAsDwarvenRuin.GeographicalDescription = (string)dwarvenRuinObject.GetType().GetProperty("GeographicalDescription").GetValue(dwarvenRuinObject, null);
             locationAsDwarvenRuin.Description = (string)dwarvenRuinObject.GetType().GetProperty("Description").GetValue(dwarvenRuinObject, null);
 
@@ -2944,7 +2944,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(dwarvenRuin.Name, locationAsDwarvenRuin.Name);
             Assert.Equal(dwarvenRuin.Id, locationAsDwarvenRuin.Id);
             Assert.Equal(dwarvenRuin.Description, locationAsDwarvenRuin.Description);
-            Assert.Equal(dwarvenRuin.TypeOfLocation, locationAsDwarvenRuin.TypeOfLocation);
+            Assert.Equal(dwarvenRuin.LocationId, locationAsDwarvenRuin.LocationId);
             Assert.Equal(dwarvenRuin.GeographicalDescription, locationAsDwarvenRuin.GeographicalDescription);
         }
 
@@ -2953,11 +2953,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test DwarvenRuin",
                 Description = null,
-                TypeOfLocation = LocationType.DwarvenRuin,
+                LocationId = LocationType.DwarvenRuin,
                 GeographicalDescription = "Test Description"
             };
 
@@ -2966,13 +2966,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test DwarvenRuin",
                 Description = null,
-                TypeOfLocation = LocationType.DwarvenRuin,
+                LocationId = LocationType.DwarvenRuin,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(dwarvenRuin);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -2987,7 +2987,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsDwarvenRuin.Id = (int)dwarvenRuinObject.GetType().GetProperty("Id").GetValue(dwarvenRuinObject, null);
             locationAsDwarvenRuin.Name = (string)dwarvenRuinObject.GetType().GetProperty("Name").GetValue(dwarvenRuinObject, null);
-            locationAsDwarvenRuin.TypeOfLocation = (LocationType)dwarvenRuinObject.GetType().GetProperty("TypeOfLocation").GetValue(dwarvenRuinObject, null);
+            locationAsDwarvenRuin.LocationId = (LocationType)dwarvenRuinObject.GetType().GetProperty("LocationId").GetValue(dwarvenRuinObject, null);
             locationAsDwarvenRuin.GeographicalDescription = (string)dwarvenRuinObject.GetType().GetProperty("GeographicalDescription").GetValue(dwarvenRuinObject, null);
             locationAsDwarvenRuin.Description = (string)dwarvenRuinObject.GetType().GetProperty("Description").GetValue(dwarvenRuinObject, null);
 
@@ -2997,7 +2997,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(dwarvenRuin.Id, locationAsDwarvenRuin.Id);
             Assert.Equal(dwarvenRuin.Name, locationAsDwarvenRuin.Name);
             Assert.Equal(dwarvenRuin.Description, locationAsDwarvenRuin.Description);
-            Assert.Equal(dwarvenRuin.TypeOfLocation, locationAsDwarvenRuin.TypeOfLocation);
+            Assert.Equal(dwarvenRuin.LocationId, locationAsDwarvenRuin.LocationId);
             Assert.Equal(dwarvenRuin.GeographicalDescription, locationAsDwarvenRuin.GeographicalDescription);
         }
 
@@ -3005,11 +3005,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsADwarvenRuin_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "      ",
                 Description = "Test",
-                TypeOfLocation = LocationType.DwarvenRuin,
+                LocationId = LocationType.DwarvenRuin,
                 GeographicalDescription = "Test Description"
             };
 
@@ -3017,7 +3017,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -3032,11 +3032,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsADwarvenRuin_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.DwarvenRuin,
+                LocationId = LocationType.DwarvenRuin,
                 GeographicalDescription = "        "
             };
 
@@ -3044,7 +3044,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -3063,10 +3063,10 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test ship",
-                TypeOfLocation = LocationType.Farm,
+                LocationId = LocationType.Farm,
                 GeographicalDescription = "Test Description"
             };
 
@@ -3074,13 +3074,13 @@ namespace Skyrim.Api.Test.Controllers
             {
                 Id = 0,
                 Name = "Test Farm",
-                TypeOfLocation = LocationType.Farm,
+                LocationId = LocationType.Farm,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(farm);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -3095,7 +3095,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsFarm.Id = (int)farmObject.GetType().GetProperty("Id").GetValue(farmObject, null);
             locationAsFarm.Name = (string)farmObject.GetType().GetProperty("Name").GetValue(farmObject, null);
-            locationAsFarm.TypeOfLocation = (LocationType)farmObject.GetType().GetProperty("TypeOfLocation").GetValue(farmObject, null);
+            locationAsFarm.LocationId = (LocationType)farmObject.GetType().GetProperty("LocationId").GetValue(farmObject, null);
             locationAsFarm.GeographicalDescription = (string)farmObject.GetType().GetProperty("GeographicalDescription").GetValue(farmObject, null);
             locationAsFarm.Description = (string)farmObject.GetType().GetProperty("Description").GetValue(farmObject, null);
 
@@ -3105,7 +3105,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(farm.Id, locationAsFarm.Id);
             Assert.Equal(farm.Name, locationAsFarm.Name);
             Assert.Equal(farm.Description, locationAsFarm.Description);
-            Assert.Equal(farm.TypeOfLocation, locationAsFarm.TypeOfLocation);
+            Assert.Equal(farm.LocationId, locationAsFarm.LocationId);
             Assert.Equal(farm.GeographicalDescription, locationAsFarm.GeographicalDescription);
         }
 
@@ -3114,11 +3114,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Farm",
                 Description = "    ",
-                TypeOfLocation = LocationType.Farm,
+                LocationId = LocationType.Farm,
                 GeographicalDescription = "Test Description"
             };
 
@@ -3127,13 +3127,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test Farm",
                 Description = "",
-                TypeOfLocation = LocationType.Farm,
+                LocationId = LocationType.Farm,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(farm);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -3148,7 +3148,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsFarm.Id = (int)farmObject.GetType().GetProperty("Id").GetValue(farmObject, null);
             locationAsFarm.Name = (string)farmObject.GetType().GetProperty("Name").GetValue(farmObject, null);
-            locationAsFarm.TypeOfLocation = (LocationType)farmObject.GetType().GetProperty("TypeOfLocation").GetValue(farmObject, null);
+            locationAsFarm.LocationId = (LocationType)farmObject.GetType().GetProperty("LocationId").GetValue(farmObject, null);
             locationAsFarm.GeographicalDescription = (string)farmObject.GetType().GetProperty("GeographicalDescription").GetValue(farmObject, null);
             locationAsFarm.Description = (string)farmObject.GetType().GetProperty("Description").GetValue(farmObject, null);
 
@@ -3158,7 +3158,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(farm.Name, locationAsFarm.Name);
             Assert.Equal(farm.Id, locationAsFarm.Id);
             Assert.Equal(farm.Description, locationAsFarm.Description);
-            Assert.Equal(farm.TypeOfLocation, locationAsFarm.TypeOfLocation);
+            Assert.Equal(farm.LocationId, locationAsFarm.LocationId);
             Assert.Equal(farm.GeographicalDescription, locationAsFarm.GeographicalDescription);
         }
 
@@ -3167,11 +3167,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Farm",
                 Description = null,
-                TypeOfLocation = LocationType.Farm,
+                LocationId = LocationType.Farm,
                 GeographicalDescription = "Test Description"
             };
 
@@ -3180,13 +3180,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test Farm",
                 Description = null,
-                TypeOfLocation = LocationType.Farm,
+                LocationId = LocationType.Farm,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(farm);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -3201,7 +3201,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsFarm.Id = (int)farmObject.GetType().GetProperty("Id").GetValue(farmObject, null);
             locationAsFarm.Name = (string)farmObject.GetType().GetProperty("Name").GetValue(farmObject, null);
-            locationAsFarm.TypeOfLocation = (LocationType)farmObject.GetType().GetProperty("TypeOfLocation").GetValue(farmObject, null);
+            locationAsFarm.LocationId = (LocationType)farmObject.GetType().GetProperty("LocationId").GetValue(farmObject, null);
             locationAsFarm.GeographicalDescription = (string)farmObject.GetType().GetProperty("GeographicalDescription").GetValue(farmObject, null);
             locationAsFarm.Description = (string)farmObject.GetType().GetProperty("Description").GetValue(farmObject, null);
 
@@ -3211,7 +3211,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(farm.Id, locationAsFarm.Id);
             Assert.Equal(farm.Name, locationAsFarm.Name);
             Assert.Equal(farm.Description, locationAsFarm.Description);
-            Assert.Equal(farm.TypeOfLocation, locationAsFarm.TypeOfLocation);
+            Assert.Equal(farm.LocationId, locationAsFarm.LocationId);
             Assert.Equal(farm.GeographicalDescription, locationAsFarm.GeographicalDescription);
         }
 
@@ -3219,11 +3219,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsAFarm_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "      ",
                 Description = "Test",
-                TypeOfLocation = LocationType.Farm,
+                LocationId = LocationType.Farm,
                 GeographicalDescription = "Test Description"
             };
 
@@ -3231,7 +3231,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -3246,11 +3246,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsAFarm_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.Farm,
+                LocationId = LocationType.Farm,
                 GeographicalDescription = "        "
             };
 
@@ -3258,7 +3258,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -3277,10 +3277,10 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Fort",
-                TypeOfLocation = LocationType.Fort,
+                LocationId = LocationType.Fort,
                 GeographicalDescription = "Test Description"
             };
 
@@ -3288,13 +3288,13 @@ namespace Skyrim.Api.Test.Controllers
             {
                 Id = 0,
                 Name = "Test Fort",
-                TypeOfLocation = LocationType.Fort,
+                LocationId = LocationType.Fort,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(fort);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -3309,7 +3309,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsFort.Id = (int)fortObject.GetType().GetProperty("Id").GetValue(fortObject, null);
             locationAsFort.Name = (string)fortObject.GetType().GetProperty("Name").GetValue(fortObject, null);
-            locationAsFort.TypeOfLocation = (LocationType)fortObject.GetType().GetProperty("TypeOfLocation").GetValue(fortObject, null);
+            locationAsFort.LocationId = (LocationType)fortObject.GetType().GetProperty("LocationId").GetValue(fortObject, null);
             locationAsFort.GeographicalDescription = (string)fortObject.GetType().GetProperty("GeographicalDescription").GetValue(fortObject, null);
             locationAsFort.Description = (string)fortObject.GetType().GetProperty("Description").GetValue(fortObject, null);
 
@@ -3319,7 +3319,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(fort.Id, locationAsFort.Id);
             Assert.Equal(fort.Name, locationAsFort.Name);
             Assert.Equal(fort.Description, locationAsFort.Description);
-            Assert.Equal(fort.TypeOfLocation, locationAsFort.TypeOfLocation);
+            Assert.Equal(fort.LocationId, locationAsFort.LocationId);
             Assert.Equal(fort.GeographicalDescription, locationAsFort.GeographicalDescription);
         }
 
@@ -3328,11 +3328,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Fort",
                 Description = "    ",
-                TypeOfLocation = LocationType.Fort,
+                LocationId = LocationType.Fort,
                 GeographicalDescription = "Test Description"
             };
 
@@ -3341,13 +3341,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test Fort",
                 Description = "",
-                TypeOfLocation = LocationType.Fort,
+                LocationId = LocationType.Fort,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(fort);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -3362,7 +3362,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsFort.Id = (int)fortObject.GetType().GetProperty("Id").GetValue(fortObject, null);
             locationAsFort.Name = (string)fortObject.GetType().GetProperty("Name").GetValue(fortObject, null);
-            locationAsFort.TypeOfLocation = (LocationType)fortObject.GetType().GetProperty("TypeOfLocation").GetValue(fortObject, null);
+            locationAsFort.LocationId = (LocationType)fortObject.GetType().GetProperty("LocationId").GetValue(fortObject, null);
             locationAsFort.GeographicalDescription = (string)fortObject.GetType().GetProperty("GeographicalDescription").GetValue(fortObject, null);
             locationAsFort.Description = (string)fortObject.GetType().GetProperty("Description").GetValue(fortObject, null);
 
@@ -3372,7 +3372,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(fort.Name, locationAsFort.Name);
             Assert.Equal(fort.Id, locationAsFort.Id);
             Assert.Equal(fort.Description, locationAsFort.Description);
-            Assert.Equal(fort.TypeOfLocation, locationAsFort.TypeOfLocation);
+            Assert.Equal(fort.LocationId, locationAsFort.LocationId);
             Assert.Equal(fort.GeographicalDescription, locationAsFort.GeographicalDescription);
         }
 
@@ -3381,11 +3381,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Fort",
                 Description = null,
-                TypeOfLocation = LocationType.Fort,
+                LocationId = LocationType.Fort,
                 GeographicalDescription = "Test Description"
             };
 
@@ -3394,13 +3394,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test Fort",
                 Description = null,
-                TypeOfLocation = LocationType.Fort,
+                LocationId = LocationType.Fort,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(fort);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -3415,7 +3415,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsFort.Id = (int)fortObject.GetType().GetProperty("Id").GetValue(fortObject, null);
             locationAsFort.Name = (string)fortObject.GetType().GetProperty("Name").GetValue(fortObject, null);
-            locationAsFort.TypeOfLocation = (LocationType)fortObject.GetType().GetProperty("TypeOfLocation").GetValue(fortObject, null);
+            locationAsFort.LocationId = (LocationType)fortObject.GetType().GetProperty("LocationId").GetValue(fortObject, null);
             locationAsFort.GeographicalDescription = (string)fortObject.GetType().GetProperty("GeographicalDescription").GetValue(fortObject, null);
             locationAsFort.Description = (string)fortObject.GetType().GetProperty("Description").GetValue(fortObject, null);
 
@@ -3425,7 +3425,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(fort.Id, locationAsFort.Id);
             Assert.Equal(fort.Name, locationAsFort.Name);
             Assert.Equal(fort.Description, locationAsFort.Description);
-            Assert.Equal(fort.TypeOfLocation, locationAsFort.TypeOfLocation);
+            Assert.Equal(fort.LocationId, locationAsFort.LocationId);
             Assert.Equal(fort.GeographicalDescription, locationAsFort.GeographicalDescription);
         }
 
@@ -3433,11 +3433,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsAFort_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "      ",
                 Description = "Test",
-                TypeOfLocation = LocationType.Fort,
+                LocationId = LocationType.Fort,
                 GeographicalDescription = "Test Description"
             };
 
@@ -3445,7 +3445,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -3460,11 +3460,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsAFort_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.Fort,
+                LocationId = LocationType.Fort,
                 GeographicalDescription = "        "
             };
 
@@ -3472,7 +3472,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -3491,10 +3491,10 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test GiantCamp",
-                TypeOfLocation = LocationType.GiantCamp,
+                LocationId = LocationType.GiantCamp,
                 GeographicalDescription = "Test Description"
             };
 
@@ -3502,13 +3502,13 @@ namespace Skyrim.Api.Test.Controllers
             {
                 Id = 0,
                 Name = "Test GiantCamp",
-                TypeOfLocation = LocationType.GiantCamp,
+                LocationId = LocationType.GiantCamp,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(giantCamp);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -3523,7 +3523,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsGiantCamp.Id = (int)giantCampObject.GetType().GetProperty("Id").GetValue(giantCampObject, null);
             locationAsGiantCamp.Name = (string)giantCampObject.GetType().GetProperty("Name").GetValue(giantCampObject, null);
-            locationAsGiantCamp.TypeOfLocation = (LocationType)giantCampObject.GetType().GetProperty("TypeOfLocation").GetValue(giantCampObject, null);
+            locationAsGiantCamp.LocationId = (LocationType)giantCampObject.GetType().GetProperty("LocationId").GetValue(giantCampObject, null);
             locationAsGiantCamp.GeographicalDescription = (string)giantCampObject.GetType().GetProperty("GeographicalDescription").GetValue(giantCampObject, null);
             locationAsGiantCamp.Description = (string)giantCampObject.GetType().GetProperty("Description").GetValue(giantCampObject, null);
 
@@ -3533,7 +3533,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(giantCamp.Id, locationAsGiantCamp.Id);
             Assert.Equal(giantCamp.Name, locationAsGiantCamp.Name);
             Assert.Equal(giantCamp.Description, locationAsGiantCamp.Description);
-            Assert.Equal(giantCamp.TypeOfLocation, locationAsGiantCamp.TypeOfLocation);
+            Assert.Equal(giantCamp.LocationId, locationAsGiantCamp.LocationId);
             Assert.Equal(giantCamp.GeographicalDescription, locationAsGiantCamp.GeographicalDescription);
         }
 
@@ -3542,11 +3542,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test GiantCamp",
                 Description = "    ",
-                TypeOfLocation = LocationType.GiantCamp,
+                LocationId = LocationType.GiantCamp,
                 GeographicalDescription = "Test Description"
             };
 
@@ -3555,13 +3555,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test GiantCamp",
                 Description = "",
-                TypeOfLocation = LocationType.GiantCamp,
+                LocationId = LocationType.GiantCamp,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(giantCamp);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -3576,7 +3576,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsGiantCamp.Id = (int)giantCampObject.GetType().GetProperty("Id").GetValue(giantCampObject, null);
             locationAsGiantCamp.Name = (string)giantCampObject.GetType().GetProperty("Name").GetValue(giantCampObject, null);
-            locationAsGiantCamp.TypeOfLocation = (LocationType)giantCampObject.GetType().GetProperty("TypeOfLocation").GetValue(giantCampObject, null);
+            locationAsGiantCamp.LocationId = (LocationType)giantCampObject.GetType().GetProperty("LocationId").GetValue(giantCampObject, null);
             locationAsGiantCamp.GeographicalDescription = (string)giantCampObject.GetType().GetProperty("GeographicalDescription").GetValue(giantCampObject, null);
             locationAsGiantCamp.Description = (string)giantCampObject.GetType().GetProperty("Description").GetValue(giantCampObject, null);
 
@@ -3586,7 +3586,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(giantCamp.Name, locationAsGiantCamp.Name);
             Assert.Equal(giantCamp.Id, locationAsGiantCamp.Id);
             Assert.Equal(giantCamp.Description, locationAsGiantCamp.Description);
-            Assert.Equal(giantCamp.TypeOfLocation, locationAsGiantCamp.TypeOfLocation);
+            Assert.Equal(giantCamp.LocationId, locationAsGiantCamp.LocationId);
             Assert.Equal(giantCamp.GeographicalDescription, locationAsGiantCamp.GeographicalDescription);
         }
 
@@ -3595,11 +3595,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test GiantCamp",
                 Description = null,
-                TypeOfLocation = LocationType.GiantCamp,
+                LocationId = LocationType.GiantCamp,
                 GeographicalDescription = "Test Description"
             };
 
@@ -3608,13 +3608,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test GiantCamp",
                 Description = null,
-                TypeOfLocation = LocationType.GiantCamp,
+                LocationId = LocationType.GiantCamp,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(giantCamp);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -3629,7 +3629,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsGiantCamp.Id = (int)giantCampObject.GetType().GetProperty("Id").GetValue(giantCampObject, null);
             locationAsGiantCamp.Name = (string)giantCampObject.GetType().GetProperty("Name").GetValue(giantCampObject, null);
-            locationAsGiantCamp.TypeOfLocation = (LocationType)giantCampObject.GetType().GetProperty("TypeOfLocation").GetValue(giantCampObject, null);
+            locationAsGiantCamp.LocationId = (LocationType)giantCampObject.GetType().GetProperty("LocationId").GetValue(giantCampObject, null);
             locationAsGiantCamp.GeographicalDescription = (string)giantCampObject.GetType().GetProperty("GeographicalDescription").GetValue(giantCampObject, null);
             locationAsGiantCamp.Description = (string)giantCampObject.GetType().GetProperty("Description").GetValue(giantCampObject, null);
 
@@ -3639,7 +3639,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(giantCamp.Id, locationAsGiantCamp.Id);
             Assert.Equal(giantCamp.Name, locationAsGiantCamp.Name);
             Assert.Equal(giantCamp.Description, locationAsGiantCamp.Description);
-            Assert.Equal(giantCamp.TypeOfLocation, locationAsGiantCamp.TypeOfLocation);
+            Assert.Equal(giantCamp.LocationId, locationAsGiantCamp.LocationId);
             Assert.Equal(giantCamp.GeographicalDescription, locationAsGiantCamp.GeographicalDescription);
         }
 
@@ -3647,11 +3647,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsAGiantCamp_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "      ",
                 Description = "Test",
-                TypeOfLocation = LocationType.GiantCamp,
+                LocationId = LocationType.GiantCamp,
                 GeographicalDescription = "Test Description"
             };
 
@@ -3659,7 +3659,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -3674,11 +3674,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsAGiantCamp_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.GiantCamp,
+                LocationId = LocationType.GiantCamp,
                 GeographicalDescription = "        "
             };
 
@@ -3686,7 +3686,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -3705,10 +3705,10 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Grove",
-                TypeOfLocation = LocationType.Grove,
+                LocationId = LocationType.Grove,
                 GeographicalDescription = "Test Description"
             };
 
@@ -3716,13 +3716,13 @@ namespace Skyrim.Api.Test.Controllers
             {
                 Id = 0,
                 Name = "Test Grove",
-                TypeOfLocation = LocationType.Grove,
+                LocationId = LocationType.Grove,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(grove);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -3737,7 +3737,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsGrove.Id = (int)groveObject.GetType().GetProperty("Id").GetValue(groveObject, null);
             locationAsGrove.Name = (string)groveObject.GetType().GetProperty("Name").GetValue(groveObject, null);
-            locationAsGrove.TypeOfLocation = (LocationType)groveObject.GetType().GetProperty("TypeOfLocation").GetValue(groveObject, null);
+            locationAsGrove.LocationId = (LocationType)groveObject.GetType().GetProperty("LocationId").GetValue(groveObject, null);
             locationAsGrove.GeographicalDescription = (string)groveObject.GetType().GetProperty("GeographicalDescription").GetValue(groveObject, null);
             locationAsGrove.Description = (string)groveObject.GetType().GetProperty("Description").GetValue(groveObject, null);
 
@@ -3747,7 +3747,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(grove.Id, locationAsGrove.Id);
             Assert.Equal(grove.Name, locationAsGrove.Name);
             Assert.Equal(grove.Description, locationAsGrove.Description);
-            Assert.Equal(grove.TypeOfLocation, locationAsGrove.TypeOfLocation);
+            Assert.Equal(grove.LocationId, locationAsGrove.LocationId);
             Assert.Equal(grove.GeographicalDescription, locationAsGrove.GeographicalDescription);
         }
 
@@ -3756,11 +3756,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Grove",
                 Description = "    ",
-                TypeOfLocation = LocationType.Grove,
+                LocationId = LocationType.Grove,
                 GeographicalDescription = "Test Description"
             };
 
@@ -3769,13 +3769,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test Grove",
                 Description = "",
-                TypeOfLocation = LocationType.Grove,
+                LocationId = LocationType.Grove,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(grove);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -3790,7 +3790,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsGrove.Id = (int)groveObject.GetType().GetProperty("Id").GetValue(groveObject, null);
             locationAsGrove.Name = (string)groveObject.GetType().GetProperty("Name").GetValue(groveObject, null);
-            locationAsGrove.TypeOfLocation = (LocationType)groveObject.GetType().GetProperty("TypeOfLocation").GetValue(groveObject, null);
+            locationAsGrove.LocationId = (LocationType)groveObject.GetType().GetProperty("LocationId").GetValue(groveObject, null);
             locationAsGrove.GeographicalDescription = (string)groveObject.GetType().GetProperty("GeographicalDescription").GetValue(groveObject, null);
             locationAsGrove.Description = (string)groveObject.GetType().GetProperty("Description").GetValue(groveObject, null);
 
@@ -3800,7 +3800,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(grove.Name, locationAsGrove.Name);
             Assert.Equal(grove.Id, locationAsGrove.Id);
             Assert.Equal(grove.Description, locationAsGrove.Description);
-            Assert.Equal(grove.TypeOfLocation, locationAsGrove.TypeOfLocation);
+            Assert.Equal(grove.LocationId, locationAsGrove.LocationId);
             Assert.Equal(grove.GeographicalDescription, locationAsGrove.GeographicalDescription);
         }
 
@@ -3809,11 +3809,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Grove",
                 Description = null,
-                TypeOfLocation = LocationType.Grove,
+                LocationId = LocationType.Grove,
                 GeographicalDescription = "Test Description"
             };
 
@@ -3822,13 +3822,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test Grove",
                 Description = null,
-                TypeOfLocation = LocationType.Grove,
+                LocationId = LocationType.Grove,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(grove);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -3843,7 +3843,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsGrove.Id = (int)groveObject.GetType().GetProperty("Id").GetValue(groveObject, null);
             locationAsGrove.Name = (string)groveObject.GetType().GetProperty("Name").GetValue(groveObject, null);
-            locationAsGrove.TypeOfLocation = (LocationType)groveObject.GetType().GetProperty("TypeOfLocation").GetValue(groveObject, null);
+            locationAsGrove.LocationId = (LocationType)groveObject.GetType().GetProperty("LocationId").GetValue(groveObject, null);
             locationAsGrove.GeographicalDescription = (string)groveObject.GetType().GetProperty("GeographicalDescription").GetValue(groveObject, null);
             locationAsGrove.Description = (string)groveObject.GetType().GetProperty("Description").GetValue(groveObject, null);
 
@@ -3853,7 +3853,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(grove.Id, locationAsGrove.Id);
             Assert.Equal(grove.Name, locationAsGrove.Name);
             Assert.Equal(grove.Description, locationAsGrove.Description);
-            Assert.Equal(grove.TypeOfLocation, locationAsGrove.TypeOfLocation);
+            Assert.Equal(grove.LocationId, locationAsGrove.LocationId);
             Assert.Equal(grove.GeographicalDescription, locationAsGrove.GeographicalDescription);
         }
 
@@ -3861,11 +3861,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsAGrove_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "      ",
                 Description = "Test",
-                TypeOfLocation = LocationType.Grove,
+                LocationId = LocationType.Grove,
                 GeographicalDescription = "Test Description"
             };
 
@@ -3873,7 +3873,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -3888,11 +3888,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsAGrove_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.Grove,
+                LocationId = LocationType.Grove,
                 GeographicalDescription = "        "
             };
 
@@ -3900,7 +3900,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -3919,10 +3919,10 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test ImperialCamp",
-                TypeOfLocation = LocationType.ImperialCamp,
+                LocationId = LocationType.ImperialCamp,
                 GeographicalDescription = "Test Description"
             };
 
@@ -3930,13 +3930,13 @@ namespace Skyrim.Api.Test.Controllers
             {
                 Id = 0,
                 Name = "Test ImperialCamp",
-                TypeOfLocation = LocationType.ImperialCamp,
+                LocationId = LocationType.ImperialCamp,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(imperialCamp);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -3951,7 +3951,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsImperialCamp.Id = (int)imperialCampObject.GetType().GetProperty("Id").GetValue(imperialCampObject, null);
             locationAsImperialCamp.Name = (string)imperialCampObject.GetType().GetProperty("Name").GetValue(imperialCampObject, null);
-            locationAsImperialCamp.TypeOfLocation = (LocationType)imperialCampObject.GetType().GetProperty("TypeOfLocation").GetValue(imperialCampObject, null);
+            locationAsImperialCamp.LocationId = (LocationType)imperialCampObject.GetType().GetProperty("LocationId").GetValue(imperialCampObject, null);
             locationAsImperialCamp.GeographicalDescription = (string)imperialCampObject.GetType().GetProperty("GeographicalDescription").GetValue(imperialCampObject, null);
             locationAsImperialCamp.Description = (string)imperialCampObject.GetType().GetProperty("Description").GetValue(imperialCampObject, null);
 
@@ -3961,7 +3961,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(imperialCamp.Id, locationAsImperialCamp.Id);
             Assert.Equal(imperialCamp.Name, locationAsImperialCamp.Name);
             Assert.Equal(imperialCamp.Description, locationAsImperialCamp.Description);
-            Assert.Equal(imperialCamp.TypeOfLocation, locationAsImperialCamp.TypeOfLocation);
+            Assert.Equal(imperialCamp.LocationId, locationAsImperialCamp.LocationId);
             Assert.Equal(imperialCamp.GeographicalDescription, locationAsImperialCamp.GeographicalDescription);
         }
 
@@ -3970,11 +3970,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test ImperialCamp",
                 Description = "    ",
-                TypeOfLocation = LocationType.ImperialCamp,
+                LocationId = LocationType.ImperialCamp,
                 GeographicalDescription = "Test Description"
             };
 
@@ -3983,13 +3983,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test ImperialCamp",
                 Description = "",
-                TypeOfLocation = LocationType.ImperialCamp,
+                LocationId = LocationType.ImperialCamp,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(imperialCamp);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -4004,7 +4004,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsImperialCamp.Id = (int)imperialCampObject.GetType().GetProperty("Id").GetValue(imperialCampObject, null);
             locationAsImperialCamp.Name = (string)imperialCampObject.GetType().GetProperty("Name").GetValue(imperialCampObject, null);
-            locationAsImperialCamp.TypeOfLocation = (LocationType)imperialCampObject.GetType().GetProperty("TypeOfLocation").GetValue(imperialCampObject, null);
+            locationAsImperialCamp.LocationId = (LocationType)imperialCampObject.GetType().GetProperty("LocationId").GetValue(imperialCampObject, null);
             locationAsImperialCamp.GeographicalDescription = (string)imperialCampObject.GetType().GetProperty("GeographicalDescription").GetValue(imperialCampObject, null);
             locationAsImperialCamp.Description = (string)imperialCampObject.GetType().GetProperty("Description").GetValue(imperialCampObject, null);
 
@@ -4014,7 +4014,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(imperialCamp.Name, locationAsImperialCamp.Name);
             Assert.Equal(imperialCamp.Id, locationAsImperialCamp.Id);
             Assert.Equal(imperialCamp.Description, locationAsImperialCamp.Description);
-            Assert.Equal(imperialCamp.TypeOfLocation, locationAsImperialCamp.TypeOfLocation);
+            Assert.Equal(imperialCamp.LocationId, locationAsImperialCamp.LocationId);
             Assert.Equal(imperialCamp.GeographicalDescription, locationAsImperialCamp.GeographicalDescription);
         }
 
@@ -4023,11 +4023,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test ImperialCamp",
                 Description = null,
-                TypeOfLocation = LocationType.ImperialCamp,
+                LocationId = LocationType.ImperialCamp,
                 GeographicalDescription = "Test Description"
             };
 
@@ -4036,13 +4036,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test ImperialCamp",
                 Description = null,
-                TypeOfLocation = LocationType.ImperialCamp,
+                LocationId = LocationType.ImperialCamp,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(imperialCamp);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -4057,7 +4057,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsImperialCamp.Id = (int)imperialCampObject.GetType().GetProperty("Id").GetValue(imperialCampObject, null);
             locationAsImperialCamp.Name = (string)imperialCampObject.GetType().GetProperty("Name").GetValue(imperialCampObject, null);
-            locationAsImperialCamp.TypeOfLocation = (LocationType)imperialCampObject.GetType().GetProperty("TypeOfLocation").GetValue(imperialCampObject, null);
+            locationAsImperialCamp.LocationId = (LocationType)imperialCampObject.GetType().GetProperty("LocationId").GetValue(imperialCampObject, null);
             locationAsImperialCamp.GeographicalDescription = (string)imperialCampObject.GetType().GetProperty("GeographicalDescription").GetValue(imperialCampObject, null);
             locationAsImperialCamp.Description = (string)imperialCampObject.GetType().GetProperty("Description").GetValue(imperialCampObject, null);
 
@@ -4067,7 +4067,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(imperialCamp.Id, locationAsImperialCamp.Id);
             Assert.Equal(imperialCamp.Name, locationAsImperialCamp.Name);
             Assert.Equal(imperialCamp.Description, locationAsImperialCamp.Description);
-            Assert.Equal(imperialCamp.TypeOfLocation, locationAsImperialCamp.TypeOfLocation);
+            Assert.Equal(imperialCamp.LocationId, locationAsImperialCamp.LocationId);
             Assert.Equal(imperialCamp.GeographicalDescription, locationAsImperialCamp.GeographicalDescription);
         }
 
@@ -4075,11 +4075,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsAImperialCamp_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "      ",
                 Description = "Test",
-                TypeOfLocation = LocationType.ImperialCamp,
+                LocationId = LocationType.ImperialCamp,
                 GeographicalDescription = "Test Description"
             };
 
@@ -4087,7 +4087,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -4102,11 +4102,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsAImperialCamp_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.ImperialCamp,
+                LocationId = LocationType.ImperialCamp,
                 GeographicalDescription = "        "
             };
 
@@ -4114,7 +4114,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -4133,10 +4133,10 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test LightHouse",
-                TypeOfLocation = LocationType.LightHouse,
+                LocationId = LocationType.LightHouse,
                 GeographicalDescription = "Test Description"
             };
 
@@ -4144,13 +4144,13 @@ namespace Skyrim.Api.Test.Controllers
             {
                 Id = 0,
                 Name = "Test LightHouse",
-                TypeOfLocation = LocationType.LightHouse,
+                LocationId = LocationType.LightHouse,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(lightHouse);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -4165,7 +4165,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsLightHouse.Id = (int)lightHouseObject.GetType().GetProperty("Id").GetValue(lightHouseObject, null);
             locationAsLightHouse.Name = (string)lightHouseObject.GetType().GetProperty("Name").GetValue(lightHouseObject, null);
-            locationAsLightHouse.TypeOfLocation = (LocationType)lightHouseObject.GetType().GetProperty("TypeOfLocation").GetValue(lightHouseObject, null);
+            locationAsLightHouse.LocationId = (LocationType)lightHouseObject.GetType().GetProperty("LocationId").GetValue(lightHouseObject, null);
             locationAsLightHouse.GeographicalDescription = (string)lightHouseObject.GetType().GetProperty("GeographicalDescription").GetValue(lightHouseObject, null);
             locationAsLightHouse.Description = (string)lightHouseObject.GetType().GetProperty("Description").GetValue(lightHouseObject, null);
 
@@ -4175,7 +4175,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(lightHouse.Id, locationAsLightHouse.Id);
             Assert.Equal(lightHouse.Name, locationAsLightHouse.Name);
             Assert.Equal(lightHouse.Description, locationAsLightHouse.Description);
-            Assert.Equal(lightHouse.TypeOfLocation, locationAsLightHouse.TypeOfLocation);
+            Assert.Equal(lightHouse.LocationId, locationAsLightHouse.LocationId);
             Assert.Equal(lightHouse.GeographicalDescription, locationAsLightHouse.GeographicalDescription);
         }
 
@@ -4184,11 +4184,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test LightHouse",
                 Description = "    ",
-                TypeOfLocation = LocationType.LightHouse,
+                LocationId = LocationType.LightHouse,
                 GeographicalDescription = "Test Description"
             };
 
@@ -4197,13 +4197,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test LightHouse",
                 Description = "",
-                TypeOfLocation = LocationType.LightHouse,
+                LocationId = LocationType.LightHouse,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(lightHouse);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -4218,7 +4218,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsLightHouse.Id = (int)lightHouseObject.GetType().GetProperty("Id").GetValue(lightHouseObject, null);
             locationAsLightHouse.Name = (string)lightHouseObject.GetType().GetProperty("Name").GetValue(lightHouseObject, null);
-            locationAsLightHouse.TypeOfLocation = (LocationType)lightHouseObject.GetType().GetProperty("TypeOfLocation").GetValue(lightHouseObject, null);
+            locationAsLightHouse.LocationId = (LocationType)lightHouseObject.GetType().GetProperty("LocationId").GetValue(lightHouseObject, null);
             locationAsLightHouse.GeographicalDescription = (string)lightHouseObject.GetType().GetProperty("GeographicalDescription").GetValue(lightHouseObject, null);
             locationAsLightHouse.Description = (string)lightHouseObject.GetType().GetProperty("Description").GetValue(lightHouseObject, null);
 
@@ -4228,7 +4228,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(lightHouse.Name, locationAsLightHouse.Name);
             Assert.Equal(lightHouse.Id, locationAsLightHouse.Id);
             Assert.Equal(lightHouse.Description, locationAsLightHouse.Description);
-            Assert.Equal(lightHouse.TypeOfLocation, locationAsLightHouse.TypeOfLocation);
+            Assert.Equal(lightHouse.LocationId, locationAsLightHouse.LocationId);
             Assert.Equal(lightHouse.GeographicalDescription, locationAsLightHouse.GeographicalDescription);
         }
 
@@ -4237,11 +4237,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test LightHouse",
                 Description = null,
-                TypeOfLocation = LocationType.LightHouse,
+                LocationId = LocationType.LightHouse,
                 GeographicalDescription = "Test Description"
             };
 
@@ -4250,13 +4250,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test LightHouse",
                 Description = null,
-                TypeOfLocation = LocationType.LightHouse,
+                LocationId = LocationType.LightHouse,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(lightHouse);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -4271,7 +4271,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsLightHouse.Id = (int)lightHouseObject.GetType().GetProperty("Id").GetValue(lightHouseObject, null);
             locationAsLightHouse.Name = (string)lightHouseObject.GetType().GetProperty("Name").GetValue(lightHouseObject, null);
-            locationAsLightHouse.TypeOfLocation = (LocationType)lightHouseObject.GetType().GetProperty("TypeOfLocation").GetValue(lightHouseObject, null);
+            locationAsLightHouse.LocationId = (LocationType)lightHouseObject.GetType().GetProperty("LocationId").GetValue(lightHouseObject, null);
             locationAsLightHouse.GeographicalDescription = (string)lightHouseObject.GetType().GetProperty("GeographicalDescription").GetValue(lightHouseObject, null);
             locationAsLightHouse.Description = (string)lightHouseObject.GetType().GetProperty("Description").GetValue(lightHouseObject, null);
 
@@ -4281,7 +4281,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(lightHouse.Id, locationAsLightHouse.Id);
             Assert.Equal(lightHouse.Name, locationAsLightHouse.Name);
             Assert.Equal(lightHouse.Description, locationAsLightHouse.Description);
-            Assert.Equal(lightHouse.TypeOfLocation, locationAsLightHouse.TypeOfLocation);
+            Assert.Equal(lightHouse.LocationId, locationAsLightHouse.LocationId);
             Assert.Equal(lightHouse.GeographicalDescription, locationAsLightHouse.GeographicalDescription);
         }
 
@@ -4289,11 +4289,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsALightHouse_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "      ",
                 Description = "Test",
-                TypeOfLocation = LocationType.LightHouse,
+                LocationId = LocationType.LightHouse,
                 GeographicalDescription = "Test Description"
             };
 
@@ -4301,7 +4301,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -4316,11 +4316,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsALightHouse_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.LightHouse,
+                LocationId = LocationType.LightHouse,
                 GeographicalDescription = "        "
             };
 
@@ -4328,7 +4328,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -4347,10 +4347,10 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Mine",
-                TypeOfLocation = LocationType.Mine,
+                LocationId = LocationType.Mine,
                 GeographicalDescription = "Test Description"
             };
 
@@ -4358,13 +4358,13 @@ namespace Skyrim.Api.Test.Controllers
             {
                 Id = 0,
                 Name = "Test Mine",
-                TypeOfLocation = LocationType.Mine,
+                LocationId = LocationType.Mine,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(mine);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -4379,7 +4379,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsMine.Id = (int)mineObject.GetType().GetProperty("Id").GetValue(mineObject, null);
             locationAsMine.Name = (string)mineObject.GetType().GetProperty("Name").GetValue(mineObject, null);
-            locationAsMine.TypeOfLocation = (LocationType)mineObject.GetType().GetProperty("TypeOfLocation").GetValue(mineObject, null);
+            locationAsMine.LocationId = (LocationType)mineObject.GetType().GetProperty("LocationId").GetValue(mineObject, null);
             locationAsMine.GeographicalDescription = (string)mineObject.GetType().GetProperty("GeographicalDescription").GetValue(mineObject, null);
             locationAsMine.Description = (string)mineObject.GetType().GetProperty("Description").GetValue(mineObject, null);
 
@@ -4389,7 +4389,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(mine.Id, locationAsMine.Id);
             Assert.Equal(mine.Name, locationAsMine.Name);
             Assert.Equal(mine.Description, locationAsMine.Description);
-            Assert.Equal(mine.TypeOfLocation, locationAsMine.TypeOfLocation);
+            Assert.Equal(mine.LocationId, locationAsMine.LocationId);
             Assert.Equal(mine.GeographicalDescription, locationAsMine.GeographicalDescription);
         }
 
@@ -4398,11 +4398,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Mine",
                 Description = "    ",
-                TypeOfLocation = LocationType.Mine,
+                LocationId = LocationType.Mine,
                 GeographicalDescription = "Test Description"
             };
 
@@ -4411,13 +4411,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test Mine",
                 Description = "",
-                TypeOfLocation = LocationType.Mine,
+                LocationId = LocationType.Mine,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(mine);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -4432,7 +4432,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsMine.Id = (int)mineObject.GetType().GetProperty("Id").GetValue(mineObject, null);
             locationAsMine.Name = (string)mineObject.GetType().GetProperty("Name").GetValue(mineObject, null);
-            locationAsMine.TypeOfLocation = (LocationType)mineObject.GetType().GetProperty("TypeOfLocation").GetValue(mineObject, null);
+            locationAsMine.LocationId = (LocationType)mineObject.GetType().GetProperty("LocationId").GetValue(mineObject, null);
             locationAsMine.GeographicalDescription = (string)mineObject.GetType().GetProperty("GeographicalDescription").GetValue(mineObject, null);
             locationAsMine.Description = (string)mineObject.GetType().GetProperty("Description").GetValue(mineObject, null);
 
@@ -4442,7 +4442,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(mine.Name, locationAsMine.Name);
             Assert.Equal(mine.Id, locationAsMine.Id);
             Assert.Equal(mine.Description, locationAsMine.Description);
-            Assert.Equal(mine.TypeOfLocation, locationAsMine.TypeOfLocation);
+            Assert.Equal(mine.LocationId, locationAsMine.LocationId);
             Assert.Equal(mine.GeographicalDescription, locationAsMine.GeographicalDescription);
         }
 
@@ -4451,11 +4451,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Mine",
                 Description = null,
-                TypeOfLocation = LocationType.Mine,
+                LocationId = LocationType.Mine,
                 GeographicalDescription = "Test Description"
             };
 
@@ -4464,13 +4464,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test Mine",
                 Description = null,
-                TypeOfLocation = LocationType.Mine,
+                LocationId = LocationType.Mine,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(mine);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -4485,7 +4485,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsMine.Id = (int)mineObject.GetType().GetProperty("Id").GetValue(mineObject, null);
             locationAsMine.Name = (string)mineObject.GetType().GetProperty("Name").GetValue(mineObject, null);
-            locationAsMine.TypeOfLocation = (LocationType)mineObject.GetType().GetProperty("TypeOfLocation").GetValue(mineObject, null);
+            locationAsMine.LocationId = (LocationType)mineObject.GetType().GetProperty("LocationId").GetValue(mineObject, null);
             locationAsMine.GeographicalDescription = (string)mineObject.GetType().GetProperty("GeographicalDescription").GetValue(mineObject, null);
             locationAsMine.Description = (string)mineObject.GetType().GetProperty("Description").GetValue(mineObject, null);
 
@@ -4495,7 +4495,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(mine.Id, locationAsMine.Id);
             Assert.Equal(mine.Name, locationAsMine.Name);
             Assert.Equal(mine.Description, locationAsMine.Description);
-            Assert.Equal(mine.TypeOfLocation, locationAsMine.TypeOfLocation);
+            Assert.Equal(mine.LocationId, locationAsMine.LocationId);
             Assert.Equal(mine.GeographicalDescription, locationAsMine.GeographicalDescription);
         }
 
@@ -4503,11 +4503,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsAMine_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "      ",
                 Description = "Test",
-                TypeOfLocation = LocationType.Mine,
+                LocationId = LocationType.Mine,
                 GeographicalDescription = "Test Description"
             };
 
@@ -4515,7 +4515,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -4530,11 +4530,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsAMine_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.Mine,
+                LocationId = LocationType.Mine,
                 GeographicalDescription = "        "
             };
 
@@ -4542,7 +4542,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -4561,10 +4561,10 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test NordicTower",
-                TypeOfLocation = LocationType.NordicTower,
+                LocationId = LocationType.NordicTower,
                 GeographicalDescription = "Test Description"
             };
 
@@ -4572,13 +4572,13 @@ namespace Skyrim.Api.Test.Controllers
             {
                 Id = 0,
                 Name = "Test NordicTower",
-                TypeOfLocation = LocationType.NordicTower,
+                LocationId = LocationType.NordicTower,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(nordicTower);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -4593,7 +4593,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsNordicTower.Id = (int)nordicTowerObject.GetType().GetProperty("Id").GetValue(nordicTowerObject, null);
             locationAsNordicTower.Name = (string)nordicTowerObject.GetType().GetProperty("Name").GetValue(nordicTowerObject, null);
-            locationAsNordicTower.TypeOfLocation = (LocationType)nordicTowerObject.GetType().GetProperty("TypeOfLocation").GetValue(nordicTowerObject, null);
+            locationAsNordicTower.LocationId = (LocationType)nordicTowerObject.GetType().GetProperty("LocationId").GetValue(nordicTowerObject, null);
             locationAsNordicTower.GeographicalDescription = (string)nordicTowerObject.GetType().GetProperty("GeographicalDescription").GetValue(nordicTowerObject, null);
             locationAsNordicTower.Description = (string)nordicTowerObject.GetType().GetProperty("Description").GetValue(nordicTowerObject, null);
 
@@ -4603,7 +4603,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(nordicTower.Id, locationAsNordicTower.Id);
             Assert.Equal(nordicTower.Name, locationAsNordicTower.Name);
             Assert.Equal(nordicTower.Description, locationAsNordicTower.Description);
-            Assert.Equal(nordicTower.TypeOfLocation, locationAsNordicTower.TypeOfLocation);
+            Assert.Equal(nordicTower.LocationId, locationAsNordicTower.LocationId);
             Assert.Equal(nordicTower.GeographicalDescription, locationAsNordicTower.GeographicalDescription);
         }
 
@@ -4612,11 +4612,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test NordicTower",
                 Description = "    ",
-                TypeOfLocation = LocationType.NordicTower,
+                LocationId = LocationType.NordicTower,
                 GeographicalDescription = "Test Description"
             };
 
@@ -4625,13 +4625,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test NordicTower",
                 Description = "",
-                TypeOfLocation = LocationType.NordicTower,
+                LocationId = LocationType.NordicTower,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(nordicTower);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -4646,7 +4646,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsNordicTower.Id = (int)nordicTowerObject.GetType().GetProperty("Id").GetValue(nordicTowerObject, null);
             locationAsNordicTower.Name = (string)nordicTowerObject.GetType().GetProperty("Name").GetValue(nordicTowerObject, null);
-            locationAsNordicTower.TypeOfLocation = (LocationType)nordicTowerObject.GetType().GetProperty("TypeOfLocation").GetValue(nordicTowerObject, null);
+            locationAsNordicTower.LocationId = (LocationType)nordicTowerObject.GetType().GetProperty("LocationId").GetValue(nordicTowerObject, null);
             locationAsNordicTower.GeographicalDescription = (string)nordicTowerObject.GetType().GetProperty("GeographicalDescription").GetValue(nordicTowerObject, null);
             locationAsNordicTower.Description = (string)nordicTowerObject.GetType().GetProperty("Description").GetValue(nordicTowerObject, null);
 
@@ -4656,7 +4656,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(nordicTower.Name, locationAsNordicTower.Name);
             Assert.Equal(nordicTower.Id, locationAsNordicTower.Id);
             Assert.Equal(nordicTower.Description, locationAsNordicTower.Description);
-            Assert.Equal(nordicTower.TypeOfLocation, locationAsNordicTower.TypeOfLocation);
+            Assert.Equal(nordicTower.LocationId, locationAsNordicTower.LocationId);
             Assert.Equal(nordicTower.GeographicalDescription, locationAsNordicTower.GeographicalDescription);
         }
 
@@ -4665,11 +4665,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test NordicTower",
                 Description = null,
-                TypeOfLocation = LocationType.NordicTower,
+                LocationId = LocationType.NordicTower,
                 GeographicalDescription = "Test Description"
             };
 
@@ -4678,13 +4678,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test NordicTower",
                 Description = null,
-                TypeOfLocation = LocationType.NordicTower,
+                LocationId = LocationType.NordicTower,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(nordicTower);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -4699,7 +4699,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsNordicTower.Id = (int)nordicTowerObject.GetType().GetProperty("Id").GetValue(nordicTowerObject, null);
             locationAsNordicTower.Name = (string)nordicTowerObject.GetType().GetProperty("Name").GetValue(nordicTowerObject, null);
-            locationAsNordicTower.TypeOfLocation = (LocationType)nordicTowerObject.GetType().GetProperty("TypeOfLocation").GetValue(nordicTowerObject, null);
+            locationAsNordicTower.LocationId = (LocationType)nordicTowerObject.GetType().GetProperty("LocationId").GetValue(nordicTowerObject, null);
             locationAsNordicTower.GeographicalDescription = (string)nordicTowerObject.GetType().GetProperty("GeographicalDescription").GetValue(nordicTowerObject, null);
             locationAsNordicTower.Description = (string)nordicTowerObject.GetType().GetProperty("Description").GetValue(nordicTowerObject, null);
 
@@ -4709,7 +4709,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(nordicTower.Id, locationAsNordicTower.Id);
             Assert.Equal(nordicTower.Name, locationAsNordicTower.Name);
             Assert.Equal(nordicTower.Description, locationAsNordicTower.Description);
-            Assert.Equal(nordicTower.TypeOfLocation, locationAsNordicTower.TypeOfLocation);
+            Assert.Equal(nordicTower.LocationId, locationAsNordicTower.LocationId);
             Assert.Equal(nordicTower.GeographicalDescription, locationAsNordicTower.GeographicalDescription);
         }
 
@@ -4717,11 +4717,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsANordicTower_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "      ",
                 Description = "Test",
-                TypeOfLocation = LocationType.NordicTower,
+                LocationId = LocationType.NordicTower,
                 GeographicalDescription = "Test Description"
             };
 
@@ -4729,7 +4729,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -4744,11 +4744,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsANordicTowerReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.NordicTower,
+                LocationId = LocationType.NordicTower,
                 GeographicalDescription = "        "
             };
 
@@ -4756,7 +4756,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -4775,10 +4775,10 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test OrcStronghold",
-                TypeOfLocation = LocationType.OrcStronghold,
+                LocationId = LocationType.OrcStronghold,
                 GeographicalDescription = "Test Description"
             };
 
@@ -4786,13 +4786,13 @@ namespace Skyrim.Api.Test.Controllers
             {
                 Id = 0,
                 Name = "Test OrcStronghold",
-                TypeOfLocation = LocationType.OrcStronghold,
+                LocationId = LocationType.OrcStronghold,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(orcStronghold);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -4807,7 +4807,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsOrcStronghold.Id = (int)orcStrongholdObject.GetType().GetProperty("Id").GetValue(orcStrongholdObject, null);
             locationAsOrcStronghold.Name = (string)orcStrongholdObject.GetType().GetProperty("Name").GetValue(orcStrongholdObject, null);
-            locationAsOrcStronghold.TypeOfLocation = (LocationType)orcStrongholdObject.GetType().GetProperty("TypeOfLocation").GetValue(orcStrongholdObject, null);
+            locationAsOrcStronghold.LocationId = (LocationType)orcStrongholdObject.GetType().GetProperty("LocationId").GetValue(orcStrongholdObject, null);
             locationAsOrcStronghold.GeographicalDescription = (string)orcStrongholdObject.GetType().GetProperty("GeographicalDescription").GetValue(orcStrongholdObject, null);
             locationAsOrcStronghold.Description = (string)orcStrongholdObject.GetType().GetProperty("Description").GetValue(orcStrongholdObject, null);
 
@@ -4817,7 +4817,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(orcStronghold.Id, locationAsOrcStronghold.Id);
             Assert.Equal(orcStronghold.Name, locationAsOrcStronghold.Name);
             Assert.Equal(orcStronghold.Description, locationAsOrcStronghold.Description);
-            Assert.Equal(orcStronghold.TypeOfLocation, locationAsOrcStronghold.TypeOfLocation);
+            Assert.Equal(orcStronghold.LocationId, locationAsOrcStronghold.LocationId);
             Assert.Equal(orcStronghold.GeographicalDescription, locationAsOrcStronghold.GeographicalDescription);
         }
 
@@ -4826,11 +4826,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test OrcStronghold",
                 Description = "    ",
-                TypeOfLocation = LocationType.OrcStronghold,
+                LocationId = LocationType.OrcStronghold,
                 GeographicalDescription = "Test Description"
             };
 
@@ -4839,13 +4839,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test OrcStronghold",
                 Description = "",
-                TypeOfLocation = LocationType.OrcStronghold,
+                LocationId = LocationType.OrcStronghold,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(orcStronghold);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -4860,7 +4860,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsOrcStronghold.Id = (int)orcStrongholdObject.GetType().GetProperty("Id").GetValue(orcStrongholdObject, null);
             locationAsOrcStronghold.Name = (string)orcStrongholdObject.GetType().GetProperty("Name").GetValue(orcStrongholdObject, null);
-            locationAsOrcStronghold.TypeOfLocation = (LocationType)orcStrongholdObject.GetType().GetProperty("TypeOfLocation").GetValue(orcStrongholdObject, null);
+            locationAsOrcStronghold.LocationId = (LocationType)orcStrongholdObject.GetType().GetProperty("LocationId").GetValue(orcStrongholdObject, null);
             locationAsOrcStronghold.GeographicalDescription = (string)orcStrongholdObject.GetType().GetProperty("GeographicalDescription").GetValue(orcStrongholdObject, null);
             locationAsOrcStronghold.Description = (string)orcStrongholdObject.GetType().GetProperty("Description").GetValue(orcStrongholdObject, null);
 
@@ -4870,7 +4870,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(orcStronghold.Name, locationAsOrcStronghold.Name);
             Assert.Equal(orcStronghold.Id, locationAsOrcStronghold.Id);
             Assert.Equal(orcStronghold.Description, locationAsOrcStronghold.Description);
-            Assert.Equal(orcStronghold.TypeOfLocation, locationAsOrcStronghold.TypeOfLocation);
+            Assert.Equal(orcStronghold.LocationId, locationAsOrcStronghold.LocationId);
             Assert.Equal(orcStronghold.GeographicalDescription, locationAsOrcStronghold.GeographicalDescription);
         }
 
@@ -4879,11 +4879,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test OrcStronghold",
                 Description = null,
-                TypeOfLocation = LocationType.OrcStronghold,
+                LocationId = LocationType.OrcStronghold,
                 GeographicalDescription = "Test Description"
             };
 
@@ -4892,13 +4892,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test OrcStronghold",
                 Description = null,
-                TypeOfLocation = LocationType.OrcStronghold,
+                LocationId = LocationType.OrcStronghold,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(orcStronghold);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -4913,7 +4913,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsOrcStronghold.Id = (int)orcStrongholdObject.GetType().GetProperty("Id").GetValue(orcStrongholdObject, null);
             locationAsOrcStronghold.Name = (string)orcStrongholdObject.GetType().GetProperty("Name").GetValue(orcStrongholdObject, null);
-            locationAsOrcStronghold.TypeOfLocation = (LocationType)orcStrongholdObject.GetType().GetProperty("TypeOfLocation").GetValue(orcStrongholdObject, null);
+            locationAsOrcStronghold.LocationId = (LocationType)orcStrongholdObject.GetType().GetProperty("LocationId").GetValue(orcStrongholdObject, null);
             locationAsOrcStronghold.GeographicalDescription = (string)orcStrongholdObject.GetType().GetProperty("GeographicalDescription").GetValue(orcStrongholdObject, null);
             locationAsOrcStronghold.Description = (string)orcStrongholdObject.GetType().GetProperty("Description").GetValue(orcStrongholdObject, null);
 
@@ -4923,7 +4923,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(orcStronghold.Id, locationAsOrcStronghold.Id);
             Assert.Equal(orcStronghold.Name, locationAsOrcStronghold.Name);
             Assert.Equal(orcStronghold.Description, locationAsOrcStronghold.Description);
-            Assert.Equal(orcStronghold.TypeOfLocation, locationAsOrcStronghold.TypeOfLocation);
+            Assert.Equal(orcStronghold.LocationId, locationAsOrcStronghold.LocationId);
             Assert.Equal(orcStronghold.GeographicalDescription, locationAsOrcStronghold.GeographicalDescription);
         }
 
@@ -4931,11 +4931,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsAnOrcStronghold_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "      ",
                 Description = "Test",
-                TypeOfLocation = LocationType.OrcStronghold,
+                LocationId = LocationType.OrcStronghold,
                 GeographicalDescription = "Test Description"
             };
 
@@ -4943,7 +4943,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -4958,11 +4958,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsAOrcStronghold_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.OrcStronghold,
+                LocationId = LocationType.OrcStronghold,
                 GeographicalDescription = "        "
             };
 
@@ -4970,7 +4970,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -4989,10 +4989,10 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Pass",
-                TypeOfLocation = LocationType.Pass,
+                LocationId = LocationType.Pass,
                 GeographicalDescription = "Test Description"
             };
 
@@ -5000,13 +5000,13 @@ namespace Skyrim.Api.Test.Controllers
             {
                 Id = 0,
                 Name = "Test Pass",
-                TypeOfLocation = LocationType.Pass,
+                LocationId = LocationType.Pass,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(pass);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -5021,7 +5021,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsPass.Id = (int)passObject.GetType().GetProperty("Id").GetValue(passObject, null);
             locationAsPass.Name = (string)passObject.GetType().GetProperty("Name").GetValue(passObject, null);
-            locationAsPass.TypeOfLocation = (LocationType)passObject.GetType().GetProperty("TypeOfLocation").GetValue(passObject, null);
+            locationAsPass.LocationId = (LocationType)passObject.GetType().GetProperty("LocationId").GetValue(passObject, null);
             locationAsPass.GeographicalDescription = (string)passObject.GetType().GetProperty("GeographicalDescription").GetValue(passObject, null);
             locationAsPass.Description = (string)passObject.GetType().GetProperty("Description").GetValue(passObject, null);
 
@@ -5031,7 +5031,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(pass.Id, locationAsPass.Id);
             Assert.Equal(pass.Name, locationAsPass.Name);
             Assert.Equal(pass.Description, locationAsPass.Description);
-            Assert.Equal(pass.TypeOfLocation, locationAsPass.TypeOfLocation);
+            Assert.Equal(pass.LocationId, locationAsPass.LocationId);
             Assert.Equal(pass.GeographicalDescription, locationAsPass.GeographicalDescription);
         }
 
@@ -5040,11 +5040,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Pass",
                 Description = "    ",
-                TypeOfLocation = LocationType.Pass,
+                LocationId = LocationType.Pass,
                 GeographicalDescription = "Test Description"
             };
 
@@ -5053,13 +5053,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test Pass",
                 Description = "",
-                TypeOfLocation = LocationType.Pass,
+                LocationId = LocationType.Pass,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(pass);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -5074,7 +5074,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsPass.Id = (int)passObject.GetType().GetProperty("Id").GetValue(passObject, null);
             locationAsPass.Name = (string)passObject.GetType().GetProperty("Name").GetValue(passObject, null);
-            locationAsPass.TypeOfLocation = (LocationType)passObject.GetType().GetProperty("TypeOfLocation").GetValue(passObject, null);
+            locationAsPass.LocationId = (LocationType)passObject.GetType().GetProperty("LocationId").GetValue(passObject, null);
             locationAsPass.GeographicalDescription = (string)passObject.GetType().GetProperty("GeographicalDescription").GetValue(passObject, null);
             locationAsPass.Description = (string)passObject.GetType().GetProperty("Description").GetValue(passObject, null);
 
@@ -5084,7 +5084,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(pass.Name, locationAsPass.Name);
             Assert.Equal(pass.Id, locationAsPass.Id);
             Assert.Equal(pass.Description, locationAsPass.Description);
-            Assert.Equal(pass.TypeOfLocation, locationAsPass.TypeOfLocation);
+            Assert.Equal(pass.LocationId, locationAsPass.LocationId);
             Assert.Equal(pass.GeographicalDescription, locationAsPass.GeographicalDescription);
         }
 
@@ -5093,11 +5093,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Pass",
                 Description = null,
-                TypeOfLocation = LocationType.Pass,
+                LocationId = LocationType.Pass,
                 GeographicalDescription = "Test Description"
             };
 
@@ -5106,13 +5106,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test Pass",
                 Description = null,
-                TypeOfLocation = LocationType.Pass,
+                LocationId = LocationType.Pass,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(pass);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -5127,7 +5127,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsPass.Id = (int)passObject.GetType().GetProperty("Id").GetValue(passObject, null);
             locationAsPass.Name = (string)passObject.GetType().GetProperty("Name").GetValue(passObject, null);
-            locationAsPass.TypeOfLocation = (LocationType)passObject.GetType().GetProperty("TypeOfLocation").GetValue(passObject, null);
+            locationAsPass.LocationId = (LocationType)passObject.GetType().GetProperty("LocationId").GetValue(passObject, null);
             locationAsPass.GeographicalDescription = (string)passObject.GetType().GetProperty("GeographicalDescription").GetValue(passObject, null);
             locationAsPass.Description = (string)passObject.GetType().GetProperty("Description").GetValue(passObject, null);
 
@@ -5137,7 +5137,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(pass.Id, locationAsPass.Id);
             Assert.Equal(pass.Name, locationAsPass.Name);
             Assert.Equal(pass.Description, locationAsPass.Description);
-            Assert.Equal(pass.TypeOfLocation, locationAsPass.TypeOfLocation);
+            Assert.Equal(pass.LocationId, locationAsPass.LocationId);
             Assert.Equal(pass.GeographicalDescription, locationAsPass.GeographicalDescription);
         }
 
@@ -5145,11 +5145,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsAPass_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "      ",
                 Description = "Test",
-                TypeOfLocation = LocationType.Pass,
+                LocationId = LocationType.Pass,
                 GeographicalDescription = "Test Description"
             };
 
@@ -5157,7 +5157,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -5172,11 +5172,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsAPass_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.Pass,
+                LocationId = LocationType.Pass,
                 GeographicalDescription = "        "
             };
 
@@ -5184,7 +5184,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -5203,10 +5203,10 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Ruin",
-                TypeOfLocation = LocationType.Ruin,
+                LocationId = LocationType.Ruin,
                 GeographicalDescription = "Test Description"
             };
 
@@ -5214,13 +5214,13 @@ namespace Skyrim.Api.Test.Controllers
             {
                 Id = 0,
                 Name = "Test Ruin",
-                TypeOfLocation = LocationType.Ruin,
+                LocationId = LocationType.Ruin,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(ruin);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -5235,7 +5235,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsRuin.Id = (int)ruinObject.GetType().GetProperty("Id").GetValue(ruinObject, null);
             locationAsRuin.Name = (string)ruinObject.GetType().GetProperty("Name").GetValue(ruinObject, null);
-            locationAsRuin.TypeOfLocation = (LocationType)ruinObject.GetType().GetProperty("TypeOfLocation").GetValue(ruinObject, null);
+            locationAsRuin.LocationId = (LocationType)ruinObject.GetType().GetProperty("LocationId").GetValue(ruinObject, null);
             locationAsRuin.GeographicalDescription = (string)ruinObject.GetType().GetProperty("GeographicalDescription").GetValue(ruinObject, null);
             locationAsRuin.Description = (string)ruinObject.GetType().GetProperty("Description").GetValue(ruinObject, null);
 
@@ -5245,7 +5245,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(ruin.Id, locationAsRuin.Id);
             Assert.Equal(ruin.Name, locationAsRuin.Name);
             Assert.Equal(ruin.Description, locationAsRuin.Description);
-            Assert.Equal(ruin.TypeOfLocation, locationAsRuin.TypeOfLocation);
+            Assert.Equal(ruin.LocationId, locationAsRuin.LocationId);
             Assert.Equal(ruin.GeographicalDescription, locationAsRuin.GeographicalDescription);
         }
 
@@ -5254,11 +5254,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Ruin",
                 Description = "    ",
-                TypeOfLocation = LocationType.Ruin,
+                LocationId = LocationType.Ruin,
                 GeographicalDescription = "Test Description"
             };
 
@@ -5267,13 +5267,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test Ruin",
                 Description = "",
-                TypeOfLocation = LocationType.Ruin,
+                LocationId = LocationType.Ruin,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(ruin);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -5288,7 +5288,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsRuin.Id = (int)ruinObject.GetType().GetProperty("Id").GetValue(ruinObject, null);
             locationAsRuin.Name = (string)ruinObject.GetType().GetProperty("Name").GetValue(ruinObject, null);
-            locationAsRuin.TypeOfLocation = (LocationType)ruinObject.GetType().GetProperty("TypeOfLocation").GetValue(ruinObject, null);
+            locationAsRuin.LocationId = (LocationType)ruinObject.GetType().GetProperty("LocationId").GetValue(ruinObject, null);
             locationAsRuin.GeographicalDescription = (string)ruinObject.GetType().GetProperty("GeographicalDescription").GetValue(ruinObject, null);
             locationAsRuin.Description = (string)ruinObject.GetType().GetProperty("Description").GetValue(ruinObject, null);
 
@@ -5298,7 +5298,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(ruin.Name, locationAsRuin.Name);
             Assert.Equal(ruin.Id, locationAsRuin.Id);
             Assert.Equal(ruin.Description, locationAsRuin.Description);
-            Assert.Equal(ruin.TypeOfLocation, locationAsRuin.TypeOfLocation);
+            Assert.Equal(ruin.LocationId, locationAsRuin.LocationId);
             Assert.Equal(ruin.GeographicalDescription, locationAsRuin.GeographicalDescription);
         }
 
@@ -5307,11 +5307,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Ruin",
                 Description = null,
-                TypeOfLocation = LocationType.Ruin,
+                LocationId = LocationType.Ruin,
                 GeographicalDescription = "Test Description"
             };
 
@@ -5320,13 +5320,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test Ruin",
                 Description = null,
-                TypeOfLocation = LocationType.Ruin,
+                LocationId = LocationType.Ruin,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(ruin);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -5341,7 +5341,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsRuin.Id = (int)ruinObject.GetType().GetProperty("Id").GetValue(ruinObject, null);
             locationAsRuin.Name = (string)ruinObject.GetType().GetProperty("Name").GetValue(ruinObject, null);
-            locationAsRuin.TypeOfLocation = (LocationType)ruinObject.GetType().GetProperty("TypeOfLocation").GetValue(ruinObject, null);
+            locationAsRuin.LocationId = (LocationType)ruinObject.GetType().GetProperty("LocationId").GetValue(ruinObject, null);
             locationAsRuin.GeographicalDescription = (string)ruinObject.GetType().GetProperty("GeographicalDescription").GetValue(ruinObject, null);
             locationAsRuin.Description = (string)ruinObject.GetType().GetProperty("Description").GetValue(ruinObject, null);
 
@@ -5351,7 +5351,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(ruin.Id, locationAsRuin.Id);
             Assert.Equal(ruin.Name, locationAsRuin.Name);
             Assert.Equal(ruin.Description, locationAsRuin.Description);
-            Assert.Equal(ruin.TypeOfLocation, locationAsRuin.TypeOfLocation);
+            Assert.Equal(ruin.LocationId, locationAsRuin.LocationId);
             Assert.Equal(ruin.GeographicalDescription, locationAsRuin.GeographicalDescription);
         }
 
@@ -5359,11 +5359,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsARuin_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "      ",
                 Description = "Test",
-                TypeOfLocation = LocationType.Ruin,
+                LocationId = LocationType.Ruin,
                 GeographicalDescription = "Test Description"
             };
 
@@ -5371,7 +5371,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -5386,11 +5386,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsARuin_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.Ruin,
+                LocationId = LocationType.Ruin,
                 GeographicalDescription = "        "
             };
 
@@ -5398,7 +5398,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -5417,10 +5417,10 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Shack",
-                TypeOfLocation = LocationType.Shack,
+                LocationId = LocationType.Shack,
                 GeographicalDescription = "Test Description"
             };
 
@@ -5428,13 +5428,13 @@ namespace Skyrim.Api.Test.Controllers
             {
                 Id = 0,
                 Name = "Test Shack",
-                TypeOfLocation = LocationType.Shack,
+                LocationId = LocationType.Shack,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(shack);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -5449,7 +5449,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsShack.Id = (int)shackObject.GetType().GetProperty("Id").GetValue(shackObject, null);
             locationAsShack.Name = (string)shackObject.GetType().GetProperty("Name").GetValue(shackObject, null);
-            locationAsShack.TypeOfLocation = (LocationType)shackObject.GetType().GetProperty("TypeOfLocation").GetValue(shackObject, null);
+            locationAsShack.LocationId = (LocationType)shackObject.GetType().GetProperty("LocationId").GetValue(shackObject, null);
             locationAsShack.GeographicalDescription = (string)shackObject.GetType().GetProperty("GeographicalDescription").GetValue(shackObject, null);
             locationAsShack.Description = (string)shackObject.GetType().GetProperty("Description").GetValue(shackObject, null);
 
@@ -5459,7 +5459,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(shack.Id, locationAsShack.Id);
             Assert.Equal(shack.Name, locationAsShack.Name);
             Assert.Equal(shack.Description, locationAsShack.Description);
-            Assert.Equal(shack.TypeOfLocation, locationAsShack.TypeOfLocation);
+            Assert.Equal(shack.LocationId, locationAsShack.LocationId);
             Assert.Equal(shack.GeographicalDescription, locationAsShack.GeographicalDescription);
         }
 
@@ -5468,11 +5468,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Shack",
                 Description = "    ",
-                TypeOfLocation = LocationType.Shack,
+                LocationId = LocationType.Shack,
                 GeographicalDescription = "Test Description"
             };
 
@@ -5481,13 +5481,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test Shack",
                 Description = "",
-                TypeOfLocation = LocationType.Shack,
+                LocationId = LocationType.Shack,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(shack);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -5502,7 +5502,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsShack.Id = (int)ShackObject.GetType().GetProperty("Id").GetValue(ShackObject, null);
             locationAsShack.Name = (string)ShackObject.GetType().GetProperty("Name").GetValue(ShackObject, null);
-            locationAsShack.TypeOfLocation = (LocationType)ShackObject.GetType().GetProperty("TypeOfLocation").GetValue(ShackObject, null);
+            locationAsShack.LocationId = (LocationType)ShackObject.GetType().GetProperty("LocationId").GetValue(ShackObject, null);
             locationAsShack.GeographicalDescription = (string)ShackObject.GetType().GetProperty("GeographicalDescription").GetValue(ShackObject, null);
             locationAsShack.Description = (string)ShackObject.GetType().GetProperty("Description").GetValue(ShackObject, null);
 
@@ -5512,7 +5512,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(shack.Name, locationAsShack.Name);
             Assert.Equal(shack.Id, locationAsShack.Id);
             Assert.Equal(shack.Description, locationAsShack.Description);
-            Assert.Equal(shack.TypeOfLocation, locationAsShack.TypeOfLocation);
+            Assert.Equal(shack.LocationId, locationAsShack.LocationId);
             Assert.Equal(shack.GeographicalDescription, locationAsShack.GeographicalDescription);
         }
 
@@ -5521,11 +5521,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Shack",
                 Description = null,
-                TypeOfLocation = LocationType.Shack,
+                LocationId = LocationType.Shack,
                 GeographicalDescription = "Test Description"
             };
 
@@ -5534,13 +5534,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test Shack",
                 Description = null,
-                TypeOfLocation = LocationType.Shack,
+                LocationId = LocationType.Shack,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(shack);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -5555,7 +5555,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsShack.Id = (int)shackObject.GetType().GetProperty("Id").GetValue(shackObject, null);
             locationAsShack.Name = (string)shackObject.GetType().GetProperty("Name").GetValue(shackObject, null);
-            locationAsShack.TypeOfLocation = (LocationType)shackObject.GetType().GetProperty("TypeOfLocation").GetValue(shackObject, null);
+            locationAsShack.LocationId = (LocationType)shackObject.GetType().GetProperty("LocationId").GetValue(shackObject, null);
             locationAsShack.GeographicalDescription = (string)shackObject.GetType().GetProperty("GeographicalDescription").GetValue(shackObject, null);
             locationAsShack.Description = (string)shackObject.GetType().GetProperty("Description").GetValue(shackObject, null);
 
@@ -5565,7 +5565,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(shack.Id, locationAsShack.Id);
             Assert.Equal(shack.Name, locationAsShack.Name);
             Assert.Equal(shack.Description, locationAsShack.Description);
-            Assert.Equal(shack.TypeOfLocation, locationAsShack.TypeOfLocation);
+            Assert.Equal(shack.LocationId, locationAsShack.LocationId);
             Assert.Equal(shack.GeographicalDescription, locationAsShack.GeographicalDescription);
         }
 
@@ -5573,11 +5573,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsAShack_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "      ",
                 Description = "Test",
-                TypeOfLocation = LocationType.Shack,
+                LocationId = LocationType.Shack,
                 GeographicalDescription = "Test Description"
             };
 
@@ -5585,7 +5585,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -5600,11 +5600,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsAShack_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.Shack,
+                LocationId = LocationType.Shack,
                 GeographicalDescription = "        "
             };
 
@@ -5612,7 +5612,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -5631,10 +5631,10 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Ship",
-                TypeOfLocation = LocationType.Ship,
+                LocationId = LocationType.Ship,
                 GeographicalDescription = "Test Description"
             };
 
@@ -5642,13 +5642,13 @@ namespace Skyrim.Api.Test.Controllers
             {
                 Id = 0,
                 Name = "Test Shipwreck",
-                TypeOfLocation = LocationType.Ship,
+                LocationId = LocationType.Ship,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(ship);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -5663,7 +5663,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsShip.Id = (int)shipObject.GetType().GetProperty("Id").GetValue(shipObject, null);
             locationAsShip.Name = (string)shipObject.GetType().GetProperty("Name").GetValue(shipObject, null);
-            locationAsShip.TypeOfLocation = (LocationType)shipObject.GetType().GetProperty("TypeOfLocation").GetValue(shipObject, null);
+            locationAsShip.LocationId = (LocationType)shipObject.GetType().GetProperty("LocationId").GetValue(shipObject, null);
             locationAsShip.GeographicalDescription = (string)shipObject.GetType().GetProperty("GeographicalDescription").GetValue(shipObject, null);
             locationAsShip.Description = (string)shipObject.GetType().GetProperty("Description").GetValue(shipObject, null);
 
@@ -5673,7 +5673,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(ship.Id, locationAsShip.Id);
             Assert.Equal(ship.Name, locationAsShip.Name);
             Assert.Equal(ship.Description, locationAsShip.Description);
-            Assert.Equal(ship.TypeOfLocation, locationAsShip.TypeOfLocation);
+            Assert.Equal(ship.LocationId, locationAsShip.LocationId);
             Assert.Equal(ship.GeographicalDescription, locationAsShip.GeographicalDescription);
         }
 
@@ -5682,11 +5682,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Ship",
                 Description = "    ",
-                TypeOfLocation = LocationType.Ship,
+                LocationId = LocationType.Ship,
                 GeographicalDescription = "Test Description"
             };
 
@@ -5695,13 +5695,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test Shipwreck",
                 Description = "",
-                TypeOfLocation = LocationType.Shipwreck,
+                LocationId = LocationType.Shipwreck,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(ship);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -5716,7 +5716,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsShip.Id = (int)shipObject.GetType().GetProperty("Id").GetValue(shipObject, null);
             locationAsShip.Name = (string)shipObject.GetType().GetProperty("Name").GetValue(shipObject, null);
-            locationAsShip.TypeOfLocation = (LocationType)shipObject.GetType().GetProperty("TypeOfLocation").GetValue(shipObject, null);
+            locationAsShip.LocationId = (LocationType)shipObject.GetType().GetProperty("LocationId").GetValue(shipObject, null);
             locationAsShip.GeographicalDescription = (string)shipObject.GetType().GetProperty("GeographicalDescription").GetValue(shipObject, null);
             locationAsShip.Description = (string)shipObject.GetType().GetProperty("Description").GetValue(shipObject, null);
 
@@ -5726,7 +5726,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(ship.Name, locationAsShip.Name);
             Assert.Equal(ship.Id, locationAsShip.Id);
             Assert.Equal(ship.Description, locationAsShip.Description);
-            Assert.Equal(ship.TypeOfLocation, locationAsShip.TypeOfLocation);
+            Assert.Equal(ship.LocationId, locationAsShip.LocationId);
             Assert.Equal(ship.GeographicalDescription, locationAsShip.GeographicalDescription);
         }
 
@@ -5735,11 +5735,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Ship",
                 Description = null,
-                TypeOfLocation = LocationType.Ship,
+                LocationId = LocationType.Ship,
                 GeographicalDescription = "Test Description"
             };
 
@@ -5748,13 +5748,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test Shipwreck",
                 Description = null,
-                TypeOfLocation = LocationType.Shipwreck,
+                LocationId = LocationType.Shipwreck,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(ship);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -5769,7 +5769,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsShip.Id = (int)shipObject.GetType().GetProperty("Id").GetValue(shipObject, null);
             locationAsShip.Name = (string)shipObject.GetType().GetProperty("Name").GetValue(shipObject, null);
-            locationAsShip.TypeOfLocation = (LocationType)shipObject.GetType().GetProperty("TypeOfLocation").GetValue(shipObject, null);
+            locationAsShip.LocationId = (LocationType)shipObject.GetType().GetProperty("LocationId").GetValue(shipObject, null);
             locationAsShip.GeographicalDescription = (string)shipObject.GetType().GetProperty("GeographicalDescription").GetValue(shipObject, null);
             locationAsShip.Description = (string)shipObject.GetType().GetProperty("Description").GetValue(shipObject, null);
 
@@ -5779,7 +5779,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(ship.Id, locationAsShip.Id);
             Assert.Equal(ship.Name, locationAsShip.Name);
             Assert.Equal(ship.Description, locationAsShip.Description);
-            Assert.Equal(ship.TypeOfLocation, locationAsShip.TypeOfLocation);
+            Assert.Equal(ship.LocationId, locationAsShip.LocationId);
             Assert.Equal(ship.GeographicalDescription, locationAsShip.GeographicalDescription);
         }
 
@@ -5787,11 +5787,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsAShip_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "      ",
                 Description = "Test",
-                TypeOfLocation = LocationType.Ship,
+                LocationId = LocationType.Ship,
                 GeographicalDescription = "Test Description"
             };
 
@@ -5799,7 +5799,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -5814,11 +5814,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsAShip_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.Ship,
+                LocationId = LocationType.Ship,
                 GeographicalDescription = "        "
             };
 
@@ -5826,7 +5826,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -5845,10 +5845,10 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Shipwreck",
-                TypeOfLocation = LocationType.Shipwreck,
+                LocationId = LocationType.Shipwreck,
                 GeographicalDescription = "Test Description"
             };
 
@@ -5856,13 +5856,13 @@ namespace Skyrim.Api.Test.Controllers
             {
                 Id = 0,
                 Name = "Test Shipwreck",
-                TypeOfLocation = LocationType.Shipwreck,
+                LocationId = LocationType.Shipwreck,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(shipwreck);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -5877,7 +5877,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsShipwreck.Id = (int)shipwreckObject.GetType().GetProperty("Id").GetValue(shipwreckObject, null);
             locationAsShipwreck.Name = (string)shipwreckObject.GetType().GetProperty("Name").GetValue(shipwreckObject, null);
-            locationAsShipwreck.TypeOfLocation = (LocationType)shipwreckObject.GetType().GetProperty("TypeOfLocation").GetValue(shipwreckObject, null);
+            locationAsShipwreck.LocationId = (LocationType)shipwreckObject.GetType().GetProperty("LocationId").GetValue(shipwreckObject, null);
             locationAsShipwreck.GeographicalDescription = (string)shipwreckObject.GetType().GetProperty("GeographicalDescription").GetValue(shipwreckObject, null);
             locationAsShipwreck.Description = (string)shipwreckObject.GetType().GetProperty("Description").GetValue(shipwreckObject, null);
 
@@ -5887,7 +5887,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(shipwreck.Id, locationAsShipwreck.Id);
             Assert.Equal(shipwreck.Name, locationAsShipwreck.Name);
             Assert.Equal(shipwreck.Description, locationAsShipwreck.Description);
-            Assert.Equal(shipwreck.TypeOfLocation, locationAsShipwreck.TypeOfLocation);
+            Assert.Equal(shipwreck.LocationId, locationAsShipwreck.LocationId);
             Assert.Equal(shipwreck.GeographicalDescription, locationAsShipwreck.GeographicalDescription);
         }
 
@@ -5896,11 +5896,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Shipwreck",
                 Description = "    ",
-                TypeOfLocation = LocationType.Shipwreck,
+                LocationId = LocationType.Shipwreck,
                 GeographicalDescription = "Test Description"
             };
 
@@ -5909,13 +5909,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test Shipwreck",
                 Description = "",
-                TypeOfLocation = LocationType.Shipwreck,
+                LocationId = LocationType.Shipwreck,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(shipwreck);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -5930,7 +5930,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsShipwreck.Id = (int)shipwreckObject.GetType().GetProperty("Id").GetValue(shipwreckObject, null);
             locationAsShipwreck.Name = (string)shipwreckObject.GetType().GetProperty("Name").GetValue(shipwreckObject, null);
-            locationAsShipwreck.TypeOfLocation = (LocationType)shipwreckObject.GetType().GetProperty("TypeOfLocation").GetValue(shipwreckObject, null);
+            locationAsShipwreck.LocationId = (LocationType)shipwreckObject.GetType().GetProperty("LocationId").GetValue(shipwreckObject, null);
             locationAsShipwreck.GeographicalDescription = (string)shipwreckObject.GetType().GetProperty("GeographicalDescription").GetValue(shipwreckObject, null);
             locationAsShipwreck.Description = (string)shipwreckObject.GetType().GetProperty("Description").GetValue(shipwreckObject, null);
 
@@ -5940,7 +5940,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(shipwreck.Name, locationAsShipwreck.Name);
             Assert.Equal(shipwreck.Id, locationAsShipwreck.Id);
             Assert.Equal(shipwreck.Description, locationAsShipwreck.Description);
-            Assert.Equal(shipwreck.TypeOfLocation, locationAsShipwreck.TypeOfLocation);
+            Assert.Equal(shipwreck.LocationId, locationAsShipwreck.LocationId);
             Assert.Equal(shipwreck.GeographicalDescription, locationAsShipwreck.GeographicalDescription);
         }
 
@@ -5949,11 +5949,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Shipwreck",
                 Description = null,
-                TypeOfLocation = LocationType.Shipwreck,
+                LocationId = LocationType.Shipwreck,
                 GeographicalDescription = "Test Description"
             };
 
@@ -5962,13 +5962,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test Shipwreck",
                 Description = null,
-                TypeOfLocation = LocationType.Shipwreck,
+                LocationId = LocationType.Shipwreck,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(shipwreck);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -5983,7 +5983,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsShipwreck.Id = (int)shipwreckObject.GetType().GetProperty("Id").GetValue(shipwreckObject, null);
             locationAsShipwreck.Name = (string)shipwreckObject.GetType().GetProperty("Name").GetValue(shipwreckObject, null);
-            locationAsShipwreck.TypeOfLocation = (LocationType)shipwreckObject.GetType().GetProperty("TypeOfLocation").GetValue(shipwreckObject, null);
+            locationAsShipwreck.LocationId = (LocationType)shipwreckObject.GetType().GetProperty("LocationId").GetValue(shipwreckObject, null);
             locationAsShipwreck.GeographicalDescription = (string)shipwreckObject.GetType().GetProperty("GeographicalDescription").GetValue(shipwreckObject, null);
             locationAsShipwreck.Description = (string)shipwreckObject.GetType().GetProperty("Description").GetValue(shipwreckObject, null);
 
@@ -5993,7 +5993,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(shipwreck.Id, locationAsShipwreck.Id);
             Assert.Equal(shipwreck.Name, locationAsShipwreck.Name);
             Assert.Equal(shipwreck.Description, locationAsShipwreck.Description);
-            Assert.Equal(shipwreck.TypeOfLocation, locationAsShipwreck.TypeOfLocation);
+            Assert.Equal(shipwreck.LocationId, locationAsShipwreck.LocationId);
             Assert.Equal(shipwreck.GeographicalDescription, locationAsShipwreck.GeographicalDescription);
         }
 
@@ -6001,11 +6001,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsAShipwreck_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "      ",
                 Description = "Test",
-                TypeOfLocation = LocationType.Shipwreck,
+                LocationId = LocationType.Shipwreck,
                 GeographicalDescription = "Test Description"
             };
 
@@ -6013,7 +6013,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -6028,11 +6028,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsAShipwreck_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.Shipwreck,
+                LocationId = LocationType.Shipwreck,
                 GeographicalDescription = "        "
             };
 
@@ -6040,7 +6040,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -6059,10 +6059,10 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Stable",
-                TypeOfLocation = LocationType.Stable,
+                LocationId = LocationType.Stable,
                 GeographicalDescription = "Test Description"
             };
 
@@ -6070,13 +6070,13 @@ namespace Skyrim.Api.Test.Controllers
             {
                 Id = 0,
                 Name = "Test Stable",
-                TypeOfLocation = LocationType.Stable,
+                LocationId = LocationType.Stable,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(stable);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -6091,7 +6091,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsStable.Id = (int)stableObject.GetType().GetProperty("Id").GetValue(stableObject, null);
             locationAsStable.Name = (string)stableObject.GetType().GetProperty("Name").GetValue(stableObject, null);
-            locationAsStable.TypeOfLocation = (LocationType)stableObject.GetType().GetProperty("TypeOfLocation").GetValue(stableObject, null);
+            locationAsStable.LocationId = (LocationType)stableObject.GetType().GetProperty("LocationId").GetValue(stableObject, null);
             locationAsStable.GeographicalDescription = (string)stableObject.GetType().GetProperty("GeographicalDescription").GetValue(stableObject, null);
             locationAsStable.Description = (string)stableObject.GetType().GetProperty("Description").GetValue(stableObject, null);
 
@@ -6101,7 +6101,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(stable.Id, locationAsStable.Id);
             Assert.Equal(stable.Name, locationAsStable.Name);
             Assert.Equal(stable.Description, locationAsStable.Description);
-            Assert.Equal(stable.TypeOfLocation, locationAsStable.TypeOfLocation);
+            Assert.Equal(stable.LocationId, locationAsStable.LocationId);
             Assert.Equal(stable.GeographicalDescription, locationAsStable.GeographicalDescription);
         }
 
@@ -6110,11 +6110,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Stable",
                 Description = "    ",
-                TypeOfLocation = LocationType.Stable,
+                LocationId = LocationType.Stable,
                 GeographicalDescription = "Test Description"
             };
 
@@ -6123,13 +6123,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test Stable",
                 Description = "",
-                TypeOfLocation = LocationType.Stable,
+                LocationId = LocationType.Stable,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(stable);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -6144,7 +6144,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsStable.Id = (int)stableObject.GetType().GetProperty("Id").GetValue(stableObject, null);
             locationAsStable.Name = (string)stableObject.GetType().GetProperty("Name").GetValue(stableObject, null);
-            locationAsStable.TypeOfLocation = (LocationType)stableObject.GetType().GetProperty("TypeOfLocation").GetValue(stableObject, null);
+            locationAsStable.LocationId = (LocationType)stableObject.GetType().GetProperty("LocationId").GetValue(stableObject, null);
             locationAsStable.GeographicalDescription = (string)stableObject.GetType().GetProperty("GeographicalDescription").GetValue(stableObject, null);
             locationAsStable.Description = (string)stableObject.GetType().GetProperty("Description").GetValue(stableObject, null);
 
@@ -6154,7 +6154,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(stable.Name, locationAsStable.Name);
             Assert.Equal(stable.Id, locationAsStable.Id);
             Assert.Equal(stable.Description, locationAsStable.Description);
-            Assert.Equal(stable.TypeOfLocation, locationAsStable.TypeOfLocation);
+            Assert.Equal(stable.LocationId, locationAsStable.LocationId);
             Assert.Equal(stable.GeographicalDescription, locationAsStable.GeographicalDescription);
         }
 
@@ -6163,11 +6163,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Stable",
                 Description = null,
-                TypeOfLocation = LocationType.Stable,
+                LocationId = LocationType.Stable,
                 GeographicalDescription = "Test Description"
             };
 
@@ -6176,13 +6176,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test Stable",
                 Description = null,
-                TypeOfLocation = LocationType.Stable,
+                LocationId = LocationType.Stable,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(stable);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -6197,7 +6197,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsStable.Id = (int)stableObject.GetType().GetProperty("Id").GetValue(stableObject, null);
             locationAsStable.Name = (string)stableObject.GetType().GetProperty("Name").GetValue(stableObject, null);
-            locationAsStable.TypeOfLocation = (LocationType)stableObject.GetType().GetProperty("TypeOfLocation").GetValue(stableObject, null);
+            locationAsStable.LocationId = (LocationType)stableObject.GetType().GetProperty("LocationId").GetValue(stableObject, null);
             locationAsStable.GeographicalDescription = (string)stableObject.GetType().GetProperty("GeographicalDescription").GetValue(stableObject, null);
             locationAsStable.Description = (string)stableObject.GetType().GetProperty("Description").GetValue(stableObject, null);
 
@@ -6207,7 +6207,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(stable.Id, locationAsStable.Id);
             Assert.Equal(stable.Name, locationAsStable.Name);
             Assert.Equal(stable.Description, locationAsStable.Description);
-            Assert.Equal(stable.TypeOfLocation, locationAsStable.TypeOfLocation);
+            Assert.Equal(stable.LocationId, locationAsStable.LocationId);
             Assert.Equal(stable.GeographicalDescription, locationAsStable.GeographicalDescription);
         }
 
@@ -6215,11 +6215,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsAStable_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "      ",
                 Description = "Test",
-                TypeOfLocation = LocationType.Stable,
+                LocationId = LocationType.Stable,
                 GeographicalDescription = "Test Description"
             };
 
@@ -6227,7 +6227,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -6242,11 +6242,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsAStable_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.Stable,
+                LocationId = LocationType.Stable,
                 GeographicalDescription = "        "
             };
 
@@ -6254,7 +6254,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -6273,10 +6273,10 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test StormcloakCamp",
-                TypeOfLocation = LocationType.StormcloakCamp,
+                LocationId = LocationType.StormcloakCamp,
                 GeographicalDescription = "Test Description"
             };
 
@@ -6284,13 +6284,13 @@ namespace Skyrim.Api.Test.Controllers
             {
                 Id = 0,
                 Name = "Test StormcloakCamp",
-                TypeOfLocation = LocationType.StormcloakCamp,
+                LocationId = LocationType.StormcloakCamp,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(stormcloakCamp);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -6305,7 +6305,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsStormcloakCamp.Id = (int)stormcloakCampObject.GetType().GetProperty("Id").GetValue(stormcloakCampObject, null);
             locationAsStormcloakCamp.Name = (string)stormcloakCampObject.GetType().GetProperty("Name").GetValue(stormcloakCampObject, null);
-            locationAsStormcloakCamp.TypeOfLocation = (LocationType)stormcloakCampObject.GetType().GetProperty("TypeOfLocation").GetValue(stormcloakCampObject, null);
+            locationAsStormcloakCamp.LocationId = (LocationType)stormcloakCampObject.GetType().GetProperty("LocationId").GetValue(stormcloakCampObject, null);
             locationAsStormcloakCamp.GeographicalDescription = (string)stormcloakCampObject.GetType().GetProperty("GeographicalDescription").GetValue(stormcloakCampObject, null);
             locationAsStormcloakCamp.Description = (string)stormcloakCampObject.GetType().GetProperty("Description").GetValue(stormcloakCampObject, null);
 
@@ -6315,7 +6315,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(stormcloakCamp.Id, locationAsStormcloakCamp.Id);
             Assert.Equal(stormcloakCamp.Name, locationAsStormcloakCamp.Name);
             Assert.Equal(stormcloakCamp.Description, locationAsStormcloakCamp.Description);
-            Assert.Equal(stormcloakCamp.TypeOfLocation, locationAsStormcloakCamp.TypeOfLocation);
+            Assert.Equal(stormcloakCamp.LocationId, locationAsStormcloakCamp.LocationId);
             Assert.Equal(stormcloakCamp.GeographicalDescription, locationAsStormcloakCamp.GeographicalDescription);
         }
 
@@ -6324,11 +6324,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test StormcloakCamp",
                 Description = "    ",
-                TypeOfLocation = LocationType.StormcloakCamp,
+                LocationId = LocationType.StormcloakCamp,
                 GeographicalDescription = "Test Description"
             };
 
@@ -6337,13 +6337,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test StormcloakCamp",
                 Description = "",
-                TypeOfLocation = LocationType.StormcloakCamp,
+                LocationId = LocationType.StormcloakCamp,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(stormcloakCamp);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -6358,7 +6358,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsStormcloakCamp.Id = (int)stormcloakCampObject.GetType().GetProperty("Id").GetValue(stormcloakCampObject, null);
             locationAsStormcloakCamp.Name = (string)stormcloakCampObject.GetType().GetProperty("Name").GetValue(stormcloakCampObject, null);
-            locationAsStormcloakCamp.TypeOfLocation = (LocationType)stormcloakCampObject.GetType().GetProperty("TypeOfLocation").GetValue(stormcloakCampObject, null);
+            locationAsStormcloakCamp.LocationId = (LocationType)stormcloakCampObject.GetType().GetProperty("LocationId").GetValue(stormcloakCampObject, null);
             locationAsStormcloakCamp.GeographicalDescription = (string)stormcloakCampObject.GetType().GetProperty("GeographicalDescription").GetValue(stormcloakCampObject, null);
             locationAsStormcloakCamp.Description = (string)stormcloakCampObject.GetType().GetProperty("Description").GetValue(stormcloakCampObject, null);
 
@@ -6368,7 +6368,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(stormcloakCamp.Name, locationAsStormcloakCamp.Name);
             Assert.Equal(stormcloakCamp.Id, locationAsStormcloakCamp.Id);
             Assert.Equal(stormcloakCamp.Description, locationAsStormcloakCamp.Description);
-            Assert.Equal(stormcloakCamp.TypeOfLocation, locationAsStormcloakCamp.TypeOfLocation);
+            Assert.Equal(stormcloakCamp.LocationId, locationAsStormcloakCamp.LocationId);
             Assert.Equal(stormcloakCamp.GeographicalDescription, locationAsStormcloakCamp.GeographicalDescription);
         }
 
@@ -6377,11 +6377,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test StormcloakCamp",
                 Description = null,
-                TypeOfLocation = LocationType.StormcloakCamp,
+                LocationId = LocationType.StormcloakCamp,
                 GeographicalDescription = "Test Description"
             };
 
@@ -6390,13 +6390,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test StormcloakCamp",
                 Description = null,
-                TypeOfLocation = LocationType.StormcloakCamp,
+                LocationId = LocationType.StormcloakCamp,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(stormcloakCamp);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -6411,7 +6411,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsStormcloakCamp.Id = (int)stormcloakCampObject.GetType().GetProperty("Id").GetValue(stormcloakCampObject, null);
             locationAsStormcloakCamp.Name = (string)stormcloakCampObject.GetType().GetProperty("Name").GetValue(stormcloakCampObject, null);
-            locationAsStormcloakCamp.TypeOfLocation = (LocationType)stormcloakCampObject.GetType().GetProperty("TypeOfLocation").GetValue(stormcloakCampObject, null);
+            locationAsStormcloakCamp.LocationId = (LocationType)stormcloakCampObject.GetType().GetProperty("LocationId").GetValue(stormcloakCampObject, null);
             locationAsStormcloakCamp.GeographicalDescription = (string)stormcloakCampObject.GetType().GetProperty("GeographicalDescription").GetValue(stormcloakCampObject, null);
             locationAsStormcloakCamp.Description = (string)stormcloakCampObject.GetType().GetProperty("Description").GetValue(stormcloakCampObject, null);
 
@@ -6421,7 +6421,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(stormcloakCamp.Id, locationAsStormcloakCamp.Id);
             Assert.Equal(stormcloakCamp.Name, locationAsStormcloakCamp.Name);
             Assert.Equal(stormcloakCamp.Description, locationAsStormcloakCamp.Description);
-            Assert.Equal(stormcloakCamp.TypeOfLocation, locationAsStormcloakCamp.TypeOfLocation);
+            Assert.Equal(stormcloakCamp.LocationId, locationAsStormcloakCamp.LocationId);
             Assert.Equal(stormcloakCamp.GeographicalDescription, locationAsStormcloakCamp.GeographicalDescription);
         }
 
@@ -6429,11 +6429,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsAStormcloakCamp_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "      ",
                 Description = "Test",
-                TypeOfLocation = LocationType.StormcloakCamp,
+                LocationId = LocationType.StormcloakCamp,
                 GeographicalDescription = "Test Description"
             };
 
@@ -6441,7 +6441,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -6456,11 +6456,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsAStormcloakCamp_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.StormcloakCamp,
+                LocationId = LocationType.StormcloakCamp,
                 GeographicalDescription = "        "
             };
 
@@ -6468,7 +6468,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -6487,10 +6487,10 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Tomb",
-                TypeOfLocation = LocationType.Tomb,
+                LocationId = LocationType.Tomb,
                 GeographicalDescription = "Test Description"
             };
 
@@ -6498,13 +6498,13 @@ namespace Skyrim.Api.Test.Controllers
             {
                 Id = 0,
                 Name = "Test Tomb",
-                TypeOfLocation = LocationType.Tomb,
+                LocationId = LocationType.Tomb,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(tomb);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -6519,7 +6519,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsTomb.Id = (int)tombObject.GetType().GetProperty("Id").GetValue(tombObject, null);
             locationAsTomb.Name = (string)tombObject.GetType().GetProperty("Name").GetValue(tombObject, null);
-            locationAsTomb.TypeOfLocation = (LocationType)tombObject.GetType().GetProperty("TypeOfLocation").GetValue(tombObject, null);
+            locationAsTomb.LocationId = (LocationType)tombObject.GetType().GetProperty("LocationId").GetValue(tombObject, null);
             locationAsTomb.GeographicalDescription = (string)tombObject.GetType().GetProperty("GeographicalDescription").GetValue(tombObject, null);
             locationAsTomb.Description = (string)tombObject.GetType().GetProperty("Description").GetValue(tombObject, null);
 
@@ -6529,7 +6529,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(tomb.Id, locationAsTomb.Id);
             Assert.Equal(tomb.Name, locationAsTomb.Name);
             Assert.Equal(tomb.Description, locationAsTomb.Description);
-            Assert.Equal(tomb.TypeOfLocation, locationAsTomb.TypeOfLocation);
+            Assert.Equal(tomb.LocationId, locationAsTomb.LocationId);
             Assert.Equal(tomb.GeographicalDescription, locationAsTomb.GeographicalDescription);
         }
 
@@ -6538,11 +6538,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Tomb",
                 Description = "    ",
-                TypeOfLocation = LocationType.Tomb,
+                LocationId = LocationType.Tomb,
                 GeographicalDescription = "Test Description"
             };
 
@@ -6551,13 +6551,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test Tomb",
                 Description = "",
-                TypeOfLocation = LocationType.Tomb,
+                LocationId = LocationType.Tomb,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(tomb);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -6572,7 +6572,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsTomb.Id = (int)tombObject.GetType().GetProperty("Id").GetValue(tombObject, null);
             locationAsTomb.Name = (string)tombObject.GetType().GetProperty("Name").GetValue(tombObject, null);
-            locationAsTomb.TypeOfLocation = (LocationType)tombObject.GetType().GetProperty("TypeOfLocation").GetValue(tombObject, null);
+            locationAsTomb.LocationId = (LocationType)tombObject.GetType().GetProperty("LocationId").GetValue(tombObject, null);
             locationAsTomb.GeographicalDescription = (string)tombObject.GetType().GetProperty("GeographicalDescription").GetValue(tombObject, null);
             locationAsTomb.Description = (string)tombObject.GetType().GetProperty("Description").GetValue(tombObject, null);
 
@@ -6582,7 +6582,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(tomb.Name, locationAsTomb.Name);
             Assert.Equal(tomb.Id, locationAsTomb.Id);
             Assert.Equal(tomb.Description, locationAsTomb.Description);
-            Assert.Equal(tomb.TypeOfLocation, locationAsTomb.TypeOfLocation);
+            Assert.Equal(tomb.LocationId, locationAsTomb.LocationId);
             Assert.Equal(tomb.GeographicalDescription, locationAsTomb.GeographicalDescription);
         }
 
@@ -6591,11 +6591,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Tomb",
                 Description = null,
-                TypeOfLocation = LocationType.Tomb,
+                LocationId = LocationType.Tomb,
                 GeographicalDescription = "Test Description"
             };
 
@@ -6604,13 +6604,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test Tomb",
                 Description = null,
-                TypeOfLocation = LocationType.Tomb,
+                LocationId = LocationType.Tomb,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(tomb);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -6625,7 +6625,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsTomb.Id = (int)tombObject.GetType().GetProperty("Id").GetValue(tombObject, null);
             locationAsTomb.Name = (string)tombObject.GetType().GetProperty("Name").GetValue(tombObject, null);
-            locationAsTomb.TypeOfLocation = (LocationType)tombObject.GetType().GetProperty("TypeOfLocation").GetValue(tombObject, null);
+            locationAsTomb.LocationId = (LocationType)tombObject.GetType().GetProperty("LocationId").GetValue(tombObject, null);
             locationAsTomb.GeographicalDescription = (string)tombObject.GetType().GetProperty("GeographicalDescription").GetValue(tombObject, null);
             locationAsTomb.Description = (string)tombObject.GetType().GetProperty("Description").GetValue(tombObject, null);
 
@@ -6635,7 +6635,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(tomb.Id, locationAsTomb.Id);
             Assert.Equal(tomb.Name, locationAsTomb.Name);
             Assert.Equal(tomb.Description, locationAsTomb.Description);
-            Assert.Equal(tomb.TypeOfLocation, locationAsTomb.TypeOfLocation);
+            Assert.Equal(tomb.LocationId, locationAsTomb.LocationId);
             Assert.Equal(tomb.GeographicalDescription, locationAsTomb.GeographicalDescription);
         }
 
@@ -6643,11 +6643,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsATomb_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "      ",
                 Description = "Test",
-                TypeOfLocation = LocationType.Tomb,
+                LocationId = LocationType.Tomb,
                 GeographicalDescription = "Test Description"
             };
 
@@ -6655,7 +6655,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -6670,11 +6670,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsATomb_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.Tomb,
+                LocationId = LocationType.Tomb,
                 GeographicalDescription = "        "
             };
 
@@ -6682,7 +6682,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -6701,10 +6701,10 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Watchtower",
-                TypeOfLocation = LocationType.Watchtower,
+                LocationId = LocationType.Watchtower,
                 GeographicalDescription = "Test Watchtower"
             };
 
@@ -6712,13 +6712,13 @@ namespace Skyrim.Api.Test.Controllers
             {
                 Id = 0,
                 Name = "Test Watchtower",
-                TypeOfLocation = LocationType.Watchtower,
+                LocationId = LocationType.Watchtower,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(watchtower);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -6733,7 +6733,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsWatchtower.Id = (int)watchtowerObject.GetType().GetProperty("Id").GetValue(watchtowerObject, null);
             locationAsWatchtower.Name = (string)watchtowerObject.GetType().GetProperty("Name").GetValue(watchtowerObject, null);
-            locationAsWatchtower.TypeOfLocation = (LocationType)watchtowerObject.GetType().GetProperty("TypeOfLocation").GetValue(watchtowerObject, null);
+            locationAsWatchtower.LocationId = (LocationType)watchtowerObject.GetType().GetProperty("LocationId").GetValue(watchtowerObject, null);
             locationAsWatchtower.GeographicalDescription = (string)watchtowerObject.GetType().GetProperty("GeographicalDescription").GetValue(watchtowerObject, null);
             locationAsWatchtower.Description = (string)watchtowerObject.GetType().GetProperty("Description").GetValue(watchtowerObject, null);
 
@@ -6743,7 +6743,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(watchtower.Id, locationAsWatchtower.Id);
             Assert.Equal(watchtower.Name, locationAsWatchtower.Name);
             Assert.Equal(watchtower.Description, locationAsWatchtower.Description);
-            Assert.Equal(watchtower.TypeOfLocation, locationAsWatchtower.TypeOfLocation);
+            Assert.Equal(watchtower.LocationId, locationAsWatchtower.LocationId);
             Assert.Equal(watchtower.GeographicalDescription, locationAsWatchtower.GeographicalDescription);
         }
 
@@ -6752,11 +6752,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Watchtower",
                 Description = "    ",
-                TypeOfLocation = LocationType.Watchtower,
+                LocationId = LocationType.Watchtower,
                 GeographicalDescription = "Test Description"
             };
 
@@ -6765,13 +6765,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test Watchtower",
                 Description = "",
-                TypeOfLocation = LocationType.Watchtower,
+                LocationId = LocationType.Watchtower,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(watchtower);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -6786,7 +6786,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsWatchtower.Id = (int)watchtowerObject.GetType().GetProperty("Id").GetValue(watchtowerObject, null);
             locationAsWatchtower.Name = (string)watchtowerObject.GetType().GetProperty("Name").GetValue(watchtowerObject, null);
-            locationAsWatchtower.TypeOfLocation = (LocationType)watchtowerObject.GetType().GetProperty("TypeOfLocation").GetValue(watchtowerObject, null);
+            locationAsWatchtower.LocationId = (LocationType)watchtowerObject.GetType().GetProperty("LocationId").GetValue(watchtowerObject, null);
             locationAsWatchtower.GeographicalDescription = (string)watchtowerObject.GetType().GetProperty("GeographicalDescription").GetValue(watchtowerObject, null);
             locationAsWatchtower.Description = (string)watchtowerObject.GetType().GetProperty("Description").GetValue(watchtowerObject, null);
 
@@ -6796,7 +6796,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(watchtower.Name, locationAsWatchtower.Name);
             Assert.Equal(watchtower.Id, locationAsWatchtower.Id);
             Assert.Equal(watchtower.Description, locationAsWatchtower.Description);
-            Assert.Equal(watchtower.TypeOfLocation, locationAsWatchtower.TypeOfLocation);
+            Assert.Equal(watchtower.LocationId, locationAsWatchtower.LocationId);
             Assert.Equal(watchtower.GeographicalDescription, locationAsWatchtower.GeographicalDescription);
         }
 
@@ -6805,11 +6805,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Watchtower",
                 Description = null,
-                TypeOfLocation = LocationType.Watchtower,
+                LocationId = LocationType.Watchtower,
                 GeographicalDescription = "Test Description"
             };
 
@@ -6818,13 +6818,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test Watchtower",
                 Description = null,
-                TypeOfLocation = LocationType.Watchtower,
+                LocationId = LocationType.Watchtower,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(watchtower);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -6839,7 +6839,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsWatchtower.Id = (int)watchtowerObject.GetType().GetProperty("Id").GetValue(watchtowerObject, null);
             locationAsWatchtower.Name = (string)watchtowerObject.GetType().GetProperty("Name").GetValue(watchtowerObject, null);
-            locationAsWatchtower.TypeOfLocation = (LocationType)watchtowerObject.GetType().GetProperty("TypeOfLocation").GetValue(watchtowerObject, null);
+            locationAsWatchtower.LocationId = (LocationType)watchtowerObject.GetType().GetProperty("LocationId").GetValue(watchtowerObject, null);
             locationAsWatchtower.GeographicalDescription = (string)watchtowerObject.GetType().GetProperty("GeographicalDescription").GetValue(watchtowerObject, null);
             locationAsWatchtower.Description = (string)watchtowerObject.GetType().GetProperty("Description").GetValue(watchtowerObject, null);
 
@@ -6849,7 +6849,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(watchtower.Id, locationAsWatchtower.Id);
             Assert.Equal(watchtower.Name, locationAsWatchtower.Name);
             Assert.Equal(watchtower.Description, locationAsWatchtower.Description);
-            Assert.Equal(watchtower.TypeOfLocation, locationAsWatchtower.TypeOfLocation);
+            Assert.Equal(watchtower.LocationId, locationAsWatchtower.LocationId);
             Assert.Equal(watchtower.GeographicalDescription, locationAsWatchtower.GeographicalDescription);
         }
 
@@ -6857,11 +6857,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsAWatchtower_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "      ",
                 Description = "Test",
-                TypeOfLocation = LocationType.Watchtower,
+                LocationId = LocationType.Watchtower,
                 GeographicalDescription = "Test Description"
             };
 
@@ -6869,7 +6869,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -6884,11 +6884,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsAWatchtower_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.Watchtower,
+                LocationId = LocationType.Watchtower,
                 GeographicalDescription = "        "
             };
 
@@ -6896,7 +6896,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -6915,10 +6915,10 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test WheatMill",
-                TypeOfLocation = LocationType.WheatMill,
+                LocationId = LocationType.WheatMill,
                 GeographicalDescription = "Test WheatMill"
             };
 
@@ -6926,13 +6926,13 @@ namespace Skyrim.Api.Test.Controllers
             {
                 Id = 0,
                 Name = "Test WheatMill",
-                TypeOfLocation = LocationType.WheatMill,
+                LocationId = LocationType.WheatMill,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(wheatMill);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -6947,7 +6947,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsWheatMill.Id = (int)wheatMillObject.GetType().GetProperty("Id").GetValue(wheatMillObject, null);
             locationAsWheatMill.Name = (string)wheatMillObject.GetType().GetProperty("Name").GetValue(wheatMillObject, null);
-            locationAsWheatMill.TypeOfLocation = (LocationType)wheatMillObject.GetType().GetProperty("TypeOfLocation").GetValue(wheatMillObject, null);
+            locationAsWheatMill.LocationId = (LocationType)wheatMillObject.GetType().GetProperty("LocationId").GetValue(wheatMillObject, null);
             locationAsWheatMill.GeographicalDescription = (string)wheatMillObject.GetType().GetProperty("GeographicalDescription").GetValue(wheatMillObject, null);
             locationAsWheatMill.Description = (string)wheatMillObject.GetType().GetProperty("Description").GetValue(wheatMillObject, null);
 
@@ -6957,7 +6957,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(wheatMill.Id, locationAsWheatMill.Id);
             Assert.Equal(wheatMill.Name, locationAsWheatMill.Name);
             Assert.Equal(wheatMill.Description, locationAsWheatMill.Description);
-            Assert.Equal(wheatMill.TypeOfLocation, locationAsWheatMill.TypeOfLocation);
+            Assert.Equal(wheatMill.LocationId, locationAsWheatMill.LocationId);
             Assert.Equal(wheatMill.GeographicalDescription, locationAsWheatMill.GeographicalDescription);
         }
 
@@ -6966,11 +6966,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test WheatMill",
                 Description = "    ",
-                TypeOfLocation = LocationType.WheatMill,
+                LocationId = LocationType.WheatMill,
                 GeographicalDescription = "Test Description"
             };
 
@@ -6979,13 +6979,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test WheatMill",
                 Description = "",
-                TypeOfLocation = LocationType.WheatMill,
+                LocationId = LocationType.WheatMill,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(wheatMill);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -7000,7 +7000,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsWheatMill.Id = (int)wheatMillObject.GetType().GetProperty("Id").GetValue(wheatMillObject, null);
             locationAsWheatMill.Name = (string)wheatMillObject.GetType().GetProperty("Name").GetValue(wheatMillObject, null);
-            locationAsWheatMill.TypeOfLocation = (LocationType)wheatMillObject.GetType().GetProperty("TypeOfLocation").GetValue(wheatMillObject, null);
+            locationAsWheatMill.LocationId = (LocationType)wheatMillObject.GetType().GetProperty("LocationId").GetValue(wheatMillObject, null);
             locationAsWheatMill.GeographicalDescription = (string)wheatMillObject.GetType().GetProperty("GeographicalDescription").GetValue(wheatMillObject, null);
             locationAsWheatMill.Description = (string)wheatMillObject.GetType().GetProperty("Description").GetValue(wheatMillObject, null);
 
@@ -7010,7 +7010,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(wheatMill.Name, locationAsWheatMill.Name);
             Assert.Equal(wheatMill.Id, locationAsWheatMill.Id);
             Assert.Equal(wheatMill.Description, locationAsWheatMill.Description);
-            Assert.Equal(wheatMill.TypeOfLocation, locationAsWheatMill.TypeOfLocation);
+            Assert.Equal(wheatMill.LocationId, locationAsWheatMill.LocationId);
             Assert.Equal(wheatMill.GeographicalDescription, locationAsWheatMill.GeographicalDescription);
         }
 
@@ -7019,11 +7019,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test WheatMill",
                 Description = null,
-                TypeOfLocation = LocationType.WheatMill,
+                LocationId = LocationType.WheatMill,
                 GeographicalDescription = "Test Description"
             };
 
@@ -7032,13 +7032,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test WheatMill",
                 Description = null,
-                TypeOfLocation = LocationType.WheatMill,
+                LocationId = LocationType.WheatMill,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(wheatMill);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -7053,7 +7053,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsWheatMill.Id = (int)wheatMillObject.GetType().GetProperty("Id").GetValue(wheatMillObject, null);
             locationAsWheatMill.Name = (string)wheatMillObject.GetType().GetProperty("Name").GetValue(wheatMillObject, null);
-            locationAsWheatMill.TypeOfLocation = (LocationType)wheatMillObject.GetType().GetProperty("TypeOfLocation").GetValue(wheatMillObject, null);
+            locationAsWheatMill.LocationId = (LocationType)wheatMillObject.GetType().GetProperty("LocationId").GetValue(wheatMillObject, null);
             locationAsWheatMill.GeographicalDescription = (string)wheatMillObject.GetType().GetProperty("GeographicalDescription").GetValue(wheatMillObject, null);
             locationAsWheatMill.Description = (string)wheatMillObject.GetType().GetProperty("Description").GetValue(wheatMillObject, null);
 
@@ -7063,7 +7063,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(wheatMill.Id, locationAsWheatMill.Id);
             Assert.Equal(wheatMill.Name, locationAsWheatMill.Name);
             Assert.Equal(wheatMill.Description, locationAsWheatMill.Description);
-            Assert.Equal(wheatMill.TypeOfLocation, locationAsWheatMill.TypeOfLocation);
+            Assert.Equal(wheatMill.LocationId, locationAsWheatMill.LocationId);
             Assert.Equal(wheatMill.GeographicalDescription, locationAsWheatMill.GeographicalDescription);
         }
 
@@ -7071,11 +7071,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsAWheatMill_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "      ",
                 Description = "Test",
-                TypeOfLocation = LocationType.WheatMill,
+                LocationId = LocationType.WheatMill,
                 GeographicalDescription = "Test Description"
             };
 
@@ -7083,7 +7083,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -7098,11 +7098,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsAWheatMill_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.WheatMill,
+                LocationId = LocationType.WheatMill,
                 GeographicalDescription = "        "
             };
 
@@ -7110,7 +7110,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -7129,10 +7129,10 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test LumberMill",
-                TypeOfLocation = LocationType.LumberMill,
+                LocationId = LocationType.LumberMill,
                 GeographicalDescription = "Test LumberMill"
             };
 
@@ -7140,13 +7140,13 @@ namespace Skyrim.Api.Test.Controllers
             {
                 Id = 0,
                 Name = "Test LumberMill",
-                TypeOfLocation = LocationType.LumberMill,
+                LocationId = LocationType.LumberMill,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(lumberMill);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -7161,7 +7161,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsLumberMill.Id = (int)lumberMillObject.GetType().GetProperty("Id").GetValue(lumberMillObject, null);
             locationAsLumberMill.Name = (string)lumberMillObject.GetType().GetProperty("Name").GetValue(lumberMillObject, null);
-            locationAsLumberMill.TypeOfLocation = (LocationType)lumberMillObject.GetType().GetProperty("TypeOfLocation").GetValue(lumberMillObject, null);
+            locationAsLumberMill.LocationId = (LocationType)lumberMillObject.GetType().GetProperty("LocationId").GetValue(lumberMillObject, null);
             locationAsLumberMill.GeographicalDescription = (string)lumberMillObject.GetType().GetProperty("GeographicalDescription").GetValue(lumberMillObject, null);
             locationAsLumberMill.Description = (string)lumberMillObject.GetType().GetProperty("Description").GetValue(lumberMillObject, null);
 
@@ -7171,7 +7171,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(lumberMill.Id, locationAsLumberMill.Id);
             Assert.Equal(lumberMill.Name, locationAsLumberMill.Name);
             Assert.Equal(lumberMill.Description, locationAsLumberMill.Description);
-            Assert.Equal(lumberMill.TypeOfLocation, locationAsLumberMill.TypeOfLocation);
+            Assert.Equal(lumberMill.LocationId, locationAsLumberMill.LocationId);
             Assert.Equal(lumberMill.GeographicalDescription, locationAsLumberMill.GeographicalDescription);
         }
 
@@ -7180,11 +7180,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test LumberMill",
                 Description = "    ",
-                TypeOfLocation = LocationType.LumberMill,
+                LocationId = LocationType.LumberMill,
                 GeographicalDescription = "Test Description"
             };
 
@@ -7193,13 +7193,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test LumberMill",
                 Description = "",
-                TypeOfLocation = LocationType.LumberMill,
+                LocationId = LocationType.LumberMill,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(lumberMill);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -7214,7 +7214,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsLumberMill.Id = (int)lumberMillObject.GetType().GetProperty("Id").GetValue(lumberMillObject, null);
             locationAsLumberMill.Name = (string)lumberMillObject.GetType().GetProperty("Name").GetValue(lumberMillObject, null);
-            locationAsLumberMill.TypeOfLocation = (LocationType)lumberMillObject.GetType().GetProperty("TypeOfLocation").GetValue(lumberMillObject, null);
+            locationAsLumberMill.LocationId = (LocationType)lumberMillObject.GetType().GetProperty("LocationId").GetValue(lumberMillObject, null);
             locationAsLumberMill.GeographicalDescription = (string)lumberMillObject.GetType().GetProperty("GeographicalDescription").GetValue(lumberMillObject, null);
             locationAsLumberMill.Description = (string)lumberMillObject.GetType().GetProperty("Description").GetValue(lumberMillObject, null);
 
@@ -7224,7 +7224,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(lumberMill.Name, locationAsLumberMill.Name);
             Assert.Equal(lumberMill.Id, locationAsLumberMill.Id);
             Assert.Equal(lumberMill.Description, locationAsLumberMill.Description);
-            Assert.Equal(lumberMill.TypeOfLocation, locationAsLumberMill.TypeOfLocation);
+            Assert.Equal(lumberMill.LocationId, locationAsLumberMill.LocationId);
             Assert.Equal(lumberMill.GeographicalDescription, locationAsLumberMill.GeographicalDescription);
         }
 
@@ -7233,11 +7233,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test LumberMill",
                 Description = null,
-                TypeOfLocation = LocationType.LumberMill,
+                LocationId = LocationType.LumberMill,
                 GeographicalDescription = "Test Description"
             };
 
@@ -7246,13 +7246,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test LumberMill",
                 Description = null,
-                TypeOfLocation = LocationType.LumberMill,
+                LocationId = LocationType.LumberMill,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(lumberMill);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -7267,7 +7267,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsLumberMill.Id = (int)lumberMillObject.GetType().GetProperty("Id").GetValue(lumberMillObject, null);
             locationAsLumberMill.Name = (string)lumberMillObject.GetType().GetProperty("Name").GetValue(lumberMillObject, null);
-            locationAsLumberMill.TypeOfLocation = (LocationType)lumberMillObject.GetType().GetProperty("TypeOfLocation").GetValue(lumberMillObject, null);
+            locationAsLumberMill.LocationId = (LocationType)lumberMillObject.GetType().GetProperty("LocationId").GetValue(lumberMillObject, null);
             locationAsLumberMill.GeographicalDescription = (string)lumberMillObject.GetType().GetProperty("GeographicalDescription").GetValue(lumberMillObject, null);
             locationAsLumberMill.Description = (string)lumberMillObject.GetType().GetProperty("Description").GetValue(lumberMillObject, null);
 
@@ -7277,7 +7277,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(lumberMill.Id, locationAsLumberMill.Id);
             Assert.Equal(lumberMill.Name, locationAsLumberMill.Name);
             Assert.Equal(lumberMill.Description, locationAsLumberMill.Description);
-            Assert.Equal(lumberMill.TypeOfLocation, locationAsLumberMill.TypeOfLocation);
+            Assert.Equal(lumberMill.LocationId, locationAsLumberMill.LocationId);
             Assert.Equal(lumberMill.GeographicalDescription, locationAsLumberMill.GeographicalDescription);
         }
 
@@ -7285,11 +7285,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsALumberMill_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "      ",
                 Description = "Test",
-                TypeOfLocation = LocationType.LumberMill,
+                LocationId = LocationType.LumberMill,
                 GeographicalDescription = "Test Description"
             };
 
@@ -7297,7 +7297,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -7312,11 +7312,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsALumberMill_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.LumberMill,
+                LocationId = LocationType.LumberMill,
                 GeographicalDescription = "        "
             };
 
@@ -7324,7 +7324,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -7343,10 +7343,10 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test BodyOfWater",
-                TypeOfLocation = LocationType.BodyOfWater,
+                LocationId = LocationType.BodyOfWater,
                 GeographicalDescription = "Test BodyOfWater"
             };
 
@@ -7354,13 +7354,13 @@ namespace Skyrim.Api.Test.Controllers
             {
                 Id = 0,
                 Name = "Test BodyOfWater",
-                TypeOfLocation = LocationType.BodyOfWater,
+                LocationId = LocationType.BodyOfWater,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(bodyOfWater);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -7375,7 +7375,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsBodyOfWater.Id = (int)bodyOfWaterObject.GetType().GetProperty("Id").GetValue(bodyOfWaterObject, null);
             locationAsBodyOfWater.Name = (string)bodyOfWaterObject.GetType().GetProperty("Name").GetValue(bodyOfWaterObject, null);
-            locationAsBodyOfWater.TypeOfLocation = (LocationType)bodyOfWaterObject.GetType().GetProperty("TypeOfLocation").GetValue(bodyOfWaterObject, null);
+            locationAsBodyOfWater.LocationId = (LocationType)bodyOfWaterObject.GetType().GetProperty("LocationId").GetValue(bodyOfWaterObject, null);
             locationAsBodyOfWater.GeographicalDescription = (string)bodyOfWaterObject.GetType().GetProperty("GeographicalDescription").GetValue(bodyOfWaterObject, null);
             locationAsBodyOfWater.Description = (string)bodyOfWaterObject.GetType().GetProperty("Description").GetValue(bodyOfWaterObject, null);
 
@@ -7385,7 +7385,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(bodyOfWater.Id, locationAsBodyOfWater.Id);
             Assert.Equal(bodyOfWater.Name, locationAsBodyOfWater.Name);
             Assert.Equal(bodyOfWater.Description, locationAsBodyOfWater.Description);
-            Assert.Equal(bodyOfWater.TypeOfLocation, locationAsBodyOfWater.TypeOfLocation);
+            Assert.Equal(bodyOfWater.LocationId, locationAsBodyOfWater.LocationId);
             Assert.Equal(bodyOfWater.GeographicalDescription, locationAsBodyOfWater.GeographicalDescription);
         }
 
@@ -7394,11 +7394,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test BodyOfWater",
                 Description = "    ",
-                TypeOfLocation = LocationType.BodyOfWater,
+                LocationId = LocationType.BodyOfWater,
                 GeographicalDescription = "Test Description"
             };
 
@@ -7407,13 +7407,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test BodyOfWater",
                 Description = "",
-                TypeOfLocation = LocationType.BodyOfWater,
+                LocationId = LocationType.BodyOfWater,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(bodyOfWater);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -7428,7 +7428,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsBodyOfWater.Id = (int)bodyOfWaterObject.GetType().GetProperty("Id").GetValue(bodyOfWaterObject, null);
             locationAsBodyOfWater.Name = (string)bodyOfWaterObject.GetType().GetProperty("Name").GetValue(bodyOfWaterObject, null);
-            locationAsBodyOfWater.TypeOfLocation = (LocationType)bodyOfWaterObject.GetType().GetProperty("TypeOfLocation").GetValue(bodyOfWaterObject, null);
+            locationAsBodyOfWater.LocationId = (LocationType)bodyOfWaterObject.GetType().GetProperty("LocationId").GetValue(bodyOfWaterObject, null);
             locationAsBodyOfWater.GeographicalDescription = (string)bodyOfWaterObject.GetType().GetProperty("GeographicalDescription").GetValue(bodyOfWaterObject, null);
             locationAsBodyOfWater.Description = (string)bodyOfWaterObject.GetType().GetProperty("Description").GetValue(bodyOfWaterObject, null);
 
@@ -7438,7 +7438,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(bodyOfWater.Name, locationAsBodyOfWater.Name);
             Assert.Equal(bodyOfWater.Id, locationAsBodyOfWater.Id);
             Assert.Equal(bodyOfWater.Description, locationAsBodyOfWater.Description);
-            Assert.Equal(bodyOfWater.TypeOfLocation, locationAsBodyOfWater.TypeOfLocation);
+            Assert.Equal(bodyOfWater.LocationId, locationAsBodyOfWater.LocationId);
             Assert.Equal(bodyOfWater.GeographicalDescription, locationAsBodyOfWater.GeographicalDescription);
         }
 
@@ -7447,11 +7447,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test BodyOfWater",
                 Description = null,
-                TypeOfLocation = LocationType.BodyOfWater,
+                LocationId = LocationType.BodyOfWater,
                 GeographicalDescription = "Test Description"
             };
 
@@ -7460,13 +7460,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test BodyOfWater",
                 Description = null,
-                TypeOfLocation = LocationType.BodyOfWater,
+                LocationId = LocationType.BodyOfWater,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(bodyOfWater);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -7481,7 +7481,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsBodyOfWater.Id = (int)bodyOfWaterObject.GetType().GetProperty("Id").GetValue(bodyOfWaterObject, null);
             locationAsBodyOfWater.Name = (string)bodyOfWaterObject.GetType().GetProperty("Name").GetValue(bodyOfWaterObject, null);
-            locationAsBodyOfWater.TypeOfLocation = (LocationType)bodyOfWaterObject.GetType().GetProperty("TypeOfLocation").GetValue(bodyOfWaterObject, null);
+            locationAsBodyOfWater.LocationId = (LocationType)bodyOfWaterObject.GetType().GetProperty("LocationId").GetValue(bodyOfWaterObject, null);
             locationAsBodyOfWater.GeographicalDescription = (string)bodyOfWaterObject.GetType().GetProperty("GeographicalDescription").GetValue(bodyOfWaterObject, null);
             locationAsBodyOfWater.Description = (string)bodyOfWaterObject.GetType().GetProperty("Description").GetValue(bodyOfWaterObject, null);
 
@@ -7491,7 +7491,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(bodyOfWater.Id, locationAsBodyOfWater.Id);
             Assert.Equal(bodyOfWater.Name, locationAsBodyOfWater.Name);
             Assert.Equal(bodyOfWater.Description, locationAsBodyOfWater.Description);
-            Assert.Equal(bodyOfWater.TypeOfLocation, locationAsBodyOfWater.TypeOfLocation);
+            Assert.Equal(bodyOfWater.LocationId, locationAsBodyOfWater.LocationId);
             Assert.Equal(bodyOfWater.GeographicalDescription, locationAsBodyOfWater.GeographicalDescription);
         }
 
@@ -7499,11 +7499,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsABodyOfWater_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "      ",
                 Description = "Test",
-                TypeOfLocation = LocationType.BodyOfWater,
+                LocationId = LocationType.BodyOfWater,
                 GeographicalDescription = "Test Description"
             };
 
@@ -7511,7 +7511,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -7526,11 +7526,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsABodyOfWater_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.BodyOfWater,
+                LocationId = LocationType.BodyOfWater,
                 GeographicalDescription = "        "
             };
 
@@ -7538,7 +7538,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -7557,10 +7557,10 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test InnOrTavern",
-                TypeOfLocation = LocationType.InnOrTavern,
+                LocationId = LocationType.InnOrTavern,
                 GeographicalDescription = "Test InnOrTavern"
             };
 
@@ -7568,13 +7568,13 @@ namespace Skyrim.Api.Test.Controllers
             {
                 Id = 0,
                 Name = "Test InnOrTavern",
-                TypeOfLocation = LocationType.InnOrTavern,
+                LocationId = LocationType.InnOrTavern,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(innOrTavern);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -7589,7 +7589,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsInnOrTavern.Id = (int)InnOrTavernObject.GetType().GetProperty("Id").GetValue(InnOrTavernObject, null);
             locationAsInnOrTavern.Name = (string)InnOrTavernObject.GetType().GetProperty("Name").GetValue(InnOrTavernObject, null);
-            locationAsInnOrTavern.TypeOfLocation = (LocationType)InnOrTavernObject.GetType().GetProperty("TypeOfLocation").GetValue(InnOrTavernObject, null);
+            locationAsInnOrTavern.LocationId = (LocationType)InnOrTavernObject.GetType().GetProperty("LocationId").GetValue(InnOrTavernObject, null);
             locationAsInnOrTavern.GeographicalDescription = (string)InnOrTavernObject.GetType().GetProperty("GeographicalDescription").GetValue(InnOrTavernObject, null);
             locationAsInnOrTavern.Description = (string)InnOrTavernObject.GetType().GetProperty("Description").GetValue(InnOrTavernObject, null);
 
@@ -7599,7 +7599,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(innOrTavern.Id, locationAsInnOrTavern.Id);
             Assert.Equal(innOrTavern.Name, locationAsInnOrTavern.Name);
             Assert.Equal(innOrTavern.Description, locationAsInnOrTavern.Description);
-            Assert.Equal(innOrTavern.TypeOfLocation, locationAsInnOrTavern.TypeOfLocation);
+            Assert.Equal(innOrTavern.LocationId, locationAsInnOrTavern.LocationId);
             Assert.Equal(innOrTavern.GeographicalDescription, locationAsInnOrTavern.GeographicalDescription);
         }
 
@@ -7608,11 +7608,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test InnOrTavern",
                 Description = "    ",
-                TypeOfLocation = LocationType.InnOrTavern,
+                LocationId = LocationType.InnOrTavern,
                 GeographicalDescription = "Test Description"
             };
 
@@ -7621,13 +7621,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test InnOrTavern",
                 Description = "",
-                TypeOfLocation = LocationType.InnOrTavern,
+                LocationId = LocationType.InnOrTavern,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(innOrTavern);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -7642,7 +7642,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsInnOrTavern.Id = (int)innOrTavernObject.GetType().GetProperty("Id").GetValue(innOrTavernObject, null);
             locationAsInnOrTavern.Name = (string)innOrTavernObject.GetType().GetProperty("Name").GetValue(innOrTavernObject, null);
-            locationAsInnOrTavern.TypeOfLocation = (LocationType)innOrTavernObject.GetType().GetProperty("TypeOfLocation").GetValue(innOrTavernObject, null);
+            locationAsInnOrTavern.LocationId = (LocationType)innOrTavernObject.GetType().GetProperty("LocationId").GetValue(innOrTavernObject, null);
             locationAsInnOrTavern.GeographicalDescription = (string)innOrTavernObject.GetType().GetProperty("GeographicalDescription").GetValue(innOrTavernObject, null);
             locationAsInnOrTavern.Description = (string)innOrTavernObject.GetType().GetProperty("Description").GetValue(innOrTavernObject, null);
 
@@ -7652,7 +7652,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(innOrTavern.Name, locationAsInnOrTavern.Name);
             Assert.Equal(innOrTavern.Id, locationAsInnOrTavern.Id);
             Assert.Equal(innOrTavern.Description, locationAsInnOrTavern.Description);
-            Assert.Equal(innOrTavern.TypeOfLocation, locationAsInnOrTavern.TypeOfLocation);
+            Assert.Equal(innOrTavern.LocationId, locationAsInnOrTavern.LocationId);
             Assert.Equal(innOrTavern.GeographicalDescription, locationAsInnOrTavern.GeographicalDescription);
         }
 
@@ -7661,11 +7661,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test InnOrTavern",
                 Description = null,
-                TypeOfLocation = LocationType.InnOrTavern,
+                LocationId = LocationType.InnOrTavern,
                 GeographicalDescription = "Test Description"
             };
 
@@ -7674,13 +7674,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test InnOrTavern",
                 Description = null,
-                TypeOfLocation = LocationType.InnOrTavern,
+                LocationId = LocationType.InnOrTavern,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(innOrTavern);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -7695,7 +7695,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsInnOrTavern.Id = (int)innOrTavernObject.GetType().GetProperty("Id").GetValue(innOrTavernObject, null);
             locationAsInnOrTavern.Name = (string)innOrTavernObject.GetType().GetProperty("Name").GetValue(innOrTavernObject, null);
-            locationAsInnOrTavern.TypeOfLocation = (LocationType)innOrTavernObject.GetType().GetProperty("TypeOfLocation").GetValue(innOrTavernObject, null);
+            locationAsInnOrTavern.LocationId = (LocationType)innOrTavernObject.GetType().GetProperty("LocationId").GetValue(innOrTavernObject, null);
             locationAsInnOrTavern.GeographicalDescription = (string)innOrTavernObject.GetType().GetProperty("GeographicalDescription").GetValue(innOrTavernObject, null);
             locationAsInnOrTavern.Description = (string)innOrTavernObject.GetType().GetProperty("Description").GetValue(innOrTavernObject, null);
 
@@ -7705,7 +7705,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(innOrTavern.Id, locationAsInnOrTavern.Id);
             Assert.Equal(innOrTavern.Name, locationAsInnOrTavern.Name);
             Assert.Equal(innOrTavern.Description, locationAsInnOrTavern.Description);
-            Assert.Equal(innOrTavern.TypeOfLocation, locationAsInnOrTavern.TypeOfLocation);
+            Assert.Equal(innOrTavern.LocationId, locationAsInnOrTavern.LocationId);
             Assert.Equal(innOrTavern.GeographicalDescription, locationAsInnOrTavern.GeographicalDescription);
         }
 
@@ -7713,11 +7713,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsAnInnOrTavern_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "      ",
                 Description = "Test",
-                TypeOfLocation = LocationType.InnOrTavern,
+                LocationId = LocationType.InnOrTavern,
                 GeographicalDescription = "Test Description"
             };
 
@@ -7725,7 +7725,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -7740,11 +7740,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsAnInnOrTavern_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.InnOrTavern,
+                LocationId = LocationType.InnOrTavern,
                 GeographicalDescription = "        "
             };
 
@@ -7752,7 +7752,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -7771,10 +7771,10 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Temple",
-                TypeOfLocation = LocationType.Temple,
+                LocationId = LocationType.Temple,
                 GeographicalDescription = "Test Temple"
             };
 
@@ -7782,13 +7782,13 @@ namespace Skyrim.Api.Test.Controllers
             {
                 Id = 0,
                 Name = "Test Temple",
-                TypeOfLocation = LocationType.Temple,
+                LocationId = LocationType.Temple,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(temple);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -7803,7 +7803,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsTemple.Id = (int)templeObject.GetType().GetProperty("Id").GetValue(templeObject, null);
             locationAsTemple.Name = (string)templeObject.GetType().GetProperty("Name").GetValue(templeObject, null);
-            locationAsTemple.TypeOfLocation = (LocationType)templeObject.GetType().GetProperty("TypeOfLocation").GetValue(templeObject, null);
+            locationAsTemple.LocationId = (LocationType)templeObject.GetType().GetProperty("LocationId").GetValue(templeObject, null);
             locationAsTemple.GeographicalDescription = (string)templeObject.GetType().GetProperty("GeographicalDescription").GetValue(templeObject, null);
             locationAsTemple.Description = (string)templeObject.GetType().GetProperty("Description").GetValue(templeObject, null);
 
@@ -7813,7 +7813,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(temple.Id, locationAsTemple.Id);
             Assert.Equal(temple.Name, locationAsTemple.Name);
             Assert.Equal(temple.Description, locationAsTemple.Description);
-            Assert.Equal(temple.TypeOfLocation, locationAsTemple.TypeOfLocation);
+            Assert.Equal(temple.LocationId, locationAsTemple.LocationId);
             Assert.Equal(temple.GeographicalDescription, locationAsTemple.GeographicalDescription);
         }
 
@@ -7822,11 +7822,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Temple",
                 Description = "    ",
-                TypeOfLocation = LocationType.Temple,
+                LocationId = LocationType.Temple,
                 GeographicalDescription = "Test Description"
             };
 
@@ -7835,13 +7835,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test Temple",
                 Description = "",
-                TypeOfLocation = LocationType.Temple,
+                LocationId = LocationType.Temple,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(temple);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -7856,7 +7856,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsTemple.Id = (int)templeObject.GetType().GetProperty("Id").GetValue(templeObject, null);
             locationAsTemple.Name = (string)templeObject.GetType().GetProperty("Name").GetValue(templeObject, null);
-            locationAsTemple.TypeOfLocation = (LocationType)templeObject.GetType().GetProperty("TypeOfLocation").GetValue(templeObject, null);
+            locationAsTemple.LocationId = (LocationType)templeObject.GetType().GetProperty("LocationId").GetValue(templeObject, null);
             locationAsTemple.GeographicalDescription = (string)templeObject.GetType().GetProperty("GeographicalDescription").GetValue(templeObject, null);
             locationAsTemple.Description = (string)templeObject.GetType().GetProperty("Description").GetValue(templeObject, null);
 
@@ -7866,7 +7866,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(temple.Name, locationAsTemple.Name);
             Assert.Equal(temple.Id, locationAsTemple.Id);
             Assert.Equal(temple.Description, locationAsTemple.Description);
-            Assert.Equal(temple.TypeOfLocation, locationAsTemple.TypeOfLocation);
+            Assert.Equal(temple.LocationId, locationAsTemple.LocationId);
             Assert.Equal(temple.GeographicalDescription, locationAsTemple.GeographicalDescription);
         }
 
@@ -7875,11 +7875,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Temple",
                 Description = null,
-                TypeOfLocation = LocationType.Temple,
+                LocationId = LocationType.Temple,
                 GeographicalDescription = "Test Description"
             };
 
@@ -7888,13 +7888,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test Temple",
                 Description = null,
-                TypeOfLocation = LocationType.Temple,
+                LocationId = LocationType.Temple,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(temple);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -7909,7 +7909,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsTemple.Id = (int)templeObject.GetType().GetProperty("Id").GetValue(templeObject, null);
             locationAsTemple.Name = (string)templeObject.GetType().GetProperty("Name").GetValue(templeObject, null);
-            locationAsTemple.TypeOfLocation = (LocationType)templeObject.GetType().GetProperty("TypeOfLocation").GetValue(templeObject, null);
+            locationAsTemple.LocationId = (LocationType)templeObject.GetType().GetProperty("LocationId").GetValue(templeObject, null);
             locationAsTemple.GeographicalDescription = (string)templeObject.GetType().GetProperty("GeographicalDescription").GetValue(templeObject, null);
             locationAsTemple.Description = (string)templeObject.GetType().GetProperty("Description").GetValue(templeObject, null);
 
@@ -7919,7 +7919,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(temple.Id, locationAsTemple.Id);
             Assert.Equal(temple.Name, locationAsTemple.Name);
             Assert.Equal(temple.Description, locationAsTemple.Description);
-            Assert.Equal(temple.TypeOfLocation, locationAsTemple.TypeOfLocation);
+            Assert.Equal(temple.LocationId, locationAsTemple.LocationId);
             Assert.Equal(temple.GeographicalDescription, locationAsTemple.GeographicalDescription);
         }
 
@@ -7927,11 +7927,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsATemple_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "      ",
                 Description = "Test",
-                TypeOfLocation = LocationType.Temple,
+                LocationId = LocationType.Temple,
                 GeographicalDescription = "Test Description"
             };
 
@@ -7939,7 +7939,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -7954,11 +7954,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsATemple_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.Temple,
+                LocationId = LocationType.Temple,
                 GeographicalDescription = "        "
             };
 
@@ -7966,7 +7966,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -7985,10 +7985,10 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test WordWall",
-                TypeOfLocation = LocationType.WordWall,
+                LocationId = LocationType.WordWall,
                 GeographicalDescription = "Test WordWall"
             };
 
@@ -7996,13 +7996,13 @@ namespace Skyrim.Api.Test.Controllers
             {
                 Id = 0,
                 Name = "Test WordWall",
-                TypeOfLocation = LocationType.WordWall,
+                LocationId = LocationType.WordWall,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(wordWall);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -8017,7 +8017,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsWordWall.Id = (int)wordWallObject.GetType().GetProperty("Id").GetValue(wordWallObject, null);
             locationAsWordWall.Name = (string)wordWallObject.GetType().GetProperty("Name").GetValue(wordWallObject, null);
-            locationAsWordWall.TypeOfLocation = (LocationType)wordWallObject.GetType().GetProperty("TypeOfLocation").GetValue(wordWallObject, null);
+            locationAsWordWall.LocationId = (LocationType)wordWallObject.GetType().GetProperty("LocationId").GetValue(wordWallObject, null);
             locationAsWordWall.GeographicalDescription = (string)wordWallObject.GetType().GetProperty("GeographicalDescription").GetValue(wordWallObject, null);
             locationAsWordWall.Description = (string)wordWallObject.GetType().GetProperty("Description").GetValue(wordWallObject, null);
 
@@ -8027,7 +8027,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(wordWall.Id, locationAsWordWall.Id);
             Assert.Equal(wordWall.Name, locationAsWordWall.Name);
             Assert.Equal(wordWall.Description, locationAsWordWall.Description);
-            Assert.Equal(wordWall.TypeOfLocation, locationAsWordWall.TypeOfLocation);
+            Assert.Equal(wordWall.LocationId, locationAsWordWall.LocationId);
             Assert.Equal(wordWall.GeographicalDescription, locationAsWordWall.GeographicalDescription);
         }
 
@@ -8036,11 +8036,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test WordWall",
                 Description = "    ",
-                TypeOfLocation = LocationType.WordWall,
+                LocationId = LocationType.WordWall,
                 GeographicalDescription = "Test Description"
             };
 
@@ -8049,13 +8049,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test WordWall",
                 Description = "",
-                TypeOfLocation = LocationType.WordWall,
+                LocationId = LocationType.WordWall,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(wordWall);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -8070,7 +8070,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsWordWall.Id = (int)wordWallObject.GetType().GetProperty("Id").GetValue(wordWallObject, null);
             locationAsWordWall.Name = (string)wordWallObject.GetType().GetProperty("Name").GetValue(wordWallObject, null);
-            locationAsWordWall.TypeOfLocation = (LocationType)wordWallObject.GetType().GetProperty("TypeOfLocation").GetValue(wordWallObject, null);
+            locationAsWordWall.LocationId = (LocationType)wordWallObject.GetType().GetProperty("LocationId").GetValue(wordWallObject, null);
             locationAsWordWall.GeographicalDescription = (string)wordWallObject.GetType().GetProperty("GeographicalDescription").GetValue(wordWallObject, null);
             locationAsWordWall.Description = (string)wordWallObject.GetType().GetProperty("Description").GetValue(wordWallObject, null);
 
@@ -8080,7 +8080,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(wordWall.Name, locationAsWordWall.Name);
             Assert.Equal(wordWall.Id, locationAsWordWall.Id);
             Assert.Equal(wordWall.Description, locationAsWordWall.Description);
-            Assert.Equal(wordWall.TypeOfLocation, locationAsWordWall.TypeOfLocation);
+            Assert.Equal(wordWall.LocationId, locationAsWordWall.LocationId);
             Assert.Equal(wordWall.GeographicalDescription, locationAsWordWall.GeographicalDescription);
         }
 
@@ -8089,11 +8089,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test WordWall",
                 Description = null,
-                TypeOfLocation = LocationType.WordWall,
+                LocationId = LocationType.WordWall,
                 GeographicalDescription = "Test Description"
             };
 
@@ -8102,13 +8102,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test WordWall",
                 Description = null,
-                TypeOfLocation = LocationType.WordWall,
+                LocationId = LocationType.WordWall,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(wordWall);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -8123,7 +8123,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsWordWall.Id = (int)wordWallObject.GetType().GetProperty("Id").GetValue(wordWallObject, null);
             locationAsWordWall.Name = (string)wordWallObject.GetType().GetProperty("Name").GetValue(wordWallObject, null);
-            locationAsWordWall.TypeOfLocation = (LocationType)wordWallObject.GetType().GetProperty("TypeOfLocation").GetValue(wordWallObject, null);
+            locationAsWordWall.LocationId = (LocationType)wordWallObject.GetType().GetProperty("LocationId").GetValue(wordWallObject, null);
             locationAsWordWall.GeographicalDescription = (string)wordWallObject.GetType().GetProperty("GeographicalDescription").GetValue(wordWallObject, null);
             locationAsWordWall.Description = (string)wordWallObject.GetType().GetProperty("Description").GetValue(wordWallObject, null);
 
@@ -8133,7 +8133,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(wordWall.Id, locationAsWordWall.Id);
             Assert.Equal(wordWall.Name, locationAsWordWall.Name);
             Assert.Equal(wordWall.Description, locationAsWordWall.Description);
-            Assert.Equal(wordWall.TypeOfLocation, locationAsWordWall.TypeOfLocation);
+            Assert.Equal(wordWall.LocationId, locationAsWordWall.LocationId);
             Assert.Equal(wordWall.GeographicalDescription, locationAsWordWall.GeographicalDescription);
         }
 
@@ -8141,11 +8141,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsAWordWall_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "      ",
                 Description = "Test",
-                TypeOfLocation = LocationType.WordWall,
+                LocationId = LocationType.WordWall,
                 GeographicalDescription = "Test Description"
             };
 
@@ -8153,7 +8153,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -8168,11 +8168,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsAWordWall_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.WordWall,
+                LocationId = LocationType.WordWall,
                 GeographicalDescription = "        "
             };
 
@@ -8180,7 +8180,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -8199,10 +8199,10 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Castle",
-                TypeOfLocation = LocationType.Castle,
+                LocationId = LocationType.Castle,
                 GeographicalDescription = "Test Castle"
             };
 
@@ -8210,13 +8210,13 @@ namespace Skyrim.Api.Test.Controllers
             {
                 Id = 0,
                 Name = "Test Castle",
-                TypeOfLocation = LocationType.Castle,
+                LocationId = LocationType.Castle,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(castle);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -8231,7 +8231,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsCastle.Id = (int)castleObject.GetType().GetProperty("Id").GetValue(castleObject, null);
             locationAsCastle.Name = (string)castleObject.GetType().GetProperty("Name").GetValue(castleObject, null);
-            locationAsCastle.TypeOfLocation = (LocationType)castleObject.GetType().GetProperty("TypeOfLocation").GetValue(castleObject, null);
+            locationAsCastle.LocationId = (LocationType)castleObject.GetType().GetProperty("LocationId").GetValue(castleObject, null);
             locationAsCastle.GeographicalDescription = (string)castleObject.GetType().GetProperty("GeographicalDescription").GetValue(castleObject, null);
             locationAsCastle.Description = (string)castleObject.GetType().GetProperty("Description").GetValue(castleObject, null);
 
@@ -8241,7 +8241,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(castle.Id, locationAsCastle.Id);
             Assert.Equal(castle.Name, locationAsCastle.Name);
             Assert.Equal(castle.Description, locationAsCastle.Description);
-            Assert.Equal(castle.TypeOfLocation, locationAsCastle.TypeOfLocation);
+            Assert.Equal(castle.LocationId, locationAsCastle.LocationId);
             Assert.Equal(castle.GeographicalDescription, locationAsCastle.GeographicalDescription);
         }
 
@@ -8250,11 +8250,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Castle",
                 Description = "    ",
-                TypeOfLocation = LocationType.Castle,
+                LocationId = LocationType.Castle,
                 GeographicalDescription = "Test Description"
             };
 
@@ -8263,13 +8263,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test Castle",
                 Description = "",
-                TypeOfLocation = LocationType.Castle,
+                LocationId = LocationType.Castle,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(castle);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -8284,7 +8284,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsCastle.Id = (int)castleObject.GetType().GetProperty("Id").GetValue(castleObject, null);
             locationAsCastle.Name = (string)castleObject.GetType().GetProperty("Name").GetValue(castleObject, null);
-            locationAsCastle.TypeOfLocation = (LocationType)castleObject.GetType().GetProperty("TypeOfLocation").GetValue(castleObject, null);
+            locationAsCastle.LocationId = (LocationType)castleObject.GetType().GetProperty("LocationId").GetValue(castleObject, null);
             locationAsCastle.GeographicalDescription = (string)castleObject.GetType().GetProperty("GeographicalDescription").GetValue(castleObject, null);
             locationAsCastle.Description = (string)castleObject.GetType().GetProperty("Description").GetValue(castleObject, null);
 
@@ -8294,7 +8294,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(castle.Name, locationAsCastle.Name);
             Assert.Equal(castle.Id, locationAsCastle.Id);
             Assert.Equal(castle.Description, locationAsCastle.Description);
-            Assert.Equal(castle.TypeOfLocation, locationAsCastle.TypeOfLocation);
+            Assert.Equal(castle.LocationId, locationAsCastle.LocationId);
             Assert.Equal(castle.GeographicalDescription, locationAsCastle.GeographicalDescription);
         }
 
@@ -8303,11 +8303,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test Castle",
                 Description = null,
-                TypeOfLocation = LocationType.Castle,
+                LocationId = LocationType.Castle,
                 GeographicalDescription = "Test Description"
             };
 
@@ -8316,13 +8316,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test Castle",
                 Description = null,
-                TypeOfLocation = LocationType.Castle,
+                LocationId = LocationType.Castle,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(castle);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -8337,7 +8337,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsCastle.Id = (int)castleObject.GetType().GetProperty("Id").GetValue(castleObject, null);
             locationAsCastle.Name = (string)castleObject.GetType().GetProperty("Name").GetValue(castleObject, null);
-            locationAsCastle.TypeOfLocation = (LocationType)castleObject.GetType().GetProperty("TypeOfLocation").GetValue(castleObject, null);
+            locationAsCastle.LocationId = (LocationType)castleObject.GetType().GetProperty("LocationId").GetValue(castleObject, null);
             locationAsCastle.GeographicalDescription = (string)castleObject.GetType().GetProperty("GeographicalDescription").GetValue(castleObject, null);
             locationAsCastle.Description = (string)castleObject.GetType().GetProperty("Description").GetValue(castleObject, null);
 
@@ -8347,7 +8347,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(castle.Id, locationAsCastle.Id);
             Assert.Equal(castle.Name, locationAsCastle.Name);
             Assert.Equal(castle.Description, locationAsCastle.Description);
-            Assert.Equal(castle.TypeOfLocation, locationAsCastle.TypeOfLocation);
+            Assert.Equal(castle.LocationId, locationAsCastle.LocationId);
             Assert.Equal(castle.GeographicalDescription, locationAsCastle.GeographicalDescription);
         }
 
@@ -8355,11 +8355,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsACastle_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "      ",
                 Description = "Test",
-                TypeOfLocation = LocationType.Castle,
+                LocationId = LocationType.Castle,
                 GeographicalDescription = "Test Description"
             };
 
@@ -8367,7 +8367,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -8382,11 +8382,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsACastle_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.Castle,
+                LocationId = LocationType.Castle,
                 GeographicalDescription = "        "
             };
 
@@ -8394,7 +8394,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -8413,10 +8413,10 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test GuildHeadquarter",
-                TypeOfLocation = LocationType.GuildHeadquarter,
+                LocationId = LocationType.GuildHeadquarter,
                 GeographicalDescription = "Test GuildHeadquarter"
             };
 
@@ -8424,13 +8424,13 @@ namespace Skyrim.Api.Test.Controllers
             {
                 Id = 0,
                 Name = "Test GuildHeadquarter",
-                TypeOfLocation = LocationType.GuildHeadquarter,
+                LocationId = LocationType.GuildHeadquarter,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(guildHeadquarter);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -8445,7 +8445,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsGuildHeadquarter.Id = (int)guildHeadquarterObject.GetType().GetProperty("Id").GetValue(guildHeadquarterObject, null);
             locationAsGuildHeadquarter.Name = (string)guildHeadquarterObject.GetType().GetProperty("Name").GetValue(guildHeadquarterObject, null);
-            locationAsGuildHeadquarter.TypeOfLocation = (LocationType)guildHeadquarterObject.GetType().GetProperty("TypeOfLocation").GetValue(guildHeadquarterObject, null);
+            locationAsGuildHeadquarter.LocationId = (LocationType)guildHeadquarterObject.GetType().GetProperty("LocationId").GetValue(guildHeadquarterObject, null);
             locationAsGuildHeadquarter.GeographicalDescription = (string)guildHeadquarterObject.GetType().GetProperty("GeographicalDescription").GetValue(guildHeadquarterObject, null);
             locationAsGuildHeadquarter.Description = (string)guildHeadquarterObject.GetType().GetProperty("Description").GetValue(guildHeadquarterObject, null);
 
@@ -8455,7 +8455,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(guildHeadquarter.Id, locationAsGuildHeadquarter.Id);
             Assert.Equal(guildHeadquarter.Name, locationAsGuildHeadquarter.Name);
             Assert.Equal(guildHeadquarter.Description, locationAsGuildHeadquarter.Description);
-            Assert.Equal(guildHeadquarter.TypeOfLocation, locationAsGuildHeadquarter.TypeOfLocation);
+            Assert.Equal(guildHeadquarter.LocationId, locationAsGuildHeadquarter.LocationId);
             Assert.Equal(guildHeadquarter.GeographicalDescription, locationAsGuildHeadquarter.GeographicalDescription);
         }
 
@@ -8464,11 +8464,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test GuildHeadquarter",
                 Description = "    ",
-                TypeOfLocation = LocationType.GuildHeadquarter,
+                LocationId = LocationType.GuildHeadquarter,
                 GeographicalDescription = "Test Description"
             };
 
@@ -8477,13 +8477,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test GuildHeadquarter",
                 Description = "",
-                TypeOfLocation = LocationType.GuildHeadquarter,
+                LocationId = LocationType.GuildHeadquarter,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(guildHeadquarter);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -8498,7 +8498,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsGuildHeadquarter.Id = (int)guildHeadquarterObject.GetType().GetProperty("Id").GetValue(guildHeadquarterObject, null);
             locationAsGuildHeadquarter.Name = (string)guildHeadquarterObject.GetType().GetProperty("Name").GetValue(guildHeadquarterObject, null);
-            locationAsGuildHeadquarter.TypeOfLocation = (LocationType)guildHeadquarterObject.GetType().GetProperty("TypeOfLocation").GetValue(guildHeadquarterObject, null);
+            locationAsGuildHeadquarter.LocationId = (LocationType)guildHeadquarterObject.GetType().GetProperty("LocationId").GetValue(guildHeadquarterObject, null);
             locationAsGuildHeadquarter.GeographicalDescription = (string)guildHeadquarterObject.GetType().GetProperty("GeographicalDescription").GetValue(guildHeadquarterObject, null);
             locationAsGuildHeadquarter.Description = (string)guildHeadquarterObject.GetType().GetProperty("Description").GetValue(guildHeadquarterObject, null);
 
@@ -8508,7 +8508,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(guildHeadquarter.Name, locationAsGuildHeadquarter.Name);
             Assert.Equal(guildHeadquarter.Id, locationAsGuildHeadquarter.Id);
             Assert.Equal(guildHeadquarter.Description, locationAsGuildHeadquarter.Description);
-            Assert.Equal(guildHeadquarter.TypeOfLocation, locationAsGuildHeadquarter.TypeOfLocation);
+            Assert.Equal(guildHeadquarter.LocationId, locationAsGuildHeadquarter.LocationId);
             Assert.Equal(guildHeadquarter.GeographicalDescription, locationAsGuildHeadquarter.GeographicalDescription);
         }
 
@@ -8517,11 +8517,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test GuildHeadquarter",
                 Description = null,
-                TypeOfLocation = LocationType.GuildHeadquarter,
+                LocationId = LocationType.GuildHeadquarter,
                 GeographicalDescription = "Test Description"
             };
 
@@ -8530,13 +8530,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test GuildHeadquarter",
                 Description = null,
-                TypeOfLocation = LocationType.GuildHeadquarter,
+                LocationId = LocationType.GuildHeadquarter,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(guildHeadquarter);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -8551,7 +8551,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsGuildHeadquarter.Id = (int)guildHeadquarterObject.GetType().GetProperty("Id").GetValue(guildHeadquarterObject, null);
             locationAsGuildHeadquarter.Name = (string)guildHeadquarterObject.GetType().GetProperty("Name").GetValue(guildHeadquarterObject, null);
-            locationAsGuildHeadquarter.TypeOfLocation = (LocationType)guildHeadquarterObject.GetType().GetProperty("TypeOfLocation").GetValue(guildHeadquarterObject, null);
+            locationAsGuildHeadquarter.LocationId = (LocationType)guildHeadquarterObject.GetType().GetProperty("LocationId").GetValue(guildHeadquarterObject, null);
             locationAsGuildHeadquarter.GeographicalDescription = (string)guildHeadquarterObject.GetType().GetProperty("GeographicalDescription").GetValue(guildHeadquarterObject, null);
             locationAsGuildHeadquarter.Description = (string)guildHeadquarterObject.GetType().GetProperty("Description").GetValue(guildHeadquarterObject, null);
 
@@ -8561,7 +8561,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(guildHeadquarter.Id, locationAsGuildHeadquarter.Id);
             Assert.Equal(guildHeadquarter.Name, locationAsGuildHeadquarter.Name);
             Assert.Equal(guildHeadquarter.Description, locationAsGuildHeadquarter.Description);
-            Assert.Equal(guildHeadquarter.TypeOfLocation, locationAsGuildHeadquarter.TypeOfLocation);
+            Assert.Equal(guildHeadquarter.LocationId, locationAsGuildHeadquarter.LocationId);
             Assert.Equal(guildHeadquarter.GeographicalDescription, locationAsGuildHeadquarter.GeographicalDescription);
         }
 
@@ -8569,11 +8569,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsAGuildHeadquarter_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "      ",
                 Description = "Test",
-                TypeOfLocation = LocationType.GuildHeadquarter,
+                LocationId = LocationType.GuildHeadquarter,
                 GeographicalDescription = "Test Description"
             };
 
@@ -8581,7 +8581,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -8596,11 +8596,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsAGuildHeadquarter_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.GuildHeadquarter,
+                LocationId = LocationType.GuildHeadquarter,
                 GeographicalDescription = "        "
             };
 
@@ -8608,7 +8608,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -8627,10 +8627,10 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test UnmarkedLocation",
-                TypeOfLocation = LocationType.UnmarkedLocation,
+                LocationId = LocationType.UnmarkedLocation,
                 GeographicalDescription = "Test UnmarkedLocation"
             };
 
@@ -8638,13 +8638,13 @@ namespace Skyrim.Api.Test.Controllers
             {
                 Id = 0,
                 Name = "Test UnmarkedLocation",
-                TypeOfLocation = LocationType.UnmarkedLocation,
+                LocationId = LocationType.UnmarkedLocation,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(unmarkedLocation);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -8659,7 +8659,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsUnmarkedLocation.Id = (int)unmarkedLocationObject.GetType().GetProperty("Id").GetValue(unmarkedLocationObject, null);
             locationAsUnmarkedLocation.Name = (string)unmarkedLocationObject.GetType().GetProperty("Name").GetValue(unmarkedLocationObject, null);
-            locationAsUnmarkedLocation.TypeOfLocation = (LocationType)unmarkedLocationObject.GetType().GetProperty("TypeOfLocation").GetValue(unmarkedLocationObject, null);
+            locationAsUnmarkedLocation.LocationId = (LocationType)unmarkedLocationObject.GetType().GetProperty("LocationId").GetValue(unmarkedLocationObject, null);
             locationAsUnmarkedLocation.GeographicalDescription = (string)unmarkedLocationObject.GetType().GetProperty("GeographicalDescription").GetValue(unmarkedLocationObject, null);
             locationAsUnmarkedLocation.Description = (string)unmarkedLocationObject.GetType().GetProperty("Description").GetValue(unmarkedLocationObject, null);
 
@@ -8669,7 +8669,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(unmarkedLocation.Id, locationAsUnmarkedLocation.Id);
             Assert.Equal(unmarkedLocation.Name, locationAsUnmarkedLocation.Name);
             Assert.Equal(unmarkedLocation.Description, locationAsUnmarkedLocation.Description);
-            Assert.Equal(unmarkedLocation.TypeOfLocation, locationAsUnmarkedLocation.TypeOfLocation);
+            Assert.Equal(unmarkedLocation.LocationId, locationAsUnmarkedLocation.LocationId);
             Assert.Equal(unmarkedLocation.GeographicalDescription, locationAsUnmarkedLocation.GeographicalDescription);
         }
 
@@ -8678,11 +8678,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test UnmarkedLocation",
                 Description = "    ",
-                TypeOfLocation = LocationType.UnmarkedLocation,
+                LocationId = LocationType.UnmarkedLocation,
                 GeographicalDescription = "Test Description"
             };
 
@@ -8691,13 +8691,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test UnmarkedLocation",
                 Description = "",
-                TypeOfLocation = LocationType.UnmarkedLocation,
+                LocationId = LocationType.UnmarkedLocation,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(unmarkedLocation);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -8712,7 +8712,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsUnmarkedLocation.Id = (int)unmarkedLocationObject.GetType().GetProperty("Id").GetValue(unmarkedLocationObject, null);
             locationAsUnmarkedLocation.Name = (string)unmarkedLocationObject.GetType().GetProperty("Name").GetValue(unmarkedLocationObject, null);
-            locationAsUnmarkedLocation.TypeOfLocation = (LocationType)unmarkedLocationObject.GetType().GetProperty("TypeOfLocation").GetValue(unmarkedLocationObject, null);
+            locationAsUnmarkedLocation.LocationId = (LocationType)unmarkedLocationObject.GetType().GetProperty("LocationId").GetValue(unmarkedLocationObject, null);
             locationAsUnmarkedLocation.GeographicalDescription = (string)unmarkedLocationObject.GetType().GetProperty("GeographicalDescription").GetValue(unmarkedLocationObject, null);
             locationAsUnmarkedLocation.Description = (string)unmarkedLocationObject.GetType().GetProperty("Description").GetValue(unmarkedLocationObject, null);
 
@@ -8722,7 +8722,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(unmarkedLocation.Name, locationAsUnmarkedLocation.Name);
             Assert.Equal(unmarkedLocation.Id, locationAsUnmarkedLocation.Id);
             Assert.Equal(unmarkedLocation.Description, locationAsUnmarkedLocation.Description);
-            Assert.Equal(unmarkedLocation.TypeOfLocation, locationAsUnmarkedLocation.TypeOfLocation);
+            Assert.Equal(unmarkedLocation.LocationId, locationAsUnmarkedLocation.LocationId);
             Assert.Equal(unmarkedLocation.GeographicalDescription, locationAsUnmarkedLocation.GeographicalDescription);
         }
 
@@ -8731,11 +8731,11 @@ namespace Skyrim.Api.Test.Controllers
         {
             // Arrange
 
-            var createLocationDto = new CreateLocationDto
+            var createLocationDto = new LocationDto
             {
                 Name = "Test UnmarkedLocation",
                 Description = null,
-                TypeOfLocation = LocationType.UnmarkedLocation,
+                LocationId = LocationType.UnmarkedLocation,
                 GeographicalDescription = "Test Description"
             };
 
@@ -8744,13 +8744,13 @@ namespace Skyrim.Api.Test.Controllers
                 Id = 0,
                 Name = "Test UnmarkedLocation",
                 Description = null,
-                TypeOfLocation = LocationType.UnmarkedLocation,
+                LocationId = LocationType.UnmarkedLocation,
                 GeographicalDescription = "Test Description"
             };
 
             var completedCreateTask = Task<Location>.FromResult(unmarkedLocation);
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             var createdAtActionStatusCode = (int)HttpStatusCode.Created;
@@ -8765,7 +8765,7 @@ namespace Skyrim.Api.Test.Controllers
 
             locationAsUnmarkedLocation.Id = (int)unmarkedLocationObject.GetType().GetProperty("Id").GetValue(unmarkedLocationObject, null);
             locationAsUnmarkedLocation.Name = (string)unmarkedLocationObject.GetType().GetProperty("Name").GetValue(unmarkedLocationObject, null);
-            locationAsUnmarkedLocation.TypeOfLocation = (LocationType)unmarkedLocationObject.GetType().GetProperty("TypeOfLocation").GetValue(unmarkedLocationObject, null);
+            locationAsUnmarkedLocation.LocationId = (LocationType)unmarkedLocationObject.GetType().GetProperty("LocationId").GetValue(unmarkedLocationObject, null);
             locationAsUnmarkedLocation.GeographicalDescription = (string)unmarkedLocationObject.GetType().GetProperty("GeographicalDescription").GetValue(unmarkedLocationObject, null);
             locationAsUnmarkedLocation.Description = (string)unmarkedLocationObject.GetType().GetProperty("Description").GetValue(unmarkedLocationObject, null);
 
@@ -8775,7 +8775,7 @@ namespace Skyrim.Api.Test.Controllers
             Assert.Equal(unmarkedLocation.Id, locationAsUnmarkedLocation.Id);
             Assert.Equal(unmarkedLocation.Name, locationAsUnmarkedLocation.Name);
             Assert.Equal(unmarkedLocation.Description, locationAsUnmarkedLocation.Description);
-            Assert.Equal(unmarkedLocation.TypeOfLocation, locationAsUnmarkedLocation.TypeOfLocation);
+            Assert.Equal(unmarkedLocation.LocationId, locationAsUnmarkedLocation.LocationId);
             Assert.Equal(unmarkedLocation.GeographicalDescription, locationAsUnmarkedLocation.GeographicalDescription);
         }
 
@@ -8783,11 +8783,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForNameAsAUnmarkedLocation_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "      ",
                 Description = "Test",
-                TypeOfLocation = LocationType.UnmarkedLocation,
+                LocationId = LocationType.UnmarkedLocation,
                 GeographicalDescription = "Test Description"
             };
 
@@ -8795,7 +8795,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act
@@ -8810,11 +8810,11 @@ namespace Skyrim.Api.Test.Controllers
         public async void WhenCreateLocationDtoHasNullOrWhiteSpaceForGeogrpahicalDescriptionAsAUnmarkedLocation_ReturnsBadRequest()
         {
             // Arrange
-            CreateLocationDto createLocationDto = new CreateLocationDto
+            LocationDto createLocationDto = new LocationDto
             {
                 Name = "Test",
                 Description = "Test",
-                TypeOfLocation = LocationType.UnmarkedLocation,
+                LocationId = LocationType.UnmarkedLocation,
                 GeographicalDescription = "        "
             };
 
@@ -8822,7 +8822,7 @@ namespace Skyrim.Api.Test.Controllers
             var completedCreateTask = Task<Location>.FromResult(location);
             var badRequest = (int)HttpStatusCode.BadRequest;
 
-            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<CreateLocationDto>()))
+            _mockDomain.Setup(x => x.CreateLocation(It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedCreateTask.Result);
 
             // Act

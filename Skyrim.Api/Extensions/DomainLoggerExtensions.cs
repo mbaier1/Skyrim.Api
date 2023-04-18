@@ -13,7 +13,7 @@ namespace Skyrim.Api.Extensions
             _creatLocationDtoDomainLogger = creatLocationDtoDomainLogger;
         }
 
-        public void LogError(Exception e, CreateLocationDto createLocationDto)
+        public void LogError(Exception e, LocationDto createLocationDto)
         {
             _creatLocationDtoDomainLogger.Log(LogLevel.Error, e.Message, createLocationDto);
         }
