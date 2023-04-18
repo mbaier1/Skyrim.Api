@@ -4,32 +4,32 @@ using Skyrim.Api.Domain.DTOs;
 
 namespace Skyrim.Api.Test.Domains.DomainHelpers
 {
-    public class CreateLocationDtoFormatHelper_Tests
+    public class LocationDtoFormatHelper_Tests
     {
-        protected readonly CreateLocationDtoFormatHelper _createLocationDtoFormatHelper;
+        protected readonly LocationDtoFormatHelper _locationDtoFormatHelper;
 
-        public CreateLocationDtoFormatHelper_Tests()
+        public LocationDtoFormatHelper_Tests()
         {
-            _createLocationDtoFormatHelper = new CreateLocationDtoFormatHelper();
+            _locationDtoFormatHelper = new LocationDtoFormatHelper();
         }
     }
 
-    public class FormatEntity : CreateLocationDtoFormatHelper_Tests
+    public class FormatEntity : LocationDtoFormatHelper_Tests
     {
         [Theory]
         [MemberData(nameof(ValidPropertiesForEachLocationType))]
-        public void WhenCreateLocationDtoHasValidProperties_ReturnsDtoUnaltered(string description, LocationDto createLocationDto)
+        public void WhenLocationDtoHasValidProperties_ReturnsDtoUnaltered(string description, LocationDto locationDto)
         {
             // Arrange
 
             // Act
-            var result = _createLocationDtoFormatHelper.FormatEntity(createLocationDto);
+            var result = _locationDtoFormatHelper.FormatEntity(locationDto);
 
             // Assert
-            Assert.Equal(createLocationDto.Name, result.Name);
-            Assert.Equal(createLocationDto.Description, result.Description);
-            Assert.Equal(createLocationDto.GeographicalDescription, result.GeographicalDescription);
-            Assert.Equal(createLocationDto.LocationId, result.LocationId);
+            Assert.Equal(locationDto.Name, result.Name);
+            Assert.Equal(locationDto.Description, result.Description);
+            Assert.Equal(locationDto.GeographicalDescription, result.GeographicalDescription);
+            Assert.Equal(locationDto.LocationId, result.LocationId);
         }
         public static IEnumerable<object[]> ValidPropertiesForEachLocationType()
         {
@@ -268,19 +268,19 @@ namespace Skyrim.Api.Test.Domains.DomainHelpers
 
         [Theory]
         [MemberData(nameof(Allowed_Null_WhiteSpace_OrEmptyProperties_ForeachLocationType))]
-        public void CreateLocationDtoContainsEmpty_WhiteSpace_OrNullDescription(string description, LocationDto createLocationDto,
-            LocationDto formattedCreateLocationDto)
+        public void CreateLocationDtoContainsEmpty_WhiteSpace_OrNullDescription(string description, LocationDto locationDto,
+            LocationDto formattedLocationDto)
         {
             // Arrange
 
             // Act
-            var result = _createLocationDtoFormatHelper.FormatEntity(createLocationDto);
+            var result = _locationDtoFormatHelper.FormatEntity(locationDto);
 
             // Assert
-            Assert.Equal(formattedCreateLocationDto.Name, result.Name);
-            Assert.Equal(formattedCreateLocationDto.Description, result.Description);
-            Assert.Equal(formattedCreateLocationDto.GeographicalDescription, result.GeographicalDescription);
-            Assert.Equal(formattedCreateLocationDto.LocationId, result.LocationId);
+            Assert.Equal(formattedLocationDto.Name, result.Name);
+            Assert.Equal(formattedLocationDto.Description, result.Description);
+            Assert.Equal(formattedLocationDto.GeographicalDescription, result.GeographicalDescription);
+            Assert.Equal(formattedLocationDto.LocationId, result.LocationId);
         }
         public static IEnumerable<object[]> Allowed_Null_WhiteSpace_OrEmptyProperties_ForeachLocationType()
         {
@@ -2556,16 +2556,16 @@ namespace Skyrim.Api.Test.Domains.DomainHelpers
 
         [Theory]
         [MemberData(nameof(UnallowedNull_Invalid_orWhiteSpaceProperties))]
-        public void CreateLocationDtoContainsInvalid_Empty_Whitespace_OrNullProperties(string description, LocationDto createLocationDto,
-            LocationDto formattedCreateLocationDto)
+        public void CreateLocationDtoContainsInvalid_Empty_Whitespace_OrNullProperties(string description, LocationDto locationDto,
+            LocationDto formattedLocationDto)
         {
             // Arrange
 
             // Act
-            var result = _createLocationDtoFormatHelper.FormatEntity(createLocationDto);
+            var result = _locationDtoFormatHelper.FormatEntity(locationDto);
 
             // Assert
-            Assert.Equal(formattedCreateLocationDto, result);
+            Assert.Equal(formattedLocationDto, result);
         }
         public static IEnumerable<object[]> UnallowedNull_Invalid_orWhiteSpaceProperties()
         {
@@ -4085,16 +4085,16 @@ namespace Skyrim.Api.Test.Domains.DomainHelpers
 
         [Theory]
         [MemberData(nameof(DifferentNameFormats))]
-        public void WithDifferentFormattedNames_ReturnsExpectedLocationFormattedCorrectly(string description, LocationDto createLocationDto,
-            LocationDto formattedCreateLocationDto)
+        public void WithDifferentFormattedNames_ReturnsExpectedLocationFormattedCorrectly(string description, LocationDto locationDto,
+            LocationDto formattedLocationDto)
         {
             // Arrange
 
             // Act
-            var result = _createLocationDtoFormatHelper.FormatEntity(createLocationDto);
+            var result = _locationDtoFormatHelper.FormatEntity(locationDto);
 
             // Assert
-            Assert.Equal(formattedCreateLocationDto.Name, result.Name);
+            Assert.Equal(formattedLocationDto.Name, result.Name);
         }
         public static IEnumerable<object[]> DifferentNameFormats()
         {
@@ -4220,7 +4220,7 @@ namespace Skyrim.Api.Test.Domains.DomainHelpers
             };
 
             // Act
-            var result = _createLocationDtoFormatHelper.FormatEntity(createLocationDto);
+            var result = _locationDtoFormatHelper.FormatEntity(createLocationDto);
 
             // Assert
             Assert.Equal(createLocationDto.Name, result.Name);

@@ -1,7 +1,10 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Extensions;
 using Skyrim.Api.Data;
 using Skyrim.Api.Data.AbstractModels;
+using Skyrim.Api.Data.Models;
+using Skyrim.Api.Domain.DTOs;
 using Skyrim.Api.Extensions.Interfaces;
 using Skyrim.Api.Repository.Interface;
 using Location = Skyrim.Api.Data.AbstractModels.Location;
@@ -29,6 +32,7 @@ namespace Skyrim.Api.Repository
             {
                 _loggerExtension.LogError(e);
             }
+
             return null;
         }
 
@@ -42,6 +46,30 @@ namespace Skyrim.Api.Repository
             {
                 _loggerExtension.LogError(e);
             }
+
+            return null;
+        }
+
+        public async Task<Location> UpdateLocation(Location updatedLocation)
+        {
+            try
+            {
+                var existingLocation = await _context.Location.FirstAsync(x => x.Id == updatedLocation.Id);
+                existingLocation.LocationId = updatedLocation.LocationId;
+                existingLocation.TypeOfLocation = updatedLocation.LocationId.GetDisplayName();
+                existingLocation.Name = updatedLocation.Name;
+                existingLocation.Description = updatedLocation.Description;
+                existingLocation.GeographicalDescription = updatedLocation.GeographicalDescription;
+                _context.Location.Update(existingLocation);
+                await _context.SaveChangesAsync();
+
+                return updatedLocation;
+            }
+            catch (Exception e)
+            {
+                _loggerExtension.LogError(e, updatedLocation);
+            }
+
             return null;
         }
 
@@ -57,9 +85,9 @@ namespace Skyrim.Api.Repository
             catch (Exception e)
             {
                 _loggerExtension.LogError(e, location);
-
-                return null;
             }
+
+            return null;
         }
 
         public async Task<bool> DeleteLocation(Location location)
