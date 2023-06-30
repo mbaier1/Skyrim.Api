@@ -2,6 +2,10 @@
 
 # Skyrim.Api
 
+## PLEASE READ!
+
+This is part of my project portfolio and is made public for display purposes only. Feel free to have fun with it, but I ask that you would not edit the code without my consent. If you wish to pair on an issue or future enhance, please contact me at the information provided on my profile. Paired-Programming is great!
+
 ## Entity Framework Notes
 
 If you create a new table based on the current TPC Mapping Strategy, check the Migrations because it is most likely going to attempt to drop
