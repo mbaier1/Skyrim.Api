@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis;
 using Skyrim.Api.Data.AbstractModels;
 using Skyrim.Api.Data.Enums;
 using Skyrim.Api.Domain.DTOs;
 using Skyrim.Api.Domain.Interfaces;
+using Location = Skyrim.Api.Data.AbstractModels.Location;
 
 namespace Skyrim.Api.Controllers
 {
@@ -50,7 +52,15 @@ namespace Skyrim.Api.Controllers
             if(updatedLocation == null)
                 return BadRequest();
 
-            return Ok(updatedLocation);
+            return CreatedAtAction(nameof(GetLocation), new { id = updatedLocation.Id }, new
+            {
+                updatedLocation.Id,
+                updatedLocation.Name,
+                updatedLocation.Description,
+                updatedLocation.GeographicalDescription,
+                updatedLocation.LocationId,
+                updatedLocation.TypeOfLocation
+            });
         }
 
         // POST: api/Locations
