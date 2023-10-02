@@ -191,14 +191,14 @@ namespace Skyrim.Api.Test.Controllers
 
             var completedTask = Task<Location>.FromResult(city);
             var locationAsCity = new City();
-            var okActionStatusCode = (int)HttpStatusCode.OK;
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
             _mockDomain.Setup(x => x.UpdateLocation(It.IsAny<int>(), It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedTask.Result);
 
             // Act
             var result = await _locationsController.UpdateLocation(id, locationDto);
-            var responseAsOkActionResult = (OkObjectResult)result.Result;
-            var resultValue = responseAsOkActionResult.Value;
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)result.Result;
+            var resultValue = responseAsCreateAsActionResult.Value;
 
             locationAsCity.Id = (int)resultValue.GetType().GetProperty("Id").GetValue(resultValue, null);
             locationAsCity.Name = (string)resultValue.GetType().GetProperty("Name").GetValue(resultValue, null);
@@ -206,7 +206,7 @@ namespace Skyrim.Api.Test.Controllers
             locationAsCity.GeographicalDescription = (string)resultValue.GetType().GetProperty("GeographicalDescription").GetValue(resultValue, null);
 
             // Assert
-            Assert.Equal(okActionStatusCode, responseAsOkActionResult.StatusCode);
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
             Assert.Equal(city.Id, locationAsCity.Id);
             Assert.Equal(city.Name, locationAsCity.Name);
             Assert.Equal(city.LocationId, locationAsCity.LocationId);
@@ -293,14 +293,14 @@ namespace Skyrim.Api.Test.Controllers
 
             var completedTask = Task<Location>.FromResult(city);
             var locationAsCity = new City();
-            var okActionStatusCode = (int)HttpStatusCode.OK;
+            var createdAtActionStatusCode = (int)HttpStatusCode.Created;
             _mockDomain.Setup(x => x.UpdateLocation(It.IsAny<int>(), It.IsAny<LocationDto>()))
                 .ReturnsAsync((Location)completedTask.Result);
 
             // Act
             var result = await _locationsController.UpdateLocation(id, locationDto);
-            var responseAsOkActionResult = (OkObjectResult)result.Result;
-            var resultValue = responseAsOkActionResult.Value;
+            var responseAsCreateAsActionResult = (CreatedAtActionResult)result.Result;
+            var resultValue = responseAsCreateAsActionResult.Value;
 
             locationAsCity.Id = (int)resultValue.GetType().GetProperty("Id").GetValue(resultValue, null);
             locationAsCity.Name = (string)resultValue.GetType().GetProperty("Name").GetValue(resultValue, null);
@@ -308,7 +308,7 @@ namespace Skyrim.Api.Test.Controllers
             locationAsCity.GeographicalDescription = (string)resultValue.GetType().GetProperty("GeographicalDescription").GetValue(resultValue, null);
 
             // Assert
-            Assert.Equal(okActionStatusCode, responseAsOkActionResult.StatusCode);
+            Assert.Equal(createdAtActionStatusCode, responseAsCreateAsActionResult.StatusCode);
             Assert.Equal(city.Id, locationAsCity.Id);
             Assert.Equal(city.Name, locationAsCity.Name);
             Assert.Equal(city.LocationId, locationAsCity.LocationId);
